@@ -1356,5 +1356,30 @@ bool operator!=(const Instruction<Model> &lhs, const Instruction<Model> &rhs) {
 	return !(lhs == rhs);
 }
 
+namespace edisassm {
+template <class Model>
+std::string to_string(const Instruction<Model> &insn, bool upper = false) {
+	std::ostringstream ss;
+	
+	if(upper) {
+		ss << edisassm::util::toupper_copy(insn.format_prefix());
+		ss << edisassm::util::toupper_copy(insn.mnemonic());
+	} else {
+		ss << insn.format_prefix();
+		ss << insn.mnemonic();	
+	}
+	
+	const std::size_t count = insn.operand_count();
+	if(count != 0) {
+		ss << ' ' << insn.operand(0).to_string(upper);
+		for(std::size_t i = 1; i < count; ++i) {
+			ss << ", " << insn.operand(i).to_string(upper);
+		}
+	}
+
+	return ss.str();
+}
+}
+
 #endif
 
