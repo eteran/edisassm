@@ -46,7 +46,7 @@ void disassemble(const uint8_t *start_ptr, const uint8_t *end_ptr, typename Inst
 					std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(ptr[i]) << " " << std::dec;;
 				}
 			}
-			std::cout << instruction.format() << std::endl;
+			std::cout << edisassm::to_string(instruction) << std::endl;
 			ptr += instruction.size();
 		} else {
 			std::cout << "(bad)" << std::endl;
@@ -93,14 +93,11 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	
-	if(filename.empty()) {
-		print_usage(argv[0]);
-	}
-	
+	std::vector<uint8_t> data;	
 	std::ifstream file(filename.c_str(), std::ios::binary);
 	if(file) {
 
-		const std::vector<uint8_t> data	= std::vector<uint8_t>(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
+		data = std::vector<uint8_t>(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
 		const uint8_t *const start_ptr	= &data[0];
 		const uint8_t *const end_ptr	= start_ptr + data.size();
 
