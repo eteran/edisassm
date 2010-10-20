@@ -1071,7 +1071,7 @@ void Instruction<Model>::decode_ ## name1 ## _ ## name2 ## _ ## name3(const uint
 		{ #name3, (decoder_func3), (OP3) }		\
 	};											\
 												\
-	switch(operand_size()) {						\
+	switch(operand_size()) {					\
 	case 16: opcode_ = &opcodes[0]; break;		\
 	case 32: opcode_ = &opcodes[1]; break;		\
 	case 64: opcode_ = &opcodes[2]; break;		\

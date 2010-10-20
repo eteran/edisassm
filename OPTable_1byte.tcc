@@ -134,9 +134,9 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes[0x100
 	{ "pop", &Instruction::decode_rDI, OP_POP },
 	
 	/* 0x60 - 0x6f */
-	{ "pushaw/pushad",  &Instruction::decode_pushaw_pushad_invalid, OP_PUSHA },	// ia-32 only
-	{ "popaw/popad",  &Instruction::decode_popaw_popad_invalid, OP_POPA },		// ia-32 only
-	{ "bound",  &Instruction::decode_Gv_Ma, OP_BOUND },					// ia-32 only
+	{ "pushaw/pushad", &Instruction::decode_pushaw_pushad_invalid, OP_PUSHA },	// ia-32 only
+	{ "popaw/popad", &Instruction::decode_popaw_popad_invalid, OP_POPA },		// ia-32 only
+	{ "bound", &Instruction::decode_Gv_Ma, OP_BOUND },					// ia-32 only
 	{ "arpl", &Instruction::decode_Ew_Gw, OP_ARPL },					// x86-64: movsxd Gv,Ev
 	{ "prefix fs", &Instruction::decode_invalid, OP_PREFIX },
 	{ "prefix gs", &Instruction::decode_invalid, OP_PREFIX },
@@ -146,10 +146,10 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes[0x100
 	{ "imul", &Instruction::decode_Gv_Ev_Iz, OP_IMUL },
 	{ "push", &Instruction::decode_Ib, OP_PUSH },
 	{ "imul", &Instruction::decode_Gv_Ev_Ib, OP_IMUL },
-	{ "insb",  &Instruction::decode0, OP_INS },
-	{ "insw/insd",  &Instruction::decode_insw_insd_invalid, OP_INS },
-	{ "outsb",  &Instruction::decode0, OP_OUTS },
-	{ "outsw/outsd",  &Instruction::decode_outsw_outsd_invalid, OP_OUTS },
+	{ "insb", &Instruction::decode0, OP_INS },
+	{ "insw/insd", &Instruction::decode_insw_insd_invalid, OP_INS },
+	{ "outsb", &Instruction::decode0, OP_OUTS },
+	{ "outsw/outsd", &Instruction::decode_outsw_outsd_invalid, OP_OUTS },
 		
 	/* 0x70 - 0x7f */
 	{ "jo", &Instruction::decode_Jb, OP_JCC },
@@ -174,8 +174,8 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes[0x100
 	{ "group1", &Instruction::decode_group1, OP_GROUP1 },
 	{ "group1", &Instruction::decode_group1, OP_GROUP1 },				// ia-32 only
 	{ "group1", &Instruction::decode_group1, OP_GROUP1 },
-	{ "test",  &Instruction::decode_Eb_Gb, OP_TEST },
-	{ "test",  &Instruction::decode_Ev_Gv, OP_TEST },
+	{ "test", &Instruction::decode_Eb_Gb, OP_TEST },
+	{ "test", &Instruction::decode_Ev_Gv, OP_TEST },
 	{ "xchg", &Instruction::decode_Gb_Eb, OP_XCHG },
 	{ "xchg", &Instruction::decode_Gv_Ev, OP_XCHG },
 	{ "mov", &Instruction::decode_Eb_Gb, OP_MOV },
@@ -188,16 +188,16 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes[0x100
 	{ "group10", &Instruction::decode_group10, OP_GROUP10 },
 	
 	/* 0x90 - 0x9f */
-	{ "xchg",  &Instruction::decode_rAX_rAX_NOREX, OP_XCHG },
-	{ "xchg",  &Instruction::decode_rCX_rAX_NOREX, OP_XCHG },
-	{ "xchg",  &Instruction::decode_rDX_rAX_NOREX, OP_XCHG },
-	{ "xchg",  &Instruction::decode_rBX_rAX_NOREX, OP_XCHG },
-	{ "xchg",  &Instruction::decode_rSP_rAX_NOREX, OP_XCHG },
-	{ "xchg",  &Instruction::decode_rBP_rAX_NOREX, OP_XCHG },
-	{ "xchg",  &Instruction::decode_rSI_rAX_NOREX, OP_XCHG },
-	{ "xchg",  &Instruction::decode_rDI_rAX_NOREX, OP_XCHG },
-	{ "cbw/cwde/cdqe",  &Instruction::decode_cbw_cwde_cdqe, OP_CWDE },
-	{ "cwd/cdq/cqo",  &Instruction::decode_cwd_cdq_cqo, OP_CDQ },
+	{ "xchg", &Instruction::decode_rAX_rAX_NOREX, OP_XCHG },
+	{ "xchg", &Instruction::decode_rCX_rAX_NOREX, OP_XCHG },
+	{ "xchg", &Instruction::decode_rDX_rAX_NOREX, OP_XCHG },
+	{ "xchg", &Instruction::decode_rBX_rAX_NOREX, OP_XCHG },
+	{ "xchg", &Instruction::decode_rSP_rAX_NOREX, OP_XCHG },
+	{ "xchg", &Instruction::decode_rBP_rAX_NOREX, OP_XCHG },
+	{ "xchg", &Instruction::decode_rSI_rAX_NOREX, OP_XCHG },
+	{ "xchg", &Instruction::decode_rDI_rAX_NOREX, OP_XCHG },
+	{ "cbw/cwde/cdqe", &Instruction::decode_cbw_cwde_cdqe, OP_CWDE },
+	{ "cwd/cdq/cqo", &Instruction::decode_cwd_cdq_cqo, OP_CDQ },
 	{ "callf", &Instruction::decode_Ap, OP_CALL },					// ia-32 only
 	{ "wait", &Instruction::decode0, OP_WAIT },
 	{ "pushfw/pushfd/pushfq", &Instruction::decode_pushfw_pushfd_pushfq, OP_PUSHF },

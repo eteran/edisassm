@@ -39,22 +39,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #ifndef INVALID_BLOCK
 #define INVALID_BLOCK \
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }
 #endif
 
 #include "Operand.h"
@@ -103,6 +103,15 @@ private:
 	void initialize(const uint8_t *buf, std::size_t size);
 	
 public:
+
+	enum Flags {
+		FLAG_NONE			= 0x00000000,
+		FLAG_TEST_FLAGS		= 0x00000001,
+		FLAG_WRITES_FLAGS	= 0x00000002,
+		FLAG_MODIFIES_STACK	= 0x00000004,
+		FLAG_RING0			= 0x00000008,
+	};
+
 	enum Prefix {
 		PREFIX_LOCK				= 0x00000001,
 		PREFIX_REPNE			= 0x00000002,
@@ -1212,6 +1221,7 @@ private:
 		const char 		*mnemonic;
 		DecoderFunction	decoder;
 		Type			type;
+		unsigned int	flags;
 	};
 	
 private:
