@@ -26,22 +26,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #define SHOW_BYTES
 
+enum DISPLAY_FLAGS {
+	FLAG_NONE		= 0x00,
+	FLAG_SHOW_BYTES = 0x01
+};
+
 template <class Model>
-void disassemble(const uint8_t *start_ptr, const uint8_t *end_ptr) {
+void disassemble(const uint8_t *start_ptr, const uint8_t *end_ptr, typename Instruction<Model>::address_t rva, unsigned int flags) {
 	
 	typedef Instruction<Model> insn_t;
 	
 	const uint8_t *ptr = start_ptr;
 	while(ptr < end_ptr) {
-		const typename insn_t::address_t addr = 0x10000000;
-		insn_t instruction(ptr, end_ptr - ptr,  addr + (ptr - start_ptr), std::nothrow);
+		insn_t instruction(ptr, end_ptr - ptr,  rva + (ptr - start_ptr), std::nothrow);
 		if(instruction.valid()) {
-			std::cout << std::hex << (addr + (ptr - start_ptr)) << ": ";
-#ifdef SHOW_BYTES
-			for(unsigned int i = 0; i < instruction.size(); ++i) {
-				std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(ptr[i]) << " " << std::dec;;
+			std::cout << std::hex << (rva + (ptr - start_ptr)) << ": ";
+			if(flags & FLAG_SHOW_BYTES) {
+				for(unsigned int i = 0; i < instruction.size(); ++i) {
+					std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(ptr[i]) << " " << std::dec;;
+				}
 			}
-#endif
 			std::cout << instruction.format() << std::endl;
 			ptr += instruction.size();
 		} else {
@@ -51,42 +55,62 @@ void disassemble(const uint8_t *start_ptr, const uint8_t *end_ptr) {
 	}
 }
 
+void print_usage(const char *arg0) {
+	std::cerr << arg0 << " [-m32|-m64] [--rva <address>] [--show-bytes] <file>" << std::endl;
+	exit(-1);
+}
+
 int main(int argc, char *argv[]) {
-#if 0
-	// assembler test
-	Instruction<edisassm::x86>::assemble("push eax, eax");
-#else
+	
+	if(argc == 1) {
+		print_usage(argv[0]);
+	}
 
-	if(argc == 3) {
-		std::ifstream file(argv[2], std::ios::binary);
-		if(file) {
-		
-			std::vector<uint8_t> data = std::vector<uint8_t>(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
-
-			const uint8_t *const start_ptr = &data[0];
-			const uint8_t *const end_ptr = start_ptr + data.size();
-			
-			if(std::strcmp(argv[1], "-m32") == 0) {
-				disassemble<edisassm::x86>(start_ptr, end_ptr);
-			} else if(std::strcmp(argv[1], "-m64") == 0) {
-				disassemble<edisassm::x86_64>(start_ptr, end_ptr);
+	unsigned int flags		= FLAG_NONE;
+	bool x86_64_mode		= false;
+	uint64_t rva_address	= 0;
+	std::string filename;
+	
+	for(int i = 1; i < argc; ++i) {
+		if(argv[i][0] == '-') {
+			if(strcmp(argv[i], "-m32") == 0) {
+				x86_64_mode = false;
+			} else if(strcmp(argv[i], "-m64") == 0) {
+				x86_64_mode = true;
+			} else if(strcmp(argv[i], "--rva") == 0) {
+				++i;
+				if(argv[i] == 0) {
+					print_usage(argv[0]);
+				}
+				rva_address = strtoul(argv[i], 0, 0);
+			} else if(strcmp(argv[i], "--show-bytes") == 0) {
+				flags |= FLAG_SHOW_BYTES;
 			} else {
-				std::cout << argv[0] << " [-m32|-m64] <file>" << std::endl;
+				print_usage(argv[0]);
 			}
+		} else {
+			filename = argv[i];
 		}
-	} else if(argc == 2) {
-		std::ifstream file(argv[1], std::ios::binary);
-		if(file) {
-		
-			std::vector<uint8_t> data = std::vector<uint8_t>(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());	
+	}
+	
+	if(filename.empty()) {
+		print_usage(argv[0]);
+	}
+	
+	std::ifstream file(filename.c_str(), std::ios::binary);
+	if(file) {
 
-			const uint8_t *const start_ptr = &data[0];
-			const uint8_t *const end_ptr = start_ptr + data.size();
-			
-			disassemble<edisassm::x86>(start_ptr, end_ptr);
+		const std::vector<uint8_t> data	= std::vector<uint8_t>(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
+		const uint8_t *const start_ptr	= &data[0];
+		const uint8_t *const end_ptr	= start_ptr + data.size();
+
+		if(x86_64_mode) {
+			disassemble<edisassm::x86_64>(start_ptr, end_ptr, rva_address, flags);
+		} else {
+			disassemble<edisassm::x86>(start_ptr, end_ptr, rva_address, flags);
 		}
 	} else {
-		std::cout << argv[0] << " [-m32|-m64] <file>" << std::endl;
+		std::cerr << "could not open the file: " << argv[2] << std::endl;
+		return -1;
 	}
-#endif
 }
