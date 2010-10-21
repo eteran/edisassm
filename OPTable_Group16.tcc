@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "Operand.h"
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group16_Mem[8] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group16_Mem[8] = {
 	{ "fxsave", &Instruction::decode_M512, OP_FXSAVE, FLAG_NONE },
 	{ "fxrstor", &Instruction::decode_M512, OP_FXRSTOR, FLAG_NONE },	
 	{ "ldmxcsr", &Instruction::decode_Md, OP_LDMXCSR, FLAG_NONE },
@@ -34,8 +34,8 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group
 	{ "clflush", &Instruction::decode_M, OP_CLFLUSH, FLAG_NONE },
 };
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group16_Reg[8] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group16_Reg[8] = {
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },

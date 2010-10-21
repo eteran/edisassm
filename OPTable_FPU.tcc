@@ -23,8 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "Operand.h"
 
 // this table is for x87 opcodes with a mod < 0xc0
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_x87_Lo[64] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_x87_Lo[64] = {
 
 	/* 0xd8 0x00 - 0xd8 0xbf */
 	{ "fadd", &Instruction::decode_SingleReal, OP_FADD, FLAG_NONE },
@@ -108,8 +108,8 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_x87_L
 };
 
 // this table is for x87 opcodes with a mod >= 0xc0
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_x87_Hi[0x200] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_x87_Hi[0x200] = {
 
 	/* 0xd8 0xc0 - 0xd8 0xff */
 	{ "fadd", &Instruction::template decode_ST_STi<0>, OP_FADD, FLAG_NONE },

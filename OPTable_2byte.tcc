@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "Operand.h"
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_2Byte_NA[0x100] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_2Byte_NA[0x100] = {
 
 	/* 0x0f 0x00 - 0x0f 0x0f */
 	{ "group6", &Instruction::decode_group6, OP_GROUP6, FLAG_NONE },
@@ -316,8 +316,8 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_2Byte
 
 
 // 2 byte opcodes with a 66 prefix
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_2Byte_66[0x100] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_2Byte_66[0x100] = {
 	
 	/* 0x0f 0x00 - 0x0f 0x0f */
 	{ "group6", &Instruction::decode_group6, OP_GROUP6, FLAG_NONE },
@@ -609,8 +609,8 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_2Byte
 };
 
 // 2 byte opcodes with a f2 prefix
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_2Byte_F2[0x100] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_2Byte_F2[0x100] = {
 
 	/* 0x0f 0x00 - 0x0f 0x0f */
 	{ "group6", &Instruction::decode_group6, OP_GROUP6, FLAG_NONE },
@@ -902,8 +902,8 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_2Byte
 };
 
 // 2 byte opcodes with a f3 prefix
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_2Byte_F3[0x100] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_2Byte_F3[0x100] = {
 
 	/* 0x0f 0x00 - 0x0f 0x0f */
 	{ "group6", &Instruction::decode_group6, OP_GROUP6, FLAG_NONE },

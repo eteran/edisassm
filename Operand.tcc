@@ -29,70 +29,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <limits>
 #include <sstream>
 
-template <class Model>
-const char *Operand<Model>::RegisterName[] = {
-	"",
-
-	"rax",	"rcx",	"rdx",	"rbx",
-	"rsp",	"rbp",	"rsi",	"rdi",
-	"r8",	"r9",	"r10",	"r11",
-	"r12",	"r13",	"r14",	"r15",
-	
-	"eax",	"ecx",	"edx",	"ebx",
-	"esp",	"ebp",	"esi",	"edi",
-	"r8d",	"r9d",	"r10d",	"r11d",
-	"r12d",	"r13d",	"r14d",	"r15d",
-	
-	"ax",	"cx",	"dx",	"bx",
-	"sp",	"bp",	"si",	"di",
-	"r8w",	"r9w",	"r10w",	"r11w",
-	"r12w",	"r13w",	"r14w",	"r15w",
-	
-	"al",	"cl",	"dl",	"bl",
-	"ah",	"ch",	"dh",	"bh",
-	"r8b",	"r9b",	"r10b",	"r11b",
-	"r12b",	"r13b",	"r14b",	"r15b",
-	"spl",	"bpl",	"sil",	"dil",
-	
-	"es",	"cs",	"ss",	"ds",
-	"fs",	"gs",	"seg7",	"seg8",
-	
-	"cr0",	"cr1",	"cr2",	"cr3",
-	"cr4",	"cr5",	"cr6",	"cr7",
-	"cr8",	"cr9",	"cr10",	"cr11",
-	"cr12",	"cr13",	"cr14",	"cr15",
-	
-	"dr0",	"dr1",	"dr2",	"dr3",
-	"dr4",	"dr5",	"dr6",	"dr7",
-	"dr8",	"dr9",	"dr10",	"dr11",
-	"dr12",	"dr13",	"dr14",	"dr15",
-	
-	"tr0",	"tr1",	"tr2",	"tr3",
-	"tr4",	"tr5",	"tr6",	"tr7",
-	
-	"mm0",	"mm1",	"mm2",	"mm3",
-	"mm4",	"mm5",	"mm6",	"mm7",
-	
-	"xmm0",	"xmm1",	"xmm2",	"xmm3",
-	"xmm4",	"xmm5",	"xmm6",	"xmm7",
-	"xmm8",	"xmm9",	"xmm10","xmm11",
-	"xmm12","xmm13","xmm14","xmm15",
-		
-	"st",
-	"st(0)", "st(1)", "st(2)", "st(3)",
-	"st(4)", "st(5)", "st(6)", "st(7)",
-	
-	"rip",
-	"eip",
-	
-	"(invalid)"
-};
 
 //------------------------------------------------------------------------------
 // Name: Operand()
 //------------------------------------------------------------------------------
-template <class Model>
-Operand<Model>::Operand() {
+template <class M>
+Operand<M>::Operand() {
 	// i think this is the biggest member of the union
 	std::memset(&expression, 0, sizeof(expression));
 }
@@ -100,8 +42,8 @@ Operand<Model>::Operand() {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Operand<Model>::swap(Operand &other) {
+template <class M>
+void Operand<M>::swap(Operand &other) {
 	std::swap(owner_, other.owner_);
 	std::swap(type_, other.type_);
 
@@ -115,8 +57,8 @@ void Operand<Model>::swap(Operand &other) {
 //------------------------------------------------------------------------------
 // Name: format_immediate(bool upper) const
 //------------------------------------------------------------------------------
-template <class Model>
-std::string Operand<Model>::format_immediate(bool upper) const {
+template <class M>
+std::string Operand<M>::format_immediate(bool upper) const {
 	std::ostringstream ss;
 		
 	switch(type_) {
@@ -173,8 +115,8 @@ std::string Operand<Model>::format_immediate(bool upper) const {
 //------------------------------------------------------------------------------
 // Name: relative_target() const
 //------------------------------------------------------------------------------
-template <class Model>
-typename Operand<Model>::address_t Operand<Model>::relative_target() const {
+template <class M>
+typename Operand<M>::address_t Operand<M>::relative_target() const {
 	
 	const address_t rva		= owner_->rva();
 	const unsigned int size	= owner_->size();
@@ -198,16 +140,16 @@ typename Operand<Model>::address_t Operand<Model>::relative_target() const {
 //------------------------------------------------------------------------------
 // Name: format_relative(bool upper) const
 //------------------------------------------------------------------------------
-template <class Model>
-std::string Operand<Model>::format_relative(bool upper) const {
+template <class M>
+std::string Operand<M>::format_relative(bool upper) const {
 	return hex_string(static_cast<address_t>(relative_target()), upper);
 }
 
 //------------------------------------------------------------------------------
 // Name: format_expression(bool upper) const
 //------------------------------------------------------------------------------
-template <class Model>
-std::string Operand<Model>::format_expression(bool upper) const {
+template <class M>
+std::string Operand<M>::format_expression(bool upper) const {
 	
 	static const char *expression_strings[] = {
 		"",
@@ -345,8 +287,8 @@ std::string Operand<Model>::format_expression(bool upper) const {
 //------------------------------------------------------------------------------
 // Name: format_absolute() const
 //------------------------------------------------------------------------------
-template <class Model>
-std::string Operand<Model>::format_absolute(bool upper) const {
+template <class M>
+std::string Operand<M>::format_absolute(bool upper) const {
 	std::ostringstream ss;
 	
 	ss	<< edisassm::util::toupper_copy("far ", upper)
@@ -360,8 +302,8 @@ std::string Operand<Model>::format_absolute(bool upper) const {
 //------------------------------------------------------------------------------
 // Name: format_register(bool upper) const
 //------------------------------------------------------------------------------
-template <class Model>
-std::string Operand<Model>::format_register(bool upper) const {
+template <class M>
+std::string Operand<M>::format_register(bool upper) const {
 	std::string ret = register_name(reg);
 	if(upper) {
 		return edisassm::util::toupper(ret);
@@ -374,8 +316,8 @@ std::string Operand<Model>::format_register(bool upper) const {
 //------------------------------------------------------------------------------
 // Name: displacement() const
 //------------------------------------------------------------------------------
-template <class Model>
-int32_t Operand<Model>::displacement() const {
+template <class M>
+int32_t Operand<M>::displacement() const {
 	
 	switch(expression.displacement_type) {
 	case DISP_U8:
@@ -398,8 +340,8 @@ int32_t Operand<Model>::displacement() const {
 //------------------------------------------------------------------------------
 // Name: immediate() const
 //------------------------------------------------------------------------------
-template <class Model>
-int64_t Operand<Model>::immediate() const {
+template <class M>
+int64_t Operand<M>::immediate() const {
 	switch(type_) {
 	case TYPE_IMMEDIATE8:
 		return static_cast<int64_t>(sbyte);
@@ -417,17 +359,17 @@ int64_t Operand<Model>::immediate() const {
 //------------------------------------------------------------------------------
 // Name: general_type() const
 //------------------------------------------------------------------------------
-template <class Model>
-typename Operand<Model>::Type Operand<Model>::general_type() const {
+template <class M>
+typename Operand<M>::Type Operand<M>::general_type() const {
 	return static_cast<Type>(static_cast<unsigned int>(type_) & TYPE_MASK);
 }
 
 //------------------------------------------------------------------------------
 // Name: hex_string(T value, bool upper)
 //------------------------------------------------------------------------------
-template <class Model>
+template <class M>
 template <class T>
-std::string Operand<Model>::hex_string(T value, bool upper) {
+std::string Operand<M>::hex_string(T value, bool upper) {
 
 	if(value == 0) {
 		return "0";
@@ -442,6 +384,69 @@ std::string Operand<Model>::hex_string(T value, bool upper) {
 	return ss.str();
 }
 
+template <class M>
+std::string Operand<M>::register_name(Register reg) {
+
+	static const char *names[] = {
+		"",
+
+		"rax",	"rcx",	"rdx",	"rbx",
+		"rsp",	"rbp",	"rsi",	"rdi",
+		"r8",	"r9",	"r10",	"r11",
+		"r12",	"r13",	"r14",	"r15",
+
+		"eax",	"ecx",	"edx",	"ebx",
+		"esp",	"ebp",	"esi",	"edi",
+		"r8d",	"r9d",	"r10d",	"r11d",
+		"r12d",	"r13d",	"r14d",	"r15d",
+
+		"ax",	"cx",	"dx",	"bx",
+		"sp",	"bp",	"si",	"di",
+		"r8w",	"r9w",	"r10w",	"r11w",
+		"r12w",	"r13w",	"r14w",	"r15w",
+
+		"al",	"cl",	"dl",	"bl",
+		"ah",	"ch",	"dh",	"bh",
+		"r8b",	"r9b",	"r10b",	"r11b",
+		"r12b",	"r13b",	"r14b",	"r15b",
+		"spl",	"bpl",	"sil",	"dil",
+
+		"es",	"cs",	"ss",	"ds",
+		"fs",	"gs",	"seg7",	"seg8",
+
+		"cr0",	"cr1",	"cr2",	"cr3",
+		"cr4",	"cr5",	"cr6",	"cr7",
+		"cr8",	"cr9",	"cr10",	"cr11",
+		"cr12",	"cr13",	"cr14",	"cr15",
+
+		"dr0",	"dr1",	"dr2",	"dr3",
+		"dr4",	"dr5",	"dr6",	"dr7",
+		"dr8",	"dr9",	"dr10",	"dr11",
+		"dr12",	"dr13",	"dr14",	"dr15",
+
+		"tr0",	"tr1",	"tr2",	"tr3",
+		"tr4",	"tr5",	"tr6",	"tr7",
+
+		"mm0",	"mm1",	"mm2",	"mm3",
+		"mm4",	"mm5",	"mm6",	"mm7",
+
+		"xmm0",	"xmm1",	"xmm2",	"xmm3",
+		"xmm4",	"xmm5",	"xmm6",	"xmm7",
+		"xmm8",	"xmm9",	"xmm10","xmm11",
+		"xmm12","xmm13","xmm14","xmm15",
+
+		"st",
+		"st(0)", "st(1)", "st(2)", "st(3)",
+		"st(4)", "st(5)", "st(6)", "st(7)",
+
+		"rip",
+		"eip",
+
+		"(invalid)"
+	};
+
+	return names[reg];
+}
 
 namespace edisassm {
 	template<class M>

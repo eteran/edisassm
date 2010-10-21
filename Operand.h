@@ -25,10 +25,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "edisassm_util.h"
 #include "edisassm_exception.h"
 
-template <class Model>
+template <class M>
 class Instruction;
 
-template <class Model>
+template <class M>
 class Operand;
 
 namespace edisassm {
@@ -36,19 +36,19 @@ namespace edisassm {
 	std::string to_string(const Operand<M> &operand, bool upper = false);
 }
 
-template <class Model>
+template <class M>
 class Operand {
 private:
-	friend class Instruction<Model>;
+	friend class Instruction<M>;
 	
 public:
 	Operand();
 	~Operand() {}
 
 private:
-	typedef Operand<Model>				operand_t;
-	typedef typename Model::address_t	address_t;
-	typedef Instruction<Model>			instruction_t;
+	typedef Operand<M>				operand_t;
+	typedef typename M::address_t	address_t;
+	typedef Instruction<M>			instruction_t;
 	
 private:
 	instruction_t *owner_;
@@ -215,10 +215,7 @@ private:
 	void set_owner(instruction_t *owner)	{ owner_ = owner; }
 	
 public:
-	static std::string register_name(Register reg) { return RegisterName[reg]; }
-	
-private:
-	static const char *RegisterName[];
+	static std::string register_name(Register reg);
 	
 private:
 	template<class U>

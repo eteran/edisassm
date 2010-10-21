@@ -55,9 +55,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //------------------------------------------------------------------------------
 // Name: decode_Gx(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-template <typename Operand<Model>::Register (*REG_DECODE)(uint8_t)>
-void Instruction<Model>::decode_Gx(const uint8_t *buf) {
+template <class M>
+template <typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
+void Instruction<M>::decode_Gx(const uint8_t *buf) {
 
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -68,10 +68,10 @@ void Instruction<Model>::decode_Gx(const uint8_t *buf) {
 	modrm_size_ = 1;
 
 	int regindex = rm.reg();
-	if(Model::BITS == 64 && rex_byte_.is_rex()) {
+	if(M::BITS == 64 && rex_byte_.is_rex()) {
 		regindex |= (rex_byte_.r() << 3);
 		
-		if(REG_DECODE == &indexToReg8) {
+		if(REG_DECODE == &index_to_reg_8) {
 			if(regindex > 3 && regindex < 8) {
 				regindex += 12;
 			}
@@ -86,22 +86,22 @@ void Instruction<Model>::decode_Gx(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_STi(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
+template <class M>
 template <int index>
-void Instruction<Model>::decode_STi(const uint8_t *buf) {
+void Instruction<M>::decode_STi(const uint8_t *buf) {
 	UNUSED(buf);
 
 	operand_t &operand	= next_operand();
-	operand.reg			= indexToRegFPU(index);
+	operand.reg			= index_to_reg_fpu(index);
 	operand.type_		= operand_t::TYPE_REGISTER;
 }
 
 //------------------------------------------------------------------------------
 // Name: decode_ModRM_0_16(const uint8_t *buf, const ModRM &rm, operand_t &operand)
 //------------------------------------------------------------------------------
-template <class Model>
-template <typename Operand<Model>::Type TYPE, typename Operand<Model>::Register (*REG_DECODE)(uint8_t)>
-void Instruction<Model>::decode_ModRM_0_16(const uint8_t *buf, const ModRM &rm, operand_t &operand) {
+template <class M>
+template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
+void Instruction<M>::decode_ModRM_0_16(const uint8_t *buf, const ModRM &rm, operand_t &operand) {
 
 	operand.type_							= TYPE;
 	operand.expression.scale				= 1;
@@ -148,9 +148,9 @@ void Instruction<Model>::decode_ModRM_0_16(const uint8_t *buf, const ModRM &rm, 
 //------------------------------------------------------------------------------
 // Name: decode_ModRM_1_16(const uint8_t *buf, const ModRM &rm, operand_t &operand)
 //------------------------------------------------------------------------------
-template <class Model>
-template <typename Operand<Model>::Type TYPE, typename Operand<Model>::Register (*REG_DECODE)(uint8_t)>
-void Instruction<Model>::decode_ModRM_1_16(const uint8_t *buf, const ModRM &rm, operand_t &operand) {
+template <class M>
+template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
+void Instruction<M>::decode_ModRM_1_16(const uint8_t *buf, const ModRM &rm, operand_t &operand) {
 
 	operand.type_							= TYPE;
 	operand.expression.scale				= 1;
@@ -196,9 +196,9 @@ void Instruction<Model>::decode_ModRM_1_16(const uint8_t *buf, const ModRM &rm, 
 //------------------------------------------------------------------------------
 // Name: decode_ModRM_2_16(const uint8_t *buf, const ModRM &rm, operand_t &operand)
 //------------------------------------------------------------------------------
-template <class Model>
-template <typename Operand<Model>::Type TYPE, typename Operand<Model>::Register (*REG_DECODE)(uint8_t)>
-void Instruction<Model>::decode_ModRM_2_16(const uint8_t *buf, const ModRM &rm, operand_t &operand) {
+template <class M>
+template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
+void Instruction<M>::decode_ModRM_2_16(const uint8_t *buf, const ModRM &rm, operand_t &operand) {
 	
 	operand.type_							= TYPE;
 	operand.expression.scale				= 1;
@@ -244,9 +244,9 @@ void Instruction<Model>::decode_ModRM_2_16(const uint8_t *buf, const ModRM &rm, 
 //------------------------------------------------------------------------------
 // Name: decode_Reg(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-template <typename Operand<Model>::Register REG>
-void Instruction<Model>::decode_Reg(const uint8_t *buf) {
+template <class M>
+template <typename Operand<M>::Register REG>
+void Instruction<M>::decode_Reg(const uint8_t *buf) {
 	UNUSED(buf);
 
 	operand_t &operand = next_operand();
@@ -258,9 +258,9 @@ void Instruction<Model>::decode_Reg(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_const_Iq(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
+template <class M>
 template <int64_t IMM>
-void Instruction<Model>::decode_const_Iq(const uint8_t *buf) {
+void Instruction<M>::decode_const_Iq(const uint8_t *buf) {
 	UNUSED(buf);
 
 	operand_t &operand = next_operand();
@@ -275,9 +275,9 @@ void Instruction<Model>::decode_const_Iq(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_const_Id(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
+template <class M>
 template <int32_t IMM>
-void Instruction<Model>::decode_const_Id(const uint8_t *buf) {
+void Instruction<M>::decode_const_Id(const uint8_t *buf) {
 	UNUSED(buf);
 
 	operand_t &operand = next_operand();
@@ -292,9 +292,9 @@ void Instruction<Model>::decode_const_Id(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_const_Iw(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
+template <class M>
 template <int16_t IMM>
-void Instruction<Model>::decode_const_Iw(const uint8_t *buf) {
+void Instruction<M>::decode_const_Iw(const uint8_t *buf) {
 	UNUSED(buf);
 	UNUSED(size);
 
@@ -310,9 +310,9 @@ void Instruction<Model>::decode_const_Iw(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_const_Ib(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
+template <class M>
 template <int8_t IMM>
-void Instruction<Model>::decode_const_Ib(const uint8_t *buf) {
+void Instruction<M>::decode_const_Ib(const uint8_t *buf) {
 	UNUSED(buf);
 
 	operand_t &operand = next_operand();
@@ -327,9 +327,9 @@ void Instruction<Model>::decode_const_Ib(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: get_immediate(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
+template <class M>
 template <class T>
-T Instruction<Model>::get_immediate(const uint8_t *buf) {
+T Instruction<M>::get_immediate(const uint8_t *buf) {
 	BOUNDS_CHECK(Instruction::size() + sizeof(T), buffer_size_);
 
 	const T ret = *reinterpret_cast<const T *>(&buf[opcode_size_ + modrm_size_ + sib_size_ + disp_size_ + immediate_size_]);
@@ -340,9 +340,9 @@ T Instruction<Model>::get_immediate(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: get_displacement(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
+template <class M>
 template <class T>
-T Instruction<Model>::get_displacement(const uint8_t *buf) {		
+T Instruction<M>::get_displacement(const uint8_t *buf) {		
 	
 	BOUNDS_CHECK(Instruction::size() + sizeof(T), buffer_size_);
 	
@@ -359,9 +359,9 @@ T Instruction<Model>::get_displacement(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_ModRM_0_32(const uint8_t *buf, const ModRM &rm, operand_t &operand, bool enable_64_bit)
 //------------------------------------------------------------------------------
-template <class Model>
-template <typename Operand<Model>::Type TYPE, typename Operand<Model>::Register (*REG_DECODE)(uint8_t)>
-void Instruction<Model>::decode_ModRM_0_32(const uint8_t *buf, const ModRM &rm, operand_t &operand, bool enable_64_bit) {
+template <class M>
+template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
+void Instruction<M>::decode_ModRM_0_32(const uint8_t *buf, const ModRM &rm, operand_t &operand, bool enable_64_bit) {
 
 	UNUSED(enable_64_bit);
 
@@ -379,16 +379,16 @@ void Instruction<Model>::decode_ModRM_0_32(const uint8_t *buf, const ModRM &rm, 
 
 		int sibindex = sib.index();
 
-		if(Model::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 			sibindex |= (rex_byte_.x() << 3);
 		}
 
 		if(sibindex != 0x04) {
 
-			if(Model::BITS == 64 && enable_64_bit) {
-				operand.expression.index	= indexToReg64(sibindex);
+			if(M::BITS == 64 && enable_64_bit) {
+				operand.expression.index	= index_to_reg_64(sibindex);
 			} else {
-				operand.expression.index	= indexToReg32(sibindex);
+				operand.expression.index	= index_to_reg_32(sibindex);
 			}
 			
 			
@@ -410,19 +410,19 @@ void Instruction<Model>::decode_ModRM_0_32(const uint8_t *buf, const ModRM &rm, 
 		
 			int sibbase = sib.base();
 
-			if(Model::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+			if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 				sibbase |= (rex_byte_.b() << 3);
 			}
 			
-			if(Model::BITS == 64 && enable_64_bit) {
-				operand.expression.base				= indexToReg64(sibbase);
+			if(M::BITS == 64 && enable_64_bit) {
+				operand.expression.base				= index_to_reg_64(sibbase);
 			} else {
-				operand.expression.base				= indexToReg32(sibbase);
+				operand.expression.base				= index_to_reg_32(sibbase);
 			}
 			operand.expression.displacement_type	= operand_t::DISP_NONE;
 		}
 	} else if(rm.rm() == 0x05) {
-		if(Model::BITS == 64 && enable_64_bit) {
+		if(M::BITS == 64 && enable_64_bit) {
 			operand.expression.index				= operand_t::REG_NULL;
 			operand.expression.scale				= 1;
 			operand.expression.base					= operand_t::REG_RIP;
@@ -441,14 +441,14 @@ void Instruction<Model>::decode_ModRM_0_32(const uint8_t *buf, const ModRM &rm, 
 		
 		int rmbase = rm.rm();
 
-		if(Model::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 			rmbase |= (rex_byte_.b() << 3);
 		}
 		
-		if(Model::BITS == 64 && enable_64_bit) {
-			operand.expression.base					= indexToReg64(rmbase);
+		if(M::BITS == 64 && enable_64_bit) {
+			operand.expression.base					= index_to_reg_64(rmbase);
 		} else {
-			operand.expression.base					= indexToReg32(rmbase);
+			operand.expression.base					= index_to_reg_32(rmbase);
 		}
 		operand.expression.s_disp8				= 0;
 		operand.expression.displacement_type	= operand_t::DISP_NONE;
@@ -458,9 +458,9 @@ void Instruction<Model>::decode_ModRM_0_32(const uint8_t *buf, const ModRM &rm, 
 //------------------------------------------------------------------------------
 // Name: decode_ModRM_1_32(const uint8_t *buf, const ModRM &rm, operand_t &operand, bool enable_64_bit)
 //------------------------------------------------------------------------------
-template <class Model>
-template <typename Operand<Model>::Type TYPE, typename Operand<Model>::Register (*REG_DECODE)(uint8_t)>
-void Instruction<Model>::decode_ModRM_1_32(const uint8_t *buf, const ModRM &rm, operand_t &operand, bool enable_64_bit) {
+template <class M>
+template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
+void Instruction<M>::decode_ModRM_1_32(const uint8_t *buf, const ModRM &rm, operand_t &operand, bool enable_64_bit) {
 
 	UNUSED(enable_64_bit);
 
@@ -476,28 +476,28 @@ void Instruction<Model>::decode_ModRM_1_32(const uint8_t *buf, const ModRM &rm, 
 
 		int sibbase = sib.base();
 
-		if(Model::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 			sibbase |= (rex_byte_.b() << 3);
 		}
 
-		if(Model::BITS == 64 && enable_64_bit) {
-			operand.expression.base	= indexToReg64(sibbase);
+		if(M::BITS == 64 && enable_64_bit) {
+			operand.expression.base	= index_to_reg_64(sibbase);
 		} else {
-			operand.expression.base	= indexToReg32(sibbase);
+			operand.expression.base	= index_to_reg_32(sibbase);
 		}
 		operand.expression.scale = 1 << sib.scale();
 
 		int sibindex = sib.index();
 
-		if(Model::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 			sibindex |= (rex_byte_.x() << 3);
 		}
 
 		if(sibindex != 0x04) {			
-			if(Model::BITS == 64 && enable_64_bit) {			
-				operand.expression.index = indexToReg64(sibindex);
+			if(M::BITS == 64 && enable_64_bit) {			
+				operand.expression.index = index_to_reg_64(sibindex);
 			} else {
-				operand.expression.index = indexToReg32(sibindex);
+				operand.expression.index = index_to_reg_32(sibindex);
 			}
 		} else {
 			operand.expression.index = operand_t::REG_NULL;		
@@ -508,14 +508,14 @@ void Instruction<Model>::decode_ModRM_1_32(const uint8_t *buf, const ModRM &rm, 
 
 		int rmbase = rm.rm();
 
-		if(Model::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 			rmbase |= (rex_byte_.b() << 3);
 		}
 
-		if(Model::BITS == 64 && enable_64_bit) {
-			operand.expression.base = indexToReg64(rmbase);
+		if(M::BITS == 64 && enable_64_bit) {
+			operand.expression.base = index_to_reg_64(rmbase);
 		} else {
-			operand.expression.base = indexToReg32(rmbase);
+			operand.expression.base = index_to_reg_32(rmbase);
 		}
 		
 	}
@@ -528,9 +528,9 @@ void Instruction<Model>::decode_ModRM_1_32(const uint8_t *buf, const ModRM &rm, 
 //------------------------------------------------------------------------------
 // Name: decode_ModRM_2_32(const uint8_t *buf, const ModRM &rm, operand_t &operand, bool enable_64_bit)
 //------------------------------------------------------------------------------
-template <class Model>
-template <typename Operand<Model>::Type TYPE, typename Operand<Model>::Register (*REG_DECODE)(uint8_t)>
-void Instruction<Model>::decode_ModRM_2_32(const uint8_t *buf, const ModRM &rm, operand_t &operand, bool enable_64_bit) {
+template <class M>
+template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
+void Instruction<M>::decode_ModRM_2_32(const uint8_t *buf, const ModRM &rm, operand_t &operand, bool enable_64_bit) {
 	
 	UNUSED(enable_64_bit);
 
@@ -545,29 +545,29 @@ void Instruction<Model>::decode_ModRM_2_32(const uint8_t *buf, const ModRM &rm, 
 	
 		int sibbase = sib.base();
 
-		if(Model::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 			sibbase |= (rex_byte_.b() << 3);
 		}
 
-		if(Model::BITS == 64 && enable_64_bit) {
-			operand.expression.base = indexToReg64(sibbase);
+		if(M::BITS == 64 && enable_64_bit) {
+			operand.expression.base = index_to_reg_64(sibbase);
 		} else {
-			operand.expression.base = indexToReg32(sibbase);
+			operand.expression.base = index_to_reg_32(sibbase);
 		}
 		
 		operand.expression.scale	= 1 << sib.scale();
 
 		int sibindex = sib.index();
 
-		if(Model::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 			sibindex |= (rex_byte_.x() << 3);
 		}
 
 		if(sibindex != 0x04) {
-			if(Model::BITS == 64 && enable_64_bit) {
-				operand.expression.index = indexToReg64(sibindex);
+			if(M::BITS == 64 && enable_64_bit) {
+				operand.expression.index = index_to_reg_64(sibindex);
 			} else {
-				operand.expression.index = indexToReg32(sibindex);
+				operand.expression.index = index_to_reg_32(sibindex);
 			}
 			
 		} else {
@@ -579,14 +579,14 @@ void Instruction<Model>::decode_ModRM_2_32(const uint8_t *buf, const ModRM &rm, 
 	
 		int rmbase = rm.rm();
 
-		if(Model::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 			rmbase |= (rex_byte_.b() << 3);
 		}
 		
-		if(Model::BITS == 64 && enable_64_bit) {
-			operand.expression.base = indexToReg64(rmbase);
+		if(M::BITS == 64 && enable_64_bit) {
+			operand.expression.base = index_to_reg_64(rmbase);
 		} else {
-			operand.expression.base = indexToReg32(rmbase);
+			operand.expression.base = index_to_reg_32(rmbase);
 		}
 		
 	}
@@ -599,17 +599,17 @@ void Instruction<Model>::decode_ModRM_2_32(const uint8_t *buf, const ModRM &rm, 
 //------------------------------------------------------------------------------
 // Name: decode_ModRM_3_32(const uint8_t *buf, const ModRM &rm, operand_t &operand, bool enable_64_bit)
 //------------------------------------------------------------------------------
-template <class Model>
-template <typename Operand<Model>::Type TYPE, typename Operand<Model>::Register (*REG_DECODE)(uint8_t)>
-void Instruction<Model>::decode_ModRM_3_32(const uint8_t *buf, const ModRM &rm, operand_t &operand, bool enable_64_bit) {
+template <class M>
+template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
+void Instruction<M>::decode_ModRM_3_32(const uint8_t *buf, const ModRM &rm, operand_t &operand, bool enable_64_bit) {
 	UNUSED(buf);
 	UNUSED(enable_64_bit);
 
 	int rmbase	= rm.rm();
 	
-	if(Model::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+	if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 		rmbase |= (rex_byte_.b() << 3);
-		if(REG_DECODE == &indexToReg8) {
+		if(REG_DECODE == &index_to_reg_8) {
 			if(rmbase > 3 && rmbase < 8) {
 				rmbase += 12;
 			}
@@ -623,9 +623,9 @@ void Instruction<Model>::decode_ModRM_3_32(const uint8_t *buf, const ModRM &rm, 
 //------------------------------------------------------------------------------
 // Name: decode_ModRM_Invalid(const uint8_t *buf, const ModRM &rm, operand_t &operand)
 //------------------------------------------------------------------------------
-template <class Model>
-template <typename Operand<Model>::Type TYPE, typename Operand<Model>::Register (*REG_DECODE)(uint8_t)>
-void Instruction<Model>::decode_ModRM_Invalid(const uint8_t *buf, const ModRM &rm, operand_t &operand) {
+template <class M>
+template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
+void Instruction<M>::decode_ModRM_Invalid(const uint8_t *buf, const ModRM &rm, operand_t &operand) {
 	UNUSED(rm);
 	UNUSED(operand);
 	UNUSED(buf);
@@ -635,9 +635,9 @@ void Instruction<Model>::decode_ModRM_Invalid(const uint8_t *buf, const ModRM &r
 //------------------------------------------------------------------------------
 // Name: decode_Ex(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-template <typename Operand<Model>::Type TYPE, typename Operand<Model>::Register (*REG_DECODE)(uint8_t)>
-void Instruction<Model>::decode_Ex(const uint8_t *buf) {
+template <class M>
+template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
+void Instruction<M>::decode_Ex(const uint8_t *buf) {
 
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -650,7 +650,7 @@ void Instruction<Model>::decode_Ex(const uint8_t *buf) {
 	operand_t &operand = next_operand();
 
 	if(prefix_ & PREFIX_ADDRESS) {	
-		if(Model::BITS == 64) {
+		if(M::BITS == 64) {
 			switch(rm.mod()) {
 			case 0x00:
 				decode_ModRM_0_32<operand_t::TYPE_EXPRESSION32, REG_DECODE>(buf, rm, operand, false);
@@ -703,9 +703,9 @@ void Instruction<Model>::decode_Ex(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode3(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-template <void (Instruction<Model>::*F1)(const uint8_t *), void (Instruction<Model>::*F2)(const uint8_t *), void (Instruction<Model>::*F3)(const uint8_t *)>
-void Instruction<Model>::decode3(const uint8_t *buf) {
+template <class M>
+template <void (Instruction<M>::*F1)(const uint8_t *), void (Instruction<M>::*F2)(const uint8_t *), void (Instruction<M>::*F3)(const uint8_t *)>
+void Instruction<M>::decode3(const uint8_t *buf) {
 	(this->*F1)(buf);
 	(this->*F2)(buf);
 	(this->*F3)(buf);
@@ -714,9 +714,9 @@ void Instruction<Model>::decode3(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode2(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-template <void (Instruction<Model>::*F1)(const uint8_t *), void (Instruction<Model>::*F2)(const uint8_t *)>
-void Instruction<Model>::decode2(const uint8_t *buf) {
+template <class M>
+template <void (Instruction<M>::*F1)(const uint8_t *), void (Instruction<M>::*F2)(const uint8_t *)>
+void Instruction<M>::decode2(const uint8_t *buf) {
 	(this->*F1)(buf);
 	(this->*F2)(buf);
 }
@@ -724,17 +724,17 @@ void Instruction<Model>::decode2(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode1(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-template <void (Instruction<Model>::*F1)(const uint8_t *)>
-void Instruction<Model>::decode1(const uint8_t *buf) {
+template <class M>
+template <void (Instruction<M>::*F1)(const uint8_t *)>
+void Instruction<M>::decode1(const uint8_t *buf) {
 	(this->*F1)(buf);
 }
 
 //------------------------------------------------------------------------------
 // Name: Instruction(const uint8_t *buf, std::size_t size, address_t rva, const std::nothrow_t&) throw()
 //------------------------------------------------------------------------------
-template <class Model>
-Instruction<Model>::Instruction(const uint8_t *buf, std::size_t size, address_t rva, const std::nothrow_t&) throw()
+template <class M>
+Instruction<M>::Instruction(const uint8_t *buf, std::size_t size, address_t rva, const std::nothrow_t&) throw()
 		: rva_(rva), buffer_(buf), buffer_size_(size), opcode_(0), type_(OP_INVALID),
 		prefix_(0), mandatory_prefix_(0), operand_count_(0), modrm_size_(0), 
 		sib_size_(0), disp_size_(0), prefix_size_(0), immediate_size_(0),
@@ -754,8 +754,8 @@ Instruction<Model>::Instruction(const uint8_t *buf, std::size_t size, address_t 
 //------------------------------------------------------------------------------
 // Name: Instruction(const uint8_t *buf, std::size_t size, address_t rva)
 //------------------------------------------------------------------------------
-template <class Model>
-Instruction<Model>::Instruction(const uint8_t *buf, std::size_t size, address_t rva) 
+template <class M>
+Instruction<M>::Instruction(const uint8_t *buf, std::size_t size, address_t rva) 
 		: rva_(rva), buffer_(buf), buffer_size_(size), opcode_(0), type_(OP_INVALID), 
 		prefix_(0), mandatory_prefix_(0), operand_count_(0), modrm_size_(0), 
 		sib_size_(0), disp_size_(0), prefix_size_(0), immediate_size_(0),
@@ -767,8 +767,8 @@ Instruction<Model>::Instruction(const uint8_t *buf, std::size_t size, address_t 
 //------------------------------------------------------------------------------
 // Name: ~Instruction()
 //------------------------------------------------------------------------------
-template <class Model>
-Instruction<Model>::~Instruction() {
+template <class M>
+Instruction<M>::~Instruction() {
 	if(private_buffer_) {
 		delete [] buffer_;
 	}
@@ -777,10 +777,10 @@ Instruction<Model>::~Instruction() {
 //------------------------------------------------------------------------------
 // Name: initialize(const uint8_t *buf, std::size_t size)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::initialize(const uint8_t *buf, std::size_t size) {
+template <class M>
+void Instruction<M>::initialize(const uint8_t *buf, std::size_t size) {
 	
-	for(int i = 0; i < Model::MAX_OPERANDS; ++i) {
+	for(int i = 0; i < M::MAX_OPERANDS; ++i) {
 		operands_[i].invalidate();
 	}
 	
@@ -805,8 +805,8 @@ void Instruction<Model>::initialize(const uint8_t *buf, std::size_t size) {
 //------------------------------------------------------------------------------
 // Name: Instruction(const Instruction &other)
 //------------------------------------------------------------------------------
-template <class Model>
-Instruction<Model>::Instruction(const Instruction &other) :
+template <class M>
+Instruction<M>::Instruction(const Instruction &other) :
 		rva_(other.rva_),
 		opcode_(other.opcode_),
 		mnemonic_(other.mnemonic_),
@@ -823,7 +823,7 @@ Instruction<Model>::Instruction(const Instruction &other) :
 		rex_byte_(other.rex_byte_),
 		rex_size_(other.rex_size_) {
 
-	for(int i = 0; i < Model::MAX_OPERANDS; ++i) {
+	for(int i = 0; i < M::MAX_OPERANDS; ++i) {
 		operands_[i] = other.operands_[i];
 		operands_[i].set_owner(this);
 	}
@@ -838,8 +838,8 @@ Instruction<Model>::Instruction(const Instruction &other) :
 //------------------------------------------------------------------------------
 // Name: operator=(const Instruction &rhs)
 //------------------------------------------------------------------------------
-template <class Model>
-Instruction<Model> &Instruction<Model>::operator=(const Instruction &rhs) {
+template <class M>
+Instruction<M> &Instruction<M>::operator=(const Instruction &rhs) {
 	if(this != &rhs) {
 		Instruction(rhs).swap(*this);
 	}
@@ -849,9 +849,9 @@ Instruction<Model> &Instruction<Model>::operator=(const Instruction &rhs) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::swap(Instruction &other) {
-	for(int i = 0; i < Model::MAX_OPERANDS; ++i) {
+template <class M>
+void Instruction<M>::swap(Instruction &other) {
+	for(int i = 0; i < M::MAX_OPERANDS; ++i) {
 		operands_[i].swap(other.operands_[i]);
 	}
 	
@@ -878,12 +878,12 @@ void Instruction<Model>::swap(Instruction &other) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-template <class T, int Elements>
-void Instruction<Model>::find_opcode(const std::string &opcode, T (&table)[Elements], int opcode_count) {
+template <class M>
+template <class T, int N>
+void Instruction<M>::find_opcode(const std::string &opcode, T (&table)[N], int opcode_count) {
 	(void)opcode_count;
 	
-	for(size_t i = 0; i < Elements; ++i) {
+	for(size_t i = 0; i < N; ++i) {
 		if(table[i].decoder != &Instruction::decode_invalid) {
 			if(opcode == table[i].mnemonic) {
 				// possible match
@@ -897,8 +897,8 @@ void Instruction<Model>::find_opcode(const std::string &opcode, T (&table)[Eleme
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::assemble(std::string instruction) {
+template <class M>
+void Instruction<M>::assemble(std::string instruction) {
 
 	std::istringstream ss(instruction);
 	std::string token;
@@ -953,8 +953,8 @@ void Instruction<Model>::assemble(std::string instruction) {
 //------------------------------------------------------------------------------
 // Name: process_prefixes(const uint8_t *&buf, std::size_t size)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::process_prefixes(const uint8_t *&buf, std::size_t size) {
+template <class M>
+void Instruction<M>::process_prefixes(const uint8_t *&buf, std::size_t size) {
 
 	bool done = false;
 	
@@ -1026,7 +1026,7 @@ void Instruction<Model>::process_prefixes(const uint8_t *&buf, std::size_t size)
 		}
 	} while(!done);
 	
-	if(Model::BITS == 64) {
+	if(M::BITS == 64) {
 		if(size != 0) {
 			rex_byte_ = *buf;
 			if(rex_byte_.is_rex()) {
@@ -1041,10 +1041,10 @@ void Instruction<Model>::process_prefixes(const uint8_t *&buf, std::size_t size)
 //------------------------------------------------------------------------------
 // Name: next_operand()
 //------------------------------------------------------------------------------
-template <class Model>
-typename Instruction<Model>::operand_t &Instruction<Model>::next_operand() {
+template <class M>
+typename Instruction<M>::operand_t &Instruction<M>::next_operand() {
 
-	if(operand_count_ >= Model::MAX_OPERANDS) {
+	if(operand_count_ >= M::MAX_OPERANDS) {
 		throw too_many_operands(size());
 	}
 	
@@ -1056,72 +1056,33 @@ typename Instruction<Model>::operand_t &Instruction<Model>::next_operand() {
 //------------------------------------------------------------------------------
 // Name: decode_invalid(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_invalid(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_invalid(const uint8_t *buf) {
 	UNUSED(buf);
-	throw invalid_instruction(Instruction<Model>::size());
+	throw invalid_instruction(Instruction<M>::size());
 }
 
-#define EMIT_ALT_NAME_HANDLER_GENERIC(name1, name2, name3, decoder_func1, decoder_func2, decoder_func3, OP1, OP2, OP3) \
-template <class Model>																		\
-void Instruction<Model>::decode_ ## name1 ## _ ## name2 ## _ ## name3(const uint8_t *buf) {	\
-	static const OpcodeEntry opcodes[] = {		\
-		{ #name1, (decoder_func1), (OP1), FLAG_NONE },		\
-		{ #name2, (decoder_func2), (OP2), FLAG_NONE },		\
-		{ #name3, (decoder_func3), (OP3), FLAG_NONE }		\
-	};											\
-												\
-	switch(operand_size()) {					\
-	case 16: opcode_ = &opcodes[0]; break;		\
-	case 32: opcode_ = &opcodes[1]; break;		\
-	case 64: opcode_ = &opcodes[2]; break;		\
-	}											\
-	(this->*(opcode_->decoder))(buf);			\
-}
-
-
-#define EMIT_ALT_NAME_HANDLER(name1, name2, decoder_func, OP1, OP2)	\
-	EMIT_ALT_NAME_HANDLER_GENERIC( \
-		name1, name2, invalid, \
-		decoder_func, decoder_func, &Instruction::decode_invalid, \
-		OP1, OP2, OP_INVALID)
-
-
-#define EMIT_ALT_NAME_HANDLER2(name1, name2, name3, decoder_func, OP1, OP2, OP3)		\
-	EMIT_ALT_NAME_HANDLER_GENERIC( \
-		name1, name2, name3, \
-		decoder_func, decoder_func, decoder_func, \
-		OP1, OP2, OP3)
-
-EMIT_ALT_NAME_HANDLER2(cbw, cwde, cdqe, &Instruction::decode0, OP_CBW, OP_CWDE, OP_CDQE)
-EMIT_ALT_NAME_HANDLER2(cwd, cdq, cqo, &Instruction::decode0, OP_CWD, OP_CDQ, OP_CQO)
-EMIT_ALT_NAME_HANDLER2(stosw, stosd, stosq, &Instruction::decode0, OP_STOS, OP_STOS, OP_STOS)
-EMIT_ALT_NAME_HANDLER2(lodsw, lodsd, lodsq, &Instruction::decode0, OP_LODS, OP_LODS, OP_LODS)
-EMIT_ALT_NAME_HANDLER2(scasw, scasd, scasq, &Instruction::decode0, OP_SCAS, OP_SCAS, OP_SCAS)
-EMIT_ALT_NAME_HANDLER2(iretw, iret, iretq, &Instruction::decode0, OP_IRET, OP_IRET, OP_IRET)
-EMIT_ALT_NAME_HANDLER2(movsw, movsd, movsq, &Instruction::decode0, OP_MOVS, OP_MOVS, OP_MOVS)
-EMIT_ALT_NAME_HANDLER2(popfw, popfd, popfq, &Instruction::decode0, OP_POPF, OP_POPF, OP_POPF)
-EMIT_ALT_NAME_HANDLER2(pushfw, pushfd, pushfq, &Instruction::decode0, OP_PUSHF, OP_PUSHF, OP_PUSHF)
-
-EMIT_ALT_NAME_HANDLER_GENERIC(invalid, cmpxchg8b, cmpxchg16b, &Instruction::decode_invalid, &Instruction::decode_Mo, &Instruction::decode_Mo, OP_INVALID, OP_CMPXCHG8B, OP_CMPXCHG16B)
-
-
-EMIT_ALT_NAME_HANDLER(insw, insd, &Instruction::decode0, OP_INS, OP_INS)
-EMIT_ALT_NAME_HANDLER(outsw, outsd, &Instruction::decode0, OP_OUTS, OP_OUTS)
-EMIT_ALT_NAME_HANDLER(cmpsw, cmpsd, &Instruction::decode0, OP_CMPS, OP_CMPS)
-EMIT_ALT_NAME_HANDLER(pushaw, pushad, &Instruction::decode0, OP_PUSHA, OP_PUSHA)
-EMIT_ALT_NAME_HANDLER(popaw, popad, &Instruction::decode0, OP_POPA, OP_POPA)
-
-
-#undef EMIT_ALT_NAME_HANDLER_GENERIC
-#undef EMIT_ALT_NAME_HANDLER
-#undef EMIT_ALT_NAME_HANDLER2
+template <class M> void Instruction<M>::decode_cbw_cwde_cdqe(const uint8_t *buf)				{ static const OpcodeEntry opcodes[] = { { "cbw",     &Instruction::decode0, OP_CBW, FLAG_NONE },            { "cwde",      &Instruction::decode0, OP_CWDE, FLAG_NONE },        { "cdqe",       &Instruction::decode0, OP_CDQE, FLAG_NONE } };           decode_size_sensitive(buf, opcodes);}
+template <class M> void Instruction<M>::decode_cwd_cdq_cqo(const uint8_t *buf)					{ static const OpcodeEntry opcodes[] = { { "cwd",     &Instruction::decode0, OP_CWD, FLAG_NONE },            { "cdq",       &Instruction::decode0, OP_CDQ, FLAG_NONE },         { "cqo",        &Instruction::decode0, OP_CQO, FLAG_NONE } };            decode_size_sensitive(buf, opcodes);}
+template <class M> void Instruction<M>::decode_stosw_stosd_stosq(const uint8_t *buf)			{ static const OpcodeEntry opcodes[] = { { "stosw",   &Instruction::decode0, OP_STOS, FLAG_NONE },           { "stosd",     &Instruction::decode0, OP_STOS, FLAG_NONE },        { "stosq",      &Instruction::decode0, OP_STOS, FLAG_NONE } };           decode_size_sensitive(buf, opcodes);}
+template <class M> void Instruction<M>::decode_lodsw_lodsd_lodsq(const uint8_t *buf)			{ static const OpcodeEntry opcodes[] = { { "lodsw",   &Instruction::decode0, OP_LODS, FLAG_NONE },           { "lodsd",     &Instruction::decode0, OP_LODS, FLAG_NONE },        { "lodsq",      &Instruction::decode0, OP_LODS, FLAG_NONE } };           decode_size_sensitive(buf, opcodes);}
+template <class M> void Instruction<M>::decode_scasw_scasd_scasq(const uint8_t *buf)			{ static const OpcodeEntry opcodes[] = { { "scasw",   &Instruction::decode0, OP_SCAS, FLAG_NONE },           { "scasd",     &Instruction::decode0, OP_SCAS, FLAG_NONE },        { "scasq",      &Instruction::decode0, OP_SCAS, FLAG_NONE } };           decode_size_sensitive(buf, opcodes);}
+template <class M> void Instruction<M>::decode_iretw_iret_iretq(const uint8_t *buf)				{ static const OpcodeEntry opcodes[] = { { "iretw",   &Instruction::decode0, OP_IRET, FLAG_NONE },           { "iret",      &Instruction::decode0, OP_IRET, FLAG_NONE },        { "iretq",      &Instruction::decode0, OP_IRET, FLAG_NONE } };           decode_size_sensitive(buf, opcodes);}
+template <class M> void Instruction<M>::decode_movsw_movsd_movsq(const uint8_t *buf)			{ static const OpcodeEntry opcodes[] = { { "movsw",   &Instruction::decode0, OP_MOVS, FLAG_NONE },           { "movsd",     &Instruction::decode0, OP_MOVS, FLAG_NONE },        { "movsq",      &Instruction::decode0, OP_MOVS, FLAG_NONE } };           decode_size_sensitive(buf, opcodes);}
+template <class M> void Instruction<M>::decode_popfw_popfd_popfq(const uint8_t *buf)			{ static const OpcodeEntry opcodes[] = { { "popfw",   &Instruction::decode0, OP_POPF, FLAG_NONE },           { "popfd",     &Instruction::decode0, OP_POPF, FLAG_NONE },        { "popfq",      &Instruction::decode0, OP_POPF, FLAG_NONE } };           decode_size_sensitive(buf, opcodes);}
+template <class M> void Instruction<M>::decode_pushfw_pushfd_pushfq(const uint8_t *buf)			{ static const OpcodeEntry opcodes[] = { { "pushfw",  &Instruction::decode0, OP_PUSHF, FLAG_NONE },          { "pushfd",    &Instruction::decode0, OP_PUSHF, FLAG_NONE },       { "pushfq",     &Instruction::decode0, OP_PUSHF, FLAG_NONE } };          decode_size_sensitive(buf, opcodes);}
+template <class M> void Instruction<M>::decode_invalid_cmpxchg8b_cmpxchg16b(const uint8_t *buf)	{ static const OpcodeEntry opcodes[] = { { "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }, { "cmpxchg8b", &Instruction::decode_Mo, OP_CMPXCHG8B, FLAG_NONE }, { "cmpxchg16b", &Instruction::decode_Mo, OP_CMPXCHG16B, FLAG_NONE } };   decode_size_sensitive(buf, opcodes);}
+template <class M> void Instruction<M>::decode_insw_insd_invalid(const uint8_t *buf)			{ static const OpcodeEntry opcodes[] = { { "insw",    &Instruction::decode0, OP_INS, FLAG_NONE },            { "insd",      &Instruction::decode0, OP_INS, FLAG_NONE },         { "invalid",    &Instruction::decode_invalid, OP_INVALID, FLAG_NONE } }; decode_size_sensitive(buf, opcodes);}
+template <class M> void Instruction<M>::decode_outsw_outsd_invalid(const uint8_t *buf)			{ static const OpcodeEntry opcodes[] = { { "outsw",   &Instruction::decode0, OP_OUTS, FLAG_NONE },           { "outsd",     &Instruction::decode0, OP_OUTS, FLAG_NONE },        { "invalid",    &Instruction::decode_invalid, OP_INVALID, FLAG_NONE } }; decode_size_sensitive(buf, opcodes);}
+template <class M> void Instruction<M>::decode_cmpsw_cmpsd_invalid(const uint8_t *buf)			{ static const OpcodeEntry opcodes[] = { { "cmpsw",   &Instruction::decode0, OP_CMPS, FLAG_NONE },           { "cmpsd",     &Instruction::decode0, OP_CMPS, FLAG_NONE },        { "invalid",    &Instruction::decode_invalid, OP_INVALID, FLAG_NONE } }; decode_size_sensitive(buf, opcodes);}
+template <class M> void Instruction<M>::decode_pushaw_pushad_invalid(const uint8_t *buf)		{ static const OpcodeEntry opcodes[] = { { "pushaw",  &Instruction::decode0, OP_PUSHA, FLAG_NONE },          { "pushad",    &Instruction::decode0, OP_PUSHA, FLAG_NONE },       { "invalid",    &Instruction::decode_invalid, OP_INVALID, FLAG_NONE } }; decode_size_sensitive(buf, opcodes);}
+template <class M> void Instruction<M>::decode_popaw_popad_invalid(const uint8_t *buf)			{ static const OpcodeEntry opcodes[] = { { "popaw",   &Instruction::decode0, OP_POPA, FLAG_NONE },           { "popad",     &Instruction::decode0, OP_POPA, FLAG_NONE },        { "invalid",    &Instruction::decode_invalid, OP_INVALID, FLAG_NONE } }; decode_size_sensitive(buf, opcodes);}
 
 //------------------------------------------------------------------------------
 // Name: decode_x87(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_x87(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_x87(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1131,13 +1092,13 @@ void Instruction<Model>::decode_x87(const uint8_t *buf) {
 	const ModRM modrm(buf[opcode_size_]);
 	modrm_size_ = 1;
 	
-	const uint8_t escNum = (buf[0] - 0xd8);
+	const uint8_t esc_num = (buf[0] - 0xd8);
 	const uint8_t byte2 = buf[opcode_size_];
 	
 	if((byte2 & 0xc0) != 0xc0) {
-		opcode_ = &Opcodes_x87_Lo[modrm.reg() + escNum * 8];
+		opcode_ = &Opcodes_x87_Lo[modrm.reg() + esc_num * 8];
 	} else {
-		opcode_ = &Opcodes_x87_Hi[(byte2 & 0x3f) + escNum * 64];
+		opcode_ = &Opcodes_x87_Hi[(byte2 & 0x3f) + esc_num * 64];
 	}
 	
 	(this->*(opcode_->decoder))(buf);
@@ -1146,8 +1107,8 @@ void Instruction<Model>::decode_x87(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_2byte(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_2byte(const uint8_t *buf) {
 	
 	// we got enough room for next byte?
 	BOUNDS_CHECK(Instruction::size() + 1, buffer_size_);
@@ -1179,8 +1140,8 @@ void Instruction<Model>::decode_2byte(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_3byte_38(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_3byte_38(const uint8_t *buf) {
 	
 	// we got enough room for next byte?
 	BOUNDS_CHECK(Instruction::size() + 1, buffer_size_);
@@ -1208,8 +1169,8 @@ void Instruction<Model>::decode_3byte_38(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_3byte_3A(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_3byte_3A(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_3byte_3A(const uint8_t *buf) {
 	
 	// we got enough room for next byte?
 	BOUNDS_CHECK(Instruction::size() + 1, buffer_size_);
@@ -1233,8 +1194,8 @@ void Instruction<Model>::decode_3byte_3A(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group1(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group1(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group1(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1251,8 +1212,8 @@ void Instruction<Model>::decode_group1(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group2(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group2(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group2(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1269,8 +1230,8 @@ void Instruction<Model>::decode_group2(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group2D(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group2D(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group2D(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1287,8 +1248,8 @@ void Instruction<Model>::decode_group2D(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group3(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group3(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group3(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1305,8 +1266,8 @@ void Instruction<Model>::decode_group3(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group4(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group4(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group4(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1323,8 +1284,8 @@ void Instruction<Model>::decode_group4(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group5(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group5(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group5(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1341,8 +1302,8 @@ void Instruction<Model>::decode_group5(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group6(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group6(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group6(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1359,8 +1320,8 @@ void Instruction<Model>::decode_group6(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group7(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group7(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group7(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1383,8 +1344,8 @@ void Instruction<Model>::decode_group7(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group8(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group8(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group8(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1401,8 +1362,8 @@ void Instruction<Model>::decode_group8(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group9(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group9(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group9(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1434,8 +1395,8 @@ void Instruction<Model>::decode_group9(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group10(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group10(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group10(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1453,8 +1414,8 @@ void Instruction<Model>::decode_group10(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group11(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group11(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group11(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1472,8 +1433,8 @@ void Instruction<Model>::decode_group11(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group12(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group12(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group12(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1490,8 +1451,8 @@ void Instruction<Model>::decode_group12(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group13(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group13(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group13(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1518,8 +1479,8 @@ void Instruction<Model>::decode_group13(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group14(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group14(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group14(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1546,8 +1507,8 @@ void Instruction<Model>::decode_group14(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group15(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group15(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group15(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1573,8 +1534,8 @@ void Instruction<Model>::decode_group15(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group16(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group16(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group16(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1598,8 +1559,8 @@ void Instruction<Model>::decode_group16(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_group17(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_group17(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_group17(const uint8_t *buf) {
 	
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
@@ -1617,8 +1578,8 @@ void Instruction<Model>::decode_group17(const uint8_t *buf) {
 // Name: decode_Ap(const uint8_t *buf)
 // Desc: absolute pointer (32 or 48 bit)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Ap(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Ap(const uint8_t *buf) {
 	
 	operand_t &operand		= next_operand();
 	
@@ -1636,8 +1597,8 @@ void Instruction<Model>::decode_Ap(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_Ib(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Ib(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Ib(const uint8_t *buf) {
 	operand_t &operand = next_operand();
 
 	operand.sbyte	= get_immediate<int8_t>(buf);
@@ -1647,8 +1608,8 @@ void Instruction<Model>::decode_Ib(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_Iw(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Iw(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Iw(const uint8_t *buf) {
 	operand_t &operand = next_operand();
 
 	operand.sword	= get_immediate<int16_t>(buf);
@@ -1658,8 +1619,8 @@ void Instruction<Model>::decode_Iw(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_Id(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Id(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Id(const uint8_t *buf) {
 	operand_t &operand = next_operand();
 
 	operand.sdword	= get_immediate<int32_t>(buf);
@@ -1669,8 +1630,8 @@ void Instruction<Model>::decode_Id(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_Iq(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Iq(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Iq(const uint8_t *buf) {
 	operand_t &operand = next_operand();
 	
 	operand.sqword	= get_immediate<int64_t>(buf);	
@@ -1680,8 +1641,8 @@ void Instruction<Model>::decode_Iq(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_Jb(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Jb(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Jb(const uint8_t *buf) {
 	
 	operand_t &operand = next_operand();
 	
@@ -1692,8 +1653,8 @@ void Instruction<Model>::decode_Jb(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_Jw(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Jw(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Jw(const uint8_t *buf) {
 	
 	operand_t &operand = next_operand();
 	
@@ -1704,8 +1665,8 @@ void Instruction<Model>::decode_Jw(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_Jd(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Jd(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Jd(const uint8_t *buf) {
 	
 	operand_t &operand = next_operand();
 	
@@ -1716,8 +1677,8 @@ void Instruction<Model>::decode_Jd(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_Jq(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Jq(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Jq(const uint8_t *buf) {
 	
 	operand_t &operand = next_operand();
 	
@@ -1728,46 +1689,46 @@ void Instruction<Model>::decode_Jq(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: decode_Ev(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Ev(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Ev(const uint8_t *buf) {
 
 	switch(operand_size()) {
-	case 16: decode_Ex<operand_t::TYPE_EXPRESSION16, &Instruction::indexToReg16>(buf); break;
-	case 32: decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction::indexToReg32>(buf); break;
-	case 64: decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction::indexToReg64>(buf); break;
+	case 16: decode_Ex<operand_t::TYPE_EXPRESSION16, &Instruction::index_to_reg_16>(buf); break;
+	case 32: decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction::index_to_reg_32>(buf); break;
+	case 64: decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction::index_to_reg_64>(buf); break;
 	}
 }
 
 //------------------------------------------------------------------------------
 // Name: decode_Rv(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Rv(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Rv(const uint8_t *buf) {
 	switch(operand_size()) {
-	case 16: decode_Ex<operand_t::TYPE_INVALID, &Instruction::indexToReg16>(buf); break;
-	case 32: decode_Ex<operand_t::TYPE_INVALID, &Instruction::indexToReg32>(buf); break;
-	case 64: decode_Ex<operand_t::TYPE_INVALID, &Instruction::indexToReg64>(buf); break;
+	case 16: decode_Ex<operand_t::TYPE_INVALID, &Instruction::index_to_reg_16>(buf); break;
+	case 32: decode_Ex<operand_t::TYPE_INVALID, &Instruction::index_to_reg_32>(buf); break;
+	case 64: decode_Ex<operand_t::TYPE_INVALID, &Instruction::index_to_reg_64>(buf); break;
 	}
 }
 
 //------------------------------------------------------------------------------
 // Name: decode_Gv(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Gv(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Gv(const uint8_t *buf) {
 
 	switch(operand_size()) {
-	case 16: decode_Gx<&Instruction::indexToReg16>(buf); break;
-	case 32: decode_Gx<&Instruction::indexToReg32>(buf); break;
-	case 64: decode_Gx<&Instruction::indexToReg64>(buf); break;
+	case 16: decode_Gx<&Instruction::index_to_reg_16>(buf); break;
+	case 32: decode_Gx<&Instruction::index_to_reg_32>(buf); break;
+	case 64: decode_Gx<&Instruction::index_to_reg_64>(buf); break;
 	}
 }
 
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Iv(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Iv(const uint8_t *buf) {
 	switch(operand_size()) {
 	case 16: decode_Iw(buf); break;
 	case 32: decode_Id(buf); break;
@@ -1778,8 +1739,8 @@ void Instruction<Model>::decode_Iv(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Ob(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Ob(const uint8_t *buf) {
 	operand_t &operand = next_operand();
 
 	operand.type_							= operand_t::TYPE_EXPRESSION8;
@@ -1793,8 +1754,8 @@ void Instruction<Model>::decode_Ob(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Ow(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Ow(const uint8_t *buf) {
 	operand_t &operand = next_operand();
 
 	operand.type_							= operand_t::TYPE_EXPRESSION16;
@@ -1808,8 +1769,8 @@ void Instruction<Model>::decode_Ow(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Od(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Od(const uint8_t *buf) {
 	operand_t &operand = next_operand();
 
 	operand.type_							= operand_t::TYPE_EXPRESSION32;
@@ -1823,8 +1784,8 @@ void Instruction<Model>::decode_Od(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Ov(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Ov(const uint8_t *buf) {
 	switch(operand_size()) {
 	case 16: decode_Ow(buf); break;
 	case 32: decode_Od(buf); break;
@@ -1835,8 +1796,8 @@ void Instruction<Model>::decode_Ov(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_Mv(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_Mv(const uint8_t *buf) {
 	switch(operand_size()) {
 	case 16: decode_Mw(buf); break;
 	case 32: decode_Md(buf); break;
@@ -1847,9 +1808,9 @@ void Instruction<Model>::decode_Mv(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_AL(const uint8_t *buf) {
-	if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+template <class M>
+void Instruction<M>::decode_AL(const uint8_t *buf) {
+	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		decode_Reg<operand_t::REG_R8B>(buf); 
 	} else {
 		decode_Reg<operand_t::REG_AL>(buf);
@@ -1859,9 +1820,9 @@ void Instruction<Model>::decode_AL(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_CL(const uint8_t *buf) {
-	if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+template <class M>
+void Instruction<M>::decode_CL(const uint8_t *buf) {
+	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		decode_Reg<operand_t::REG_R9B>(buf); 
 	} else {
 		decode_Reg<operand_t::REG_CL>(buf);
@@ -1871,9 +1832,9 @@ void Instruction<Model>::decode_CL(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_DL(const uint8_t *buf) {
-	if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+template <class M>
+void Instruction<M>::decode_DL(const uint8_t *buf) {
+	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		decode_Reg<operand_t::REG_R10B>(buf); 
 	} else {
 		decode_Reg<operand_t::REG_DL>(buf);
@@ -1883,9 +1844,9 @@ void Instruction<Model>::decode_DL(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_BL(const uint8_t *buf) {
-	if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+template <class M>
+void Instruction<M>::decode_BL(const uint8_t *buf) {
+	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		decode_Reg<operand_t::REG_R11B>(buf); 
 	} else {
 		decode_Reg<operand_t::REG_BL>(buf);
@@ -1895,9 +1856,9 @@ void Instruction<Model>::decode_BL(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_AH(const uint8_t *buf) {
-	if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+template <class M>
+void Instruction<M>::decode_AH(const uint8_t *buf) {
+	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		decode_Reg<operand_t::REG_R12B>(buf); 
 	} else {
 		decode_Reg<operand_t::REG_AH>(buf);
@@ -1907,9 +1868,9 @@ void Instruction<Model>::decode_AH(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_CH(const uint8_t *buf) {
-	if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+template <class M>
+void Instruction<M>::decode_CH(const uint8_t *buf) {
+	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		decode_Reg<operand_t::REG_R13B>(buf); 
 	} else {
 		decode_Reg<operand_t::REG_CH>(buf);
@@ -1919,9 +1880,9 @@ void Instruction<Model>::decode_CH(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_DH(const uint8_t *buf) {
-	if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+template <class M>
+void Instruction<M>::decode_DH(const uint8_t *buf) {
+	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		decode_Reg<operand_t::REG_R14B>(buf); 
 	} else {
 		decode_Reg<operand_t::REG_DH>(buf);
@@ -1931,9 +1892,9 @@ void Instruction<Model>::decode_DH(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_BH(const uint8_t *buf) {
-	if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+template <class M>
+void Instruction<M>::decode_BH(const uint8_t *buf) {
+	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		decode_Reg<operand_t::REG_R15B>(buf); 
 	} else {
 		decode_Reg<operand_t::REG_BH>(buf);
@@ -1943,8 +1904,8 @@ void Instruction<Model>::decode_BH(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_rAX_NOREX(const uint8_t *buf) { 
+template <class M>
+void Instruction<M>::decode_rAX_NOREX(const uint8_t *buf) { 
 	switch(operand_size()) {;
 	case 16: decode_Reg<operand_t::REG_AX>(buf); break;
 	case 32: decode_Reg<operand_t::REG_EAX>(buf); break;
@@ -1955,8 +1916,8 @@ void Instruction<Model>::decode_rAX_NOREX(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_eAX(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_eAX(const uint8_t *buf) {
 	// TODO: is this correct, it seems to be the same
 	// because eAX is only used for ops where REX is illegal
 	decode_rAX_NOREX(buf);
@@ -1965,25 +1926,25 @@ void Instruction<Model>::decode_eAX(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_rAX(const uint8_t *buf) { 
+template <class M>
+void Instruction<M>::decode_rAX(const uint8_t *buf) { 
 	switch(operand_size()) {
 	case 16: 
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R8W>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_AX>(buf); 
 		}
 		break;
 	case 32:
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R8D>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_EAX>(buf); 
 		}
 		break;
 	case 64:
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R8>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_RAX>(buf); 
@@ -1995,25 +1956,25 @@ void Instruction<Model>::decode_rAX(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_rCX(const uint8_t *buf) { 
+template <class M>
+void Instruction<M>::decode_rCX(const uint8_t *buf) { 
 	switch(operand_size()) {
 	case 16: 
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R9W>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_CX>(buf); 
 		}
 		break;
 	case 32:
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R9D>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_ECX>(buf); 
 		}
 		break;
 	case 64:
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R9>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_RCX>(buf); 
@@ -2025,25 +1986,25 @@ void Instruction<Model>::decode_rCX(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_rDX(const uint8_t *buf) { 
+template <class M>
+void Instruction<M>::decode_rDX(const uint8_t *buf) { 
 	switch(operand_size()) {
 	case 16: 
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R10W>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_DX>(buf); 
 		}
 		break;
 	case 32:
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R10D>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_EDX>(buf); 
 		}
 		break;
 	case 64:
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R10>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_RDX>(buf); 
@@ -2055,25 +2016,25 @@ void Instruction<Model>::decode_rDX(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_rBX(const uint8_t *buf) { 
+template <class M>
+void Instruction<M>::decode_rBX(const uint8_t *buf) { 
 	switch(operand_size()) {
 	case 16: 
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R11W>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_BX>(buf); 
 		}
 		break;
 	case 32:
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R11D>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_EBX>(buf); 
 		}
 		break;
 	case 64:
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R11>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_RBX>(buf); 
@@ -2085,25 +2046,25 @@ void Instruction<Model>::decode_rBX(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_rSP(const uint8_t *buf) { 
+template <class M>
+void Instruction<M>::decode_rSP(const uint8_t *buf) { 
 	switch(operand_size()) {
 	case 16: 
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R12W>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_SP>(buf); 
 		}
 		break;
 	case 32:
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R12D>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_ESP>(buf); 
 		}
 		break;
 	case 64:
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R12>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_RSP>(buf); 
@@ -2115,25 +2076,25 @@ void Instruction<Model>::decode_rSP(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_rBP(const uint8_t *buf) { 
+template <class M>
+void Instruction<M>::decode_rBP(const uint8_t *buf) { 
 	switch(operand_size()) {
 	case 16: 
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R13W>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_BP>(buf); 
 		}
 		break;
 	case 32:
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R13D>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_EBP>(buf); 
 		}
 		break;
 	case 64:
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R13>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_RBP>(buf); 
@@ -2145,25 +2106,25 @@ void Instruction<Model>::decode_rBP(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_rSI(const uint8_t *buf) { 
+template <class M>
+void Instruction<M>::decode_rSI(const uint8_t *buf) { 
 	switch(operand_size()) {
 	case 16: 
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R14W>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_SI>(buf); 
 		}
 		break;
 	case 32:
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R14D>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_ESI>(buf); 
 		}
 		break;
 	case 64:
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R14>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_RSI>(buf); 
@@ -2175,25 +2136,25 @@ void Instruction<Model>::decode_rSI(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_rDI(const uint8_t *buf) { 
+template <class M>
+void Instruction<M>::decode_rDI(const uint8_t *buf) { 
 	switch(operand_size()) {
 	case 16: 
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R15W>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_DI>(buf); 
 		}
 		break;
 	case 32:
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R15D>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_EDI>(buf); 
 		}
 		break;
 	case 64:
-		if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R15>(buf); 
 		} else {
 			decode_Reg<operand_t::REG_RDI>(buf); 
@@ -2208,8 +2169,8 @@ void Instruction<Model>::decode_rDI(const uint8_t *buf) {
 // Name: decode_rAX_rAX_NOREX(const uint8_t *buf
 // NOTE: special case because this represents 3 possible ops!
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode_rAX_rAX_NOREX(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode_rAX_rAX_NOREX(const uint8_t *buf) {
 	static const OpcodeEntry opcodes[] = {
 		{ "nop",	&Instruction::decode0, OP_NOP, FLAG_NONE },
 		{ "pause",	&Instruction::decode0, OP_PAUSE, FLAG_NONE },
@@ -2217,7 +2178,7 @@ void Instruction<Model>::decode_rAX_rAX_NOREX(const uint8_t *buf) {
 	};
 	
 	// TODO: does F3 or xchg r8, rAX take precidence
-	if(Model::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		opcode_ = &opcodes[2];
 	} else if(prefix_ & PREFIX_REP) {
 		mandatory_prefix_ |= PREFIX_REP;
@@ -2232,8 +2193,8 @@ void Instruction<Model>::decode_rAX_rAX_NOREX(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: operand_size() const
 //------------------------------------------------------------------------------
-template <class Model>
-int Instruction<Model>::operand_size() const {
+template <class M>
+int Instruction<M>::operand_size() const {
 	int ret = 32;
 		
 	// we check if 16-bit mode is enabled
@@ -2242,7 +2203,7 @@ int Instruction<Model>::operand_size() const {
 	}
 	
 	// we check if 64-bit mode is enabled
-	if(Model::BITS == 64) {
+	if(M::BITS == 64) {
 		if(rex_byte_.is_rex() && rex_byte_.w()) {
 			ret = 64;
 		} else {
@@ -2260,8 +2221,8 @@ int Instruction<Model>::operand_size() const {
 //------------------------------------------------------------------------------
 // Name: decode0(const uint8_t *buf)
 //------------------------------------------------------------------------------
-template <class Model>
-void Instruction<Model>::decode0(const uint8_t *buf) {
+template <class M>
+void Instruction<M>::decode0(const uint8_t *buf) {
 	UNUSED(buf);
 	// does nothing
 }
@@ -2269,8 +2230,8 @@ void Instruction<Model>::decode0(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 // Name: format_prefix() const
 //------------------------------------------------------------------------------
-template <class Model>
-std::string Instruction<Model>::format_prefix() const {
+template <class M>
+std::string Instruction<M>::format_prefix() const {
 	std::string ret;
 	
 	if((prefix_ & PREFIX_LOCK) && !(mandatory_prefix_ & PREFIX_LOCK)) {
@@ -2299,9 +2260,9 @@ std::string Instruction<Model>::format_prefix() const {
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
-template <class Model>
-template <void (Instruction<Model>::*F1)(const uint8_t *), void (Instruction<Model>::*F2)(const uint8_t *)>
-void Instruction<Model>::decode_Reg_Mem(const uint8_t *buf) {
+template <class M>
+template <void (Instruction<M>::*F1)(const uint8_t *), void (Instruction<M>::*F2)(const uint8_t *)>
+void Instruction<M>::decode_Reg_Mem(const uint8_t *buf) {
 	// we got enough room for the ModRM byte?
 	if(modrm_size_ == 0) {
 		BOUNDS_CHECK(Instruction::size() + 1, buffer_size_);
