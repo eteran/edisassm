@@ -24,25 +24,25 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 template <class Model>
 const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group14[8] = {
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "psrld", &Instruction::decode_Nq_Ib, OP_PSRLD },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "psrad", &Instruction::decode_Nq_Ib, OP_PSRAD },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "pslld", &Instruction::decode_Nq_Ib, OP_PSLLD },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psrld", &Instruction::decode_Nq_Ib, OP_PSRLD, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psrad", &Instruction::decode_Nq_Ib, OP_PSRAD, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "pslld", &Instruction::decode_Nq_Ib, OP_PSLLD, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID }
 };
 
 template <class Model>
 const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group14_66[8] = {
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "psrld", &Instruction::decode_Uo_Ib, OP_PSRLD },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "psrad", &Instruction::decode_Uo_Ib, OP_PSRAD },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "pslld", &Instruction::decode_Uo_Ib, OP_PSLLD },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psrld", &Instruction::decode_Uo_Ib, OP_PSRLD, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psrad", &Instruction::decode_Uo_Ib, OP_PSRAD, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "pslld", &Instruction::decode_Uo_Ib, OP_PSLLD, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID }
 };
 

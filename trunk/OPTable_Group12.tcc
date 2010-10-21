@@ -24,23 +24,23 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 template <class Model>
 const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group12[16] = {
-	{ "mov", &Instruction::decode_Eb_Ib, OP_MOV },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
+	{ "mov", &Instruction::decode_Eb_Ib, OP_MOV, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	
-	{ "mov", &Instruction::decode_Ev_Iz, OP_MOV },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
+	{ "mov", &Instruction::decode_Ev_Iz, OP_MOV, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
 
 #endif

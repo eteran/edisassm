@@ -24,14 +24,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 template <class Model>
 const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group11[8] = {
-	{ "ud", &Instruction::decode0, OP_UD },
-	{ "ud", &Instruction::decode0, OP_UD },
-	{ "ud", &Instruction::decode0, OP_UD },
-	{ "ud", &Instruction::decode0, OP_UD },
-	{ "ud", &Instruction::decode0, OP_UD },
-	{ "ud", &Instruction::decode0, OP_UD },
-	{ "ud", &Instruction::decode0, OP_UD },
-	{ "ud", &Instruction::decode0, OP_UD },
+	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
+	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
+	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
+	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
+	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
+	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
+	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
+	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
 };
 
 #endif
