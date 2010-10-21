@@ -311,7 +311,7 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_2Byte
 	{ "paddb", &Instruction::decode_Pq_Qq, OP_PADDB, FLAG_NONE },
 	{ "paddw", &Instruction::decode_Pq_Qq, OP_PADDW, FLAG_NONE },
 	{ "paddd", &Instruction::decode_Pq_Qq, OP_PADDD, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }
 };
 
 
@@ -605,7 +605,7 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_2Byte
 	{ "paddb", &Instruction::decode_Vo_Wo, OP_PADDB, FLAG_NONE },
 	{ "paddw", &Instruction::decode_Vo_Wo, OP_PADDW, FLAG_NONE },
 	{ "paddd", &Instruction::decode_Vo_Wo, OP_PADDD, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }
 };
 
 // 2 byte opcodes with a f2 prefix
@@ -898,7 +898,7 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_2Byte
 	{ "paddb", &Instruction::decode_Pq_Qq, OP_PADDB, FLAG_NONE },
 	{ "paddw", &Instruction::decode_Pq_Qq, OP_PADDW, FLAG_NONE },
 	{ "paddd", &Instruction::decode_Pq_Qq, OP_PADDD, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }
 };
 
 // 2 byte opcodes with a f3 prefix
@@ -1191,7 +1191,7 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_2Byte
 	{ "paddb", &Instruction::decode_Pq_Qq, OP_PADDB, FLAG_NONE },
 	{ "paddw", &Instruction::decode_Pq_Qq, OP_PADDW, FLAG_NONE },
 	{ "paddd", &Instruction::decode_Pq_Qq, OP_PADDD, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }
 };
 
 #endif

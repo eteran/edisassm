@@ -104,7 +104,7 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_x87_L
 	{ "fbld", &Instruction::decode_PackedBCD, OP_FBLD, FLAG_NONE },
 	{ "fild", &Instruction::decode_LongInteger, OP_FILD, FLAG_NONE },
 	{ "fbstp", &Instruction::decode_PackedBCD, OP_FBSTP, FLAG_NONE },
-	{ "fistp", &Instruction::decode_LongInteger, OP_FISTP }
+	{ "fistp", &Instruction::decode_LongInteger, OP_FISTP, FLAG_NONE }
 };
 
 // this table is for x87 opcodes with a mod >= 0xc0
