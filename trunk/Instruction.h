@@ -1200,8 +1200,6 @@ private:
 	
 public:
 	std::string format_prefix() const;
-	std::string format() const;
-	std::string format(bool upper) const;
 	std::string mnemonic() const						{ return mnemonic_; }
 	unsigned int operand_count() const					{ return operand_count_; }
 	unsigned int prefix_size() const					{ return prefix_size_; }

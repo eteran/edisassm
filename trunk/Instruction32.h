@@ -2297,40 +2297,6 @@ std::string Instruction<Model>::format_prefix() const {
 }
 
 //------------------------------------------------------------------------------
-// Name: format() const
-//------------------------------------------------------------------------------
-template <class Model>
-std::string Instruction<Model>::format() const {
-	return format(false);
-}
-
-//------------------------------------------------------------------------------
-// Name: format(bool upper) const
-//------------------------------------------------------------------------------
-template <class Model>
-std::string Instruction<Model>::format(bool upper) const {
-	std::ostringstream ss;
-	
-	if(upper) {
-		ss << edisassm::util::toupper_copy(format_prefix());
-		ss << edisassm::util::toupper_copy(mnemonic());
-	} else {
-		ss << format_prefix();
-		ss << mnemonic();	
-	}
-	
-	const std::size_t count = operand_count();
-	if(count != 0) {
-		ss << ' ' << operands_[0].to_string(upper);
-		for(std::size_t i = 1; i < count; ++i) {
-			ss << ", " << operands_[i].to_string(upper);
-		}
-	}
-
-	return ss.str();
-}
-
-//------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
 template <class Model>
