@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "Operand.h"
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group7[8] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group7[8] = {
 	{ "sgdt", &Instruction::decode_Ms, OP_SGDT, FLAG_NONE },
 	{ "sidt", &Instruction::decode_Ms, OP_SIDT, FLAG_NONE },
 	{ "lgdt", &Instruction::decode_Ms, OP_LGDT, FLAG_NONE },
@@ -34,8 +34,8 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group
 	{ "invlpg", &Instruction::decode_Mb, OP_INVLPG, FLAG_NONE },
 };
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group7A[64] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group7A[64] = {
 	{ "vmcall", &Instruction::decode0, OP_VMCALL, FLAG_NONE },
 	{ "vmlaunch", &Instruction::decode0, OP_VMLAUNCH, FLAG_NONE },
 	{ "vmresume", &Instruction::decode0, OP_VMRESUME, FLAG_NONE },

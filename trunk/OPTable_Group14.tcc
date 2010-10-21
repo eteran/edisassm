@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "Operand.h"
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group14[8] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group14[8] = {
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "psrld", &Instruction::decode_Nq_Ib, OP_PSRLD, FLAG_NONE },
@@ -34,8 +34,8 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }
 };
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group14_66[8] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group14_66[8] = {
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "psrld", &Instruction::decode_Uo_Ib, OP_PSRLD, FLAG_NONE },

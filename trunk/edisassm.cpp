@@ -31,10 +31,10 @@ enum DISPLAY_FLAGS {
 	FLAG_SHOW_BYTES = 0x01
 };
 
-template <class Model>
-void disassemble(const uint8_t *start_ptr, const uint8_t *end_ptr, typename Instruction<Model>::address_t rva, unsigned int flags) {
+template <class M>
+void disassemble(const uint8_t *start_ptr, const uint8_t *end_ptr, typename Instruction<M>::address_t rva, unsigned int flags) {
 	
-	typedef Instruction<Model> insn_t;
+	typedef Instruction<M> insn_t;
 	
 	const uint8_t *ptr = start_ptr;
 	while(ptr < end_ptr) {

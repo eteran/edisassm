@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "Operand.h"
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group1[32] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group1[32] = {
 	{ "add", &Instruction::decode_Eb_Ib, OP_ADD, FLAG_NONE },
 	{ "or", &Instruction::decode_Eb_Ib, OP_OR, FLAG_NONE },
 	{ "adc", &Instruction::decode_Eb_Ib, OP_ADC, FLAG_NONE },

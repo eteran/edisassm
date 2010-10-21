@@ -64,17 +64,17 @@ class ModRM;
 
 #define BOUNDS_CHECK(new_size, max_size) do { if((new_size) > (max_size)) { throw instruction_too_big(instruction_t::size()); } } while(0)
 
-template <class Model>
+template <class M>
 class EDB_EXPORT Instruction {
 public:
-	static const int MAX_OPERANDS	= Model::MAX_OPERANDS;
-	static const int MAX_SIZE		= Model::MAX_SIZE;
-	static const int BITS			= Model::BITS;
+	static const int MAX_OPERANDS	= M::MAX_OPERANDS;
+	static const int MAX_SIZE		= M::MAX_SIZE;
+	static const int BITS			= M::BITS;
 
 public:
-	typedef Operand<Model>				operand_t;
-	typedef typename Model::address_t	address_t;
-	typedef Instruction<Model>			instruction_t;
+	typedef Operand<M>				operand_t;
+	typedef typename M::address_t	address_t;
+	typedef Instruction<M>			instruction_t;
 	
 public:
 	typedef void (instruction_t::*DecoderFunction)(const uint8_t *);
@@ -96,14 +96,13 @@ public:
 	static void assemble(std::string instruction);
 	
 private:
-	template <class T, int Elements>
-	static void find_opcode(const std::string &opcode, T (&table)[Elements], int opcode_count);
+	template <class T, int N>
+	static void find_opcode(const std::string &opcode, T (&table)[N], int opcode_count);
 
 private:
 	void initialize(const uint8_t *buf, std::size_t size);
 	
 public:
-
 	enum Flags {
 		FLAG_NONE			= 0x00000000,
 		FLAG_TEST_FLAGS		= 0x00000001,
@@ -725,6 +724,17 @@ private:
 	void decode0(const uint8_t *buf);
 	
 private:
+
+	template <class T>
+	void decode_size_sensitive(const uint8_t *buf, const T(&opcodes)[3]) {
+		switch(operand_size()) {
+		case 16: opcode_ = &opcodes[0]; break;
+		case 32: opcode_ = &opcodes[1]; break;
+		case 64: opcode_ = &opcodes[2]; break;
+		}
+		(this->*(opcode_->decoder))(buf);
+	}
+
 	// special cased names
 	void decode_cwd_cdq_cqo(const uint8_t *buf);
 	void decode_stosw_stosd_stosq(const uint8_t *buf);
@@ -835,18 +845,18 @@ private:
 	
 private:
 	// ModRM Reg or Memory 
-	void decode_Eb(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION8, &Instruction<Model>::indexToReg8>(buf); }
-	void decode_Ew(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION16, &Instruction<Model>::indexToReg16>(buf); }
-	void decode_Ed(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<Model>::indexToReg32>(buf); }
-	void decode_Eq(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<Model>::indexToReg64>(buf); }
+	void decode_Eb(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION8, &Instruction<M>::index_to_reg_8>(buf); }
+	void decode_Ew(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION16, &Instruction<M>::index_to_reg_16>(buf); }
+	void decode_Ed(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::index_to_reg_32>(buf); }
+	void decode_Eq(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<M>::index_to_reg_64>(buf); }
 	void decode_Ev(const uint8_t *buf);
-	void decode_Qd(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<Model>::indexToRegMMX>(buf); }
-	void decode_Qq(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<Model>::indexToRegMMX>(buf); }
-	void decode_Qo(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION128, &Instruction<Model>::indexToRegMMX>(buf); }   
-	void decode_Ww(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION16, &Instruction<Model>::indexToRegXMMX>(buf); }   
-	void decode_Wd(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<Model>::indexToRegXMMX>(buf); }   
-	void decode_Wq(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<Model>::indexToRegXMMX>(buf); }
-	void decode_Wo(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION128, &Instruction<Model>::indexToRegXMMX>(buf); }
+	void decode_Qd(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::index_to_reg_mmx>(buf); }
+	void decode_Qq(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<M>::index_to_reg_mmx>(buf); }
+	void decode_Qo(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION128, &Instruction<M>::index_to_reg_mmx>(buf); }   
+	void decode_Ww(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION16, &Instruction<M>::index_to_reg_xmmx>(buf); }   
+	void decode_Wd(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::index_to_reg_xmmx>(buf); }   
+	void decode_Wq(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<M>::index_to_reg_xmmx>(buf); }
+	void decode_Wo(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION128, &Instruction<M>::index_to_reg_xmmx>(buf); }
 
 
 	// special cases for things like SMSW Rv/Mw
@@ -863,60 +873,60 @@ private:
 	
 	// TODO: throw an error if any of these return REG_INVALID
 	// ModRM Memory Only
-	void decode_Mo(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION128, &Instruction<Model>::indexToRegInvalid>(buf); }
-	void decode_M(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<Model>::indexToRegInvalid>(buf); }
-	void decode_Ms(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<Model>::indexToRegInvalid>(buf); }
-	void decode_M108(const uint8_t *buf) 		{ decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<Model>::indexToRegInvalid>(buf); }  // Note this can be 108 or 98, but we just say "expression"
-	void decode_M512(const uint8_t *buf) 		{ decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<Model>::indexToRegInvalid>(buf); }  // Note this can be 512 or 256, but we just say "expression"
-	void decode_M28(const uint8_t *buf) 		{ decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<Model>::indexToRegInvalid>(buf); }  // Note this can be 28 or 14, but we just say "expression"
-	void decode_Mw(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION16, &Instruction<Model>::indexToRegInvalid>(buf); }
+	void decode_Mo(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION128, &Instruction<M>::indexToRegInvalid>(buf); }
+	void decode_M(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<M>::indexToRegInvalid>(buf); }
+	void decode_Ms(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<M>::indexToRegInvalid>(buf); }
+	void decode_M108(const uint8_t *buf) 		{ decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<M>::indexToRegInvalid>(buf); }  // Note this can be 108 or 98, but we just say "expression"
+	void decode_M512(const uint8_t *buf) 		{ decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<M>::indexToRegInvalid>(buf); }  // Note this can be 512 or 256, but we just say "expression"
+	void decode_M28(const uint8_t *buf) 		{ decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<M>::indexToRegInvalid>(buf); }  // Note this can be 28 or 14, but we just say "expression"
+	void decode_Mw(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION16, &Instruction<M>::indexToRegInvalid>(buf); }
 	void decode_Mp(const uint8_t *buf) 			{ decode_Ep(buf);}
-	void decode_Mdq(const uint8_t *buf) 		{ decode_Ex<operand_t::TYPE_EXPRESSION128, &Instruction<Model>::indexToRegInvalid>(buf); }
-	void decode_Mq(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<Model>::indexToRegInvalid>(buf); }
-	void decode_Md(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<Model>::indexToRegInvalid>(buf); }
-	void decode_Mb(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION8, &Instruction<Model>::indexToRegInvalid>(buf); }
-	void decode_Ma(const uint8_t *buf) 			{ if(prefix_ & PREFIX_OPERAND) { decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<Model>::indexToRegInvalid>(buf); } else { decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<Model>::indexToRegInvalid>(buf); } }
+	void decode_Mdq(const uint8_t *buf) 		{ decode_Ex<operand_t::TYPE_EXPRESSION128, &Instruction<M>::indexToRegInvalid>(buf); }
+	void decode_Mq(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<M>::indexToRegInvalid>(buf); }
+	void decode_Md(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::indexToRegInvalid>(buf); }
+	void decode_Mb(const uint8_t *buf) 			{ decode_Ex<operand_t::TYPE_EXPRESSION8, &Instruction<M>::indexToRegInvalid>(buf); }
+	void decode_Ma(const uint8_t *buf) 			{ if(prefix_ & PREFIX_OPERAND) { decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::indexToRegInvalid>(buf); } else { decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<M>::indexToRegInvalid>(buf); } }
 	void decode_Mv(const uint8_t *buf);
-	void decode_Ep(const uint8_t *buf) 			{ if(prefix_ & PREFIX_OPERAND) { decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<Model>::indexToRegInvalid>(buf); } else { decode_Ex<operand_t::TYPE_EXPRESSION48, &Instruction<Model>::indexToRegInvalid>(buf); } }
+	void decode_Ep(const uint8_t *buf) 			{ if(prefix_ & PREFIX_OPERAND) { decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::indexToRegInvalid>(buf); } else { decode_Ex<operand_t::TYPE_EXPRESSION48, &Instruction<M>::indexToRegInvalid>(buf); } }
 	
 	
 	// FPU memory only
-	void decode_WordInteger(const uint8_t *buf) { decode_Ex<operand_t::TYPE_EXPRESSION16, &Instruction<Model>::indexToRegInvalid>(buf); }
-	void decode_SingleReal(const uint8_t *buf) 	{ decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<Model>::indexToRegInvalid>(buf); }
-	void decode_ShortInteger(const uint8_t *buf){ decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<Model>::indexToRegInvalid>(buf); }
-	void decode_DoubleReal(const uint8_t *buf) 	{ decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<Model>::indexToRegInvalid>(buf); }			
-	void decode_LongInteger(const uint8_t *buf) { decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<Model>::indexToRegInvalid>(buf); }
-	void decode_ExtendedReal(const uint8_t *buf){ decode_Ex<operand_t::TYPE_EXPRESSION80, &Instruction<Model>::indexToRegInvalid>(buf); }
-	void decode_PackedBCD(const uint8_t *buf) 	{ decode_Ex<operand_t::TYPE_EXPRESSION80, &Instruction<Model>::indexToRegInvalid>(buf); }
+	void decode_WordInteger(const uint8_t *buf) { decode_Ex<operand_t::TYPE_EXPRESSION16, &Instruction<M>::indexToRegInvalid>(buf); }
+	void decode_SingleReal(const uint8_t *buf) 	{ decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::indexToRegInvalid>(buf); }
+	void decode_ShortInteger(const uint8_t *buf){ decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::indexToRegInvalid>(buf); }
+	void decode_DoubleReal(const uint8_t *buf) 	{ decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<M>::indexToRegInvalid>(buf); }			
+	void decode_LongInteger(const uint8_t *buf) { decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<M>::indexToRegInvalid>(buf); }
+	void decode_ExtendedReal(const uint8_t *buf){ decode_Ex<operand_t::TYPE_EXPRESSION80, &Instruction<M>::indexToRegInvalid>(buf); }
+	void decode_PackedBCD(const uint8_t *buf) 	{ decode_Ex<operand_t::TYPE_EXPRESSION80, &Instruction<M>::indexToRegInvalid>(buf); }
 	
 	// ModRM selects a register only (mod must be 0x3)
 	// TODO: throw an error if any of these return TYPE_INVALID
 	void decode_Rv(const uint8_t *buf);
-	void decode_Rw(const uint8_t *buf)			{ decode_Ex<operand_t::TYPE_INVALID, &Instruction<Model>::indexToReg16>(buf); }
-	void decode_Rd(const uint8_t *buf)			{ decode_Ex<operand_t::TYPE_INVALID, &Instruction<Model>::indexToReg32>(buf); }
-	void decode_Rq(const uint8_t *buf)			{ decode_Ex<operand_t::TYPE_INVALID, &Instruction<Model>::indexToReg64>(buf); }
-	void decode_Nq(const uint8_t *buf)			{ decode_Ex<operand_t::TYPE_INVALID, &Instruction<Model>::indexToRegMMX>(buf); }
-	void decode_Uo(const uint8_t *buf)			{ decode_Ex<operand_t::TYPE_INVALID, &Instruction<Model>::indexToRegXMMX>(buf); }
-	void decode_Uq(const uint8_t *buf)			{ decode_Ex<operand_t::TYPE_INVALID, &Instruction<Model>::indexToRegXMMX>(buf); }
+	void decode_Rw(const uint8_t *buf)			{ decode_Ex<operand_t::TYPE_INVALID, &Instruction<M>::index_to_reg_16>(buf); }
+	void decode_Rd(const uint8_t *buf)			{ decode_Ex<operand_t::TYPE_INVALID, &Instruction<M>::index_to_reg_32>(buf); }
+	void decode_Rq(const uint8_t *buf)			{ decode_Ex<operand_t::TYPE_INVALID, &Instruction<M>::index_to_reg_64>(buf); }
+	void decode_Nq(const uint8_t *buf)			{ decode_Ex<operand_t::TYPE_INVALID, &Instruction<M>::index_to_reg_mmx>(buf); }
+	void decode_Uo(const uint8_t *buf)			{ decode_Ex<operand_t::TYPE_INVALID, &Instruction<M>::index_to_reg_xmmx>(buf); }
+	void decode_Uq(const uint8_t *buf)			{ decode_Ex<operand_t::TYPE_INVALID, &Instruction<M>::index_to_reg_xmmx>(buf); }
 
 	// ModRM Reg Field
 	void decode_Gv(const uint8_t *buf);
-	void decode_Gb(const uint8_t *buf) 			{ decode_Gx<&Instruction<Model>::indexToReg8>(buf); }
-	void decode_Gw(const uint8_t *buf) 			{ decode_Gx<&Instruction<Model>::indexToReg16>(buf); }
-	void decode_Gd(const uint8_t *buf) 			{ decode_Gx<&Instruction<Model>::indexToReg32>(buf); }
-	void decode_Gq(const uint8_t *buf) 			{ decode_Gx<&Instruction<Model>::indexToReg64>(buf); }
-	void decode_Gz(const uint8_t *buf) 			{ if(prefix_ & PREFIX_OPERAND) { decode_Gx<&Instruction<Model>::indexToReg16>(buf); } else { decode_Gx<&Instruction<Model>::indexToReg32>(buf); } }
-	void decode_Vo(const uint8_t *buf) 			{ decode_Gx<&Instruction<Model>::indexToRegXMMX>(buf); }
-	void decode_Vd(const uint8_t *buf) 			{ decode_Gx<&Instruction<Model>::indexToRegXMMX>(buf); }
-	void decode_Vq(const uint8_t *buf) 			{ decode_Gx<&Instruction<Model>::indexToRegXMMX>(buf); }
-	void decode_Pq(const uint8_t *buf)			{ decode_Gx<&Instruction<Model>::indexToRegMMX>(buf); }
-	void decode_Pd(const uint8_t *buf)			{ decode_Gx<&Instruction<Model>::indexToRegMMX>(buf); }
+	void decode_Gb(const uint8_t *buf) 			{ decode_Gx<&Instruction<M>::index_to_reg_8>(buf); }
+	void decode_Gw(const uint8_t *buf) 			{ decode_Gx<&Instruction<M>::index_to_reg_16>(buf); }
+	void decode_Gd(const uint8_t *buf) 			{ decode_Gx<&Instruction<M>::index_to_reg_32>(buf); }
+	void decode_Gq(const uint8_t *buf) 			{ decode_Gx<&Instruction<M>::index_to_reg_64>(buf); }
+	void decode_Gz(const uint8_t *buf) 			{ if(prefix_ & PREFIX_OPERAND) { decode_Gx<&Instruction<M>::index_to_reg_16>(buf); } else { decode_Gx<&Instruction<M>::index_to_reg_32>(buf); } }
+	void decode_Vo(const uint8_t *buf) 			{ decode_Gx<&Instruction<M>::index_to_reg_xmmx>(buf); }
+	void decode_Vd(const uint8_t *buf) 			{ decode_Gx<&Instruction<M>::index_to_reg_xmmx>(buf); }
+	void decode_Vq(const uint8_t *buf) 			{ decode_Gx<&Instruction<M>::index_to_reg_xmmx>(buf); }
+	void decode_Pq(const uint8_t *buf)			{ decode_Gx<&Instruction<M>::index_to_reg_mmx>(buf); }
+	void decode_Pd(const uint8_t *buf)			{ decode_Gx<&Instruction<M>::index_to_reg_mmx>(buf); }
 
 	// Decode [C/D/T]Rx from ModRM reg
-	void decode_Sw(const uint8_t *buf)			{ decode_Gx<&Instruction<Model>::indexToRegSeg>(buf); }
-	void decode_Cd(const uint8_t *buf)			{ decode_Gx<&Instruction<Model>::indexToRegCR>(buf); }
-	void decode_Dd(const uint8_t *buf)			{ decode_Gx<&Instruction<Model>::indexToRegDR>(buf); }
-	void decode_Td(const uint8_t *buf)			{ decode_Gx<&Instruction<Model>::indexToRegTR>(buf); }
+	void decode_Sw(const uint8_t *buf)			{ decode_Gx<&Instruction<M>::index_to_reg_seg>(buf); }
+	void decode_Cd(const uint8_t *buf)			{ decode_Gx<&Instruction<M>::index_to_reg_cr>(buf); }
+	void decode_Dd(const uint8_t *buf)			{ decode_Gx<&Instruction<M>::index_to_reg_dr>(buf); }
+	void decode_Td(const uint8_t *buf)			{ decode_Gx<&Instruction<M>::index_to_reg_tr>(buf); }
 	
 	// Immediate
 	void decode_Ib(const uint8_t *buf);
@@ -1186,17 +1196,17 @@ private:
 
 private:
 	static typename operand_t::Register indexToRegInvalid(uint8_t)		{ return operand_t::REG_INVALID; }
-	static typename operand_t::Register indexToReg8(uint8_t index)		{ return static_cast<typename operand_t::Register>(operand_t::REG_AL + index); }
-	static typename operand_t::Register indexToReg16(uint8_t index)		{ return static_cast<typename operand_t::Register>(operand_t::REG_AX + index); }
-	static typename operand_t::Register indexToReg32(uint8_t index)		{ return static_cast<typename operand_t::Register>(operand_t::REG_EAX + index); }
-	static typename operand_t::Register indexToReg64(uint8_t index)		{ return static_cast<typename operand_t::Register>(operand_t::REG_RAX + index); }
-	static typename operand_t::Register indexToRegSeg(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_ES + index); }
-	static typename operand_t::Register indexToRegMMX(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_MM0 + index); }
-	static typename operand_t::Register indexToRegXMMX(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_XMM0 + index); }
-	static typename operand_t::Register indexToRegFPU(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_ST0 + index); }
-	static typename operand_t::Register indexToRegCR(uint8_t index)		{ return static_cast<typename operand_t::Register>(operand_t::REG_CR0 + index); }
-	static typename operand_t::Register indexToRegDR(uint8_t index)		{ return static_cast<typename operand_t::Register>(operand_t::REG_DR0 + index); }
-	static typename operand_t::Register indexToRegTR(uint8_t index)		{ return static_cast<typename operand_t::Register>(operand_t::REG_TR0 + index); }
+	static typename operand_t::Register index_to_reg_8(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_AL + index); }
+	static typename operand_t::Register index_to_reg_16(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_AX + index); }
+	static typename operand_t::Register index_to_reg_32(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_EAX + index); }
+	static typename operand_t::Register index_to_reg_64(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_RAX + index); }
+	static typename operand_t::Register index_to_reg_seg(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_ES + index); }
+	static typename operand_t::Register index_to_reg_mmx(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_MM0 + index); }
+	static typename operand_t::Register index_to_reg_xmmx(uint8_t index){ return static_cast<typename operand_t::Register>(operand_t::REG_XMM0 + index); }
+	static typename operand_t::Register index_to_reg_fpu(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_ST0 + index); }
+	static typename operand_t::Register index_to_reg_cr(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_CR0 + index); }
+	static typename operand_t::Register index_to_reg_dr(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_DR0 + index); }
+	static typename operand_t::Register index_to_reg_tr(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_TR0 + index); }
 	
 public:
 	std::string format_prefix() const;
@@ -1265,7 +1275,7 @@ private:
 	static const OpcodeEntry Opcodes_Group17[64];
 
 private:	
-	operand_t				operands_[Model::MAX_OPERANDS];
+	operand_t				operands_[M::MAX_OPERANDS];
 	address_t				rva_;
 	const uint8_t *			buffer_;
 	std::size_t				buffer_size_;
@@ -1287,8 +1297,8 @@ private:
 	bool					private_buffer_;
 };
 
-template <class Model>
-bool operator==(const Instruction<Model> &lhs, const Instruction<Model> &rhs) {
+template <class M>
+bool operator==(const Instruction<M> &lhs, const Instruction<M> &rhs) {
 	// invalid ops match nothing
 	if(!lhs.valid() || !rhs.valid()) {
 		return false;
@@ -1310,11 +1320,11 @@ bool operator==(const Instruction<Model> &lhs, const Instruction<Model> &rhs) {
 	// compare the type and value of each operand
 	for(unsigned int i = 0; i < lhs_operand_count; ++i) {
 	
-		const typename Instruction<Model>::operand_t &lhs_operand = lhs.operand(i);
-		const typename Instruction<Model>::operand_t &rhs_operand = rhs.operand(i);
+		const typename Instruction<M>::operand_t &lhs_operand = lhs.operand(i);
+		const typename Instruction<M>::operand_t &rhs_operand = rhs.operand(i);
 		
-		typename Instruction<Model>::operand_t::Type lhs_operand_type = lhs_operand.general_type();
-		typename Instruction<Model>::operand_t::Type rhs_operand_type = rhs_operand.general_type();
+		typename Instruction<M>::operand_t::Type lhs_operand_type = lhs_operand.general_type();
+		typename Instruction<M>::operand_t::Type rhs_operand_type = rhs_operand.general_type();
 	
 		if(lhs_operand_type != rhs_operand_type) {
 			return false;
@@ -1322,22 +1332,22 @@ bool operator==(const Instruction<Model> &lhs, const Instruction<Model> &rhs) {
 		
 		// TODO: support generics
 		switch(lhs_operand_type) {
-		case Operand<Model>::TYPE_REGISTER:
+		case Operand<M>::TYPE_REGISTER:
 			if(lhs_operand.reg != rhs_operand.reg) {
 				return false;
 			}
 			break;
-		case Operand<Model>::TYPE_IMMEDIATE:
+		case Operand<M>::TYPE_IMMEDIATE:
 			if(lhs_operand.immediate() != rhs_operand.immediate()) {
 				return false;
 			}
 			break;
-		case Operand<Model>::TYPE_REL:
+		case Operand<M>::TYPE_REL:
 			if(lhs_operand.relative_target() != rhs_operand.relative_target()) {
 				return false;
 			}
 			break;
-		case Operand<Model>::TYPE_ABSOLUTE:
+		case Operand<M>::TYPE_ABSOLUTE:
 			if(lhs_operand.absolute.offset != rhs_operand.absolute.offset) {
 				return false;
 			}
@@ -1347,7 +1357,7 @@ bool operator==(const Instruction<Model> &lhs, const Instruction<Model> &rhs) {
 			}
 			break;
 		default:
-		case Operand<Model>::TYPE_EXPRESSION:
+		case Operand<M>::TYPE_EXPRESSION:
 			// TODO: do this way more efficiently...
 			if(lhs_operand.format() != rhs_operand.format()) {
 				return false;
@@ -1359,14 +1369,14 @@ bool operator==(const Instruction<Model> &lhs, const Instruction<Model> &rhs) {
 	return true;
 }
 
-template <class Model>
-bool operator!=(const Instruction<Model> &lhs, const Instruction<Model> &rhs) {
+template <class M>
+bool operator!=(const Instruction<M> &lhs, const Instruction<M> &rhs) {
 	return !(lhs == rhs);
 }
 
 namespace edisassm {
-template <class Model>
-std::string to_string(const Instruction<Model> &insn, bool upper = false) {
+template <class M>
+std::string to_string(const Instruction<M> &insn, bool upper = false) {
 	std::ostringstream ss;
 	
 	if(upper) {

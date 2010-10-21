@@ -24,8 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "Operand.h"
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group10[8] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group10[8] = {
 	{ "pop", &Instruction::decode_Ev, OP_POP, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },

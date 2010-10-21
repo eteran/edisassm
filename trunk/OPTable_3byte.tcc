@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "Operand.h"
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_3Byte_38_NA[0x100] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_3Byte_38_NA[0x100] = {
 	
 	/* 0x0f 0x38 0x00 - 0x0f 0x38 0x0f */
 	{ "pshufb", &Instruction::decode_Pq_Qq, OP_PSHUFB, FLAG_NONE },
@@ -119,8 +119,8 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_3Byte
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_3Byte_38_F2[0x100] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_3Byte_38_F2[0x100] = {
 	
 	/* 0x0f 0x38 0x00 - 0x0f 0x38 0x0f */
 	{ "pshufb", &Instruction::decode_Pq_Qq, OP_PSHUFB, FLAG_NONE },
@@ -216,8 +216,8 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_3Byte
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_3Byte_38_66[0x100] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_3Byte_38_66[0x100] = {
 	
 	/* 0x0f 0x38 0x00 - 0x0f 0x38 0x0f */
 	{ "pshufb", &Instruction::decode_Vo_Wo, OP_PSHUFB, FLAG_NONE },
@@ -373,8 +373,8 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_3Byte
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_3Byte_3A_66[0x100] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_3Byte_3A_66[0x100] = {
 	/* 0x0f 0x3a 0x00 - 0x0f 0x3a 0x0f */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -499,8 +499,8 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_3Byte
 	INVALID_BLOCK
 };
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_3Byte_3A_NA[0x100] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_3Byte_3A_NA[0x100] = {
 	/* 0x0f 0x3a 0x00 - 0x0f 0x3a 0x0f */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },

@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "Operand.h"
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group17[64] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group17[64] = {
 	{ "prefetchnta", &Instruction::decode_M, OP_PREFETCHH, FLAG_NONE },
 	{ "prefetcht0", &Instruction::decode_M, OP_PREFETCHH, FLAG_NONE },
 	{ "prefetcht1", &Instruction::decode_M, OP_PREFETCHH, FLAG_NONE },

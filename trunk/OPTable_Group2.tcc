@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "Operand.h"
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group2[16] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group2[16] = {
 	{ "rol", &Instruction::decode_Eb_Ib, OP_ROL, FLAG_NONE },
 	{ "ror", &Instruction::decode_Eb_Ib, OP_ROR, FLAG_NONE },
 	{ "rcl", &Instruction::decode_Eb_Ib, OP_RCL, FLAG_NONE },
@@ -43,8 +43,8 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group
 	{ "sar", &Instruction::decode_Ev_Ib, OP_SAR, FLAG_NONE },
 };
 
-template <class Model>
-const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group2D[32] = {
+template <class M>
+const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group2D[32] = {
 	{ "rol", &Instruction::decode_Eb_1, OP_ROL, FLAG_NONE },
 	{ "ror", &Instruction::decode_Eb_1, OP_ROR, FLAG_NONE },
 	{ "rcl", &Instruction::decode_Eb_1, OP_RCL, FLAG_NONE },
