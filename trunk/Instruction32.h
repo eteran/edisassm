@@ -1066,9 +1066,9 @@ void Instruction<Model>::decode_invalid(const uint8_t *buf) {
 template <class Model>																		\
 void Instruction<Model>::decode_ ## name1 ## _ ## name2 ## _ ## name3(const uint8_t *buf) {	\
 	static const OpcodeEntry opcodes[] = {		\
-		{ #name1, (decoder_func1), (OP1) },		\
-		{ #name2, (decoder_func2), (OP2) },		\
-		{ #name3, (decoder_func3), (OP3) }		\
+		{ #name1, (decoder_func1), (OP1), FLAG_NONE },		\
+		{ #name2, (decoder_func2), (OP2), FLAG_NONE },		\
+		{ #name3, (decoder_func3), (OP3), FLAG_NONE }		\
 	};											\
 												\
 	switch(operand_size()) {					\
