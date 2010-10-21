@@ -31,7 +31,7 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "psllq", &Instruction::decode_Nq_Ib, OP_PSLLQ, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }
 };
 
 template <class Model>
@@ -43,7 +43,7 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "psllq", &Instruction::decode_Uo_Ib, OP_PSLLQ, FLAG_NONE },
-	{ "pslldq", &Instruction::decode_Uo_Ib, OP_PSLLDQ }
+	{ "pslldq", &Instruction::decode_Uo_Ib, OP_PSLLDQ, FLAG_NONE }
 };
 
 

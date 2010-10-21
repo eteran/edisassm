@@ -31,7 +31,7 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group
 	{ "psrad", &Instruction::decode_Nq_Ib, OP_PSRAD, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "pslld", &Instruction::decode_Nq_Ib, OP_PSLLD, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }
 };
 
 template <class Model>
@@ -43,7 +43,7 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group
 	{ "psrad", &Instruction::decode_Uo_Ib, OP_PSRAD, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "pslld", &Instruction::decode_Uo_Ib, OP_PSLLD, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }
 };
 
 #endif

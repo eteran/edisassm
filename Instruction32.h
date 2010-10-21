@@ -2211,9 +2211,9 @@ void Instruction<Model>::decode_rDI(const uint8_t *buf) {
 template <class Model>
 void Instruction<Model>::decode_rAX_rAX_NOREX(const uint8_t *buf) {
 	static const OpcodeEntry opcodes[] = {
-		{ "nop",	&Instruction::decode0, OP_NOP },
-		{ "pause",	&Instruction::decode0, OP_PAUSE },
-		{ "xchg", 	&Instruction::template decode2<&instruction_t::decode_rAX, &instruction_t::decode_rAX_NOREX>, OP_XCHG }
+		{ "nop",	&Instruction::decode0, OP_NOP, FLAG_NONE },
+		{ "pause",	&Instruction::decode0, OP_PAUSE, FLAG_NONE },
+		{ "xchg", 	&Instruction::template decode2<&instruction_t::decode_rAX, &instruction_t::decode_rAX_NOREX>, OP_XCHG, FLAG_NONE }
 	};
 	
 	// TODO: does F3 or xchg r8, rAX take precidence

@@ -58,7 +58,7 @@ const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group
 	{ "and", &Instruction::decode_Ev_Ib, OP_AND, FLAG_NONE },
 	{ "sub", &Instruction::decode_Ev_Ib, OP_SUB, FLAG_NONE },
 	{ "xor", &Instruction::decode_Ev_Ib, OP_XOR, FLAG_NONE },
-	{ "cmp", &Instruction::decode_Ev_Ib, OP_CMP }
+	{ "cmp", &Instruction::decode_Ev_Ib, OP_CMP, FLAG_NONE }
 };
 
 #endif
