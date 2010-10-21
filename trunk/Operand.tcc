@@ -372,37 +372,6 @@ std::string Operand<Model>::format_register(bool upper) const {
 }
 
 //------------------------------------------------------------------------------
-// Name: to_string() const
-//------------------------------------------------------------------------------
-template <class Model>
-std::string Operand<Model>::to_string() const {
-	return to_string(false);
-}
-
-//------------------------------------------------------------------------------
-// Name: to_string(bool upper) const
-//------------------------------------------------------------------------------
-template <class Model>
-std::string Operand<Model>::to_string(bool upper) const {
-	switch(general_type()) {
-	case TYPE_REGISTER:
-		return format_register(upper);
-	case TYPE_IMMEDIATE:
-		return format_immediate(upper);
-	case TYPE_REL:
-		return format_relative(upper);
-	case TYPE_EXPRESSION:
-		return format_expression(upper);
-	case TYPE_ABSOLUTE:
-		return format_absolute(upper);
-	default:
-		return upper ? "(INVALID)" : "(invalid)";
-		// is it better to throw, or return a string?
-		//throw invalid_operand(owner_->size());
-	}
-}
-
-//------------------------------------------------------------------------------
 // Name: displacement() const
 //------------------------------------------------------------------------------
 template <class Model>
@@ -471,6 +440,25 @@ std::string Operand<Model>::hex_string(T value, bool upper) {
 	}
 	ss << std::hex << std::setw(sizeof(T) * 2) << std::setfill('0') << static_cast<address_t>(value);
 	return ss.str();
+}
+
+
+namespace edisassm {
+	template<class M>
+	std::string to_string(const Operand<M> &operand, bool upper) {
+		
+		switch(operand.general_type()) {
+		case Operand<M>::TYPE_REGISTER:		return operand.format_register(upper);
+		case Operand<M>::TYPE_IMMEDIATE:	return operand.format_immediate(upper);
+		case Operand<M>::TYPE_REL:			return operand.format_relative(upper);
+		case Operand<M>::TYPE_EXPRESSION:	return operand.format_expression(upper);
+		case Operand<M>::TYPE_ABSOLUTE:		return operand.format_absolute(upper);
+		default:
+			return upper ? "(INVALID)" : "(invalid)";
+			// is it better to throw, or return a string?
+			//throw invalid_operand(owner_->size());
+		}
+	}
 }
 
 #endif

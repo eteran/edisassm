@@ -29,6 +29,14 @@ template <class Model>
 class Instruction;
 
 template <class Model>
+class Operand;
+
+namespace edisassm {
+	template<class M>
+	std::string to_string(const Operand<M> &operand, bool upper = false);
+}
+
+template <class Model>
 class Operand {
 private:
 	friend class Instruction<Model>;
@@ -193,10 +201,6 @@ private:
 	static std::string hex_string(T value, bool upper);
 	
 public:
-	std::string to_string() const;
-	std::string to_string(bool upper) const;
-	
-public:
 	void swap(Operand &other);
 	instruction_t *owner() const	{ return owner_; }
 	int32_t displacement() const;
@@ -215,6 +219,10 @@ public:
 	
 private:
 	static const char *RegisterName[];
+	
+private:
+	template<class U>
+	friend std::string edisassm::to_string(const Operand<U> &operand, bool upper);
 };
 
 #include "Operand.tcc"
