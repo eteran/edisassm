@@ -1379,9 +1379,9 @@ std::string to_string(const Instruction<Model> &insn, bool upper = false) {
 	
 	const std::size_t count = insn.operand_count();
 	if(count != 0) {
-		ss << ' ' << insn.operand(0).to_string(upper);
+		ss << ' ' << to_string(insn.operand(0), upper);
 		for(std::size_t i = 1; i < count; ++i) {
-			ss << ", " << insn.operand(i).to_string(upper);
+			ss << ", " << to_string(insn.operand(i), upper);
 		}
 	}
 
