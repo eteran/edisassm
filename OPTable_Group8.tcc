@@ -24,14 +24,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 template <class Model>
 const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group8[8] = {
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "bt", &Instruction::decode_Ev_Ib, OP_BT },
-	{ "bts", &Instruction::decode_Ev_Ib, OP_BTS },
-	{ "btr", &Instruction::decode_Ev_Ib, OP_BTR },
-	{ "btc", &Instruction::decode_Ev_Ib, OP_BTC },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "bt", &Instruction::decode_Ev_Ib, OP_BT, FLAG_NONE },
+	{ "bts", &Instruction::decode_Ev_Ib, OP_BTS, FLAG_NONE },
+	{ "btr", &Instruction::decode_Ev_Ib, OP_BTR, FLAG_NONE },
+	{ "btc", &Instruction::decode_Ev_Ib, OP_BTC, FLAG_NONE },
 };
 
 #endif

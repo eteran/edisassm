@@ -24,14 +24,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 template <class Model>
 const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes_Group6[8] = {
-	{ "sldt", &Instruction::decode_Rv_Mw, OP_SLDT },
-	{ "str", &Instruction::decode_Rv_Mw, OP_STR },
-	{ "lldt", &Instruction::decode_Ew, OP_LLDT },
-	{ "ltr", &Instruction::decode_Ew, OP_LTR },
-	{ "verr", &Instruction::decode_Ew, OP_VERR },
-	{ "verw", &Instruction::decode_Ew, OP_VERW },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID }, // NOTE: jmpe Ev on x86-64
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
+	{ "sldt", &Instruction::decode_Rv_Mw, OP_SLDT, FLAG_NONE },
+	{ "str", &Instruction::decode_Rv_Mw, OP_STR, FLAG_NONE },
+	{ "lldt", &Instruction::decode_Ew, OP_LLDT, FLAG_NONE },
+	{ "ltr", &Instruction::decode_Ew, OP_LTR, FLAG_NONE },
+	{ "verr", &Instruction::decode_Ew, OP_VERR, FLAG_NONE },
+	{ "verw", &Instruction::decode_Ew, OP_VERW, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }, // NOTE: jmpe Ev on x86-64
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
 
 #endif

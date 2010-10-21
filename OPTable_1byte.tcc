@@ -26,291 +26,291 @@ template <class Model>
 const typename Instruction<Model>::OpcodeEntry Instruction<Model>::Opcodes[0x100] = {
 
 	/* 0x00 - 0x0f */
-	{ "add", &Instruction::decode_Eb_Gb, OP_ADD },
-	{ "add", &Instruction::decode_Ev_Gv, OP_ADD },
-	{ "add", &Instruction::decode_Gb_Eb, OP_ADD },
-	{ "add", &Instruction::decode_Gv_Ev, OP_ADD },
-	{ "add", &Instruction::decode_AL_Ib, OP_ADD },
-	{ "add", &Instruction::decode_rAX_Iz, OP_ADD },
-	{ "push", &Instruction::decode_SegES, OP_PUSH },	// ia-32 only
-	{ "pop", &Instruction::decode_SegES, OP_POP },	// ia-32 only
-	{ "or", &Instruction::decode_Eb_Gb, OP_OR },
-	{ "or", &Instruction::decode_Ev_Gv, OP_OR },
-	{ "or", &Instruction::decode_Gb_Eb, OP_OR },
-	{ "or", &Instruction::decode_Gv_Ev, OP_OR },
-	{ "or", &Instruction::decode_AL_Ib, OP_OR },
-	{ "or", &Instruction::decode_rAX_Iz, OP_OR },
-	{ "push", &Instruction::decode_SegCS, OP_PUSH },	// ia-32 only
-	{ "2byte", &Instruction::decode_2byte, OP_2BYTE },
+	{ "add", &Instruction::decode_Eb_Gb, OP_ADD, FLAG_NONE },
+	{ "add", &Instruction::decode_Ev_Gv, OP_ADD, FLAG_NONE },
+	{ "add", &Instruction::decode_Gb_Eb, OP_ADD, FLAG_NONE },
+	{ "add", &Instruction::decode_Gv_Ev, OP_ADD, FLAG_NONE },
+	{ "add", &Instruction::decode_AL_Ib, OP_ADD, FLAG_NONE },
+	{ "add", &Instruction::decode_rAX_Iz, OP_ADD, FLAG_NONE },
+	{ "push", &Instruction::decode_SegES, OP_PUSH, FLAG_NONE },	// ia-32 only
+	{ "pop", &Instruction::decode_SegES, OP_POP, FLAG_NONE },	// ia-32 only
+	{ "or", &Instruction::decode_Eb_Gb, OP_OR, FLAG_NONE },
+	{ "or", &Instruction::decode_Ev_Gv, OP_OR, FLAG_NONE },
+	{ "or", &Instruction::decode_Gb_Eb, OP_OR, FLAG_NONE },
+	{ "or", &Instruction::decode_Gv_Ev, OP_OR, FLAG_NONE },
+	{ "or", &Instruction::decode_AL_Ib, OP_OR, FLAG_NONE },
+	{ "or", &Instruction::decode_rAX_Iz, OP_OR, FLAG_NONE },
+	{ "push", &Instruction::decode_SegCS, OP_PUSH, FLAG_NONE },	// ia-32 only
+	{ "2byte", &Instruction::decode_2byte, OP_2BYTE, FLAG_NONE },
 	
 	/* 0x10 - 0x1f */
-	{ "adc", &Instruction::decode_Eb_Gb, OP_ADC },
-	{ "adc", &Instruction::decode_Ev_Gv, OP_ADC },
-	{ "adc", &Instruction::decode_Gb_Eb, OP_ADC },
-	{ "adc", &Instruction::decode_Gv_Ev, OP_ADC },
-	{ "adc", &Instruction::decode_AL_Ib, OP_ADC },
-	{ "adc", &Instruction::decode_rAX_Iz, OP_ADC },
-	{ "push", &Instruction::decode_SegSS, OP_PUSH },	// ia-32 only
-	{ "pop", &Instruction::decode_SegSS, OP_POP },		// ia-32 only
-	{ "sbb", &Instruction::decode_Eb_Gb, OP_SBB },
-	{ "sbb", &Instruction::decode_Ev_Gv, OP_SBB },
-	{ "sbb", &Instruction::decode_Gb_Eb, OP_SBB },
-	{ "sbb", &Instruction::decode_Gv_Ev, OP_SBB },
-	{ "sbb", &Instruction::decode_AL_Ib, OP_SBB },
-	{ "sbb", &Instruction::decode_rAX_Iz, OP_SBB },
-	{ "push", &Instruction::decode_SegDS, OP_PUSH },	// ia-32 only
-	{ "pop", &Instruction::decode_SegDS, OP_POP },	// ia-32 only
+	{ "adc", &Instruction::decode_Eb_Gb, OP_ADC, FLAG_NONE },
+	{ "adc", &Instruction::decode_Ev_Gv, OP_ADC, FLAG_NONE },
+	{ "adc", &Instruction::decode_Gb_Eb, OP_ADC, FLAG_NONE },
+	{ "adc", &Instruction::decode_Gv_Ev, OP_ADC, FLAG_NONE },
+	{ "adc", &Instruction::decode_AL_Ib, OP_ADC, FLAG_NONE },
+	{ "adc", &Instruction::decode_rAX_Iz, OP_ADC, FLAG_NONE },
+	{ "push", &Instruction::decode_SegSS, OP_PUSH, FLAG_NONE },	// ia-32 only
+	{ "pop", &Instruction::decode_SegSS, OP_POP, FLAG_NONE },		// ia-32 only
+	{ "sbb", &Instruction::decode_Eb_Gb, OP_SBB, FLAG_NONE },
+	{ "sbb", &Instruction::decode_Ev_Gv, OP_SBB, FLAG_NONE },
+	{ "sbb", &Instruction::decode_Gb_Eb, OP_SBB, FLAG_NONE },
+	{ "sbb", &Instruction::decode_Gv_Ev, OP_SBB, FLAG_NONE },
+	{ "sbb", &Instruction::decode_AL_Ib, OP_SBB, FLAG_NONE },
+	{ "sbb", &Instruction::decode_rAX_Iz, OP_SBB, FLAG_NONE },
+	{ "push", &Instruction::decode_SegDS, OP_PUSH, FLAG_NONE },	// ia-32 only
+	{ "pop", &Instruction::decode_SegDS, OP_POP, FLAG_NONE },	// ia-32 only
 	
 	/* 0x20 - 0x2f */
-	{ "and", &Instruction::decode_Eb_Gb, OP_AND }, 
-	{ "and", &Instruction::decode_Ev_Gv, OP_AND }, 
-	{ "and", &Instruction::decode_Gb_Eb, OP_AND }, 
-	{ "and", &Instruction::decode_Gv_Ev, OP_AND }, 
-	{ "and", &Instruction::decode_AL_Ib, OP_AND }, 
-	{ "and", &Instruction::decode_rAX_Iz, OP_AND }, 
-	{ "prefix es", &Instruction::decode_invalid, OP_PREFIX },
-	{ "daa", &Instruction::decode0, OP_DAA }, 						// ia-32 only
-	{ "sub", &Instruction::decode_Eb_Gb, OP_SUB }, 
-	{ "sub", &Instruction::decode_Ev_Gv, OP_SUB }, 
-	{ "sub", &Instruction::decode_Gb_Eb, OP_SUB }, 
-	{ "sub", &Instruction::decode_Gv_Ev, OP_SUB }, 
-	{ "sub", &Instruction::decode_AL_Ib, OP_SUB }, 
-	{ "sub", &Instruction::decode_rAX_Iz, OP_SUB }, 
-	{ "prefix cs", &Instruction::decode_invalid, OP_PREFIX },
-	{ "das", &Instruction::decode0, OP_DAS },						// ia-32 only
+	{ "and", &Instruction::decode_Eb_Gb, OP_AND, FLAG_NONE }, 
+	{ "and", &Instruction::decode_Ev_Gv, OP_AND, FLAG_NONE }, 
+	{ "and", &Instruction::decode_Gb_Eb, OP_AND, FLAG_NONE }, 
+	{ "and", &Instruction::decode_Gv_Ev, OP_AND, FLAG_NONE }, 
+	{ "and", &Instruction::decode_AL_Ib, OP_AND, FLAG_NONE }, 
+	{ "and", &Instruction::decode_rAX_Iz, OP_AND, FLAG_NONE }, 
+	{ "prefix es", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
+	{ "daa", &Instruction::decode0, OP_DAA, FLAG_NONE }, 						// ia-32 only
+	{ "sub", &Instruction::decode_Eb_Gb, OP_SUB, FLAG_NONE }, 
+	{ "sub", &Instruction::decode_Ev_Gv, OP_SUB, FLAG_NONE }, 
+	{ "sub", &Instruction::decode_Gb_Eb, OP_SUB, FLAG_NONE }, 
+	{ "sub", &Instruction::decode_Gv_Ev, OP_SUB, FLAG_NONE }, 
+	{ "sub", &Instruction::decode_AL_Ib, OP_SUB, FLAG_NONE }, 
+	{ "sub", &Instruction::decode_rAX_Iz, OP_SUB, FLAG_NONE }, 
+	{ "prefix cs", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
+	{ "das", &Instruction::decode0, OP_DAS, FLAG_NONE },						// ia-32 only
 	
 	/* 0x30 - 0x3f */
-	{ "xor", &Instruction::decode_Eb_Gb, OP_XOR },
-	{ "xor", &Instruction::decode_Ev_Gv, OP_XOR },
-	{ "xor", &Instruction::decode_Gb_Eb, OP_XOR },
-	{ "xor", &Instruction::decode_Gv_Ev, OP_XOR },
-	{ "xor", &Instruction::decode_AL_Ib, OP_XOR },
-	{ "xor", &Instruction::decode_rAX_Iz, OP_XOR },
-	{ "prefix ss", &Instruction::decode_invalid, OP_PREFIX },
-	{ "aaa", &Instruction::decode0, OP_AAA },						// ia-32 only
-	{ "cmp", &Instruction::decode_Eb_Gb, OP_CMP },
-	{ "cmp", &Instruction::decode_Ev_Gv, OP_CMP },
-	{ "cmp", &Instruction::decode_Gb_Eb, OP_CMP },
-	{ "cmp", &Instruction::decode_Gv_Ev, OP_CMP },
-	{ "cmp", &Instruction::decode_AL_Ib, OP_CMP },
-	{ "cmp", &Instruction::decode_rAX_Iz, OP_CMP },
-	{ "prefix ds", &Instruction::decode_invalid, OP_PREFIX },
-	{ "aas", &Instruction::decode0, OP_AAS },						// ia-32 only
+	{ "xor", &Instruction::decode_Eb_Gb, OP_XOR, FLAG_NONE },
+	{ "xor", &Instruction::decode_Ev_Gv, OP_XOR, FLAG_NONE },
+	{ "xor", &Instruction::decode_Gb_Eb, OP_XOR, FLAG_NONE },
+	{ "xor", &Instruction::decode_Gv_Ev, OP_XOR, FLAG_NONE },
+	{ "xor", &Instruction::decode_AL_Ib, OP_XOR, FLAG_NONE },
+	{ "xor", &Instruction::decode_rAX_Iz, OP_XOR, FLAG_NONE },
+	{ "prefix ss", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
+	{ "aaa", &Instruction::decode0, OP_AAA, FLAG_NONE },						// ia-32 only
+	{ "cmp", &Instruction::decode_Eb_Gb, OP_CMP, FLAG_NONE },
+	{ "cmp", &Instruction::decode_Ev_Gv, OP_CMP, FLAG_NONE },
+	{ "cmp", &Instruction::decode_Gb_Eb, OP_CMP, FLAG_NONE },
+	{ "cmp", &Instruction::decode_Gv_Ev, OP_CMP, FLAG_NONE },
+	{ "cmp", &Instruction::decode_AL_Ib, OP_CMP, FLAG_NONE },
+	{ "cmp", &Instruction::decode_rAX_Iz, OP_CMP, FLAG_NONE },
+	{ "prefix ds", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
+	{ "aas", &Instruction::decode0, OP_AAS, FLAG_NONE },						// ia-32 only
 	
 	/* 0x40 - 0x4f */
-	{ "inc", &Instruction::decode_rAX, OP_INC },	// ia-32 only (REX byte)
-	{ "inc", &Instruction::decode_rCX, OP_INC },	// ia-32 only (REX byte)
-	{ "inc", &Instruction::decode_rDX, OP_INC },	// ia-32 only (REX byte)
-	{ "inc", &Instruction::decode_rBX, OP_INC },	// ia-32 only (REX byte)
-	{ "inc", &Instruction::decode_rSP, OP_INC },	// ia-32 only (REX byte)
-	{ "inc", &Instruction::decode_rBP, OP_INC },	// ia-32 only (REX byte)
-	{ "inc", &Instruction::decode_rSI, OP_INC },	// ia-32 only (REX byte)
-	{ "inc", &Instruction::decode_rDI, OP_INC },	// ia-32 only (REX byte)
-	{ "dec", &Instruction::decode_rAX, OP_DEC },	// ia-32 only (REX byte)
-	{ "dec", &Instruction::decode_rCX, OP_DEC },	// ia-32 only (REX byte)
-	{ "dec", &Instruction::decode_rDX, OP_DEC },	// ia-32 only (REX byte)
-	{ "dec", &Instruction::decode_rBX, OP_DEC },	// ia-32 only (REX byte)
-	{ "dec", &Instruction::decode_rSP, OP_DEC },	// ia-32 only (REX byte)
-	{ "dec", &Instruction::decode_rBP, OP_DEC },	// ia-32 only (REX byte)
-	{ "dec", &Instruction::decode_rSI, OP_DEC },	// ia-32 only (REX byte)
-	{ "dec", &Instruction::decode_rDI, OP_DEC },	// ia-32 only (REX byte)
+	{ "inc", &Instruction::decode_rAX, OP_INC, FLAG_NONE },	// ia-32 only (REX byte)
+	{ "inc", &Instruction::decode_rCX, OP_INC, FLAG_NONE },	// ia-32 only (REX byte)
+	{ "inc", &Instruction::decode_rDX, OP_INC, FLAG_NONE },	// ia-32 only (REX byte)
+	{ "inc", &Instruction::decode_rBX, OP_INC, FLAG_NONE },	// ia-32 only (REX byte)
+	{ "inc", &Instruction::decode_rSP, OP_INC, FLAG_NONE },	// ia-32 only (REX byte)
+	{ "inc", &Instruction::decode_rBP, OP_INC, FLAG_NONE },	// ia-32 only (REX byte)
+	{ "inc", &Instruction::decode_rSI, OP_INC, FLAG_NONE },	// ia-32 only (REX byte)
+	{ "inc", &Instruction::decode_rDI, OP_INC, FLAG_NONE },	// ia-32 only (REX byte)
+	{ "dec", &Instruction::decode_rAX, OP_DEC, FLAG_NONE },	// ia-32 only (REX byte)
+	{ "dec", &Instruction::decode_rCX, OP_DEC, FLAG_NONE },	// ia-32 only (REX byte)
+	{ "dec", &Instruction::decode_rDX, OP_DEC, FLAG_NONE },	// ia-32 only (REX byte)
+	{ "dec", &Instruction::decode_rBX, OP_DEC, FLAG_NONE },	// ia-32 only (REX byte)
+	{ "dec", &Instruction::decode_rSP, OP_DEC, FLAG_NONE },	// ia-32 only (REX byte)
+	{ "dec", &Instruction::decode_rBP, OP_DEC, FLAG_NONE },	// ia-32 only (REX byte)
+	{ "dec", &Instruction::decode_rSI, OP_DEC, FLAG_NONE },	// ia-32 only (REX byte)
+	{ "dec", &Instruction::decode_rDI, OP_DEC, FLAG_NONE },	// ia-32 only (REX byte)
 
 	/* 0x50 - 0x5f */
-	{ "push", &Instruction::decode_rAX, OP_PUSH },
-	{ "push", &Instruction::decode_rCX, OP_PUSH },
-	{ "push", &Instruction::decode_rDX, OP_PUSH },
-	{ "push", &Instruction::decode_rBX, OP_PUSH },
-	{ "push", &Instruction::decode_rSP, OP_PUSH },
-	{ "push", &Instruction::decode_rBP, OP_PUSH },
-	{ "push", &Instruction::decode_rSI, OP_PUSH },
-	{ "push", &Instruction::decode_rDI, OP_PUSH },
-	{ "pop", &Instruction::decode_rAX, OP_POP },
-	{ "pop", &Instruction::decode_rCX, OP_POP },
-	{ "pop", &Instruction::decode_rDX, OP_POP },
-	{ "pop", &Instruction::decode_rBX, OP_POP },
-	{ "pop", &Instruction::decode_rSP, OP_POP },
-	{ "pop", &Instruction::decode_rBP, OP_POP },
-	{ "pop", &Instruction::decode_rSI, OP_POP },
-	{ "pop", &Instruction::decode_rDI, OP_POP },
+	{ "push", &Instruction::decode_rAX, OP_PUSH, FLAG_NONE },
+	{ "push", &Instruction::decode_rCX, OP_PUSH, FLAG_NONE },
+	{ "push", &Instruction::decode_rDX, OP_PUSH, FLAG_NONE },
+	{ "push", &Instruction::decode_rBX, OP_PUSH, FLAG_NONE },
+	{ "push", &Instruction::decode_rSP, OP_PUSH, FLAG_NONE },
+	{ "push", &Instruction::decode_rBP, OP_PUSH, FLAG_NONE },
+	{ "push", &Instruction::decode_rSI, OP_PUSH, FLAG_NONE },
+	{ "push", &Instruction::decode_rDI, OP_PUSH, FLAG_NONE },
+	{ "pop", &Instruction::decode_rAX, OP_POP, FLAG_NONE },
+	{ "pop", &Instruction::decode_rCX, OP_POP, FLAG_NONE },
+	{ "pop", &Instruction::decode_rDX, OP_POP, FLAG_NONE },
+	{ "pop", &Instruction::decode_rBX, OP_POP, FLAG_NONE },
+	{ "pop", &Instruction::decode_rSP, OP_POP, FLAG_NONE },
+	{ "pop", &Instruction::decode_rBP, OP_POP, FLAG_NONE },
+	{ "pop", &Instruction::decode_rSI, OP_POP, FLAG_NONE },
+	{ "pop", &Instruction::decode_rDI, OP_POP, FLAG_NONE },
 	
 	/* 0x60 - 0x6f */
-	{ "pushaw/pushad", &Instruction::decode_pushaw_pushad_invalid, OP_PUSHA },	// ia-32 only
-	{ "popaw/popad", &Instruction::decode_popaw_popad_invalid, OP_POPA },		// ia-32 only
-	{ "bound", &Instruction::decode_Gv_Ma, OP_BOUND },					// ia-32 only
-	{ "arpl", &Instruction::decode_Ew_Gw, OP_ARPL },					// x86-64: movsxd Gv,Ev
-	{ "prefix fs", &Instruction::decode_invalid, OP_PREFIX },
-	{ "prefix gs", &Instruction::decode_invalid, OP_PREFIX },
-	{ "prefix data16", &Instruction::decode_invalid, OP_PREFIX },
-	{ "prefix addr16", &Instruction::decode_invalid, OP_PREFIX },
-	{ "push", &Instruction::decode_Iz, OP_PUSH },
-	{ "imul", &Instruction::decode_Gv_Ev_Iz, OP_IMUL },
-	{ "push", &Instruction::decode_Ib, OP_PUSH },
-	{ "imul", &Instruction::decode_Gv_Ev_Ib, OP_IMUL },
-	{ "insb", &Instruction::decode0, OP_INS },
-	{ "insw/insd", &Instruction::decode_insw_insd_invalid, OP_INS },
-	{ "outsb", &Instruction::decode0, OP_OUTS },
-	{ "outsw/outsd", &Instruction::decode_outsw_outsd_invalid, OP_OUTS },
+	{ "pushaw/pushad", &Instruction::decode_pushaw_pushad_invalid, OP_PUSHA, FLAG_NONE },	// ia-32 only
+	{ "popaw/popad", &Instruction::decode_popaw_popad_invalid, OP_POPA, FLAG_NONE },		// ia-32 only
+	{ "bound", &Instruction::decode_Gv_Ma, OP_BOUND, FLAG_NONE },					// ia-32 only
+	{ "arpl", &Instruction::decode_Ew_Gw, OP_ARPL, FLAG_NONE },					// x86-64: movsxd Gv,Ev
+	{ "prefix fs", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
+	{ "prefix gs", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
+	{ "prefix data16", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
+	{ "prefix addr16", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
+	{ "push", &Instruction::decode_Iz, OP_PUSH, FLAG_NONE },
+	{ "imul", &Instruction::decode_Gv_Ev_Iz, OP_IMUL, FLAG_NONE },
+	{ "push", &Instruction::decode_Ib, OP_PUSH, FLAG_NONE },
+	{ "imul", &Instruction::decode_Gv_Ev_Ib, OP_IMUL, FLAG_NONE },
+	{ "insb", &Instruction::decode0, OP_INS, FLAG_NONE },
+	{ "insw/insd", &Instruction::decode_insw_insd_invalid, OP_INS, FLAG_NONE },
+	{ "outsb", &Instruction::decode0, OP_OUTS, FLAG_NONE },
+	{ "outsw/outsd", &Instruction::decode_outsw_outsd_invalid, OP_OUTS, FLAG_NONE },
 		
 	/* 0x70 - 0x7f */
-	{ "jo", &Instruction::decode_Jb, OP_JCC },
-	{ "jno", &Instruction::decode_Jb, OP_JCC },
-	{ "jb", &Instruction::decode_Jb, OP_JCC },
-	{ "jnb", &Instruction::decode_Jb, OP_JCC },
-	{ "jz", &Instruction::decode_Jb, OP_JCC },
-	{ "jnz", &Instruction::decode_Jb, OP_JCC },
-	{ "jbe", &Instruction::decode_Jb, OP_JCC },
-	{ "jnbe", &Instruction::decode_Jb, OP_JCC },
-	{ "js", &Instruction::decode_Jb, OP_JCC },
-	{ "jns", &Instruction::decode_Jb, OP_JCC },
-	{ "jp", &Instruction::decode_Jb, OP_JCC },
-	{ "jnp", &Instruction::decode_Jb, OP_JCC },
-	{ "jl", &Instruction::decode_Jb, OP_JCC },
-	{ "jnl", &Instruction::decode_Jb, OP_JCC },
-	{ "jle", &Instruction::decode_Jb, OP_JCC },
-	{ "jnle", &Instruction::decode_Jb, OP_JCC },
+	{ "jo", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
+	{ "jno", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
+	{ "jb", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
+	{ "jnb", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
+	{ "jz", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
+	{ "jnz", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
+	{ "jbe", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
+	{ "jnbe", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
+	{ "js", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
+	{ "jns", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
+	{ "jp", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
+	{ "jnp", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
+	{ "jl", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
+	{ "jnl", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
+	{ "jle", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
+	{ "jnle", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
 	
 	/* 0x80 - 0x8f */
-	{ "group1", &Instruction::decode_group1, OP_GROUP1 },
-	{ "group1", &Instruction::decode_group1, OP_GROUP1 },
-	{ "group1", &Instruction::decode_group1, OP_GROUP1 },				// ia-32 only
-	{ "group1", &Instruction::decode_group1, OP_GROUP1 },
-	{ "test", &Instruction::decode_Eb_Gb, OP_TEST },
-	{ "test", &Instruction::decode_Ev_Gv, OP_TEST },
-	{ "xchg", &Instruction::decode_Gb_Eb, OP_XCHG },
-	{ "xchg", &Instruction::decode_Gv_Ev, OP_XCHG },
-	{ "mov", &Instruction::decode_Eb_Gb, OP_MOV },
-	{ "mov", &Instruction::decode_Ev_Gv, OP_MOV },
-	{ "mov", &Instruction::decode_Gb_Eb, OP_MOV },
-	{ "mov", &Instruction::decode_Gv_Ev, OP_MOV },
-	{ "mov", &Instruction::decode_Ev_Sw, OP_MOV },
-	{ "lea", &Instruction::decode_Gv_M, OP_LEA },
-	{ "mov", &Instruction::decode_Sw_Ew, OP_MOV },
-	{ "group10", &Instruction::decode_group10, OP_GROUP10 },
+	{ "group1", &Instruction::decode_group1, OP_GROUP1, FLAG_NONE },
+	{ "group1", &Instruction::decode_group1, OP_GROUP1, FLAG_NONE },
+	{ "group1", &Instruction::decode_group1, OP_GROUP1, FLAG_NONE },				// ia-32 only
+	{ "group1", &Instruction::decode_group1, OP_GROUP1, FLAG_NONE },
+	{ "test", &Instruction::decode_Eb_Gb, OP_TEST, FLAG_NONE },
+	{ "test", &Instruction::decode_Ev_Gv, OP_TEST, FLAG_NONE },
+	{ "xchg", &Instruction::decode_Gb_Eb, OP_XCHG, FLAG_NONE },
+	{ "xchg", &Instruction::decode_Gv_Ev, OP_XCHG, FLAG_NONE },
+	{ "mov", &Instruction::decode_Eb_Gb, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_Ev_Gv, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_Gb_Eb, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_Gv_Ev, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_Ev_Sw, OP_MOV, FLAG_NONE },
+	{ "lea", &Instruction::decode_Gv_M, OP_LEA, FLAG_NONE },
+	{ "mov", &Instruction::decode_Sw_Ew, OP_MOV, FLAG_NONE },
+	{ "group10", &Instruction::decode_group10, OP_GROUP10, FLAG_NONE },
 	
 	/* 0x90 - 0x9f */
-	{ "xchg", &Instruction::decode_rAX_rAX_NOREX, OP_XCHG },
-	{ "xchg", &Instruction::decode_rCX_rAX_NOREX, OP_XCHG },
-	{ "xchg", &Instruction::decode_rDX_rAX_NOREX, OP_XCHG },
-	{ "xchg", &Instruction::decode_rBX_rAX_NOREX, OP_XCHG },
-	{ "xchg", &Instruction::decode_rSP_rAX_NOREX, OP_XCHG },
-	{ "xchg", &Instruction::decode_rBP_rAX_NOREX, OP_XCHG },
-	{ "xchg", &Instruction::decode_rSI_rAX_NOREX, OP_XCHG },
-	{ "xchg", &Instruction::decode_rDI_rAX_NOREX, OP_XCHG },
-	{ "cbw/cwde/cdqe", &Instruction::decode_cbw_cwde_cdqe, OP_CWDE },
-	{ "cwd/cdq/cqo", &Instruction::decode_cwd_cdq_cqo, OP_CDQ },
-	{ "callf", &Instruction::decode_Ap, OP_CALL },					// ia-32 only
-	{ "wait", &Instruction::decode0, OP_WAIT },
-	{ "pushfw/pushfd/pushfq", &Instruction::decode_pushfw_pushfd_pushfq, OP_PUSHF },
-	{ "popfw/popfd/popfq", &Instruction::decode_popfw_popfd_popfq, OP_POPF },
-	{ "sahf", &Instruction::decode0, OP_SAHF },
-	{ "lahf", &Instruction::decode0, OP_LAHF },
+	{ "xchg", &Instruction::decode_rAX_rAX_NOREX, OP_XCHG, FLAG_NONE },
+	{ "xchg", &Instruction::decode_rCX_rAX_NOREX, OP_XCHG, FLAG_NONE },
+	{ "xchg", &Instruction::decode_rDX_rAX_NOREX, OP_XCHG, FLAG_NONE },
+	{ "xchg", &Instruction::decode_rBX_rAX_NOREX, OP_XCHG, FLAG_NONE },
+	{ "xchg", &Instruction::decode_rSP_rAX_NOREX, OP_XCHG, FLAG_NONE },
+	{ "xchg", &Instruction::decode_rBP_rAX_NOREX, OP_XCHG, FLAG_NONE },
+	{ "xchg", &Instruction::decode_rSI_rAX_NOREX, OP_XCHG, FLAG_NONE },
+	{ "xchg", &Instruction::decode_rDI_rAX_NOREX, OP_XCHG, FLAG_NONE },
+	{ "cbw/cwde/cdqe", &Instruction::decode_cbw_cwde_cdqe, OP_CWDE, FLAG_NONE },
+	{ "cwd/cdq/cqo", &Instruction::decode_cwd_cdq_cqo, OP_CDQ, FLAG_NONE },
+	{ "callf", &Instruction::decode_Ap, OP_CALL, FLAG_NONE },					// ia-32 only
+	{ "wait", &Instruction::decode0, OP_WAIT, FLAG_NONE },
+	{ "pushfw/pushfd/pushfq", &Instruction::decode_pushfw_pushfd_pushfq, OP_PUSHF, FLAG_NONE },
+	{ "popfw/popfd/popfq", &Instruction::decode_popfw_popfd_popfq, OP_POPF, FLAG_NONE },
+	{ "sahf", &Instruction::decode0, OP_SAHF, FLAG_NONE },
+	{ "lahf", &Instruction::decode0, OP_LAHF, FLAG_NONE },
 	
 	/* 0xa0 - 0xaf */
-	{ "mov", &Instruction::decode_AL_Ob, OP_MOV },
-	{ "mov", &Instruction::decode_rAX_Ov, OP_MOV },
-	{ "mov", &Instruction::decode_Ob_AL, OP_MOV },
-	{ "mov", &Instruction::decode_Ov_rAX, OP_MOV },
-	{ "movsb", &Instruction::decode0, OP_MOVS },
-	{ "movsw/movsd/movsq", &Instruction::decode_movsw_movsd_movsq, OP_MOVS },
-	{ "cmpsb", &Instruction::decode0, OP_CMPS },
-	{ "cmpsw/cmpsd", &Instruction::decode_cmpsw_cmpsd_invalid, OP_CMPS },
-	{ "test", &Instruction::decode_AL_Ib, OP_TEST },
-	{ "test", &Instruction::decode_rAX_Iz, OP_TEST },
-	{ "stosb", &Instruction::decode0, OP_STOS },
-	{ "stosw/stosd/stosq", &Instruction::decode_stosw_stosd_stosq, OP_STOS },
-	{ "lodsb", &Instruction::decode0, OP_LODS },
-	{ "lodsw/lodsd/lodsq", &Instruction::decode_lodsw_lodsd_lodsq, OP_LODS },
-	{ "scasb", &Instruction::decode0, OP_SCAS },
-	{ "scasw/scasd/scasq", &Instruction::decode_scasw_scasd_scasq, OP_SCAS },
+	{ "mov", &Instruction::decode_AL_Ob, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_rAX_Ov, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_Ob_AL, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_Ov_rAX, OP_MOV, FLAG_NONE },
+	{ "movsb", &Instruction::decode0, OP_MOVS, FLAG_NONE },
+	{ "movsw/movsd/movsq", &Instruction::decode_movsw_movsd_movsq, OP_MOVS, FLAG_NONE },
+	{ "cmpsb", &Instruction::decode0, OP_CMPS, FLAG_NONE },
+	{ "cmpsw/cmpsd", &Instruction::decode_cmpsw_cmpsd_invalid, OP_CMPS, FLAG_NONE },
+	{ "test", &Instruction::decode_AL_Ib, OP_TEST, FLAG_NONE },
+	{ "test", &Instruction::decode_rAX_Iz, OP_TEST, FLAG_NONE },
+	{ "stosb", &Instruction::decode0, OP_STOS, FLAG_NONE },
+	{ "stosw/stosd/stosq", &Instruction::decode_stosw_stosd_stosq, OP_STOS, FLAG_NONE },
+	{ "lodsb", &Instruction::decode0, OP_LODS, FLAG_NONE },
+	{ "lodsw/lodsd/lodsq", &Instruction::decode_lodsw_lodsd_lodsq, OP_LODS, FLAG_NONE },
+	{ "scasb", &Instruction::decode0, OP_SCAS, FLAG_NONE },
+	{ "scasw/scasd/scasq", &Instruction::decode_scasw_scasd_scasq, OP_SCAS, FLAG_NONE },
 	
 	/* 0xb0 - 0xbf */
-	{ "mov", &Instruction::decode_AL_Ib, OP_MOV },
-	{ "mov", &Instruction::decode_CL_Ib, OP_MOV },
-	{ "mov", &Instruction::decode_DL_Ib, OP_MOV },
-	{ "mov", &Instruction::decode_BL_Ib, OP_MOV },
-	{ "mov", &Instruction::decode_AH_Ib, OP_MOV },
-	{ "mov", &Instruction::decode_CH_Ib, OP_MOV },
-	{ "mov", &Instruction::decode_DH_Ib, OP_MOV },
-	{ "mov", &Instruction::decode_BH_Ib, OP_MOV },
-	{ "mov", &Instruction::decode_rAX_Iv, OP_MOV },	
-	{ "mov", &Instruction::decode_rCX_Iv, OP_MOV },
-	{ "mov", &Instruction::decode_rDX_Iv, OP_MOV },
-	{ "mov", &Instruction::decode_rBX_Iv, OP_MOV },
-	{ "mov", &Instruction::decode_rSP_Iv, OP_MOV },
-	{ "mov", &Instruction::decode_rBP_Iv, OP_MOV },
-	{ "mov", &Instruction::decode_rSI_Iv, OP_MOV },
-	{ "mov", &Instruction::decode_rDI_Iv, OP_MOV },
+	{ "mov", &Instruction::decode_AL_Ib, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_CL_Ib, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_DL_Ib, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_BL_Ib, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_AH_Ib, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_CH_Ib, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_DH_Ib, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_BH_Ib, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_rAX_Iv, OP_MOV, FLAG_NONE },	
+	{ "mov", &Instruction::decode_rCX_Iv, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_rDX_Iv, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_rBX_Iv, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_rSP_Iv, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_rBP_Iv, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_rSI_Iv, OP_MOV, FLAG_NONE },
+	{ "mov", &Instruction::decode_rDI_Iv, OP_MOV, FLAG_NONE },
 	
 	/* 0xc0 - 0xcf */
-	{ "group2", &Instruction::decode_group2, OP_GROUP2 },
-	{ "group2", &Instruction::decode_group2, OP_GROUP2 },
-	{ "ret", &Instruction::decode_Iw, OP_RET },
-	{ "ret", &Instruction::decode0, OP_RET },
-	{ "les", &Instruction::decode_Gz_Mp, OP_LES },				// ia-32 only
-	{ "lds", &Instruction::decode_Gz_Mp, OP_LDS },				// ia-32 only
-	{ "group12", &Instruction::decode_group12, OP_GROUP12 },
-	{ "group12", &Instruction::decode_group12, OP_GROUP12 },
-	{ "enter", &Instruction::decode_Iw_Ib, OP_ENTER },
-	{ "leave", &Instruction::decode0, OP_LEAVE },
-	{ "retf", &Instruction::decode_Iw, OP_RETF },
-	{ "retf", &Instruction::decode0, OP_RETF },
-	{ "int3", &Instruction::decode0, OP_INT3 },
-	{ "int", &Instruction::decode_Ib, OP_INT },
-	{ "into", &Instruction::decode0, OP_INTO },					// ia-32 only
-	{ "iretw/iret/iretq", &Instruction::decode_iretw_iret_iretq, OP_IRET },
+	{ "group2", &Instruction::decode_group2, OP_GROUP2, FLAG_NONE },
+	{ "group2", &Instruction::decode_group2, OP_GROUP2, FLAG_NONE },
+	{ "ret", &Instruction::decode_Iw, OP_RET, FLAG_NONE },
+	{ "ret", &Instruction::decode0, OP_RET, FLAG_NONE },
+	{ "les", &Instruction::decode_Gz_Mp, OP_LES, FLAG_NONE },				// ia-32 only
+	{ "lds", &Instruction::decode_Gz_Mp, OP_LDS, FLAG_NONE },				// ia-32 only
+	{ "group12", &Instruction::decode_group12, OP_GROUP12, FLAG_NONE },
+	{ "group12", &Instruction::decode_group12, OP_GROUP12, FLAG_NONE },
+	{ "enter", &Instruction::decode_Iw_Ib, OP_ENTER, FLAG_NONE },
+	{ "leave", &Instruction::decode0, OP_LEAVE, FLAG_NONE },
+	{ "retf", &Instruction::decode_Iw, OP_RETF, FLAG_NONE },
+	{ "retf", &Instruction::decode0, OP_RETF, FLAG_NONE },
+	{ "int3", &Instruction::decode0, OP_INT3, FLAG_NONE },
+	{ "int", &Instruction::decode_Ib, OP_INT, FLAG_NONE },
+	{ "into", &Instruction::decode0, OP_INTO, FLAG_NONE },					// ia-32 only
+	{ "iretw/iret/iretq", &Instruction::decode_iretw_iret_iretq, OP_IRET, FLAG_NONE },
 	
 	/* 0xd0 - 0xdf */
-	{ "group2", &Instruction::decode_group2D, OP_GROUP2 },
-	{ "group2", &Instruction::decode_group2D, OP_GROUP2 },
-	{ "group2", &Instruction::decode_group2D, OP_GROUP2 },
-	{ "group2", &Instruction::decode_group2D, OP_GROUP2 },
-	{ "aam", &Instruction::decode_Ib, OP_AAM },					// ia-32 only
-	{ "aad", &Instruction::decode_Ib, OP_AAD },					// ia-32 only
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "xlat", &Instruction::decode0, OP_XLAT },
-	{ "esc0", &Instruction::decode_x87, OP_FPU },
-	{ "esc1", &Instruction::decode_x87, OP_FPU },
-	{ "esc2", &Instruction::decode_x87, OP_FPU },
-	{ "esc3", &Instruction::decode_x87, OP_FPU },
-	{ "esc4", &Instruction::decode_x87, OP_FPU },
-	{ "esc5", &Instruction::decode_x87, OP_FPU },
-	{ "esc6", &Instruction::decode_x87, OP_FPU },
-	{ "esc7", &Instruction::decode_x87, OP_FPU },
+	{ "group2", &Instruction::decode_group2D, OP_GROUP2, FLAG_NONE },
+	{ "group2", &Instruction::decode_group2D, OP_GROUP2, FLAG_NONE },
+	{ "group2", &Instruction::decode_group2D, OP_GROUP2, FLAG_NONE },
+	{ "group2", &Instruction::decode_group2D, OP_GROUP2, FLAG_NONE },
+	{ "aam", &Instruction::decode_Ib, OP_AAM, FLAG_NONE },					// ia-32 only
+	{ "aad", &Instruction::decode_Ib, OP_AAD, FLAG_NONE },					// ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "xlat", &Instruction::decode0, OP_XLAT, FLAG_NONE },
+	{ "esc0", &Instruction::decode_x87, OP_FPU, FLAG_NONE },
+	{ "esc1", &Instruction::decode_x87, OP_FPU, FLAG_NONE },
+	{ "esc2", &Instruction::decode_x87, OP_FPU, FLAG_NONE },
+	{ "esc3", &Instruction::decode_x87, OP_FPU, FLAG_NONE },
+	{ "esc4", &Instruction::decode_x87, OP_FPU, FLAG_NONE },
+	{ "esc5", &Instruction::decode_x87, OP_FPU, FLAG_NONE },
+	{ "esc6", &Instruction::decode_x87, OP_FPU, FLAG_NONE },
+	{ "esc7", &Instruction::decode_x87, OP_FPU, FLAG_NONE },
 	
 	/* 0xe0 - 0xef */
-	{ "loopne", &Instruction::decode_Jb, OP_LOOPNE },
-	{ "loope", &Instruction::decode_Jb, OP_LOOPE },
-	{ "loop", &Instruction::decode_Jb, OP_LOOP },
-	{ "jcez", &Instruction::decode_Jb, OP_JCC },
-	{ "in", &Instruction::decode_AL_Ib, OP_IN },		
-	{ "in", &Instruction::decode_eAX_Ib, OP_IN },
-	{ "out", &Instruction::decode_Ib_AL, OP_OUT },
-	{ "out", &Instruction::decode_Ib_eAX, OP_OUT },
-	{ "call", &Instruction::decode_Jz, OP_CALL },
-	{ "jmp", &Instruction::decode_Jz, OP_JMP },
-	{ "jmp", &Instruction::decode_Ap, OP_JMP },					// ia-32 only
-	{ "jmp", &Instruction::decode_Jb, OP_JMP },
-	{ "in", &Instruction::decode_AL_DX, OP_IN },
-	{ "in", &Instruction::decode_eAX_DX, OP_IN },
-	{ "out", &Instruction::decode_DX_AL, OP_OUT },
-	{ "out", &Instruction::decode_DX_eAX, OP_OUT },
+	{ "loopne", &Instruction::decode_Jb, OP_LOOPNE, FLAG_NONE },
+	{ "loope", &Instruction::decode_Jb, OP_LOOPE, FLAG_NONE },
+	{ "loop", &Instruction::decode_Jb, OP_LOOP, FLAG_NONE },
+	{ "jcez", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
+	{ "in", &Instruction::decode_AL_Ib, OP_IN, FLAG_NONE },		
+	{ "in", &Instruction::decode_eAX_Ib, OP_IN, FLAG_NONE },
+	{ "out", &Instruction::decode_Ib_AL, OP_OUT, FLAG_NONE },
+	{ "out", &Instruction::decode_Ib_eAX, OP_OUT, FLAG_NONE },
+	{ "call", &Instruction::decode_Jz, OP_CALL, FLAG_NONE },
+	{ "jmp", &Instruction::decode_Jz, OP_JMP, FLAG_NONE },
+	{ "jmp", &Instruction::decode_Ap, OP_JMP, FLAG_NONE },					// ia-32 only
+	{ "jmp", &Instruction::decode_Jb, OP_JMP, FLAG_NONE },
+	{ "in", &Instruction::decode_AL_DX, OP_IN, FLAG_NONE },
+	{ "in", &Instruction::decode_eAX_DX, OP_IN, FLAG_NONE },
+	{ "out", &Instruction::decode_DX_AL, OP_OUT, FLAG_NONE },
+	{ "out", &Instruction::decode_DX_eAX, OP_OUT, FLAG_NONE },
 	
 	/* 0xf0 - 0xff */
-	{ "prefix lock", &Instruction::decode_invalid, OP_PREFIX },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID },
-	{ "prefix repne", &Instruction::decode_invalid, OP_PREFIX },
-	{ "prefix rep", &Instruction::decode_invalid, OP_PREFIX },
-	{ "hlt", &Instruction::decode0, OP_HLT },
-	{ "cmc", &Instruction::decode0, OP_CMC },
-	{ "group3", &Instruction::decode_group3, OP_GROUP3 },
-	{ "group3", &Instruction::decode_group3, OP_GROUP3 },
-	{ "clc", &Instruction::decode0, OP_CLC },
-	{ "stc", &Instruction::decode0, OP_STC },
-	{ "cli", &Instruction::decode0, OP_CLI },
-	{ "sti", &Instruction::decode0, OP_STI },
-	{ "cld", &Instruction::decode0, OP_CLD },
-	{ "std", &Instruction::decode0, OP_STD },
-	{ "group4", &Instruction::decode_group4, OP_GROUP4 },
+	{ "prefix lock", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "prefix repne", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
+	{ "prefix rep", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
+	{ "hlt", &Instruction::decode0, OP_HLT, FLAG_NONE },
+	{ "cmc", &Instruction::decode0, OP_CMC, FLAG_NONE },
+	{ "group3", &Instruction::decode_group3, OP_GROUP3, FLAG_NONE },
+	{ "group3", &Instruction::decode_group3, OP_GROUP3, FLAG_NONE },
+	{ "clc", &Instruction::decode0, OP_CLC, FLAG_NONE },
+	{ "stc", &Instruction::decode0, OP_STC, FLAG_NONE },
+	{ "cli", &Instruction::decode0, OP_CLI, FLAG_NONE },
+	{ "sti", &Instruction::decode0, OP_STI, FLAG_NONE },
+	{ "cld", &Instruction::decode0, OP_CLD, FLAG_NONE },
+	{ "std", &Instruction::decode0, OP_STD, FLAG_NONE },
+	{ "group4", &Instruction::decode_group4, OP_GROUP4, FLAG_NONE },
 	{ "group5", &Instruction::decode_group5, OP_GROUP5 }
 };
 
