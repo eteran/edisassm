@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2006 - 2009 Evan Teran
+Copyright (C) 2006 - 2011 Evan Teran
                    eteran@alum.rit.edu
 
 This program is free software; you can redistribute it and/or modify
@@ -1207,6 +1207,10 @@ private:
 	static typename operand_t::Register index_to_reg_cr(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_CR0 + index); }
 	static typename operand_t::Register index_to_reg_dr(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_DR0 + index); }
 	static typename operand_t::Register index_to_reg_tr(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_TR0 + index); }
+	
+private:
+	std::string format() const;
+	std::string format(bool upper) const;
 	
 public:
 	std::string format_prefix() const;

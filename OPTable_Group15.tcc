@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2006 - 2009 Evan Teran
+Copyright (C) 2006 - 2011 Evan Teran
                    eteran@alum.rit.edu
 
 This program is free software; you can redistribute it and/or modify
@@ -45,7 +45,6 @@ const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group15_66[8]
 	{ "psllq", &Instruction::decode_Uo_Ib, OP_PSLLQ, FLAG_NONE },
 	{ "pslldq", &Instruction::decode_Uo_Ib, OP_PSLLDQ, FLAG_NONE }
 };
-
 
 #endif
 

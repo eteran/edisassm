@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2006 - 2009 Evan Teran
+Copyright (C) 2006 - 2011 Evan Teran
                    eteran@alum.rit.edu
 
 This program is free software; you can redistribute it and/or modify
