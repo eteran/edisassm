@@ -26,9 +26,9 @@ namespace edisassm {
 
 struct x86 {
 public:
-	static const int BITS			= 32;
-	static const int MAX_SIZE		= 20;
-	static const int MAX_OPERANDS	= 3;
+	static const int BITS         = 32;
+	static const int MAX_SIZE     = 20;
+	static const int MAX_OPERANDS = 3;
 
 public:
 	typedef uint32_t address_t;
@@ -36,7 +36,7 @@ public:
 
 struct x86_64 : x86 {
 public:
-	static const int BITS			= 64;
+	static const int BITS = 64;
 
 public:
 	typedef uint64_t address_t;

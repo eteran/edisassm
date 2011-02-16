@@ -51,7 +51,7 @@ private:
 	typedef Instruction<M>			instruction_t;
 	
 private:
-	instruction_t *owner_;
+	instruction_t *	owner_;
 
 public:
 	enum Register {
