@@ -107,7 +107,7 @@ int main(int argc, char *argv[]) {
 			disassemble<edisassm::x86>(start_ptr, end_ptr, rva_address, flags);
 		}
 	} else {
-		std::cerr << "could not open the file: " << argv[2] << std::endl;
+		std::cerr << "could not open the file: " << filename << std::endl;
 		return -1;
 	}
 }
