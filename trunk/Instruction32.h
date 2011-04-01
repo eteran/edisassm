@@ -846,36 +846,38 @@ Instruction<M> &Instruction<M>::operator=(const Instruction &rhs) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: swap(Instruction &other)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::swap(Instruction &other) {
+	using std::swap;
+	
 	for(int i = 0; i < M::MAX_OPERANDS; ++i) {
 		operands_[i].swap(other.operands_[i]);
 	}
 	
-	std::swap(rva_, other.rva_);
-	std::swap(buffer_, other.buffer_);
-	std::swap(buffer_size_, other.buffer_size_);	
-	std::swap(opcode_, other.opcode_);
-	std::swap(mnemonic_, other.mnemonic_);
-	std::swap(type_, other.type_);
-	std::swap(prefix_, other.prefix_);
-	std::swap(mandatory_prefix_, other.mandatory_prefix_);
-	std::swap(operand_count_, other.operand_count_);
-	std::swap(modrm_size_, other.modrm_size_);
-	std::swap(sib_size_, other.sib_size_);
-	std::swap(disp_size_, other.disp_size_);
-	std::swap(prefix_size_, other.prefix_size_);
-	std::swap(immediate_size_, other.immediate_size_);
-	std::swap(opcode_size_, other.opcode_size_);
-	std::swap(rex_byte_, other.rex_byte_);
-	std::swap(rex_size_, other.rex_size_);
-	std::swap(private_buffer_, other.private_buffer_);
+	swap(rva_, other.rva_);
+	swap(buffer_, other.buffer_);
+	swap(buffer_size_, other.buffer_size_);    
+	swap(opcode_, other.opcode_);
+	swap(mnemonic_, other.mnemonic_);
+	swap(type_, other.type_);
+	swap(prefix_, other.prefix_);
+	swap(mandatory_prefix_, other.mandatory_prefix_);
+	swap(operand_count_, other.operand_count_);
+	swap(modrm_size_, other.modrm_size_);
+	swap(sib_size_, other.sib_size_);
+	swap(disp_size_, other.disp_size_);
+	swap(prefix_size_, other.prefix_size_);
+	swap(immediate_size_, other.immediate_size_);
+	swap(opcode_size_, other.opcode_size_);
+	swap(rex_byte_, other.rex_byte_);
+	swap(rex_size_, other.rex_size_);
+	swap(private_buffer_, other.private_buffer_);
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: find_opcode(const std::string &opcode, T (&table)[N], int opcode_count)
 //------------------------------------------------------------------------------
 template <class M>
 template <class T, int N>
@@ -894,7 +896,7 @@ void Instruction<M>::find_opcode(const std::string &opcode, T (&table)[N], int o
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: assemble(std::string instruction)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::assemble(std::string instruction) {
@@ -1104,7 +1106,7 @@ void Instruction<M>::decode_x87(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_2byte(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_2byte(const uint8_t *buf) {
@@ -1137,7 +1139,7 @@ void Instruction<M>::decode_2byte(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_3byte_38(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_3byte_38(const uint8_t *buf) {
@@ -1724,7 +1726,7 @@ void Instruction<M>::decode_Gv(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_Iv(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Iv(const uint8_t *buf) {
@@ -1736,7 +1738,7 @@ void Instruction<M>::decode_Iv(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_Ob(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Ob(const uint8_t *buf) {
@@ -1751,7 +1753,7 @@ void Instruction<M>::decode_Ob(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_Ow(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Ow(const uint8_t *buf) {
@@ -1766,7 +1768,7 @@ void Instruction<M>::decode_Ow(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_Od(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Od(const uint8_t *buf) {
@@ -1781,7 +1783,7 @@ void Instruction<M>::decode_Od(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_Ov(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Ov(const uint8_t *buf) {
@@ -1793,7 +1795,7 @@ void Instruction<M>::decode_Ov(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_Mv(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Mv(const uint8_t *buf) {
@@ -1805,7 +1807,7 @@ void Instruction<M>::decode_Mv(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_AL(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_AL(const uint8_t *buf) {
@@ -1817,7 +1819,7 @@ void Instruction<M>::decode_AL(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_CL(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_CL(const uint8_t *buf) {
@@ -1829,7 +1831,7 @@ void Instruction<M>::decode_CL(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_DL(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_DL(const uint8_t *buf) {
@@ -1841,7 +1843,7 @@ void Instruction<M>::decode_DL(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_BL(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_BL(const uint8_t *buf) {
@@ -1853,7 +1855,7 @@ void Instruction<M>::decode_BL(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_AH(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_AH(const uint8_t *buf) {
@@ -1865,7 +1867,7 @@ void Instruction<M>::decode_AH(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_CH(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_CH(const uint8_t *buf) {
@@ -1877,7 +1879,7 @@ void Instruction<M>::decode_CH(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_DH(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_DH(const uint8_t *buf) {
@@ -1889,7 +1891,7 @@ void Instruction<M>::decode_DH(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_BH(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_BH(const uint8_t *buf) {
@@ -1901,7 +1903,7 @@ void Instruction<M>::decode_BH(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_rAX_NOREX(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rAX_NOREX(const uint8_t *buf) { 
@@ -1913,7 +1915,7 @@ void Instruction<M>::decode_rAX_NOREX(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_eAX(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_eAX(const uint8_t *buf) {
@@ -1923,7 +1925,7 @@ void Instruction<M>::decode_eAX(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_rAX(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rAX(const uint8_t *buf) { 
@@ -1953,7 +1955,7 @@ void Instruction<M>::decode_rAX(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_rCX(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rCX(const uint8_t *buf) { 
@@ -1983,7 +1985,7 @@ void Instruction<M>::decode_rCX(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_rDX(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rDX(const uint8_t *buf) { 
@@ -2013,7 +2015,7 @@ void Instruction<M>::decode_rDX(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_rBX(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rBX(const uint8_t *buf) { 
@@ -2043,7 +2045,7 @@ void Instruction<M>::decode_rBX(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_rSP(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rSP(const uint8_t *buf) { 
@@ -2073,7 +2075,7 @@ void Instruction<M>::decode_rSP(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_rBP(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rBP(const uint8_t *buf) { 
@@ -2103,7 +2105,7 @@ void Instruction<M>::decode_rBP(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_rSI(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rSI(const uint8_t *buf) { 
@@ -2133,7 +2135,7 @@ void Instruction<M>::decode_rSI(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_rDI(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rDI(const uint8_t *buf) { 
@@ -2257,7 +2259,7 @@ std::string Instruction<M>::format_prefix() const {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: decode_Reg_Mem(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 template <void (Instruction<M>::*F1)(const uint8_t *), void (Instruction<M>::*F2)(const uint8_t *)>
