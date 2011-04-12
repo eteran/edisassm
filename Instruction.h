@@ -61,8 +61,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class ModRM;
 
-#define BOUNDS_CHECK(new_size, max_size) do { if((new_size) > (max_size)) { throw instruction_too_big(instruction_t::size()); } } while(0)
-
 template <class M>
 class EDB_EXPORT Instruction {
 public:
@@ -76,7 +74,7 @@ public:
 	typedef Instruction<M>			instruction_t;
 	
 public:
-	typedef void (instruction_t::*DecoderFunction)(const uint8_t *);
+	typedef void (instruction_t::*decoder_t)(const uint8_t *);
 	
 public:
 	Instruction(const uint8_t *buf, std::size_t size, address_t rva, const std::nothrow_t&) throw();
@@ -86,6 +84,11 @@ public:
 public:
 	Instruction(const Instruction &);
 	Instruction &operator=(const Instruction &);
+	
+public:
+	operator void *() const {
+		return reinterpret_cast<void *>(valid());
+	}
 	
 public:
 	void swap(Instruction &other);
@@ -111,6 +114,7 @@ public:
 	};
 
 	enum Prefix {
+		PREFIX_NONE				= 0x00000000,
 		PREFIX_LOCK				= 0x00000001,
 		PREFIX_REPNE			= 0x00000002,
 		PREFIX_REP				= 0x00000004,
@@ -711,18 +715,36 @@ private:
 		
 private:	
 	// convinience binders,	
-	template <DecoderFunction F1, DecoderFunction F2, DecoderFunction F3>
-	void decode3(const uint8_t *buf);
+	template <decoder_t F1, decoder_t F2, decoder_t F3>
+	void decode3(const uint8_t *buf) {
+		(this->*F1)(buf);
+		(this->*F2)(buf);
+		(this->*F3)(buf);
+	}
 	
-	template <DecoderFunction F1, DecoderFunction F2>
-	void decode2(const uint8_t *buf);
+	template <decoder_t F1, decoder_t F2>
+	void decode2(const uint8_t *buf) {
+		(this->*F1)(buf);
+		(this->*F2)(buf);
+	}
 	
-	template <DecoderFunction F1>
-	void decode1(const uint8_t *buf);
+	template <decoder_t F1>
+	void decode1(const uint8_t *buf) {
+		(this->*F1)(buf);
+	}
 	
-	void decode0(const uint8_t *buf);
+	void decode0(const uint8_t *buf) {
+		UNUSED(buf);
+	}
 	
 private:
+
+	// tests if the new size is allowed
+	void bounds_check(std::size_t new_size) {
+		if(new_size > buffer_size_) {
+			throw instruction_too_big(instruction_t::size());
+		}
+	}
 
 	template <class T>
 	void decode_size_sensitive(const uint8_t *buf, const T(&opcodes)[3]) {
@@ -859,7 +881,7 @@ private:
 
 
 	// special cases for things like SMSW Rv/Mw
-	template <DecoderFunction F1, DecoderFunction F2>
+	template <decoder_t F1, decoder_t F2>
 	void decode_Reg_Mem(const uint8_t *buf);
 	
 	void decode_Rv_Mw(const uint8_t *buf)	{ decode_Reg_Mem<&instruction_t::decode_Rv, &instruction_t::decode_Mw>(buf); }
@@ -1206,21 +1228,22 @@ private:
 	static typename operand_t::Register index_to_reg_cr(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_CR0 + index); }
 	static typename operand_t::Register index_to_reg_dr(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_DR0 + index); }
 	static typename operand_t::Register index_to_reg_tr(uint8_t index)	{ return static_cast<typename operand_t::Register>(operand_t::REG_TR0 + index); }
-	
+
+
 private:
 	std::string format() const;
 	std::string format(bool upper) const;
 	
 public:
 	std::string format_prefix() const;
-	std::string mnemonic() const						{ return mnemonic_; }
+	std::string mnemonic() const						{ return opcode_->mnemonic; }
 	unsigned int operand_count() const					{ return operand_count_; }
 	unsigned int prefix_size() const					{ return prefix_size_; }
 	unsigned int size() const							{ return prefix_size_ + rex_size_ + opcode_size_ + modrm_size_ + sib_size_ + disp_size_ + immediate_size_; }
 	uint32_t prefix() const								{ return prefix_; }
 	address_t rva() const								{ return rva_; }
-	bool valid() const									{ return type_ != OP_INVALID; }
-	Type type() const									{ return type_; }
+	bool valid() const									{ return type() != OP_INVALID; }
+	Type type() const									{ return opcode_->type; }
 	const uint8_t *buffer() const						{ return buffer_; }
 	const operand_t &operand(std::size_t index) const	{ return operands_[index]; }
 
@@ -1228,63 +1251,83 @@ private:
 	int operand_size() const;
 	
 private:
-	struct OpcodeEntry {
+	struct opcode_entry {
 		const char 		*mnemonic;
-		DecoderFunction	decoder;
+		decoder_t		decoder;
 		Type			type;
 		unsigned int	flags;
 	};
 	
 private:
-	static const OpcodeEntry Opcodes_x87_Lo[64];
-	static const OpcodeEntry Opcodes_x87_Hi[0x200];
+	static const opcode_entry Opcodes_x87_Lo[64];
+	static const opcode_entry Opcodes_x87_Hi[0x200];
 	
-	static const OpcodeEntry Opcodes[0x100];
-	static const OpcodeEntry Opcodes_2Byte_NA[0x100];
-	static const OpcodeEntry Opcodes_2Byte_66[0x100];
-	static const OpcodeEntry Opcodes_2Byte_F2[0x100];
-	static const OpcodeEntry Opcodes_2Byte_F3[0x100];
-	static const OpcodeEntry Opcodes_3Byte_38_NA[0x100];
-	static const OpcodeEntry Opcodes_3Byte_38_66[0x100];
-	static const OpcodeEntry Opcodes_3Byte_38_F2[0x100];
-	static const OpcodeEntry Opcodes_3Byte_3A_NA[0x100];
-	static const OpcodeEntry Opcodes_3Byte_3A_66[0x100];
+	static const opcode_entry Opcodes[0x100];
+	static const opcode_entry Opcodes_2Byte_NA[0x100];
+	static const opcode_entry Opcodes_2Byte_66[0x100];
+	static const opcode_entry Opcodes_2Byte_F2[0x100];
+	static const opcode_entry Opcodes_2Byte_F3[0x100];
+	static const opcode_entry Opcodes_3Byte_38_NA[0x100];
+	static const opcode_entry Opcodes_3Byte_38_66[0x100];
+	static const opcode_entry Opcodes_3Byte_38_F2[0x100];
+	static const opcode_entry Opcodes_3Byte_3A_NA[0x100];
+	static const opcode_entry Opcodes_3Byte_3A_66[0x100];
 	
 private:
-	static const OpcodeEntry Opcodes_Group1[32];
-	static const OpcodeEntry Opcodes_Group2[16];
-	static const OpcodeEntry Opcodes_Group2D[32];
-	static const OpcodeEntry Opcodes_Group3[16];
-	static const OpcodeEntry Opcodes_Group4[8];
-	static const OpcodeEntry Opcodes_Group5[8];
-	static const OpcodeEntry Opcodes_Group6[8];
-	static const OpcodeEntry Opcodes_Group7[8];
-	static const OpcodeEntry Opcodes_Group7A[64];
-	static const OpcodeEntry Opcodes_Group8[8];
-	static const OpcodeEntry Opcodes_Group9[8];
-	static const OpcodeEntry Opcodes_Group9_66[8];
-	static const OpcodeEntry Opcodes_Group9_F3[8];
-	static const OpcodeEntry Opcodes_Group10[8];
-	static const OpcodeEntry Opcodes_Group11[8];
-	static const OpcodeEntry Opcodes_Group12[16];
-	static const OpcodeEntry Opcodes_Group13[8];
-	static const OpcodeEntry Opcodes_Group13_66[8];
-	static const OpcodeEntry Opcodes_Group14[8];
-	static const OpcodeEntry Opcodes_Group14_66[8];
-	static const OpcodeEntry Opcodes_Group15[8];
-	static const OpcodeEntry Opcodes_Group15_66[8];
-	static const OpcodeEntry Opcodes_Group16_Reg[8];
-	static const OpcodeEntry Opcodes_Group16_Mem[8];
-	static const OpcodeEntry Opcodes_Group17[64];
+	static const opcode_entry Opcodes_Group1[32];
+	static const opcode_entry Opcodes_Group2[16];
+	static const opcode_entry Opcodes_Group2D[32];
+	static const opcode_entry Opcodes_Group3[16];
+	static const opcode_entry Opcodes_Group4[8];
+	static const opcode_entry Opcodes_Group5[8];
+	static const opcode_entry Opcodes_Group6[8];
+	static const opcode_entry Opcodes_Group7[8];
+	static const opcode_entry Opcodes_Group7A[64];
+	static const opcode_entry Opcodes_Group8[8];
+	static const opcode_entry Opcodes_Group9[8];
+	static const opcode_entry Opcodes_Group9_66[8];
+	static const opcode_entry Opcodes_Group9_F3[8];
+	static const opcode_entry Opcodes_Group10[8];
+	static const opcode_entry Opcodes_Group11[8];
+	static const opcode_entry Opcodes_Group12[16];
+	static const opcode_entry Opcodes_Group13[8];
+	static const opcode_entry Opcodes_Group13_66[8];
+	static const opcode_entry Opcodes_Group14[8];
+	static const opcode_entry Opcodes_Group14_66[8];
+	static const opcode_entry Opcodes_Group15[8];
+	static const opcode_entry Opcodes_Group15_66[8];
+	static const opcode_entry Opcodes_Group16_Reg[8];
+	static const opcode_entry Opcodes_Group16_Mem[8];
+	static const opcode_entry Opcodes_Group17[64];
+	
+private:
+	// other
+	static const opcode_entry Opcodes_nop_pause_xchg[3];
+	static const opcode_entry Opcodes_cbw_cwde_cdqe[3];
+	static const opcode_entry Opcodes_cwd_cdq_cqo[3];
+	static const opcode_entry Opcodes_stosw_stosd_stosq[3];
+	static const opcode_entry Opcodes_lodsw_lodsd_lodsq[3];
+	static const opcode_entry Opcodes_scasw_scasd_scasq[3];
+	static const opcode_entry Opcodes_iretw_iret_iretq[3];
+	static const opcode_entry Opcodes_movsw_movsd_movsq[3];
+	static const opcode_entry Opcodes_popfw_popfd_popfq[3];
+	static const opcode_entry Opcodes_pushfw_pushfd_pushfq[3];
+	static const opcode_entry Opcodes_invalid_cmpxchg8b_cmpxchg16b[3];
+	static const opcode_entry Opcodes_insw_insd_invalid[3];
+	static const opcode_entry Opcodes_outsw_outsd_invalid[3];
+	static const opcode_entry Opcodes_cmpsw_cmpsd_invalid[3];
+	static const opcode_entry Opcodes_pushaw_pushad_invalid[3];
+	static const opcode_entry Opcodes_popaw_popad_invalid[3];
+	
+private:
+	static const opcode_entry Opcode_invalid;
 
 private:	
 	operand_t				operands_[M::MAX_OPERANDS];
 	address_t				rva_;
 	const uint8_t *			buffer_;
 	std::size_t				buffer_size_;
-	const OpcodeEntry *		opcode_;
-	const char *			mnemonic_;
-	Type					type_;
+	const opcode_entry *	opcode_;
 	
 	uint32_t				prefix_;
 	uint32_t				mandatory_prefix_;

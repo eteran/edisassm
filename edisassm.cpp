@@ -38,7 +38,7 @@ void disassemble(const uint8_t *start_ptr, const uint8_t *end_ptr, typename Inst
 	const uint8_t *ptr = start_ptr;
 	while(ptr < end_ptr) {
 		insn_t instruction(ptr, end_ptr - ptr,  rva + (ptr - start_ptr), std::nothrow);
-		if(instruction.valid()) {
+		if(instruction) {
 			std::cout << std::hex << (rva + (ptr - start_ptr)) << ": ";
 			if(flags & FLAG_SHOW_BYTES) {
 				for(unsigned int i = 0; i < instruction.size(); ++i) {
@@ -92,11 +92,10 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	
-	std::vector<uint8_t> data;	
 	std::ifstream file(filename.c_str(), std::ios::binary);
 	if(file) {
 
-		data = std::vector<uint8_t>(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
+		const std::vector<uint8_t> data((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 		const uint8_t *const start_ptr	= &data[0];
 		const uint8_t *const end_ptr	= start_ptr + data.size();
 

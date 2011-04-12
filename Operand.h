@@ -142,7 +142,7 @@ public:
 private:
 	Type type_;
 	
-public:
+private:
 	enum DisplacementType {
 		DISP_NONE,
 		DISP_U8,
@@ -153,40 +153,58 @@ public:
 		DISP_S32
 	};
 
-	union {
-		int8_t		sbyte;
-		int16_t		sword;
-		int32_t		sdword;
-		int64_t		sqword;
-		uint8_t		byte;
-		uint16_t	word;
-		uint32_t	dword;
-		uint64_t	qword;
-		Register	reg;
-		
-		struct {
-			uint16_t seg;
-			uint32_t offset;
-		} absolute;
+public:
 
+	struct absolute_t {
+		uint16_t seg;
+		uint32_t offset;
+	};
+	
+	struct expression_t {
+		union {
+			int8_t		s_disp8;
+			int16_t		s_disp16;
+			int32_t		s_disp32;
+			uint8_t		u_disp8;
+			uint16_t	u_disp16;
+			uint32_t	u_disp32;
+		};
 
-		struct {
-			union {
-				int8_t		s_disp8;
-				int16_t		s_disp16;
-				int32_t		s_disp32;
-				uint8_t		u_disp8;
-				uint16_t	u_disp16;
-				uint32_t	u_disp32;
-			};
-			
-			DisplacementType	displacement_type;
-			Register			base;
-			Register			index;
-			uint8_t				scale;
-		} expression;
+		DisplacementType	displacement_type;
+		Register			base;
+		Register			index;
+		uint8_t				scale;
 	};
 
+	union {
+		int8_t       sbyte;
+		int16_t      sword;
+		int32_t      sdword;
+		int64_t      sqword;
+		uint8_t      byte;
+		uint16_t     word;
+		uint32_t     dword;
+		uint64_t     qword;
+		Register     reg;
+		absolute_t   absolute;
+		expression_t expression;
+	} u;
+
+public:
+	
+	int8_t  sbyte() const  { return u.sbyte; }
+	int16_t sword() const  { return u.sword; }
+	int32_t sdword() const { return u.sdword; }
+	int64_t sqword() const { return u.sqword; }
+	uint8_t  byte() const  { return u.byte; }
+	uint16_t word() const  { return u.word; }
+	uint32_t dword() const { return u.dword; }
+	uint64_t qword() const { return u.qword; }
+	Register reg() const   { return u.reg; }
+
+	absolute_t absolute() const    { return u.absolute; }
+	expression_t expression() const { return u.expression; }
+	
 private:
 	std::string format_immediate(bool upper) const;
 	std::string format_relative(bool upper) const;
@@ -199,17 +217,17 @@ private:
 	
 public:
 	void swap(Operand &other);
-	instruction_t *owner() const	{ return owner_; }
+	instruction_t *owner() const         { return owner_; }
 	int32_t displacement() const;
 	int64_t immediate() const;
 	address_t relative_target() const;
 	Type general_type() const;
-	Type complete_type() const		{ return type_; }
-	bool valid() const				{ return type_ != TYPE_INVALID; }
+	Type complete_type() const           { return type_; }
+	bool valid() const                   { return type_ != TYPE_INVALID; }
 	
 private:
-	void invalidate()						{ type_ = TYPE_INVALID; }
-	void set_owner(instruction_t *owner)	{ owner_ = owner; }
+	void invalidate()                    { type_ = TYPE_INVALID; }
+	void set_owner(instruction_t *owner) { owner_ = owner; }
 	
 public:
 	static std::string register_name(Register reg);

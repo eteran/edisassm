@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Operand.h"
 
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group2[16] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group2[16] = {
 	{ "rol", &Instruction::decode_Eb_Ib, OP_ROL, FLAG_NONE },
 	{ "ror", &Instruction::decode_Eb_Ib, OP_ROR, FLAG_NONE },
 	{ "rcl", &Instruction::decode_Eb_Ib, OP_RCL, FLAG_NONE },
@@ -43,7 +43,7 @@ const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group2[16] = 
 };
 
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group2D[32] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group2D[32] = {
 	{ "rol", &Instruction::decode_Eb_1, OP_ROL, FLAG_NONE },
 	{ "ror", &Instruction::decode_Eb_1, OP_ROR, FLAG_NONE },
 	{ "rcl", &Instruction::decode_Eb_1, OP_RCL, FLAG_NONE },

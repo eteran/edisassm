@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define INSTRUCTION64_20070427_TCC_
 
 template <>
-const Instruction<edisassm::x86_64>::OpcodeEntry Instruction<edisassm::x86_64>::Opcodes_Group7A[64] = {
+const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>::Opcodes_Group7A[64] = {
 	{ "vmcall", &Instruction::decode0, OP_VMCALL, FLAG_NONE },
 	{ "vmlaunch", &Instruction::decode0, OP_VMLAUNCH, FLAG_NONE },
 	{ "vmresume", &Instruction::decode0, OP_VMRESUME, FLAG_NONE },
@@ -97,7 +97,7 @@ const Instruction<edisassm::x86_64>::OpcodeEntry Instruction<edisassm::x86_64>::
 };
 
 template <>
-const Instruction<edisassm::x86_64>::OpcodeEntry Instruction<edisassm::x86_64>::Opcodes[0x100] = {
+const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>::Opcodes[0x100] = {
 
 	/* 0x00 - 0x0f */
 	{ "add", &Instruction::decode_Eb_Gb, OP_ADD, FLAG_NONE },
@@ -390,7 +390,7 @@ const Instruction<edisassm::x86_64>::OpcodeEntry Instruction<edisassm::x86_64>::
 
 
 template <>
-const Instruction<edisassm::x86_64>::OpcodeEntry Instruction<edisassm::x86_64>::Opcodes_2Byte_NA[0x100] = {
+const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>::Opcodes_2Byte_NA[0x100] = {
 
 	/* 0x0f 0x00 - 0x0f 0x0f */
 	{ "group6", &Instruction::decode_group6, OP_GROUP6, FLAG_NONE },
@@ -684,7 +684,7 @@ const Instruction<edisassm::x86_64>::OpcodeEntry Instruction<edisassm::x86_64>::
 
 // 2 byte opcodes with a 66 prefix
 template <>
-const Instruction<edisassm::x86_64>::OpcodeEntry Instruction<edisassm::x86_64>::Opcodes_2Byte_66[0x100] = {
+const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>::Opcodes_2Byte_66[0x100] = {
 	
 	/* 0x0f 0x00 - 0x0f 0x0f */
 	{ "group6", &Instruction::decode_group6, OP_GROUP6, FLAG_NONE },
@@ -977,7 +977,7 @@ const Instruction<edisassm::x86_64>::OpcodeEntry Instruction<edisassm::x86_64>::
 
 // 2 byte opcodes with a f2 prefix
 template <>
-const Instruction<edisassm::x86_64>::OpcodeEntry Instruction<edisassm::x86_64>::Opcodes_2Byte_F2[0x100] = {
+const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>::Opcodes_2Byte_F2[0x100] = {
 
 	/* 0x0f 0x00 - 0x0f 0x0f */
 	{ "group6", &Instruction::decode_group6, OP_GROUP6, FLAG_NONE },
@@ -1270,7 +1270,7 @@ const Instruction<edisassm::x86_64>::OpcodeEntry Instruction<edisassm::x86_64>::
 
 // 2 byte opcodes with a f3 prefix
 template <>
-const Instruction<edisassm::x86_64>::OpcodeEntry Instruction<edisassm::x86_64>::Opcodes_2Byte_F3[0x100] = {
+const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>::Opcodes_2Byte_F3[0x100] = {
 
 	/* 0x0f 0x00 - 0x0f 0x0f */
 	{ "group6", &Instruction::decode_group6, OP_GROUP6, FLAG_NONE },
@@ -1563,7 +1563,7 @@ const Instruction<edisassm::x86_64>::OpcodeEntry Instruction<edisassm::x86_64>::
 
 
 template <>
-const Instruction<edisassm::x86_64>::OpcodeEntry Instruction<edisassm::x86_64>::Opcodes_3Byte_38_66[0x100] = {
+const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>::Opcodes_3Byte_38_66[0x100] = {
 	
 	/* 0x0f 0x38 0x00 - 0x0f 0x38 0x0f */
 	{ "pshufb", &Instruction::decode_Vo_Wo, OP_PSHUFB, FLAG_NONE },
@@ -1720,7 +1720,7 @@ const Instruction<edisassm::x86_64>::OpcodeEntry Instruction<edisassm::x86_64>::
 };
 
 template <>
-const Instruction<edisassm::x86_64>::OpcodeEntry Instruction<edisassm::x86_64>::Opcodes_3Byte_3A_66[0x100] = {
+const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>::Opcodes_3Byte_3A_66[0x100] = {
 	/* 0x0f 0x3a 0x00 - 0x0f 0x3a 0x0f */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },

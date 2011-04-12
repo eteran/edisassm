@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Operand.h"
 
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_2Byte_NA[0x100] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x100] = {
 
 	/* 0x0f 0x00 - 0x0f 0x0f */
 	{ "group6", &Instruction::decode_group6, OP_GROUP6, FLAG_NONE },
@@ -316,7 +316,7 @@ const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_2Byte_NA[0x10
 
 // 2 byte opcodes with a 66 prefix
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_2Byte_66[0x100] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x100] = {
 	
 	/* 0x0f 0x00 - 0x0f 0x0f */
 	{ "group6", &Instruction::decode_group6, OP_GROUP6, FLAG_NONE },
@@ -609,7 +609,7 @@ const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_2Byte_66[0x10
 
 // 2 byte opcodes with a f2 prefix
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_2Byte_F2[0x100] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x100] = {
 
 	/* 0x0f 0x00 - 0x0f 0x0f */
 	{ "group6", &Instruction::decode_group6, OP_GROUP6, FLAG_NONE },
@@ -902,7 +902,7 @@ const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_2Byte_F2[0x10
 
 // 2 byte opcodes with a f3 prefix
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_2Byte_F3[0x100] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x100] = {
 
 	/* 0x0f 0x00 - 0x0f 0x0f */
 	{ "group6", &Instruction::decode_group6, OP_GROUP6, FLAG_NONE },
