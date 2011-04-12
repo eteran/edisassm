@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Operand.h"
 
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group17[64] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group17[64] = {
 	{ "prefetchnta", &Instruction::decode_M, OP_PREFETCHH, FLAG_NONE },
 	{ "prefetcht0", &Instruction::decode_M, OP_PREFETCHH, FLAG_NONE },
 	{ "prefetcht1", &Instruction::decode_M, OP_PREFETCHH, FLAG_NONE },

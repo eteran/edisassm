@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Operand.h"
 
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group9[8] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group9[8] = {
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "cmpxchg8b/cmpxchg16b", &Instruction::decode_invalid_cmpxchg8b_cmpxchg16b, OP_CMPXCHG, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -34,7 +34,7 @@ const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group9[8] = {
 };
 
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group9_66[8] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group9_66[8] = {
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "cmpxchg8b/cmpxchg16b", &Instruction::decode_invalid_cmpxchg8b_cmpxchg16b, OP_CMPXCHG, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -46,7 +46,7 @@ const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group9_66[8] 
 };
 
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_Group9_F3[8] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group9_F3[8] = {
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "cmpxchg8b/cmpxchg16b", &Instruction::decode_invalid_cmpxchg8b_cmpxchg16b, OP_CMPXCHG, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },

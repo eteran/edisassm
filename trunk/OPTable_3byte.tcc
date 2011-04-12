@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Operand.h"
 
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_3Byte_38_NA[0x100] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_3Byte_38_NA[0x100] = {
 	
 	/* 0x0f 0x38 0x00 - 0x0f 0x38 0x0f */
 	{ "pshufb", &Instruction::decode_Pq_Qq, OP_PSHUFB, FLAG_NONE },
@@ -119,7 +119,7 @@ const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_3Byte_38_NA[0
 };
 
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_3Byte_38_F2[0x100] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_3Byte_38_F2[0x100] = {
 	
 	/* 0x0f 0x38 0x00 - 0x0f 0x38 0x0f */
 	{ "pshufb", &Instruction::decode_Pq_Qq, OP_PSHUFB, FLAG_NONE },
@@ -216,7 +216,7 @@ const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_3Byte_38_F2[0
 };
 
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_3Byte_38_66[0x100] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_3Byte_38_66[0x100] = {
 	
 	/* 0x0f 0x38 0x00 - 0x0f 0x38 0x0f */
 	{ "pshufb", &Instruction::decode_Vo_Wo, OP_PSHUFB, FLAG_NONE },
@@ -373,7 +373,7 @@ const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_3Byte_38_66[0
 };
 
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_3Byte_3A_66[0x100] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_3Byte_3A_66[0x100] = {
 	/* 0x0f 0x3a 0x00 - 0x0f 0x3a 0x0f */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -499,7 +499,7 @@ const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_3Byte_3A_66[0
 };
 
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_3Byte_3A_NA[0x100] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_3Byte_3A_NA[0x100] = {
 	/* 0x0f 0x3a 0x00 - 0x0f 0x3a 0x0f */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },

@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // this table is for x87 opcodes with a mod < 0xc0
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_x87_Lo[64] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Lo[64] = {
 
 	/* 0xd8 0x00 - 0xd8 0xbf */
 	{ "fadd", &Instruction::decode_SingleReal, OP_FADD, FLAG_NONE },
@@ -108,7 +108,7 @@ const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_x87_Lo[64] = 
 
 // this table is for x87 opcodes with a mod >= 0xc0
 template <class M>
-const typename Instruction<M>::OpcodeEntry Instruction<M>::Opcodes_x87_Hi[0x200] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Hi[0x200] = {
 
 	/* 0xd8 0xc0 - 0xd8 0xff */
 	{ "fadd", &Instruction::template decode_ST_STi<0>, OP_FADD, FLAG_NONE },
