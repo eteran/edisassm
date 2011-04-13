@@ -142,7 +142,7 @@ public:
 private:
 	Type type_;
 	
-private:
+public:
 	enum DisplacementType {
 		DISP_NONE,
 		DISP_U8,
@@ -154,7 +154,6 @@ private:
 	};
 
 public:
-
 	struct absolute_t {
 		uint16_t seg;
 		uint32_t offset;
