@@ -1,7 +1,7 @@
 /*
 Copyright (C) 2006 - 2011 Evan Teran
                           eteran@alum.rit.edu
-				   
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -23,9 +23,9 @@ struct invalid_instruction : public std::exception {
 public:
 	invalid_instruction(std::size_t size) : size_(size) {
 	}
-	
+
 	std::size_t size() const { return size_; }
-	
+
 private:
 	std::size_t size_;
 };

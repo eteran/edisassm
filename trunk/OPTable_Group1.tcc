@@ -1,7 +1,7 @@
 /*
 Copyright (C) 2006 - 2011 Evan Teran
                           eteran@alum.rit.edu
-				   
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -31,7 +31,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group1[32] =
 	{ "sub", &Instruction::decode_Eb_Ib, OP_SUB, FLAG_NONE },
 	{ "xor", &Instruction::decode_Eb_Ib, OP_XOR, FLAG_NONE },
 	{ "cmp", &Instruction::decode_Eb_Ib, OP_CMP, FLAG_NONE },
-	
+
 	{ "add", &Instruction::decode_Ev_Iz, OP_ADD, FLAG_NONE },
 	{ "or", &Instruction::decode_Ev_Iz, OP_OR, FLAG_NONE },
 	{ "adc", &Instruction::decode_Ev_Iz, OP_ADC, FLAG_NONE },
@@ -40,7 +40,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group1[32] =
 	{ "sub", &Instruction::decode_Ev_Iz, OP_SUB, FLAG_NONE },
 	{ "xor", &Instruction::decode_Ev_Iz, OP_XOR, FLAG_NONE },
 	{ "cmp", &Instruction::decode_Ev_Iz, OP_CMP, FLAG_NONE },
-	
+
 	{ "add", &Instruction::decode_Eb_Ib, OP_ADD, FLAG_NONE },
 	{ "or", &Instruction::decode_Eb_Ib, OP_OR, FLAG_NONE },
 	{ "adc", &Instruction::decode_Eb_Ib, OP_ADC, FLAG_NONE },
@@ -49,7 +49,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group1[32] =
 	{ "sub", &Instruction::decode_Eb_Ib, OP_SUB, FLAG_NONE },
 	{ "xor", &Instruction::decode_Eb_Ib, OP_XOR, FLAG_NONE },
 	{ "cmp", &Instruction::decode_Eb_Ib, OP_CMP, FLAG_NONE },
-	
+
 	{ "add", &Instruction::decode_Ev_Ib, OP_ADD, FLAG_NONE },
 	{ "or", &Instruction::decode_Ev_Ib, OP_OR, FLAG_NONE },
 	{ "adc", &Instruction::decode_Ev_Ib, OP_ADC, FLAG_NONE },

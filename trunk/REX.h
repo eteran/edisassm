@@ -1,7 +1,7 @@
 /*
 Copyright (C) 2006 - 2011 Evan Teran
                           eteran@alum.rit.edu
-				   
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -25,18 +25,18 @@ class REX {
 public:
 	REX(uint8_t value) : value_(value) {
 	}
-	
+
 	REX(const REX &other) : value_(other.value_) {
 	}
-	
+
 	REX &operator=(const REX &rhs) {
 		value_ = rhs.value_;
 		return *this;
 	}
-	
+
 private:
 	uint8_t value_;
-	
+
 public:
 	bool is_rex() const	{ return (value_ & 0xf0) == 0x40; }
 	uint8_t w() const	{ return (value_ >> 3) & 0x01; }	// 64 bit mode

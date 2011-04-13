@@ -1,7 +1,7 @@
 /*
 Copyright (C) 2006 - 2011 Evan Teran
                           eteran@alum.rit.edu
-				   
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -34,17 +34,17 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Lo[64] =
 	{ "fsubr", &Instruction::decode_SingleReal, OP_FSUBR, FLAG_NONE },
 	{ "fdiv", &Instruction::decode_SingleReal, OP_FDIV, FLAG_NONE },
 	{ "fdivr", &Instruction::decode_SingleReal, OP_FDIVR, FLAG_NONE },
-	
+
 	/* 0xd9 0x00 - 0xd9 0xbf */
 	{ "fld", &Instruction::decode_SingleReal, OP_FLD, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "fst", &Instruction::decode_SingleReal, OP_FST, FLAG_NONE },
 	{ "fstp", &Instruction::decode_SingleReal, OP_FSTP, FLAG_NONE },
-	{ "fldenv", &Instruction::decode_M28, OP_FLDENV, FLAG_NONE },	
+	{ "fldenv", &Instruction::decode_M28, OP_FLDENV, FLAG_NONE },
 	{ "fldcw", &Instruction::decode_Mw, OP_FLDCW, FLAG_NONE },
 	{ "fstenv", &Instruction::decode_M28, OP_FSTENV, FLAG_NONE },
 	{ "fstcw", &Instruction::decode_Mw, OP_FSTCW, FLAG_NONE },
-	
+
 	/* 0xda 0x00 - 0xda 0xbf */
 	{ "fiadd", &Instruction::decode_ShortInteger, OP_FIADD, FLAG_NONE },
 	{ "fimul", &Instruction::decode_ShortInteger, OP_FIMUL, FLAG_NONE },
@@ -54,7 +54,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Lo[64] =
 	{ "fisubr", &Instruction::decode_ShortInteger, OP_FISUBR, FLAG_NONE },
 	{ "fidiv", &Instruction::decode_ShortInteger, OP_FIDIV, FLAG_NONE },
 	{ "fidivr", &Instruction::decode_ShortInteger, OP_FIDIVR, FLAG_NONE },
-	
+
 	/* 0xdb 0x00 - 0xdb 0xbf */
 	{ "fild", &Instruction::decode_ShortInteger, OP_FILD, FLAG_NONE },
 	{ "fisttp", &Instruction::decode_ShortInteger, OP_FISTTP, FLAG_NONE },
@@ -64,7 +64,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Lo[64] =
 	{ "fld", &Instruction::decode_ExtendedReal, OP_FLD, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "fstp", &Instruction::decode_ExtendedReal, OP_FSTP, FLAG_NONE },
-	
+
 	/* 0xdc 0x00 - 0xdc 0xbf */
 	{ "fadd", &Instruction::decode_DoubleReal, OP_FADD, FLAG_NONE },
 	{ "fmul", &Instruction::decode_DoubleReal, OP_FMUL, FLAG_NONE },
@@ -74,7 +74,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Lo[64] =
 	{ "fsubr", &Instruction::decode_DoubleReal, OP_FSUBR, FLAG_NONE },
 	{ "fdiv", &Instruction::decode_DoubleReal, OP_FDIV, FLAG_NONE },
 	{ "fdivr", &Instruction::decode_DoubleReal, OP_FDIVR, FLAG_NONE },
-	
+
 	/* 0xdd 0x00 - 0xdd 0xbf */
 	{ "fld", &Instruction::decode_DoubleReal, OP_FLD, FLAG_NONE },
 	{ "fisttp", &Instruction::decode_LongInteger, OP_FISTTP, FLAG_NONE },
@@ -84,7 +84,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Lo[64] =
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "fsave", &Instruction::decode_M108, OP_FSAVE, FLAG_NONE },
 	{ "fstsw", &Instruction::decode_Mw, OP_FSTSW, FLAG_NONE },
-	
+
 	/* 0xde 0x00 - 0xde 0xbf */
 	{ "fiadd", &Instruction::decode_WordInteger, OP_FIADD, FLAG_NONE },
 	{ "fimul", &Instruction::decode_WordInteger, OP_FIMUL, FLAG_NONE },
@@ -94,7 +94,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Lo[64] =
 	{ "fisubr", &Instruction::decode_WordInteger, OP_FISUBR, FLAG_NONE },
 	{ "fidiv", &Instruction::decode_WordInteger, OP_FIDIV, FLAG_NONE },
 	{ "fidivr", &Instruction::decode_WordInteger, OP_FIDIVR, FLAG_NONE },
-	
+
 	/* 0xdf 0x00 - 0xdf 0xbf */
 	{ "fild", &Instruction::decode_WordInteger, OP_FILD, FLAG_NONE },
 	{ "fisttp", &Instruction::decode_WordInteger, OP_FISTTP, FLAG_NONE },
@@ -175,7 +175,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Hi[0x200
 	{ "fdivr", &Instruction::template decode_ST_STi<5>, OP_FDIVR, FLAG_NONE },
 	{ "fdivr", &Instruction::template decode_ST_STi<6>, OP_FDIVR, FLAG_NONE },
 	{ "fdivr", &Instruction::template decode_ST_STi<7>, OP_FDIVR, FLAG_NONE },
-	
+
 	/* 0xd9 0xc0 - 0xd9 0xff */
 	{ "fld", &Instruction::template decode_STi<0>, OP_FLD, FLAG_NONE },
 	{ "fld", &Instruction::template decode_STi<1>, OP_FLD, FLAG_NONE },
@@ -184,7 +184,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Hi[0x200
 	{ "fld", &Instruction::template decode_STi<4>, OP_FLD, FLAG_NONE },
 	{ "fld", &Instruction::template decode_STi<5>, OP_FLD, FLAG_NONE },
 	{ "fld", &Instruction::template decode_STi<6>, OP_FLD, FLAG_NONE },
-	{ "fld", &Instruction::template decode_STi<7>, OP_FLD, FLAG_NONE },	
+	{ "fld", &Instruction::template decode_STi<7>, OP_FLD, FLAG_NONE },
 	{ "fxch", &Instruction::template decode_STi<0>, OP_FXCH, FLAG_NONE },
 	{ "fxch", &Instruction::template decode_STi<1>, OP_FXCH, FLAG_NONE },
 	{ "fxch", &Instruction::template decode_STi<2>, OP_FXCH, FLAG_NONE },
@@ -241,7 +241,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Hi[0x200
 	{ "fscale", &Instruction::decode0, OP_FSCALE, FLAG_NONE },
 	{ "fsin", &Instruction::decode0, OP_FSIN, FLAG_NONE },
 	{ "fcos", &Instruction::decode0, OP_FCOS, FLAG_NONE },
-		
+
 	/* 0xda 0xc0 - 0xda 0xff */
 	{ "fcmovb", &Instruction::template decode_ST_STi<0>, OP_FCMOVB, FLAG_NONE },
 	{ "fcmovb", &Instruction::template decode_ST_STi<1>, OP_FCMOVB, FLAG_NONE },
@@ -282,7 +282,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Hi[0x200
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "fucompp", &Instruction::decode0, OP_FUCOMPP, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -307,7 +307,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Hi[0x200
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 
 	/* 0xdb 0xc0 - 0xdb 0xff */
 	{ "fcmovnb", &Instruction::template decode_ST_STi<0>, OP_FCMOVNB, FLAG_NONE },
@@ -374,7 +374,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Hi[0x200
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-		
+
 	/* 0xdc 0xc0 - 0xdc 0xff */
 	{ "fadd", &Instruction::template decode_STi_ST<0>, OP_FADD, FLAG_NONE },
 	{ "fadd", &Instruction::template decode_STi_ST<1>, OP_FADD, FLAG_NONE },
@@ -440,7 +440,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Hi[0x200
 	{ "fdiv", &Instruction::template decode_STi_ST<5>, OP_FDIV, FLAG_NONE },
 	{ "fdiv", &Instruction::template decode_STi_ST<6>, OP_FDIV, FLAG_NONE },
 	{ "fdiv", &Instruction::template decode_STi_ST<7>, OP_FDIV, FLAG_NONE },
-	
+
 	/* 0xdd 0xc0 - 0xdd 0xff */
 	{ "ffree", &Instruction::template decode_STi<0>, OP_FFREE, FLAG_NONE },
 	{ "ffree", &Instruction::template decode_STi<1>, OP_FFREE, FLAG_NONE },
@@ -506,7 +506,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Hi[0x200
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0xde 0xc0 - 0xde 0xff */
 	{ "faddp", &Instruction::template decode_STi_ST<0>, OP_FADDP, FLAG_NONE },
 	{ "faddp", &Instruction::template decode_STi_ST<1>, OP_FADDP, FLAG_NONE },
@@ -531,7 +531,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Hi[0x200
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },  
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "fcompp", &Instruction::decode0, OP_FCOMPP, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -572,7 +572,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Hi[0x200
 	{ "fdivp", &Instruction::template decode_STi_ST<5>, OP_FDIVP, FLAG_NONE },
 	{ "fdivp", &Instruction::template decode_STi_ST<6>, OP_FDIVP, FLAG_NONE },
 	{ "fdivp", &Instruction::template decode_STi_ST<7>, OP_FDIVP, FLAG_NONE },
-	
+
 	/* 0xdf 0xc0 - 0xdf 0xff */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },

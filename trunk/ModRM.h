@@ -1,7 +1,7 @@
 /*
 Copyright (C) 2006 - 2011 Evan Teran
                           eteran@alum.rit.edu
-				   
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -25,19 +25,19 @@ class ModRM {
 public:
 	ModRM(uint8_t value) : value_(value) {
 	}
-	
+
 	ModRM(const ModRM &other) : value_(other.value_) {
 	}
-	
+
 	ModRM &operator=(const ModRM &rhs) {
 		value_ = rhs.value_;
 		return *this;
 	}
-	
+
 private:
 	uint8_t value_;
-	
-public:	
+
+public:
 	uint8_t rm() const	{ return value_ & 0x07; }
 	uint8_t reg() const	{ return (value_ >> 3) & 0x07; }
 	uint8_t mod() const	{ return (value_ >> 6) & 0x03; }

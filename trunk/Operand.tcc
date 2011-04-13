@@ -1,7 +1,7 @@
 /*
 Copyright (C) 2006 - 2011 Evan Teran
                           eteran@alum.rit.edu
-				   
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -32,9 +32,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Name: Operand()
 //------------------------------------------------------------------------------
 template <class M>
-Operand<M>::Operand() {
-	// i think this is the biggest member of the union
-	std::memset(&u.expression, 0, sizeof(u.expression));
+Operand<M>::Operand() : owner_(0), type_(TYPE_INVALID) {
+	using std::memset;
+	memset(&u, 0, sizeof(U));
 }
 
 //------------------------------------------------------------------------------
@@ -43,16 +43,10 @@ Operand<M>::Operand() {
 template <class M>
 void Operand<M>::swap(Operand &other) {
 	using std::swap;
-	
+
 	swap(owner_, other.owner_);
 	swap(type_, other.type_);
-	
-
-	// std::swap doesn't seem to like this union all of the time
-	char temp[sizeof(u.expression)];
-	std::memcpy(temp, &u.expression, sizeof(u.expression));
-	std::memcpy(&u.expression, &other.u.expression, sizeof(u.expression));
-	std::memcpy(&u.expression, temp, sizeof(u.expression));
+	swap(u, other.u);
 }
 
 //------------------------------------------------------------------------------
@@ -61,7 +55,7 @@ void Operand<M>::swap(Operand &other) {
 template <class M>
 std::string Operand<M>::format_immediate(bool upper) const {
 	std::ostringstream ss;
-		
+
 	switch(type_) {
 	case TYPE_IMMEDIATE64:
 		if(u.qword < std::numeric_limits<uint32_t>::max()) {
@@ -75,7 +69,7 @@ std::string Operand<M>::format_immediate(bool upper) const {
 			break;
 		}
 		// FALL THROUGH
-	case TYPE_IMMEDIATE32:	
+	case TYPE_IMMEDIATE32:
 		if(u.dword < std::numeric_limits<uint16_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
@@ -90,7 +84,7 @@ std::string Operand<M>::format_immediate(bool upper) const {
 	case TYPE_IMMEDIATE16:
 		if(u.word < std::numeric_limits<uint8_t>::max()) {
 			// this will lead to a fall through, we can print smaller
-		} else {		
+		} else {
 			if(edisassm::util::is_small_num(u.sword)) {
 				ss << u.sword;
 			} else {
@@ -109,7 +103,7 @@ std::string Operand<M>::format_immediate(bool upper) const {
 	default:
 		break;
 	}
-	
+
 	return ss.str();
 }
 
@@ -118,11 +112,11 @@ std::string Operand<M>::format_immediate(bool upper) const {
 //------------------------------------------------------------------------------
 template <class M>
 typename Operand<M>::address_t Operand<M>::relative_target() const {
-	
+
 	const address_t rva		= owner_->rva();
 	const unsigned int size	= owner_->size();
 	const address_t offset	= rva + size;
-	
+
 	switch(type_) {
 	case TYPE_REL8:
 		return static_cast<address_t>(u.sbyte + offset);
@@ -151,7 +145,7 @@ std::string Operand<M>::format_relative(bool upper) const {
 //------------------------------------------------------------------------------
 template <class M>
 std::string Operand<M>::format_expression(bool upper) const {
-	
+
 	static const char *expression_strings[] = {
 		"",
 		"byte ptr ",
@@ -165,7 +159,7 @@ std::string Operand<M>::format_expression(bool upper) const {
 
 	std::ostringstream ss;
 	ss << edisassm::util::toupper_copy(expression_strings[type_ - TYPE_EXPRESSION], upper);
-	
+
 	const uint32_t prefix = owner_->prefix();
 
 	if(prefix & instruction_t::PREFIX_CS) {
@@ -199,7 +193,7 @@ std::string Operand<M>::format_expression(bool upper) const {
 		}
 		ss << edisassm::util::toupper_copy(register_name(u.expression.index), upper);
 		only_disp = false;
-		
+
 		// the scale, if any
 		if(u.expression.scale != 1) {
 			ss << '*' << static_cast<int>(u.expression.scale);
@@ -245,10 +239,10 @@ std::string Operand<M>::format_expression(bool upper) const {
 		} else {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string(u.expression.s_disp32, upper);		
+				ss << hex_string(u.expression.s_disp32, upper);
 			} else {
 				ss << '+';
-				ss << hex_string(u.expression.s_disp32, upper);		
+				ss << hex_string(u.expression.s_disp32, upper);
 			}
 			break;
 		}
@@ -259,7 +253,7 @@ std::string Operand<M>::format_expression(bool upper) const {
 		} else {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string(u.expression.s_disp16, upper);		
+				ss << hex_string(u.expression.s_disp16, upper);
 			} else {
 				ss << std::showpos << static_cast<int32_t>(u.expression.s_disp16);
 			}
@@ -270,7 +264,7 @@ std::string Operand<M>::format_expression(bool upper) const {
 		if(u.expression.s_disp8 != 0 || only_disp) {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string(u.expression.s_disp8, upper);		
+				ss << hex_string(u.expression.s_disp8, upper);
 			} else {
 				ss << std::showpos << static_cast<int32_t>(u.expression.s_disp8);
 			}
@@ -281,7 +275,7 @@ std::string Operand<M>::format_expression(bool upper) const {
 		break;
 	}
 	ss << ']';
-	
+
 	return ss.str();
 }
 
@@ -291,12 +285,12 @@ std::string Operand<M>::format_expression(bool upper) const {
 template <class M>
 std::string Operand<M>::format_absolute(bool upper) const {
 	std::ostringstream ss;
-	
+
 	ss	<< edisassm::util::toupper_copy("far ", upper)
 		<< hex_string(u.absolute.seg, upper)
 		<< ':'
 		<< hex_string(u.absolute.offset, upper);
-		
+
 	return ss.str();
 }
 
@@ -309,9 +303,9 @@ std::string Operand<M>::format_register(bool upper) const {
 	if(upper) {
 		return edisassm::util::toupper(ret);
 	}
-	
+
 	return ret;
-	
+
 }
 
 //------------------------------------------------------------------------------
@@ -319,7 +313,7 @@ std::string Operand<M>::format_register(bool upper) const {
 //------------------------------------------------------------------------------
 template <class M>
 int32_t Operand<M>::displacement() const {
-	
+
 	switch(u.expression.displacement_type) {
 	case DISP_U8:  return static_cast<int32_t>(u.expression.u_disp8);
 	case DISP_U16: return static_cast<int32_t>(u.expression.u_disp16);
@@ -337,7 +331,7 @@ int32_t Operand<M>::displacement() const {
 //------------------------------------------------------------------------------
 template <class M>
 int64_t Operand<M>::immediate() const {
-	
+
 	switch(type_) {
 	case TYPE_IMMEDIATE8:  return static_cast<int64_t>(u.sbyte);
 	case TYPE_IMMEDIATE16: return static_cast<int64_t>(u.sword);
@@ -446,7 +440,7 @@ std::string Operand<M>::register_name(Register reg) {
 namespace edisassm {
 	template<class M>
 	std::string to_string(const Operand<M> &operand, bool upper) {
-		
+
 		switch(operand.general_type()) {
 		case Operand<M>::TYPE_REGISTER:		return operand.format_register(upper);
 		case Operand<M>::TYPE_IMMEDIATE:	return operand.format_immediate(upper);

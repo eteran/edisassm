@@ -1,7 +1,7 @@
 /*
 Copyright (C) 2006 - 2011 Evan Teran
                           eteran@alum.rit.edu
-				   
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -25,15 +25,15 @@ class SIB {
 public:
 	SIB(uint8_t value) : value_(value) {
 	}
-	
+
 	SIB(const SIB &other) : value_(other.value_) {
 	}
-	
+
 	SIB &operator=(const SIB &rhs) {
 		value_ = rhs.value_;
 		return *this;
 	}
-	
+
 private:
 	uint8_t value_;
 

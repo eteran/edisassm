@@ -1,7 +1,7 @@
 /*
 Copyright (C) 2006 - 2011 Evan Teran
                           eteran@alum.rit.edu
-				   
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -44,7 +44,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_cwd_cdq_cqo[
 	{ "cdq", &Instruction::decode0, OP_CDQ, FLAG_NONE },
 	{ "cqo", &Instruction::decode0, OP_CQO, FLAG_NONE }
 };
-         
+
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_stosw_stosd_stosq[3] = {
 	{ "stosw", &Instruction::decode0, OP_STOS, FLAG_NONE },
@@ -92,14 +92,14 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_pushfw_pushf
 	{ "pushfw", &Instruction::decode0, OP_PUSHF, FLAG_NONE },
 	{ "pushfd", &Instruction::decode0, OP_PUSHF, FLAG_NONE },
 	{ "pushfq", &Instruction::decode0, OP_PUSHF, FLAG_NONE }
-};         
+};
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_invalid_cmpxchg8b_cmpxchg16b[3] = {
 	{ "invalid",    &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "cmpxchg8b",  &Instruction::decode_Mo, OP_CMPXCHG8B, FLAG_NONE },
 	{ "cmpxchg16b", &Instruction::decode_Mo, OP_CMPXCHG16B, FLAG_NONE }
-};  
+};
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_insw_insd_invalid[3] = {

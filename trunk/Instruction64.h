@@ -1,7 +1,7 @@
 /*
 Copyright (C) 2006 - 2011 Evan Teran
                           eteran@alum.rit.edu
-				   
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -31,7 +31,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	{ "monitor", &Instruction::decode0, OP_MONITOR, FLAG_NONE },
 	{ "mwait", &Instruction::decode0, OP_MWAIT, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -40,25 +40,25 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	{ "xgetbv", &Instruction::decode0, OP_XGETBV, FLAG_NONE },
 	{ "xsetbv", &Instruction::decode0, OP_XSETBV, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+
 	{ "smsw", &Instruction::decode_Rv_Mw, OP_SMSW, FLAG_NONE },
 	{ "smsw", &Instruction::decode_Rv_Mw, OP_SMSW, FLAG_NONE },
 	{ "smsw", &Instruction::decode_Rv_Mw, OP_SMSW, FLAG_NONE },
@@ -67,16 +67,16 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "smsw", &Instruction::decode_Rv_Mw, OP_SMSW, FLAG_NONE },
 	{ "smsw", &Instruction::decode_Rv_Mw, OP_SMSW, FLAG_NONE },
 	{ "smsw", &Instruction::decode_Rv_Mw, OP_SMSW, FLAG_NONE },
-	
+
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+
 	{ "lmsw", &Instruction::decode_Ew, OP_LMSW, FLAG_NONE },
 	{ "lmsw", &Instruction::decode_Ew, OP_LMSW, FLAG_NONE },
 	{ "lmsw", &Instruction::decode_Ew, OP_LMSW, FLAG_NONE },
@@ -85,13 +85,13 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "lmsw", &Instruction::decode_Ew, OP_LMSW, FLAG_NONE },
 	{ "lmsw", &Instruction::decode_Ew, OP_LMSW, FLAG_NONE },
 	{ "lmsw", &Instruction::decode_Ew, OP_LMSW, FLAG_NONE },
-	
+
 	{ "swapgs", &Instruction::decode0, OP_SWAPGS, FLAG_NONE },	// x86: invalid
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }
 };
@@ -116,7 +116,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "or", &Instruction::decode_rAX_Iz, OP_OR, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	// ia-32 only
 	{ "2byte", &Instruction::decode_2byte, OP_2BYTE, FLAG_NONE },
-	
+
 	/* 0x10 - 0x1f */
 	{ "adc", &Instruction::decode_Eb_Gb, OP_ADC, FLAG_NONE },
 	{ "adc", &Instruction::decode_Ev_Gv, OP_ADC, FLAG_NONE },
@@ -134,25 +134,25 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "sbb", &Instruction::decode_rAX_Iz, OP_SBB, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	// ia-32 only
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	// ia-32 only
-	
+
 	/* 0x20 - 0x2f */
-	{ "and", &Instruction::decode_Eb_Gb, OP_AND, FLAG_NONE }, 
-	{ "and", &Instruction::decode_Ev_Gv, OP_AND, FLAG_NONE }, 
-	{ "and", &Instruction::decode_Gb_Eb, OP_AND, FLAG_NONE }, 
-	{ "and", &Instruction::decode_Gv_Ev, OP_AND, FLAG_NONE }, 
-	{ "and", &Instruction::decode_AL_Ib, OP_AND, FLAG_NONE }, 
-	{ "and", &Instruction::decode_rAX_Iz, OP_AND, FLAG_NONE }, 
+	{ "and", &Instruction::decode_Eb_Gb, OP_AND, FLAG_NONE },
+	{ "and", &Instruction::decode_Ev_Gv, OP_AND, FLAG_NONE },
+	{ "and", &Instruction::decode_Gb_Eb, OP_AND, FLAG_NONE },
+	{ "and", &Instruction::decode_Gv_Ev, OP_AND, FLAG_NONE },
+	{ "and", &Instruction::decode_AL_Ib, OP_AND, FLAG_NONE },
+	{ "and", &Instruction::decode_rAX_Iz, OP_AND, FLAG_NONE },
 	{ "prefix es", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	// ia-32 only
-	{ "sub", &Instruction::decode_Eb_Gb, OP_SUB, FLAG_NONE }, 
-	{ "sub", &Instruction::decode_Ev_Gv, OP_SUB, FLAG_NONE }, 
-	{ "sub", &Instruction::decode_Gb_Eb, OP_SUB, FLAG_NONE }, 
-	{ "sub", &Instruction::decode_Gv_Ev, OP_SUB, FLAG_NONE }, 
-	{ "sub", &Instruction::decode_AL_Ib, OP_SUB, FLAG_NONE }, 
-	{ "sub", &Instruction::decode_rAX_Iz, OP_SUB, FLAG_NONE }, 
+	{ "sub", &Instruction::decode_Eb_Gb, OP_SUB, FLAG_NONE },
+	{ "sub", &Instruction::decode_Ev_Gv, OP_SUB, FLAG_NONE },
+	{ "sub", &Instruction::decode_Gb_Eb, OP_SUB, FLAG_NONE },
+	{ "sub", &Instruction::decode_Gv_Ev, OP_SUB, FLAG_NONE },
+	{ "sub", &Instruction::decode_AL_Ib, OP_SUB, FLAG_NONE },
+	{ "sub", &Instruction::decode_rAX_Iz, OP_SUB, FLAG_NONE },
 	{ "prefix cs", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	// ia-32 only
-	
+
 	/* 0x30 - 0x3f */
 	{ "xor", &Instruction::decode_Eb_Gb, OP_XOR, FLAG_NONE },
 	{ "xor", &Instruction::decode_Ev_Gv, OP_XOR, FLAG_NONE },
@@ -170,7 +170,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "cmp", &Instruction::decode_rAX_Iz, OP_CMP, FLAG_NONE },
 	{ "prefix ds", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	// ia-32 only
-	
+
 	/* 0x40 - 0x4f */
 	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },	// ia-32 only (REX byte)
 	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },	// ia-32 only (REX byte)
@@ -206,7 +206,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "pop", &Instruction::decode_rBP, OP_POP, FLAG_NONE },
 	{ "pop", &Instruction::decode_rSI, OP_POP, FLAG_NONE },
 	{ "pop", &Instruction::decode_rDI, OP_POP, FLAG_NONE },
-	
+
 	/* 0x60 - 0x6f */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	// ia-32 only
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	// ia-32 only
@@ -224,7 +224,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "insw/insd",  &Instruction::decode_insw_insd_invalid, OP_INS, FLAG_NONE },
 	{ "outsb",  &Instruction::decode0, OP_OUTS, FLAG_NONE },
 	{ "outsw/outsd",  &Instruction::decode_outsw_outsd_invalid, OP_OUTS, FLAG_NONE },
-		
+
 	/* 0x70 - 0x7f */
 	{ "jo", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
 	{ "jno", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
@@ -242,7 +242,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "jnl", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
 	{ "jle", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
 	{ "jnle", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
-	
+
 	/* 0x80 - 0x8f */
 	{ "group1", &Instruction::decode_group1, OP_GROUP1, FLAG_NONE },
 	{ "group1", &Instruction::decode_group1, OP_GROUP1, FLAG_NONE },
@@ -260,7 +260,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "lea", &Instruction::decode_Gv_M, OP_LEA, FLAG_NONE },
 	{ "mov", &Instruction::decode_Sw_Ew, OP_MOV, FLAG_NONE },
 	{ "group10", &Instruction::decode_group10, OP_GROUP10, FLAG_NONE },
-	
+
 	/* 0x90 - 0x9f */
 	{ "xchg",  &Instruction::decode_rAX_rAX_NOREX, OP_XCHG, FLAG_NONE },
 	{ "xchg",  &Instruction::decode_rCX_rAX_NOREX, OP_XCHG, FLAG_NONE },
@@ -278,7 +278,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "popfw/popfd/popfq", &Instruction::decode_popfw_popfd_popfq, OP_POPF, FLAG_NONE },
 	{ "sahf", &Instruction::decode0, OP_SAHF, FLAG_NONE },
 	{ "lahf", &Instruction::decode0, OP_LAHF, FLAG_NONE },
-	
+
 	/* 0xa0 - 0xaf */
 	{ "mov", &Instruction::decode_AL_Ob, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_rAX_Ov, OP_MOV, FLAG_NONE },
@@ -296,7 +296,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "lodsw/lodsd/lodsq", &Instruction::decode_lodsw_lodsd_lodsq, OP_LODS, FLAG_NONE },
 	{ "scasb", &Instruction::decode0, OP_SCAS, FLAG_NONE },
 	{ "scasw/scasd/scasq", &Instruction::decode_scasw_scasd_scasq, OP_SCAS, FLAG_NONE },
-	
+
 	/* 0xb0 - 0xbf */
 	{ "mov", &Instruction::decode_AL_Ib, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_CL_Ib, OP_MOV, FLAG_NONE },
@@ -306,7 +306,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "mov", &Instruction::decode_CH_Ib, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_DH_Ib, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_BH_Ib, OP_MOV, FLAG_NONE },
-	{ "mov", &Instruction::decode_rAX_Iv, OP_MOV, FLAG_NONE },	
+	{ "mov", &Instruction::decode_rAX_Iv, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_rCX_Iv, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_rDX_Iv, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_rBX_Iv, OP_MOV, FLAG_NONE },
@@ -314,7 +314,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "mov", &Instruction::decode_rBP_Iv, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_rSI_Iv, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_rDI_Iv, OP_MOV, FLAG_NONE },
-	
+
 	/* 0xc0 - 0xcf */
 	{ "group2", &Instruction::decode_group2, OP_GROUP2, FLAG_NONE },
 	{ "group2", &Instruction::decode_group2, OP_GROUP2, FLAG_NONE },
@@ -332,7 +332,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "int", &Instruction::decode_Ib, OP_INT, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	// ia-32 only
 	{ "iretw/iret/iretq", &Instruction::decode_iretw_iret_iretq, OP_IRET, FLAG_NONE },
-	
+
 	/* 0xd0 - 0xdf */
 	{ "group2", &Instruction::decode_group2D, OP_GROUP2, FLAG_NONE },
 	{ "group2", &Instruction::decode_group2D, OP_GROUP2, FLAG_NONE },
@@ -350,13 +350,13 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "esc5", &Instruction::decode_x87, OP_FPU, FLAG_NONE },
 	{ "esc6", &Instruction::decode_x87, OP_FPU, FLAG_NONE },
 	{ "esc7", &Instruction::decode_x87, OP_FPU, FLAG_NONE },
-	
+
 	/* 0xe0 - 0xef */
 	{ "loopne", &Instruction::decode_Jb, OP_LOOPNE, FLAG_NONE },
 	{ "loope", &Instruction::decode_Jb, OP_LOOPE, FLAG_NONE },
 	{ "loop", &Instruction::decode_Jb, OP_LOOP, FLAG_NONE },
 	{ "jcez", &Instruction::decode_Jb, OP_JCC, FLAG_NONE },
-	{ "in", &Instruction::decode_AL_Ib, OP_IN, FLAG_NONE },		
+	{ "in", &Instruction::decode_AL_Ib, OP_IN, FLAG_NONE },
 	{ "in", &Instruction::decode_eAX_Ib, OP_IN, FLAG_NONE },
 	{ "out", &Instruction::decode_Ib_AL, OP_OUT, FLAG_NONE },
 	{ "out", &Instruction::decode_Ib_eAX, OP_OUT, FLAG_NONE },
@@ -368,7 +368,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "in", &Instruction::decode_eAX_DX, OP_IN, FLAG_NONE },
 	{ "out", &Instruction::decode_DX_AL, OP_OUT, FLAG_NONE },
 	{ "out", &Instruction::decode_DX_eAX, OP_OUT, FLAG_NONE },
-	
+
 	/* 0xf0 - 0xff */
 	{ "prefix lock", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -409,7 +409,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "nop", &Instruction::decode_Ev, OP_NOP, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x10 - 0x0f 0x1f */
 	{ "movups", &Instruction::decode_Vo_Wo, OP_MOVUPS, FLAG_NONE },
 	{ "movups", &Instruction::decode_Wo_Vo, OP_MOVUPS, FLAG_NONE },
@@ -427,7 +427,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "nop", &Instruction::decode_Ev, OP_NOP, FLAG_NONE },
-	
+
 	/* 0x0f 0x20 - 0x0f 0x2f */
 	{ "mov", &Instruction::decode_Rd_Cd, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_Rd_Dd, OP_MOV, FLAG_NONE },
@@ -440,12 +440,12 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "movaps", &Instruction::decode_Vo_Wo, OP_MOVAPS, FLAG_NONE },
 	{ "movaps", &Instruction::decode_Wo_Vo, OP_MOVAPS, FLAG_NONE },
 	{ "cvtpi2ps", &Instruction::decode_Vo_Qq, OP_CVTPI2PS, FLAG_NONE },
-	{ "movntps",  &Instruction::decode_Mo_Vo, OP_MOVNTPS, FLAG_NONE },	
+	{ "movntps",  &Instruction::decode_Mo_Vo, OP_MOVNTPS, FLAG_NONE },
 	{ "cvttps2pi",  &Instruction::decode_Pq_Wo, OP_CVTTPS2PI, FLAG_NONE },
 	{ "cvtps2pi",  &Instruction::decode_Pq_Wo, OP_CVTPS2PI, FLAG_NONE },
 	{ "ucomiss",  &Instruction::decode_Vo_Wo, OP_UCOMISS, FLAG_NONE },
 	{ "comiss",  &Instruction::decode_Vo_Wo, OP_COMISS, FLAG_NONE },
-	
+
 	/* 0x0f 0x30 - 0x0f 0x3f */
 	{ "wrmsr", &Instruction::decode0, OP_WRMSR, FLAG_NONE },
 	{ "rdtsc", &Instruction::decode0, OP_RDTSC, FLAG_NONE },
@@ -463,7 +463,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x40 - 0x0f 0x4f */
 	{ "cmovo", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovno", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
@@ -481,7 +481,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "cmovnl", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovnle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
-	
+
 	/* 0x0f 0x50 - 0x0f 0x5f */
 	{ "movmskps", &Instruction::decode_Gq_Uo, OP_MOVMSKPS, FLAG_NONE },	// x86: movmskps Gd, Uo
 	{ "sqrtps", &Instruction::decode_Vo_Wo, OP_SQRTPS, FLAG_NONE },
@@ -499,7 +499,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "minps", &Instruction::decode_Vo_Wo, OP_MINPS, FLAG_NONE },
 	{ "divps", &Instruction::decode_Vo_Wo, OP_DIVPS, FLAG_NONE },
 	{ "maxps", &Instruction::decode_Vo_Wo, OP_MAXPS, FLAG_NONE },
-	
+
 	/* 0x0f 0x60 - 0x0f 0x6f */
 	{ "punpcklbw", &Instruction::decode_Pq_Qd, OP_PUNPCKLBW, FLAG_NONE },
 	{ "punpcklwd", &Instruction::decode_Pq_Qd, OP_PUNPCKLWD, FLAG_NONE },
@@ -517,7 +517,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "movq", &Instruction::decode_Pd_Eq, OP_MOVQ, FLAG_NONE },		// x86: movd Pd, Ed
 	{ "movq", &Instruction::decode_Pq_Qq, OP_MOVQ, FLAG_NONE },
-	
+
 	/* 0x0f 0x70 - 0x0f 0x7f */
 	{ "pshufw", &Instruction::decode_Pq_Qq_Ib, OP_PSHUFW, FLAG_NONE },
 	{ "group13", &Instruction::decode_group13, OP_GROUP13, FLAG_NONE },
@@ -535,7 +535,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "movq", &Instruction::decode_Eq_Pd, OP_MOVQ, FLAG_NONE },		// x86: movq Ed,Pd
 	{ "movq", &Instruction::decode_Qq_Pq, OP_MOVQ, FLAG_NONE },
-	
+
 	/* 0x0f 0x80 - 0x0f 0x8f */
 	{ "jo", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jno", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
@@ -553,7 +553,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "jnl", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jle", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jnle", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
-	
+
 	/* 0x0f 0x90 - 0x0f 0x9f */
 	{ "seto", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setno", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
@@ -571,7 +571,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "setnl", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setle", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setnle", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
-	
+
 	/* 0x0f 0xa0 - 0x0f 0xaf */
 	{ "push", &Instruction::decode_Reg<operand_t::REG_FS>, OP_PUSH, FLAG_NONE },
 	{ "pop", &Instruction::decode_Reg<operand_t::REG_FS>, OP_POP, FLAG_NONE },
@@ -589,7 +589,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "shrd", &Instruction::decode_Ev_Gv_Reg<operand_t::REG_CL>, OP_SHRD, FLAG_NONE },
 	{ "group16", &Instruction::decode_group16, OP_GROUP16, FLAG_NONE },
 	{ "imul",  &Instruction::decode_Gv_Ev, OP_IMUL, FLAG_NONE },
-	
+
 	/* 0x0f 0xb0 - 0x0f 0xbf */
 	{ "cmpxchg", &Instruction::decode_Eb_Gb, OP_CMPXCHG, FLAG_NONE },
 	{ "cmpxchg", &Instruction::decode_Ev_Gv, OP_CMPXCHG, FLAG_NONE },
@@ -607,7 +607,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "bsr", &Instruction::decode_Gv_Ev, OP_BSR, FLAG_NONE },
 	{ "movsx", &Instruction::decode_Gv_Eb, OP_MOVSX, FLAG_NONE },
 	{ "movsx", &Instruction::decode_Gv_Ew, OP_MOVSX, FLAG_NONE },
-	
+
 	/* 0x0f 0xc0 - 0x0f 0xcf */
 	{ "xadd", &Instruction::decode_Eb_Gb, OP_XADD, FLAG_NONE },
 	{ "xadd", &Instruction::decode_Ev_Gv, OP_XADD, FLAG_NONE },
@@ -625,7 +625,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "bswap", &Instruction::decode_rBP, OP_BSWAP, FLAG_NONE },
 	{ "bswap", &Instruction::decode_rSI, OP_BSWAP, FLAG_NONE },
 	{ "bswap", &Instruction::decode_rDI, OP_BSWAP, FLAG_NONE },
-	
+
 	/* 0x0f 0xd0 - 0x0f 0xdf */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "psrlw", &Instruction::decode_Pq_Qq, OP_PSRLW, FLAG_NONE },
@@ -643,7 +643,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
     { "paddusw", &Instruction::decode_Pq_Qq, OP_PADDUSW, FLAG_NONE },
     { "pmaxub", &Instruction::decode_Pq_Qq, OP_PMAXUB, FLAG_NONE },
     { "pandn", &Instruction::decode_Pq_Qq, OP_PANDN, FLAG_NONE },
-	
+
 	/* 0x0f 0xe0 - 0x0f 0xef */
 	{ "pavgb", &Instruction::decode_Pq_Qq, OP_PAVGB, FLAG_NONE },
 	{ "psraw", &Instruction::decode_Pq_Qq, OP_PSRAW, FLAG_NONE },
@@ -656,12 +656,12 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "psubsb", &Instruction::decode_Pq_Qq, OP_PSUBSB, FLAG_NONE },
 	{ "psubsw", &Instruction::decode_Pq_Qq, OP_PSUBSW, FLAG_NONE },
 	{ "pminsw", &Instruction::decode_Pq_Qq, OP_PMINSW, FLAG_NONE },
-	{ "por", &Instruction::decode_Pq_Qq, OP_POR, FLAG_NONE },  
+	{ "por", &Instruction::decode_Pq_Qq, OP_POR, FLAG_NONE },
 	{ "paddsb", &Instruction::decode_Pq_Qq, OP_PADDSB, FLAG_NONE },
 	{ "paddsw", &Instruction::decode_Pq_Qq, OP_PADDSW, FLAG_NONE },
 	{ "pmaxsw", &Instruction::decode_Pq_Qq, OP_PMAXSW, FLAG_NONE },
 	{ "pxor", &Instruction::decode_Pq_Qq, OP_PXOR, FLAG_NONE },
-	
+
 	/* 0x0f 0xf0 - 0x0f 0xff */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "psllw", &Instruction::decode_Pq_Qq, OP_PSLLW, FLAG_NONE },
@@ -674,7 +674,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "psubb", &Instruction::decode_Pq_Qq, OP_PSUBB, FLAG_NONE },
 	{ "psubw", &Instruction::decode_Pq_Qq, OP_PSUBW, FLAG_NONE },
 	{ "psubd", &Instruction::decode_Pq_Qq, OP_PSUBD, FLAG_NONE },
-	{ "psubq", &Instruction::decode_Pq_Qq, OP_PSUBQ, FLAG_NONE },	
+	{ "psubq", &Instruction::decode_Pq_Qq, OP_PSUBQ, FLAG_NONE },
 	{ "paddb", &Instruction::decode_Pq_Qq, OP_PADDB, FLAG_NONE },
 	{ "paddw", &Instruction::decode_Pq_Qq, OP_PADDW, FLAG_NONE },
 	{ "paddd", &Instruction::decode_Pq_Qq, OP_PADDD, FLAG_NONE },
@@ -685,7 +685,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 // 2 byte opcodes with a 66 prefix
 template <>
 const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>::Opcodes_2Byte_66[0x100] = {
-	
+
 	/* 0x0f 0x00 - 0x0f 0x0f */
 	{ "group6", &Instruction::decode_group6, OP_GROUP6, FLAG_NONE },
 	{ "group7", &Instruction::decode_group7, OP_GROUP7, FLAG_NONE },
@@ -703,7 +703,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "nop", &Instruction::decode_Ev, OP_NOP, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x10 - 0x0f 0x1f */
 	{ "movupd", &Instruction::decode_Vo_Wo, OP_MOVUPD, FLAG_NONE },
 	{ "movupd", &Instruction::decode_Wo_Vo, OP_MOVUPD, FLAG_NONE },
@@ -721,7 +721,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "nop", &Instruction::decode_Ev, OP_NOP, FLAG_NONE },
-	
+
 	/* 0x0f 0x20 - 0x0f 0x2f */
 	{ "mov", &Instruction::decode_Rd_Cd, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_Rd_Dd, OP_MOV, FLAG_NONE },
@@ -734,12 +734,12 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "movapd", &Instruction::decode_Vo_Wo, OP_MOVAPD, FLAG_NONE },
 	{ "movapd", &Instruction::decode_Wo_Vo, OP_MOVAPD, FLAG_NONE },
 	{ "cvtpi2pd", &Instruction::decode_Vo_Qq, OP_CVTPI2PD, FLAG_NONE },
-	{ "movntpd",  &Instruction::decode_Mo_Vo, OP_MOVNTPD, FLAG_NONE },	
+	{ "movntpd",  &Instruction::decode_Mo_Vo, OP_MOVNTPD, FLAG_NONE },
 	{ "cvttpd2pi",  &Instruction::decode_Pq_Wo, OP_CVTTPD2PI, FLAG_NONE },
 	{ "cvtpd2pi",  &Instruction::decode_Qq_Wo, OP_CVTPD2PI, FLAG_NONE },
 	{ "ucomisd",  &Instruction::decode_Vo_Wo, OP_UCOMISD, FLAG_NONE },
 	{ "comisd",  &Instruction::decode_Vo_Wo, OP_COMISD, FLAG_NONE },
-	
+
 	/* 0x0f 0x30 - 0x0f 0x3f */
 	{ "wrmsr", &Instruction::decode0, OP_WRMSR, FLAG_NONE },
 	{ "rdtsc", &Instruction::decode0, OP_RDTSC, FLAG_NONE },
@@ -757,7 +757,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x40 - 0x0f 0x4f */
 	{ "cmovo", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovno", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
@@ -775,7 +775,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "cmovnl", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovnle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
-	
+
 	/* 0x0f 0x50 - 0x0f 0x5f */
 	{ "movmskpd", &Instruction::decode_Gq_Uo, OP_MOVMSKPD, FLAG_NONE },	// x86: movmskpd Gd, Uo
 	{ "sqrtpd", &Instruction::decode_Vo_Wo, OP_SQRTPD, FLAG_NONE },
@@ -793,7 +793,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "minpd", &Instruction::decode_Vo_Wo, OP_MINPD, FLAG_NONE },
 	{ "divpd", &Instruction::decode_Vo_Wo, OP_DIVPD, FLAG_NONE },
 	{ "maxpd", &Instruction::decode_Vo_Wo, OP_MAXPD, FLAG_NONE },
-	
+
 	/* 0x0f 0x60 - 0x0f 0x6f */
 	{ "punpcklbw", &Instruction::decode_Vo_Wo, OP_PUNPCKLBW, FLAG_NONE },
 	{ "punpcklwd", &Instruction::decode_Vo_Wo, OP_PUNPCKLWD, FLAG_NONE },
@@ -811,7 +811,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "punpckhqdq", &Instruction::decode_Vo_Wo, OP_PUNPCKHQDQ, FLAG_NONE },
 	{ "movq", &Instruction::decode_Vo_Eq, OP_MOVQ, FLAG_NONE },		// x86: movd Vo, Ed
 	{ "movq", &Instruction::decode_Vo_Qq, OP_MOVQ, FLAG_NONE },
-	
+
 	/* 0x0f 0x70 - 0x0f 0x7f */
 	{ "pshufd", &Instruction::decode_Vo_Wo_Ib, OP_PSHUFD, FLAG_NONE },
 	{ "group13", &Instruction::decode_group13, OP_GROUP13, FLAG_NONE },
@@ -829,7 +829,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "hsubpd", &Instruction::decode_Vo_Wo, OP_HSUBPD, FLAG_NONE },
 	{ "movq", &Instruction::decode_Eq_Vo, OP_MOVD, FLAG_NONE },		// x86: movd Ed, Vo
 	{ "movdqa", &Instruction::decode_Wo_Vo, OP_MOVDQA, FLAG_NONE },
-	
+
 	/* 0x0f 0x80 - 0x0f 0x8f */
 	{ "jo", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jno", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
@@ -847,7 +847,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "jnl", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jle", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jnle", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
-	
+
 	/* 0x0f 0x90 - 0x0f 0x9f */
 	{ "seto", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setno", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
@@ -865,7 +865,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "setnl", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setle", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setnle", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
-	
+
 	/* 0x0f 0xa0 - 0x0f 0xaf */
 	{ "push", &Instruction::decode_Reg<operand_t::REG_FS>, OP_PUSH, FLAG_NONE },
 	{ "pop", &Instruction::decode_Reg<operand_t::REG_FS>, OP_POP, FLAG_NONE },
@@ -883,7 +883,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "shrd", &Instruction::decode_Ev_Gv_Reg<operand_t::REG_CL>, OP_SHRD, FLAG_NONE },
 	{ "group16", &Instruction::decode_group16, OP_GROUP16, FLAG_NONE },
 	{ "imul",  &Instruction::decode_Gv_Ev, OP_IMUL, FLAG_NONE },
-	
+
 	/* 0x0f 0xb0 - 0x0f 0xbf */
 	{ "cmpxchg", &Instruction::decode_Eb_Gb, OP_CMPXCHG, FLAG_NONE },
 	{ "cmpxchg", &Instruction::decode_Ev_Gv, OP_CMPXCHG, FLAG_NONE },
@@ -901,7 +901,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "bsr", &Instruction::decode_Gv_Ev, OP_BSR, FLAG_NONE },
 	{ "movsx", &Instruction::decode_Gv_Eb, OP_MOVSX, FLAG_NONE },
 	{ "movsx", &Instruction::decode_Gv_Ew, OP_MOVSX, FLAG_NONE },
-	
+
 	/* 0x0f 0xc0 - 0x0f 0xcf */
 	{ "xadd", &Instruction::decode_Eb_Gb, OP_XADD, FLAG_NONE },
 	{ "xadd", &Instruction::decode_Ev_Gv, OP_XADD, FLAG_NONE },
@@ -919,7 +919,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "bswap", &Instruction::decode_rBP, OP_BSWAP, FLAG_NONE },
 	{ "bswap", &Instruction::decode_rSI, OP_BSWAP, FLAG_NONE },
 	{ "bswap", &Instruction::decode_rDI, OP_BSWAP, FLAG_NONE },
-	
+
 	/* 0x0f 0xd0 - 0x0f 0xdf */
 	{ "addsubpd", &Instruction::decode_Vo_Wo, OP_ADDSUBPD, FLAG_NONE },
 	{ "psrlw", &Instruction::decode_Vo_Wo, OP_PSRLW, FLAG_NONE },
@@ -937,7 +937,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
     { "paddusw", &Instruction::decode_Vo_Wo, OP_PADDUSW, FLAG_NONE },
     { "pmaxub", &Instruction::decode_Vo_Wo, OP_PMAXUB, FLAG_NONE },
     { "pandn", &Instruction::decode_Vo_Wo, OP_PANDN, FLAG_NONE },
-	
+
 	/* 0x0f 0xe0 - 0x0f 0xef */
 	{ "pavgb", &Instruction::decode_Vo_Wo, OP_PAVGB, FLAG_NONE },
 	{ "psraw", &Instruction::decode_Vo_Wo, OP_PSRAW, FLAG_NONE },
@@ -950,12 +950,12 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "psubsb", &Instruction::decode_Vo_Wo, OP_PSUBSB, FLAG_NONE },
 	{ "psubsw", &Instruction::decode_Vo_Wo, OP_PSUBSW, FLAG_NONE },
 	{ "pminsw", &Instruction::decode_Vo_Wo, OP_PMINSW, FLAG_NONE },
-	{ "por", &Instruction::decode_Vo_Wo, OP_POR, FLAG_NONE },  
+	{ "por", &Instruction::decode_Vo_Wo, OP_POR, FLAG_NONE },
 	{ "paddsb", &Instruction::decode_Vo_Wo, OP_PADDSB, FLAG_NONE },
 	{ "paddsw", &Instruction::decode_Vo_Wo, OP_PADDSW, FLAG_NONE },
 	{ "pmaxsw", &Instruction::decode_Vo_Wo, OP_PMAXSW, FLAG_NONE },
 	{ "pxor", &Instruction::decode_Vo_Wo, OP_PXOR, FLAG_NONE },
-	
+
 	/* 0x0f 0xf0 - 0x0f 0xff */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "psllw", &Instruction::decode_Vo_Wo, OP_PSLLW, FLAG_NONE },
@@ -968,7 +968,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "psubb", &Instruction::decode_Vo_Wo, OP_PSUBB, FLAG_NONE },
 	{ "psubw", &Instruction::decode_Vo_Wo, OP_PSUBW, FLAG_NONE },
 	{ "psubd", &Instruction::decode_Vo_Wo, OP_PSUBD, FLAG_NONE },
-	{ "psubq", &Instruction::decode_Vo_Wo, OP_PSUBQ, FLAG_NONE },	
+	{ "psubq", &Instruction::decode_Vo_Wo, OP_PSUBQ, FLAG_NONE },
 	{ "paddb", &Instruction::decode_Vo_Wo, OP_PADDB, FLAG_NONE },
 	{ "paddw", &Instruction::decode_Vo_Wo, OP_PADDW, FLAG_NONE },
 	{ "paddd", &Instruction::decode_Vo_Wo, OP_PADDD, FLAG_NONE },
@@ -996,7 +996,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "nop", &Instruction::decode_Ev, OP_NOP, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x10 - 0x0f 0x1f */
 	{ "movsd", &Instruction::decode_Vo_Wo, OP_MOVSD, FLAG_NONE },
 	{ "movsd", &Instruction::decode_Wo_Vo, OP_MOVSD, FLAG_NONE },
@@ -1014,7 +1014,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "nop", &Instruction::decode_Ev, OP_NOP, FLAG_NONE },
-	
+
 	/* 0x0f 0x20 - 0x0f 0x2f */
 	{ "mov", &Instruction::decode_Rd_Cd, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_Rd_Dd, OP_MOV, FLAG_NONE },
@@ -1027,12 +1027,12 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "movaps", &Instruction::decode_Vo_Wo, OP_MOVAPS, FLAG_NONE },
 	{ "movaps", &Instruction::decode_Wo_Vo, OP_MOVAPS, FLAG_NONE },
 	{ "cvtsi2sd", &Instruction::decode_Vo_Eq, OP_CVTSI2SD, FLAG_NONE },	// x86: cvtsi2sd Vo, Ed
-	{ "movntps",  &Instruction::decode_Mo_Vo, OP_MOVNTPS, FLAG_NONE },	
+	{ "movntps",  &Instruction::decode_Mo_Vo, OP_MOVNTPS, FLAG_NONE },
 	{ "cvttsd2si",  &Instruction::decode_Gq_Wo, OP_CVTTSD2SI, FLAG_NONE },	// x86: cvttsd2si Gd, Wo
 	{ "cvtsd2si",  &Instruction::decode_Gq_Wo, OP_CVTSD2SI, FLAG_NONE },	// x86: cvtsd2si Gd, Wo
 	{ "ucomiss",  &Instruction::decode_Vo_Wo, OP_UCOMISS, FLAG_NONE },
 	{ "comiss",  &Instruction::decode_Vo_Wo, OP_COMISS, FLAG_NONE },
-	
+
 	/* 0x0f 0x30 - 0x0f 0x3f */
 	{ "wrmsr", &Instruction::decode0, OP_WRMSR, FLAG_NONE },
 	{ "rdtsc", &Instruction::decode0, OP_RDTSC, FLAG_NONE },
@@ -1050,7 +1050,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x40 - 0x0f 0x4f */
 	{ "cmovo", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovno", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
@@ -1068,7 +1068,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "cmovnl", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovnle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
-	
+
 	/* 0x0f 0x50 - 0x0f 0x5f */
 	{ "movmskps", &Instruction::decode_Gq_Uo, OP_MOVMSKPS, FLAG_NONE },	// x86: movmskps Gd, Uo
 	{ "sqrtsd", &Instruction::decode_Vo_Wo, OP_SQRTSD, FLAG_NONE },
@@ -1086,7 +1086,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "minsd", &Instruction::decode_Vo_Wo, OP_MINSD, FLAG_NONE },
 	{ "divsd", &Instruction::decode_Vo_Wo, OP_DIVSD, FLAG_NONE },
 	{ "maxsd", &Instruction::decode_Vo_Wo, OP_MAXSD, FLAG_NONE },
-	
+
 	/* 0x0f 0x60 - 0x0f 0x6f */
 	{ "punpcklbw", &Instruction::decode_Pq_Qd, OP_PUNPCKLBW, FLAG_NONE },
 	{ "punpcklwd", &Instruction::decode_Pq_Qd, OP_PUNPCKLWD, FLAG_NONE },
@@ -1104,7 +1104,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "movq", &Instruction::decode_Pd_Eq, OP_MOVQ, FLAG_NONE },		// x86: movq Pd, Ed
 	{ "movq", &Instruction::decode_Pq_Qq, OP_MOVQ, FLAG_NONE },
-	
+
 	/* 0x0f 0x70 - 0x0f 0x7f */
 	{ "pshuflw", &Instruction::decode_Vo_Wo_Ib, OP_PSHUFLW, FLAG_NONE },
 	{ "group13", &Instruction::decode_group13, OP_GROUP13, FLAG_NONE },
@@ -1122,7 +1122,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "hsubps", &Instruction::decode_Vo_Wo, OP_HSUBPS, FLAG_NONE },
 	{ "movq", &Instruction::decode_Eq_Pd, OP_MOVD, FLAG_NONE },		// x86: movq Ed, Pd
 	{ "movq", &Instruction::decode_Qq_Pq, OP_MOVQ, FLAG_NONE },
-	
+
 	/* 0x0f 0x80 - 0x0f 0x8f */
 	{ "jo", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jno", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
@@ -1140,7 +1140,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "jnl", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jle", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jnle", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
-	
+
 	/* 0x0f 0x90 - 0x0f 0x9f */
 	{ "seto", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setno", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
@@ -1158,7 +1158,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "setnl", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setle", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setnle", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
-	
+
 	/* 0x0f 0xa0 - 0x0f 0xaf */
 	{ "push", &Instruction::decode_Reg<operand_t::REG_FS>, OP_PUSH, FLAG_NONE },
 	{ "pop", &Instruction::decode_Reg<operand_t::REG_FS>, OP_POP, FLAG_NONE },
@@ -1176,7 +1176,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "shrd", &Instruction::decode_Ev_Gv_Reg<operand_t::REG_CL>, OP_SHRD, FLAG_NONE },
 	{ "group16", &Instruction::decode_group16, OP_GROUP16, FLAG_NONE },
 	{ "imul",  &Instruction::decode_Gv_Ev, OP_IMUL, FLAG_NONE },
-	
+
 	/* 0x0f 0xb0 - 0x0f 0xbf */
 	{ "cmpxchg", &Instruction::decode_Eb_Gb, OP_CMPXCHG, FLAG_NONE },
 	{ "cmpxchg", &Instruction::decode_Ev_Gv, OP_CMPXCHG, FLAG_NONE },
@@ -1194,7 +1194,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "bsr", &Instruction::decode_Gv_Ev, OP_BSR, FLAG_NONE },
 	{ "movsx", &Instruction::decode_Gv_Eb, OP_MOVSX, FLAG_NONE },
 	{ "movsx", &Instruction::decode_Gv_Ew, OP_MOVSX, FLAG_NONE },
-	
+
 	/* 0x0f 0xc0 - 0x0f 0xcf */
 	{ "xadd", &Instruction::decode_Eb_Gb, OP_XADD, FLAG_NONE },
 	{ "xadd", &Instruction::decode_Ev_Gv, OP_XADD, FLAG_NONE },
@@ -1212,7 +1212,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "bswap", &Instruction::decode_rBP, OP_BSWAP, FLAG_NONE },
 	{ "bswap", &Instruction::decode_rSI, OP_BSWAP, FLAG_NONE },
 	{ "bswap", &Instruction::decode_rDI, OP_BSWAP, FLAG_NONE },
-	
+
 	/* 0x0f 0xd0 - 0x0f 0xdf */
 	{ "addsubps", &Instruction::decode_Vo_Wo, OP_ADDSUBPS, FLAG_NONE },
 	{ "psrlw", &Instruction::decode_Pq_Qq, OP_PSRLW, FLAG_NONE },
@@ -1230,7 +1230,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
     { "paddusw", &Instruction::decode_Pq_Qq, OP_PADDUSW, FLAG_NONE },
     { "pmaxub", &Instruction::decode_Pq_Qq, OP_PMAXUB, FLAG_NONE },
     { "pandn", &Instruction::decode_Pq_Qq, OP_PANDN, FLAG_NONE },
-	
+
 	/* 0x0f 0xe0 - 0x0f 0xef */
 	{ "pavgb", &Instruction::decode_Pq_Qq, OP_PAVGB, FLAG_NONE },
 	{ "psraw", &Instruction::decode_Pq_Qq, OP_PSRAW, FLAG_NONE },
@@ -1243,12 +1243,12 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "psubsb", &Instruction::decode_Pq_Qq, OP_PSUBSB, FLAG_NONE },
 	{ "psubsw", &Instruction::decode_Pq_Qq, OP_PSUBSW, FLAG_NONE },
 	{ "pminsw", &Instruction::decode_Pq_Qq, OP_PMINSW, FLAG_NONE },
-	{ "por", &Instruction::decode_Pq_Qq, OP_POR, FLAG_NONE },  
+	{ "por", &Instruction::decode_Pq_Qq, OP_POR, FLAG_NONE },
 	{ "paddsb", &Instruction::decode_Pq_Qq, OP_PADDSB, FLAG_NONE },
 	{ "paddsw", &Instruction::decode_Pq_Qq, OP_PADDSW, FLAG_NONE },
 	{ "pmaxsw", &Instruction::decode_Pq_Qq, OP_PMAXSW, FLAG_NONE },
 	{ "pxor", &Instruction::decode_Pq_Qq, OP_PXOR, FLAG_NONE },
-	
+
 	/* 0x0f 0xf0 - 0x0f 0xff */
 	{ "lddqu", &Instruction::decode_Vo_Mo, OP_LDDQU, FLAG_NONE },
 	{ "psllw", &Instruction::decode_Pq_Qq, OP_PSLLW, FLAG_NONE },
@@ -1261,7 +1261,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "psubb", &Instruction::decode_Pq_Qq, OP_PSUBB, FLAG_NONE },
 	{ "psubw", &Instruction::decode_Pq_Qq, OP_PSUBW, FLAG_NONE },
 	{ "psubd", &Instruction::decode_Pq_Qq, OP_PSUBD, FLAG_NONE },
-	{ "psubq", &Instruction::decode_Pq_Qq, OP_PSUBQ, FLAG_NONE },	
+	{ "psubq", &Instruction::decode_Pq_Qq, OP_PSUBQ, FLAG_NONE },
 	{ "paddb", &Instruction::decode_Pq_Qq, OP_PADDB, FLAG_NONE },
 	{ "paddw", &Instruction::decode_Pq_Qq, OP_PADDW, FLAG_NONE },
 	{ "paddd", &Instruction::decode_Pq_Qq, OP_PADDD, FLAG_NONE },
@@ -1289,7 +1289,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "nop", &Instruction::decode_Ev, OP_NOP, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x10 - 0x0f 0x1f */
 	{ "movss", &Instruction::decode_Vo_Wo, OP_MOVSS, FLAG_NONE },
 	{ "movss", &Instruction::decode_Wo_Vo, OP_MOVSS, FLAG_NONE },
@@ -1307,7 +1307,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "nop", &Instruction::decode_Ev, OP_NOP, FLAG_NONE },
-	
+
 	/* 0x0f 0x20 - 0x0f 0x2f */
 	{ "mov", &Instruction::decode_Rd_Cd, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_Rd_Dd, OP_MOV, FLAG_NONE },
@@ -1320,12 +1320,12 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "movaps", &Instruction::decode_Vo_Wo, OP_MOVAPS, FLAG_NONE },
 	{ "movaps", &Instruction::decode_Wo_Vo, OP_MOVAPS, FLAG_NONE },
 	{ "cvtsi2ss", &Instruction::decode_Vo_Eq, OP_CVTSI2SS, FLAG_NONE },	// x86: cvtsi2ss Vo, Ed
-	{ "movntps",  &Instruction::decode_Mo_Vo, OP_MOVNTPS, FLAG_NONE },	
+	{ "movntps",  &Instruction::decode_Mo_Vo, OP_MOVNTPS, FLAG_NONE },
 	{ "cvttss2si",  &Instruction::decode_Gq_Wo, OP_CVTTSS2SI, FLAG_NONE },	// x86: cvttss2si Gd, Wo
 	{ "cvtss2si",  &Instruction::decode_Gq_Wo, OP_CVTSS2SI, FLAG_NONE },	// x86: cvtss2si Gd, Wo
 	{ "ucomiss",  &Instruction::decode_Vo_Wo, OP_UCOMISS, FLAG_NONE },
 	{ "comiss",  &Instruction::decode_Vo_Wo, OP_COMISS, FLAG_NONE },
-	
+
 	/* 0x0f 0x30 - 0x0f 0x3f */
 	{ "wrmsr", &Instruction::decode0, OP_WRMSR, FLAG_NONE },
 	{ "rdtsc", &Instruction::decode0, OP_RDTSC, FLAG_NONE },
@@ -1343,7 +1343,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x40 - 0x0f 0x4f */
 	{ "cmovo", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovno", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
@@ -1361,7 +1361,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "cmovnl", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovnle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
-	
+
 	/* 0x0f 0x50 - 0x0f 0x5f */
 	{ "movmskps", &Instruction::decode_Gq_Uo, OP_MOVMSKPS, FLAG_NONE },	// x86: movmskps Gd, Uo
 	{ "sqrtss", &Instruction::decode_Vo_Wo, OP_SQRTSS, FLAG_NONE },
@@ -1379,7 +1379,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "minss", &Instruction::decode_Vo_Wo, OP_MINSS, FLAG_NONE },
 	{ "divss", &Instruction::decode_Vo_Wo, OP_DIVSS, FLAG_NONE },
 	{ "maxss", &Instruction::decode_Vo_Wo, OP_MAXSS, FLAG_NONE },
-	
+
 	/* 0x0f 0x60 - 0x0f 0x6f */
 	{ "punpcklbw", &Instruction::decode_Pq_Qd, OP_PUNPCKLBW, FLAG_NONE },
 	{ "punpcklwd", &Instruction::decode_Pq_Qd, OP_PUNPCKLWD, FLAG_NONE },
@@ -1397,7 +1397,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "movq", &Instruction::decode_Pd_Eq, OP_MOVQ, FLAG_NONE },		// x86: movq Pd, Ed
 	{ "movdqu", &Instruction::decode_Vo_Wo, OP_MOVDQU, FLAG_NONE },
-	
+
 	/* 0x0f 0x70 - 0x0f 0x7f */
 	{ "pshufhw", &Instruction::decode_Vo_Wo_Ib, OP_PSHUFHW, FLAG_NONE },
 	{ "group13", &Instruction::decode_group13, OP_GROUP13, FLAG_NONE },
@@ -1415,7 +1415,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "movq", &Instruction::decode_Vq_Wq, OP_MOVQ, FLAG_NONE },
 	{ "movdqu", &Instruction::decode_Wo_Vo, OP_MOVDQU, FLAG_NONE },
-	
+
 	/* 0x0f 0x80 - 0x0f 0x8f */
 	{ "jo", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jno", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
@@ -1433,7 +1433,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "jnl", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jle", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jnle", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
-	
+
 	/* 0x0f 0x90 - 0x0f 0x9f */
 	{ "seto", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setno", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
@@ -1451,7 +1451,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "setnl", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setle", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setnle", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
-	
+
 	/* 0x0f 0xa0 - 0x0f 0xaf */
 	{ "push", &Instruction::decode_Reg<operand_t::REG_FS>, OP_PUSH, FLAG_NONE },
 	{ "pop", &Instruction::decode_Reg<operand_t::REG_FS>, OP_POP, FLAG_NONE },
@@ -1469,7 +1469,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "shrd", &Instruction::decode_Ev_Gv_Reg<operand_t::REG_CL>, OP_SHRD, FLAG_NONE },
 	{ "group16", &Instruction::decode_group16, OP_GROUP16, FLAG_NONE },
 	{ "imul",  &Instruction::decode_Gv_Ev, OP_IMUL, FLAG_NONE },
-	
+
 	/* 0x0f 0xb0 - 0x0f 0xbf */
 	{ "cmpxchg", &Instruction::decode_Eb_Gb, OP_CMPXCHG, FLAG_NONE },
 	{ "cmpxchg", &Instruction::decode_Ev_Gv, OP_CMPXCHG, FLAG_NONE },
@@ -1487,7 +1487,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "bsr", &Instruction::decode_Gv_Ev, OP_BSR, FLAG_NONE },
 	{ "movsx", &Instruction::decode_Gv_Eb, OP_MOVSX, FLAG_NONE },
 	{ "movsx", &Instruction::decode_Gv_Ew, OP_MOVSX, FLAG_NONE },
-	
+
 	/* 0x0f 0xc0 - 0x0f 0xcf */
 	{ "xadd", &Instruction::decode_Eb_Gb, OP_XADD, FLAG_NONE },
 	{ "xadd", &Instruction::decode_Ev_Gv, OP_XADD, FLAG_NONE },
@@ -1505,7 +1505,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "bswap", &Instruction::decode_rBP, OP_BSWAP, FLAG_NONE },
 	{ "bswap", &Instruction::decode_rSI, OP_BSWAP, FLAG_NONE },
 	{ "bswap", &Instruction::decode_rDI, OP_BSWAP, FLAG_NONE },
-	
+
 	/* 0x0f 0xd0 - 0x0f 0xdf */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "psrlw", &Instruction::decode_Pq_Qq, OP_PSRLW, FLAG_NONE },
@@ -1523,7 +1523,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
     { "paddusw", &Instruction::decode_Pq_Qq, OP_PADDUSW, FLAG_NONE },
     { "pmaxub", &Instruction::decode_Pq_Qq, OP_PMAXUB, FLAG_NONE },
     { "pandn", &Instruction::decode_Pq_Qq, OP_PANDN, FLAG_NONE },
-	
+
 	/* 0x0f 0xe0 - 0x0f 0xef */
 	{ "pavgb", &Instruction::decode_Pq_Qq, OP_PAVGB, FLAG_NONE },
 	{ "psraw", &Instruction::decode_Pq_Qq, OP_PSRAW, FLAG_NONE },
@@ -1536,12 +1536,12 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "psubsb", &Instruction::decode_Pq_Qq, OP_PSUBSB, FLAG_NONE },
 	{ "psubsw", &Instruction::decode_Pq_Qq, OP_PSUBSW, FLAG_NONE },
 	{ "pminsw", &Instruction::decode_Pq_Qq, OP_PMINSW, FLAG_NONE },
-	{ "por", &Instruction::decode_Pq_Qq, OP_POR, FLAG_NONE },  
+	{ "por", &Instruction::decode_Pq_Qq, OP_POR, FLAG_NONE },
 	{ "paddsb", &Instruction::decode_Pq_Qq, OP_PADDSB, FLAG_NONE },
 	{ "paddsw", &Instruction::decode_Pq_Qq, OP_PADDSW, FLAG_NONE },
 	{ "pmaxsw", &Instruction::decode_Pq_Qq, OP_PMAXSW, FLAG_NONE },
 	{ "pxor", &Instruction::decode_Pq_Qq, OP_PXOR, FLAG_NONE },
-	
+
 	/* 0x0f 0xf0 - 0x0f 0xff */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "psllw", &Instruction::decode_Pq_Qq, OP_PSLLW, FLAG_NONE },
@@ -1554,7 +1554,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "psubb", &Instruction::decode_Pq_Qq, OP_PSUBB, FLAG_NONE },
 	{ "psubw", &Instruction::decode_Pq_Qq, OP_PSUBW, FLAG_NONE },
 	{ "psubd", &Instruction::decode_Pq_Qq, OP_PSUBD, FLAG_NONE },
-	{ "psubq", &Instruction::decode_Pq_Qq, OP_PSUBQ, FLAG_NONE },	
+	{ "psubq", &Instruction::decode_Pq_Qq, OP_PSUBQ, FLAG_NONE },
 	{ "paddb", &Instruction::decode_Pq_Qq, OP_PADDB, FLAG_NONE },
 	{ "paddw", &Instruction::decode_Pq_Qq, OP_PADDW, FLAG_NONE },
 	{ "paddd", &Instruction::decode_Pq_Qq, OP_PADDD, FLAG_NONE },
@@ -1564,7 +1564,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 
 template <>
 const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>::Opcodes_3Byte_38_66[0x100] = {
-	
+
 	/* 0x0f 0x38 0x00 - 0x0f 0x38 0x0f */
 	{ "pshufb", &Instruction::decode_Vo_Wo, OP_PSHUFB, FLAG_NONE },
 	{ "phaddw", &Instruction::decode_Vo_Wo, OP_PHADDW, FLAG_NONE },
@@ -1582,7 +1582,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x38 0x10 - 0x0f 0x38 0x1f */
 	{ "pblendvb", &Instruction::decode_Vo_Wo, OP_PBLENDVB, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -1600,7 +1600,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "pabsw", &Instruction::decode_Vo_Wo, OP_PABSW, FLAG_NONE },
 	{ "pabsd", &Instruction::decode_Vo_Wo, OP_PABSD, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x38 0x20 - 0x0f 0x38 0x2f */
 	{ "pmovsxbw", &Instruction::decode_Vo_Uo_Mq, OP_PMOVSXBW, FLAG_NONE },
 	{ "pmovsxbd", &Instruction::decode_Vo_Uo_Md, OP_PMOVSXBD, FLAG_NONE },
@@ -1618,7 +1618,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x38 0x30 - 0x0f 0x38 0x3f */
 	{ "pmovzxbw", &Instruction::decode_Vo_Uo_Mq, OP_PMOVZXBW, FLAG_NONE },
 	{ "pmovzxbd", &Instruction::decode_Vo_Uo_Md, OP_PMOVZXBD, FLAG_NONE },
@@ -1636,7 +1636,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "pmaxsd", &Instruction::decode_Vo_Wo, OP_PMAXSD, FLAG_NONE },
 	{ "pmaxuw", &Instruction::decode_Vo_Wo, OP_PMAXUW, FLAG_NONE },
 	{ "pmaxud", &Instruction::decode_Vo_Wo, OP_PMAXUD, FLAG_NONE },
-	
+
 	/* 0x0f 0x38 0x40 - 0x0f 0x38 0x4f */
 	{ "pmulld", &Instruction::decode_Vo_Wo, OP_PMULLD, FLAG_NONE },
 	{ "phminposuw", &Instruction::decode_Vo_Wo, OP_PHMINPOSUW, FLAG_NONE },
@@ -1654,16 +1654,16 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x38 0x50 - 0x0f 0x38 0x5f */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x38 0x60 - 0x0f 0x38 0x6f */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x38 0x70 - 0x0f 0x38 0x7f */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x38 0x80 - 0x0f 0x38 0x8f */
 	{ "nvept", &Instruction::decode_Gq_Mo, OP_NVEPT, FLAG_NONE },		// x86: nvept Gd, Mo
 	{ "nvvpid", &Instruction::decode_Gq_Mo, OP_NVVPID, FLAG_NONE },	// x86: nvvpid Gd, Mo
@@ -1681,25 +1681,25 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x38 0x90 - 0x0f 0x38 0x9f */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x38 0xa0 - 0x0f 0x38 0xaf */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x38 0xb0 - 0x0f 0x38 0xbf */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x38 0xc0 - 0x0f 0x38 0xcf */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x38 0xd0 - 0x0f 0x38 0xdf */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x38 0xe0 - 0x0f 0x38 0xef */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x38 0xf0 - 0x0f 0x38 0xff */
 	{ "movbe", &Instruction::decode_Gv_Mv, OP_MOVBE, FLAG_NONE },
 	{ "movbe", &Instruction::decode_Mv_Gv, OP_MOVBE, FLAG_NONE },
@@ -1738,7 +1738,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "blendpd", &Instruction::decode_Vo_Wo_Ib, OP_BLENDPD, FLAG_NONE },
 	{ "pblendw", &Instruction::decode_Vo_Wo_Ib, OP_PBLENDW, FLAG_NONE },
 	{ "palignr", &Instruction::decode_Vo_Wo_Ib, OP_PALIGNR, FLAG_NONE },
-	
+
 	/* 0x0f 0x3a 0x10 - 0x0f 0x3a 0x1f */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -1756,7 +1756,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x3a 0x20 - 0x0f 0x3a 0x2f */
 	{ "pinsrb", &Instruction::decode_Vo_Mb_Ib, OP_PINSRB, FLAG_NONE },
 	{ "insertps", &Instruction::decode_Vo_Md_Ib, OP_INSERTPS, FLAG_NONE },
@@ -1774,10 +1774,10 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x3a 0x30 - 0x0f 0x3a 0x3f */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x3a 0x40 - 0x0f 0x3a 0x4f */
 	{ "dpps", &Instruction::decode_Vo_Wo_Ib, OP_DPPS, FLAG_NONE },
 	{ "dppd", &Instruction::decode_Vo_Wo_Ib, OP_DPPD, FLAG_NONE },
@@ -1795,10 +1795,10 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x3a 0x50 - 0x0f 0x3a 0x5f */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x3a 0x60 - 0x0f 0x3a 0x6f */
 	{ "pcmpestrm", &Instruction::decode_Vo_Wo_Ib, OP_PCMPESTRM, FLAG_NONE },
 	{ "pcmpestri", &Instruction::decode_Vo_Wo_Ib, OP_PCMPESTRI, FLAG_NONE },
@@ -1816,31 +1816,31 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x3a 0x70 - 0x0f 0x3a 0x7f */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x3a 0x80 - 0x0f 0x3a 0x8f */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x3a 0x90 - 0x0f 0x3a 0x9f */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x3a 0xa0 - 0x0f 0x3a 0xaf */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x3a 0xb0 - 0x0f 0x3a 0xbf */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x3a 0xc0 - 0x0f 0x3a 0xcf */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x3a 0xd0 - 0x0f 0x3a 0xdf */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x3a 0xe0 - 0x0f 0x3a 0xef */
 	INVALID_BLOCK,
-	
+
 	/* 0x0f 0x3a 0xf0 - 0x0f 0x3a 0xff */
 	INVALID_BLOCK
 };

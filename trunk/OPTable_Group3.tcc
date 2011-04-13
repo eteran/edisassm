@@ -1,7 +1,7 @@
 /*
 Copyright (C) 2006 - 2011 Evan Teran
                           eteran@alum.rit.edu
-				   
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -31,7 +31,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group3[16] =
 	{ "imul", &Instruction::decode_Eb, OP_IMUL, FLAG_NONE },
 	{ "div", &Instruction::decode_Eb, OP_DIV, FLAG_NONE },
 	{ "idiv", &Instruction::decode_Eb, OP_IDIV, FLAG_NONE },
-	
+
 	{ "test", &Instruction::decode_Ev_Iz, OP_TEST, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "not", &Instruction::decode_Ev, OP_NOT, FLAG_NONE },
