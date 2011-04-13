@@ -201,8 +201,8 @@ public:
 	uint64_t qword() const { return u.qword; }
 	Register reg() const   { return u.reg; }
 
-	absolute_t absolute() const    { return u.absolute; }
-	expression_t expression() const { return u.expression; }
+	const absolute_t absolute() const     { return u.absolute; }
+	const expression_t expression() const { return u.expression; }
 	
 private:
 	std::string format_immediate(bool upper) const;
