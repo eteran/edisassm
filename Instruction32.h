@@ -902,6 +902,7 @@ void Instruction<M>::assemble(std::string instruction) {
 	}
 
 	find_opcode(opcode, Opcodes, operand_index);
+	
 	find_opcode(opcode, Opcodes_2Byte_NA, operand_index);
 	find_opcode(opcode, Opcodes_2Byte_66, operand_index);
 	find_opcode(opcode, Opcodes_2Byte_F2, operand_index);
@@ -910,12 +911,57 @@ void Instruction<M>::assemble(std::string instruction) {
 	find_opcode(opcode, Opcodes_3Byte_38_NA, operand_index);
 	find_opcode(opcode, Opcodes_3Byte_38_66, operand_index);
 	find_opcode(opcode, Opcodes_3Byte_38_F2, operand_index);
-
 	find_opcode(opcode, Opcodes_3Byte_3A_NA, operand_index);
 	find_opcode(opcode, Opcodes_3Byte_3A_66, operand_index);
 
+	// fpu
 	find_opcode(opcode, Opcodes_x87_Lo, operand_index);
 	find_opcode(opcode, Opcodes_x87_Hi, operand_index);
+	
+	// groups
+	find_opcode(opcode, Opcodes_Group1, operand_index);
+	find_opcode(opcode, Opcodes_Group2, operand_index);
+	find_opcode(opcode, Opcodes_Group2D, operand_index);
+	find_opcode(opcode, Opcodes_Group3, operand_index);
+	find_opcode(opcode, Opcodes_Group4, operand_index);
+	find_opcode(opcode, Opcodes_Group5, operand_index);
+	find_opcode(opcode, Opcodes_Group6, operand_index);
+	find_opcode(opcode, Opcodes_Group7, operand_index);
+	find_opcode(opcode, Opcodes_Group7A, operand_index);
+	find_opcode(opcode, Opcodes_Group8, operand_index);
+	find_opcode(opcode, Opcodes_Group9, operand_index);
+	find_opcode(opcode, Opcodes_Group9_66, operand_index);
+	find_opcode(opcode, Opcodes_Group9_F3, operand_index);
+	find_opcode(opcode, Opcodes_Group10, operand_index);
+	find_opcode(opcode, Opcodes_Group11, operand_index);
+	find_opcode(opcode, Opcodes_Group12, operand_index);
+	find_opcode(opcode, Opcodes_Group13, operand_index);
+	find_opcode(opcode, Opcodes_Group13_66, operand_index);
+	find_opcode(opcode, Opcodes_Group14, operand_index);
+	find_opcode(opcode, Opcodes_Group14_66, operand_index);
+	find_opcode(opcode, Opcodes_Group15, operand_index);
+	find_opcode(opcode, Opcodes_Group15_66, operand_index);
+	find_opcode(opcode, Opcodes_Group16_Reg, operand_index);
+	find_opcode(opcode, Opcodes_Group16_Mem, operand_index);
+	find_opcode(opcode, Opcodes_Group17, operand_index);
+	
+	// other
+	find_opcode(opcode, Opcodes_nop_pause_xchg, operand_index);
+	find_opcode(opcode, Opcodes_cbw_cwde_cdqe, operand_index);
+	find_opcode(opcode, Opcodes_cwd_cdq_cqo, operand_index);
+	find_opcode(opcode, Opcodes_stosw_stosd_stosq, operand_index);
+	find_opcode(opcode, Opcodes_lodsw_lodsd_lodsq, operand_index);
+	find_opcode(opcode, Opcodes_scasw_scasd_scasq, operand_index);
+	find_opcode(opcode, Opcodes_iretw_iret_iretq, operand_index);
+	find_opcode(opcode, Opcodes_movsw_movsd_movsq, operand_index);
+	find_opcode(opcode, Opcodes_popfw_popfd_popfq, operand_index);
+	find_opcode(opcode, Opcodes_pushfw_pushfd_pushfq, operand_index);
+	find_opcode(opcode, Opcodes_invalid_cmpxchg8b_cmpxchg16b, operand_index);
+	find_opcode(opcode, Opcodes_insw_insd_invalid, operand_index);
+	find_opcode(opcode, Opcodes_outsw_outsd_invalid, operand_index);
+	find_opcode(opcode, Opcodes_cmpsw_cmpsd_invalid, operand_index);
+	find_opcode(opcode, Opcodes_pushaw_pushad_invalid, operand_index);
+	find_opcode(opcode, Opcodes_popaw_popad_invalid, operand_index);
 }
 
 //------------------------------------------------------------------------------

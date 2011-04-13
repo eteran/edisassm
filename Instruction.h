@@ -38,22 +38,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #ifndef INVALID_BLOCK
 #define INVALID_BLOCK \
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }
 #endif
 
 #include "Operand.h"
@@ -1175,35 +1175,31 @@ private:
 	}
 
 	// 3 operand modes
-	DECODE3(Vo, Eq, Ib)
+	DECODE3(Ed, Vo, Ib)
 	DECODE3(Eq, Vo, Ib)
+	DECODE3(Ev, Gv, Ib)
+	DECODE3(Gd, Nq, Ib)
+	DECODE3(Gd, Uo, Ib)
+	DECODE3(Gv, Ev, Ib)
+	DECODE3(Gv, Ev, Iz)
+	DECODE3(Pq, Qq, Ib)
+	DECODE3(Vo, Ed, Ib)
+	DECODE3(Vo, Eq, Ib)
 	DECODE3(Vo, Mb, Ib)
 	DECODE3(Vo, Md, Ib)
-	DECODE3(Vo, Ed, Ib)
-	DECODE3(Gv, Ev, Iz)
-	DECODE3(Gv, Ev, Ib)
-	DECODE3(Ev, Gv, Ib)
 	DECODE3(Vo, Wo, Ib)
-	DECODE3(Gd, Nq, Ib)
-	DECODE3(Pq, Qq, Ib)
-	DECODE3(Vd, Wd, Ib)
-	DECODE3(Vo, Mw, Ib)
-	DECODE3(Gd, Uo, Ib)
-	DECODE3(Vq, Wq, Ib)
-	DECODE3(Vo, Wq, Ib)
-	DECODE3(Mb, Vo, Ib)
-	DECODE3(Ed, Vo, Ib)
-	DECODE3(Mw, Vo, Ib)
 
+	DECODE3(Ev, Vo, Ib)
+	
 	DECODE3(Pq, Rd_Mw, Ib)
-	DECODE3(Vo, Rd_Mw, Ib)
 	DECODE3(Pq, Rq_Mw, Ib)
+	DECODE3(Vo, Rd_Mw, Ib)
 	DECODE3(Vo, Rq_Mw, Ib)
 
-	DECODE3(Rq_Mw, Vo, Ib)
+	DECODE3(Md_Gd, Vo, Ib)
 	DECODE3(Rd_Mb, Vo, Ib)
 	DECODE3(Rd_Mw, Vo, Ib)
-
+	DECODE3(Rq_Mw, Vo, Ib)
 	#undef DECODE3
 
 	template <typename operand_t::Register REG>
@@ -1247,10 +1243,11 @@ private:
 
 private:
 	struct opcode_entry {
-		const char 		*mnemonic;
-		decoder_t		decoder;
-		Type			type;
-		unsigned int	flags;
+		const char * mnemonic;
+		decoder_t    decoder;
+		Type         type;
+		unsigned int flags;
+		unsigned int operand_count;
 	};
 
 private:
@@ -1338,6 +1335,9 @@ private:
 	bool					private_buffer_;
 };
 
+//------------------------------------------------------------------------------
+// Name: operator==(const Instruction<M> &lhs, const Instruction<M> &rhs)
+//------------------------------------------------------------------------------
 template <class M>
 bool operator==(const Instruction<M> &lhs, const Instruction<M> &rhs) {
 	// invalid ops match nothing
@@ -1410,12 +1410,19 @@ bool operator==(const Instruction<M> &lhs, const Instruction<M> &rhs) {
 	return true;
 }
 
+//------------------------------------------------------------------------------
+// Name: operator!=(const Instruction<M> &lhs, const Instruction<M> &rhs)
+//------------------------------------------------------------------------------
 template <class M>
 bool operator!=(const Instruction<M> &lhs, const Instruction<M> &rhs) {
 	return !(lhs == rhs);
 }
 
 namespace edisassm {
+
+//------------------------------------------------------------------------------
+// Name: to_string(const Instruction<M> &insn, bool upper = false)
+//------------------------------------------------------------------------------
 template <class M>
 std::string to_string(const Instruction<M> &insn, bool upper = false) {
 	std::ostringstream ss;
