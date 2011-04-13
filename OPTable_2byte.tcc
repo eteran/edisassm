@@ -1,7 +1,7 @@
 /*
 Copyright (C) 2006 - 2011 Evan Teran
                           eteran@alum.rit.edu
-				   
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -41,7 +41,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "nop", &Instruction::decode_Ev, OP_NOP, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x10 - 0x0f 0x1f */
 	{ "movups", &Instruction::decode_Vo_Wo, OP_MOVUPS, FLAG_NONE },
 	{ "movups", &Instruction::decode_Wo_Vo, OP_MOVUPS, FLAG_NONE },
@@ -59,7 +59,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "nop", &Instruction::decode_Ev, OP_NOP, FLAG_NONE },
-	
+
 	/* 0x0f 0x20 - 0x0f 0x2f */
 	{ "mov", &Instruction::decode_Rd_Cd, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_Rd_Dd, OP_MOV, FLAG_NONE },
@@ -72,12 +72,12 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "movaps", &Instruction::decode_Vo_Wo, OP_MOVAPS, FLAG_NONE },
 	{ "movaps", &Instruction::decode_Wo_Vo, OP_MOVAPS, FLAG_NONE },
 	{ "cvtpi2ps", &Instruction::decode_Vo_Qq, OP_CVTPI2PS, FLAG_NONE },
-	{ "movntps",  &Instruction::decode_Mo_Vo, OP_MOVNTPS, FLAG_NONE },	
+	{ "movntps",  &Instruction::decode_Mo_Vo, OP_MOVNTPS, FLAG_NONE },
 	{ "cvttps2pi",  &Instruction::decode_Pq_Wo, OP_CVTTPS2PI, FLAG_NONE },
 	{ "cvtps2pi",  &Instruction::decode_Pq_Wo, OP_CVTPS2PI, FLAG_NONE },
 	{ "ucomiss",  &Instruction::decode_Vo_Wo, OP_UCOMISS, FLAG_NONE },
 	{ "comiss",  &Instruction::decode_Vo_Wo, OP_COMISS, FLAG_NONE },
-	
+
 	/* 0x0f 0x30 - 0x0f 0x3f */
 	{ "wrmsr", &Instruction::decode0, OP_WRMSR, FLAG_NONE },
 	{ "rdtsc", &Instruction::decode0, OP_RDTSC, FLAG_NONE },
@@ -95,7 +95,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x40 - 0x0f 0x4f */
 	{ "cmovo", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovno", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
@@ -113,7 +113,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "cmovnl", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovnle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
-	
+
 	/* 0x0f 0x50 - 0x0f 0x5f */
 	{ "movmskps", &Instruction::decode_Gd_Uo, OP_MOVMSKPS, FLAG_NONE },	// x86-64: movmskps Gq, Uo
 	{ "sqrtps", &Instruction::decode_Vo_Wo, OP_SQRTPS, FLAG_NONE },
@@ -131,7 +131,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "minps", &Instruction::decode_Vo_Wo, OP_MINPS, FLAG_NONE },
 	{ "divps", &Instruction::decode_Vo_Wo, OP_DIVPS, FLAG_NONE },
 	{ "maxps", &Instruction::decode_Vo_Wo, OP_MAXPS, FLAG_NONE },
-	
+
 	/* 0x0f 0x60 - 0x0f 0x6f */
 	{ "punpcklbw", &Instruction::decode_Pq_Qd, OP_PUNPCKLBW, FLAG_NONE },
 	{ "punpcklwd", &Instruction::decode_Pq_Qd, OP_PUNPCKLWD, FLAG_NONE },
@@ -149,7 +149,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "movd", &Instruction::decode_Pd_Ed, OP_MOVD, FLAG_NONE },		// x86-64: movq Pd, Eq
 	{ "movq", &Instruction::decode_Pq_Qq, OP_MOVQ, FLAG_NONE },
-	
+
 	/* 0x0f 0x70 - 0x0f 0x7f */
 	{ "pshufw", &Instruction::decode_Pq_Qq_Ib, OP_PSHUFW, FLAG_NONE },
 	{ "group13", &Instruction::decode_group13, OP_GROUP13, FLAG_NONE },
@@ -167,7 +167,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "movd", &Instruction::decode_Ed_Pd, OP_MOVD, FLAG_NONE },		// x86-64: movq Eq,Pd
 	{ "movq", &Instruction::decode_Qq_Pq, OP_MOVQ, FLAG_NONE },
-	
+
 	/* 0x0f 0x80 - 0x0f 0x8f */
 	{ "jo", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jno", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
@@ -185,7 +185,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "jnl", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jle", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jnle", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
-	
+
 	/* 0x0f 0x90 - 0x0f 0x9f */
 	{ "seto", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setno", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
@@ -203,7 +203,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "setnl", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setle", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setnle", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
-	
+
 	/* 0x0f 0xa0 - 0x0f 0xaf */
 	{ "push", &Instruction::decode_SegFS, OP_PUSH, FLAG_NONE },
 	{ "pop", &Instruction::decode_SegFS, OP_POP, FLAG_NONE },
@@ -221,7 +221,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "shrd", &Instruction::decode_Ev_Gv_CL, OP_SHRD, FLAG_NONE },
 	{ "group16", &Instruction::decode_group16, OP_GROUP16, FLAG_NONE },
 	{ "imul",  &Instruction::decode_Gv_Ev, OP_IMUL, FLAG_NONE },
-	
+
 	/* 0x0f 0xb0 - 0x0f 0xbf */
 	{ "cmpxchg", &Instruction::decode_Eb_Gb, OP_CMPXCHG, FLAG_NONE },
 	{ "cmpxchg", &Instruction::decode_Ev_Gv, OP_CMPXCHG, FLAG_NONE },
@@ -239,7 +239,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "bsr", &Instruction::decode_Gv_Ev, OP_BSR, FLAG_NONE },
 	{ "movsx", &Instruction::decode_Gv_Eb, OP_MOVSX, FLAG_NONE },
 	{ "movsx", &Instruction::decode_Gv_Ew, OP_MOVSX, FLAG_NONE },
-	
+
 	/* 0x0f 0xc0 - 0x0f 0xcf */
 	{ "xadd", &Instruction::decode_Eb_Gb, OP_XADD, FLAG_NONE },
 	{ "xadd", &Instruction::decode_Ev_Gv, OP_XADD, FLAG_NONE },
@@ -257,7 +257,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "bswap", &Instruction::decode_rBP, OP_BSWAP, FLAG_NONE },
 	{ "bswap", &Instruction::decode_rSI, OP_BSWAP, FLAG_NONE },
 	{ "bswap", &Instruction::decode_rDI, OP_BSWAP, FLAG_NONE },
-	
+
 	/* 0x0f 0xd0 - 0x0f 0xdf */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "psrlw", &Instruction::decode_Pq_Qq, OP_PSRLW, FLAG_NONE },
@@ -275,7 +275,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
     { "paddusw", &Instruction::decode_Pq_Qq, OP_PADDUSW, FLAG_NONE },
     { "pmaxub", &Instruction::decode_Pq_Qq, OP_PMAXUB, FLAG_NONE },
     { "pandn", &Instruction::decode_Pq_Qq, OP_PANDN, FLAG_NONE },
-	
+
 	/* 0x0f 0xe0 - 0x0f 0xef */
 	{ "pavgb", &Instruction::decode_Pq_Qq, OP_PAVGB, FLAG_NONE },
 	{ "psraw", &Instruction::decode_Pq_Qq, OP_PSRAW, FLAG_NONE },
@@ -288,12 +288,12 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "psubsb", &Instruction::decode_Pq_Qq, OP_PSUBSB, FLAG_NONE },
 	{ "psubsw", &Instruction::decode_Pq_Qq, OP_PSUBSW, FLAG_NONE },
 	{ "pminsw", &Instruction::decode_Pq_Qq, OP_PMINSW, FLAG_NONE },
-	{ "por", &Instruction::decode_Pq_Qq, OP_POR, FLAG_NONE },  
+	{ "por", &Instruction::decode_Pq_Qq, OP_POR, FLAG_NONE },
 	{ "paddsb", &Instruction::decode_Pq_Qq, OP_PADDSB, FLAG_NONE },
 	{ "paddsw", &Instruction::decode_Pq_Qq, OP_PADDSW, FLAG_NONE },
 	{ "pmaxsw", &Instruction::decode_Pq_Qq, OP_PMAXSW, FLAG_NONE },
 	{ "pxor", &Instruction::decode_Pq_Qq, OP_PXOR, FLAG_NONE },
-	
+
 	/* 0x0f 0xf0 - 0x0f 0xff */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "psllw", &Instruction::decode_Pq_Qq, OP_PSLLW, FLAG_NONE },
@@ -306,7 +306,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "psubb", &Instruction::decode_Pq_Qq, OP_PSUBB, FLAG_NONE },
 	{ "psubw", &Instruction::decode_Pq_Qq, OP_PSUBW, FLAG_NONE },
 	{ "psubd", &Instruction::decode_Pq_Qq, OP_PSUBD, FLAG_NONE },
-	{ "psubq", &Instruction::decode_Pq_Qq, OP_PSUBQ, FLAG_NONE },	
+	{ "psubq", &Instruction::decode_Pq_Qq, OP_PSUBQ, FLAG_NONE },
 	{ "paddb", &Instruction::decode_Pq_Qq, OP_PADDB, FLAG_NONE },
 	{ "paddw", &Instruction::decode_Pq_Qq, OP_PADDW, FLAG_NONE },
 	{ "paddd", &Instruction::decode_Pq_Qq, OP_PADDD, FLAG_NONE },
@@ -317,7 +317,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 // 2 byte opcodes with a 66 prefix
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x100] = {
-	
+
 	/* 0x0f 0x00 - 0x0f 0x0f */
 	{ "group6", &Instruction::decode_group6, OP_GROUP6, FLAG_NONE },
 	{ "group7", &Instruction::decode_group7, OP_GROUP7, FLAG_NONE },
@@ -335,7 +335,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "nop", &Instruction::decode_Ev, OP_NOP, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x10 - 0x0f 0x1f */
 	{ "movupd", &Instruction::decode_Vo_Wo, OP_MOVUPD, FLAG_NONE },
 	{ "movupd", &Instruction::decode_Wo_Vo, OP_MOVUPD, FLAG_NONE },
@@ -353,7 +353,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "nop", &Instruction::decode_Ev, OP_NOP, FLAG_NONE },
-	
+
 	/* 0x0f 0x20 - 0x0f 0x2f */
 	{ "mov", &Instruction::decode_Rd_Cd, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_Rd_Dd, OP_MOV, FLAG_NONE },
@@ -366,12 +366,12 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "movapd", &Instruction::decode_Vo_Wo, OP_MOVAPD, FLAG_NONE },
 	{ "movapd", &Instruction::decode_Wo_Vo, OP_MOVAPD, FLAG_NONE },
 	{ "cvtpi2pd", &Instruction::decode_Vo_Qq, OP_CVTPI2PD, FLAG_NONE },
-	{ "movntpd",  &Instruction::decode_Mo_Vo, OP_MOVNTPD, FLAG_NONE },	
+	{ "movntpd",  &Instruction::decode_Mo_Vo, OP_MOVNTPD, FLAG_NONE },
 	{ "cvttpd2pi",  &Instruction::decode_Pq_Wo, OP_CVTTPD2PI, FLAG_NONE },
 	{ "cvtpd2pi",  &Instruction::decode_Qq_Wo, OP_CVTPD2PI, FLAG_NONE },
 	{ "ucomisd",  &Instruction::decode_Vo_Wo, OP_UCOMISD, FLAG_NONE },
 	{ "comisd",  &Instruction::decode_Vo_Wo, OP_COMISD, FLAG_NONE },
-	
+
 	/* 0x0f 0x30 - 0x0f 0x3f */
 	{ "wrmsr", &Instruction::decode0, OP_WRMSR, FLAG_NONE },
 	{ "rdtsc", &Instruction::decode0, OP_RDTSC, FLAG_NONE },
@@ -389,7 +389,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x40 - 0x0f 0x4f */
 	{ "cmovo", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovno", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
@@ -407,7 +407,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "cmovnl", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovnle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
-	
+
 	/* 0x0f 0x50 - 0x0f 0x5f */
 	{ "movmskpd", &Instruction::decode_Gd_Uo, OP_MOVMSKPD, FLAG_NONE },	// x86-64: movmskpd Gq, Uo
 	{ "sqrtpd", &Instruction::decode_Vo_Wo, OP_SQRTPD, FLAG_NONE },
@@ -425,7 +425,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "minpd", &Instruction::decode_Vo_Wo, OP_MINPD, FLAG_NONE },
 	{ "divpd", &Instruction::decode_Vo_Wo, OP_DIVPD, FLAG_NONE },
 	{ "maxpd", &Instruction::decode_Vo_Wo, OP_MAXPD, FLAG_NONE },
-	
+
 	/* 0x0f 0x60 - 0x0f 0x6f */
 	{ "punpcklbw", &Instruction::decode_Vo_Wo, OP_PUNPCKLBW, FLAG_NONE },
 	{ "punpcklwd", &Instruction::decode_Vo_Wo, OP_PUNPCKLWD, FLAG_NONE },
@@ -443,7 +443,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "punpckhqdq", &Instruction::decode_Vo_Wo, OP_PUNPCKHQDQ, FLAG_NONE },
 	{ "movd", &Instruction::decode_Vo_Ed, OP_MOVD, FLAG_NONE },		// x86-64: movq Vo, Eq
 	{ "movq", &Instruction::decode_Vo_Qq, OP_MOVQ, FLAG_NONE },
-	
+
 	/* 0x0f 0x70 - 0x0f 0x7f */
 	{ "pshufd", &Instruction::decode_Vo_Wo_Ib, OP_PSHUFD, FLAG_NONE },
 	{ "group13", &Instruction::decode_group13, OP_GROUP13, FLAG_NONE },
@@ -461,7 +461,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "hsubpd", &Instruction::decode_Vo_Wo, OP_HSUBPD, FLAG_NONE },
 	{ "movd", &Instruction::decode_Ed_Vo, OP_MOVD, FLAG_NONE },		// x86-64: movq Eq, Vo
 	{ "movdqa", &Instruction::decode_Wo_Vo, OP_MOVDQA, FLAG_NONE },
-	
+
 	/* 0x0f 0x80 - 0x0f 0x8f */
 	{ "jo", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jno", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
@@ -479,7 +479,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "jnl", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jle", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jnle", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
-	
+
 	/* 0x0f 0x90 - 0x0f 0x9f */
 	{ "seto", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setno", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
@@ -497,7 +497,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "setnl", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setle", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setnle", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
-	
+
 	/* 0x0f 0xa0 - 0x0f 0xaf */
 	{ "push", &Instruction::decode_SegFS, OP_PUSH, FLAG_NONE },
 	{ "pop", &Instruction::decode_SegFS, OP_POP, FLAG_NONE },
@@ -515,7 +515,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "shrd", &Instruction::decode_Ev_Gv_CL, OP_SHRD, FLAG_NONE },
 	{ "group16", &Instruction::decode_group16, OP_GROUP16, FLAG_NONE },
 	{ "imul",  &Instruction::decode_Gv_Ev, OP_IMUL, FLAG_NONE },
-	
+
 	/* 0x0f 0xb0 - 0x0f 0xbf */
 	{ "cmpxchg", &Instruction::decode_Eb_Gb, OP_CMPXCHG, FLAG_NONE },
 	{ "cmpxchg", &Instruction::decode_Ev_Gv, OP_CMPXCHG, FLAG_NONE },
@@ -533,7 +533,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "bsr", &Instruction::decode_Gv_Ev, OP_BSR, FLAG_NONE },
 	{ "movsx", &Instruction::decode_Gv_Eb, OP_MOVSX, FLAG_NONE },
 	{ "movsx", &Instruction::decode_Gv_Ew, OP_MOVSX, FLAG_NONE },
-	
+
 	/* 0x0f 0xc0 - 0x0f 0xcf */
 	{ "xadd", &Instruction::decode_Eb_Gb, OP_XADD, FLAG_NONE },
 	{ "xadd", &Instruction::decode_Ev_Gv, OP_XADD, FLAG_NONE },
@@ -551,7 +551,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "bswap", &Instruction::decode_rBP, OP_BSWAP, FLAG_NONE },
 	{ "bswap", &Instruction::decode_rSI, OP_BSWAP, FLAG_NONE },
 	{ "bswap", &Instruction::decode_rDI, OP_BSWAP, FLAG_NONE },
-	
+
 	/* 0x0f 0xd0 - 0x0f 0xdf */
 	{ "addsubpd", &Instruction::decode_Vo_Wo, OP_ADDSUBPD, FLAG_NONE },
 	{ "psrlw", &Instruction::decode_Vo_Wo, OP_PSRLW, FLAG_NONE },
@@ -569,7 +569,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
     { "paddusw", &Instruction::decode_Vo_Wo, OP_PADDUSW, FLAG_NONE },
     { "pmaxub", &Instruction::decode_Vo_Wo, OP_PMAXUB, FLAG_NONE },
     { "pandn", &Instruction::decode_Vo_Wo, OP_PANDN, FLAG_NONE },
-	
+
 	/* 0x0f 0xe0 - 0x0f 0xef */
 	{ "pavgb", &Instruction::decode_Vo_Wo, OP_PAVGB, FLAG_NONE },
 	{ "psraw", &Instruction::decode_Vo_Wo, OP_PSRAW, FLAG_NONE },
@@ -582,12 +582,12 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "psubsb", &Instruction::decode_Vo_Wo, OP_PSUBSB, FLAG_NONE },
 	{ "psubsw", &Instruction::decode_Vo_Wo, OP_PSUBSW, FLAG_NONE },
 	{ "pminsw", &Instruction::decode_Vo_Wo, OP_PMINSW, FLAG_NONE },
-	{ "por", &Instruction::decode_Vo_Wo, OP_POR, FLAG_NONE },  
+	{ "por", &Instruction::decode_Vo_Wo, OP_POR, FLAG_NONE },
 	{ "paddsb", &Instruction::decode_Vo_Wo, OP_PADDSB, FLAG_NONE },
 	{ "paddsw", &Instruction::decode_Vo_Wo, OP_PADDSW, FLAG_NONE },
 	{ "pmaxsw", &Instruction::decode_Vo_Wo, OP_PMAXSW, FLAG_NONE },
 	{ "pxor", &Instruction::decode_Vo_Wo, OP_PXOR, FLAG_NONE },
-	
+
 	/* 0x0f 0xf0 - 0x0f 0xff */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "psllw", &Instruction::decode_Vo_Wo, OP_PSLLW, FLAG_NONE },
@@ -600,7 +600,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "psubb", &Instruction::decode_Vo_Wo, OP_PSUBB, FLAG_NONE },
 	{ "psubw", &Instruction::decode_Vo_Wo, OP_PSUBW, FLAG_NONE },
 	{ "psubd", &Instruction::decode_Vo_Wo, OP_PSUBD, FLAG_NONE },
-	{ "psubq", &Instruction::decode_Vo_Wo, OP_PSUBQ, FLAG_NONE },	
+	{ "psubq", &Instruction::decode_Vo_Wo, OP_PSUBQ, FLAG_NONE },
 	{ "paddb", &Instruction::decode_Vo_Wo, OP_PADDB, FLAG_NONE },
 	{ "paddw", &Instruction::decode_Vo_Wo, OP_PADDW, FLAG_NONE },
 	{ "paddd", &Instruction::decode_Vo_Wo, OP_PADDD, FLAG_NONE },
@@ -628,7 +628,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "nop", &Instruction::decode_Ev, OP_NOP, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x10 - 0x0f 0x1f */
 	{ "movsd", &Instruction::decode_Vo_Wo, OP_MOVSD, FLAG_NONE },
 	{ "movsd", &Instruction::decode_Wo_Vo, OP_MOVSD, FLAG_NONE },
@@ -646,7 +646,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "nop", &Instruction::decode_Ev, OP_NOP, FLAG_NONE },
-	
+
 	/* 0x0f 0x20 - 0x0f 0x2f */
 	{ "mov", &Instruction::decode_Rd_Cd, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_Rd_Dd, OP_MOV, FLAG_NONE },
@@ -659,12 +659,12 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "movaps", &Instruction::decode_Vo_Wo, OP_MOVAPS, FLAG_NONE },
 	{ "movaps", &Instruction::decode_Wo_Vo, OP_MOVAPS, FLAG_NONE },
 	{ "cvtsi2sd", &Instruction::decode_Vo_Ed, OP_CVTSI2SD, FLAG_NONE },	// x86-64: cvtsi2sd Vo, Eq
-	{ "movntps",  &Instruction::decode_Mo_Vo, OP_MOVNTPS, FLAG_NONE },	
+	{ "movntps",  &Instruction::decode_Mo_Vo, OP_MOVNTPS, FLAG_NONE },
 	{ "cvttsd2si",  &Instruction::decode_Gd_Wo, OP_CVTTSD2SI, FLAG_NONE },	// x86-64: cvttsd2si Gq, Wo
 	{ "cvtsd2si",  &Instruction::decode_Gd_Wo, OP_CVTSD2SI, FLAG_NONE },	// x86-64: cvtsd2si Gq, Wo
 	{ "ucomiss",  &Instruction::decode_Vo_Wo, OP_UCOMISS, FLAG_NONE },
 	{ "comiss",  &Instruction::decode_Vo_Wo, OP_COMISS, FLAG_NONE },
-	
+
 	/* 0x0f 0x30 - 0x0f 0x3f */
 	{ "wrmsr", &Instruction::decode0, OP_WRMSR, FLAG_NONE },
 	{ "rdtsc", &Instruction::decode0, OP_RDTSC, FLAG_NONE },
@@ -682,7 +682,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x40 - 0x0f 0x4f */
 	{ "cmovo", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovno", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
@@ -700,7 +700,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "cmovnl", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovnle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
-	
+
 	/* 0x0f 0x50 - 0x0f 0x5f */
 	{ "movmskps", &Instruction::decode_Gd_Uo, OP_MOVMSKPS, FLAG_NONE },	// x86-64: movmskps Gq, Uo
 	{ "sqrtsd", &Instruction::decode_Vo_Wo, OP_SQRTSD, FLAG_NONE },
@@ -718,7 +718,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "minsd", &Instruction::decode_Vo_Wo, OP_MINSD, FLAG_NONE },
 	{ "divsd", &Instruction::decode_Vo_Wo, OP_DIVSD, FLAG_NONE },
 	{ "maxsd", &Instruction::decode_Vo_Wo, OP_MAXSD, FLAG_NONE },
-	
+
 	/* 0x0f 0x60 - 0x0f 0x6f */
 	{ "punpcklbw", &Instruction::decode_Pq_Qd, OP_PUNPCKLBW, FLAG_NONE },
 	{ "punpcklwd", &Instruction::decode_Pq_Qd, OP_PUNPCKLWD, FLAG_NONE },
@@ -736,7 +736,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "movd", &Instruction::decode_Pd_Ed, OP_MOVD, FLAG_NONE },		// x86-64: movq Pd, Eq
 	{ "movq", &Instruction::decode_Pq_Qq, OP_MOVQ, FLAG_NONE },
-	
+
 	/* 0x0f 0x70 - 0x0f 0x7f */
 	{ "pshuflw", &Instruction::decode_Vo_Wo_Ib, OP_PSHUFLW, FLAG_NONE },
 	{ "group13", &Instruction::decode_group13, OP_GROUP13, FLAG_NONE },
@@ -754,7 +754,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "hsubps", &Instruction::decode_Vo_Wo, OP_HSUBPS, FLAG_NONE },
 	{ "movd", &Instruction::decode_Ed_Pd, OP_MOVD, FLAG_NONE },		// x86-64: movq Eq,Pd
 	{ "movq", &Instruction::decode_Qq_Pq, OP_MOVQ, FLAG_NONE },
-	
+
 	/* 0x0f 0x80 - 0x0f 0x8f */
 	{ "jo", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jno", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
@@ -772,7 +772,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "jnl", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jle", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jnle", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
-	
+
 	/* 0x0f 0x90 - 0x0f 0x9f */
 	{ "seto", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setno", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
@@ -790,7 +790,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "setnl", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setle", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setnle", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
-	
+
 	/* 0x0f 0xa0 - 0x0f 0xaf */
 	{ "push", &Instruction::decode_SegFS, OP_PUSH, FLAG_NONE },
 	{ "pop", &Instruction::decode_SegFS, OP_POP, FLAG_NONE },
@@ -808,7 +808,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "shrd", &Instruction::decode_Ev_Gv_CL, OP_SHRD, FLAG_NONE },
 	{ "group16", &Instruction::decode_group16, OP_GROUP16, FLAG_NONE },
 	{ "imul",  &Instruction::decode_Gv_Ev, OP_IMUL, FLAG_NONE },
-	
+
 	/* 0x0f 0xb0 - 0x0f 0xbf */
 	{ "cmpxchg", &Instruction::decode_Eb_Gb, OP_CMPXCHG, FLAG_NONE },
 	{ "cmpxchg", &Instruction::decode_Ev_Gv, OP_CMPXCHG, FLAG_NONE },
@@ -826,7 +826,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "bsr", &Instruction::decode_Gv_Ev, OP_BSR, FLAG_NONE },
 	{ "movsx", &Instruction::decode_Gv_Eb, OP_MOVSX, FLAG_NONE },
 	{ "movsx", &Instruction::decode_Gv_Ew, OP_MOVSX, FLAG_NONE },
-	
+
 	/* 0x0f 0xc0 - 0x0f 0xcf */
 	{ "xadd", &Instruction::decode_Eb_Gb, OP_XADD, FLAG_NONE },
 	{ "xadd", &Instruction::decode_Ev_Gv, OP_XADD, FLAG_NONE },
@@ -844,7 +844,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "bswap", &Instruction::decode_rBP, OP_BSWAP, FLAG_NONE },
 	{ "bswap", &Instruction::decode_rSI, OP_BSWAP, FLAG_NONE },
 	{ "bswap", &Instruction::decode_rDI, OP_BSWAP, FLAG_NONE },
-	
+
 	/* 0x0f 0xd0 - 0x0f 0xdf */
 	{ "addsubps", &Instruction::decode_Vo_Wo, OP_ADDSUBPS, FLAG_NONE },
 	{ "psrlw", &Instruction::decode_Pq_Qq, OP_PSRLW, FLAG_NONE },
@@ -862,7 +862,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
     { "paddusw", &Instruction::decode_Pq_Qq, OP_PADDUSW, FLAG_NONE },
     { "pmaxub", &Instruction::decode_Pq_Qq, OP_PMAXUB, FLAG_NONE },
     { "pandn", &Instruction::decode_Pq_Qq, OP_PANDN, FLAG_NONE },
-	
+
 	/* 0x0f 0xe0 - 0x0f 0xef */
 	{ "pavgb", &Instruction::decode_Pq_Qq, OP_PAVGB, FLAG_NONE },
 	{ "psraw", &Instruction::decode_Pq_Qq, OP_PSRAW, FLAG_NONE },
@@ -875,12 +875,12 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "psubsb", &Instruction::decode_Pq_Qq, OP_PSUBSB, FLAG_NONE },
 	{ "psubsw", &Instruction::decode_Pq_Qq, OP_PSUBSW, FLAG_NONE },
 	{ "pminsw", &Instruction::decode_Pq_Qq, OP_PMINSW, FLAG_NONE },
-	{ "por", &Instruction::decode_Pq_Qq, OP_POR, FLAG_NONE },  
+	{ "por", &Instruction::decode_Pq_Qq, OP_POR, FLAG_NONE },
 	{ "paddsb", &Instruction::decode_Pq_Qq, OP_PADDSB, FLAG_NONE },
 	{ "paddsw", &Instruction::decode_Pq_Qq, OP_PADDSW, FLAG_NONE },
 	{ "pmaxsw", &Instruction::decode_Pq_Qq, OP_PMAXSW, FLAG_NONE },
 	{ "pxor", &Instruction::decode_Pq_Qq, OP_PXOR, FLAG_NONE },
-	
+
 	/* 0x0f 0xf0 - 0x0f 0xff */
 	{ "lddqu", &Instruction::decode_Vo_Mo, OP_LDDQU, FLAG_NONE },
 	{ "psllw", &Instruction::decode_Pq_Qq, OP_PSLLW, FLAG_NONE },
@@ -893,7 +893,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "psubb", &Instruction::decode_Pq_Qq, OP_PSUBB, FLAG_NONE },
 	{ "psubw", &Instruction::decode_Pq_Qq, OP_PSUBW, FLAG_NONE },
 	{ "psubd", &Instruction::decode_Pq_Qq, OP_PSUBD, FLAG_NONE },
-	{ "psubq", &Instruction::decode_Pq_Qq, OP_PSUBQ, FLAG_NONE },	
+	{ "psubq", &Instruction::decode_Pq_Qq, OP_PSUBQ, FLAG_NONE },
 	{ "paddb", &Instruction::decode_Pq_Qq, OP_PADDB, FLAG_NONE },
 	{ "paddw", &Instruction::decode_Pq_Qq, OP_PADDW, FLAG_NONE },
 	{ "paddd", &Instruction::decode_Pq_Qq, OP_PADDD, FLAG_NONE },
@@ -921,7 +921,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "nop", &Instruction::decode_Ev, OP_NOP, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x10 - 0x0f 0x1f */
 	{ "movss", &Instruction::decode_Vo_Wo, OP_MOVSS, FLAG_NONE },
 	{ "movss", &Instruction::decode_Wo_Vo, OP_MOVSS, FLAG_NONE },
@@ -939,7 +939,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "nop", &Instruction::decode_Ev, OP_NOP, FLAG_NONE },
-	
+
 	/* 0x0f 0x20 - 0x0f 0x2f */
 	{ "mov", &Instruction::decode_Rd_Cd, OP_MOV, FLAG_NONE },
 	{ "mov", &Instruction::decode_Rd_Dd, OP_MOV, FLAG_NONE },
@@ -952,12 +952,12 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "movaps", &Instruction::decode_Vo_Wo, OP_MOVAPS, FLAG_NONE },
 	{ "movaps", &Instruction::decode_Wo_Vo, OP_MOVAPS, FLAG_NONE },
 	{ "cvtsi2ss", &Instruction::decode_Vo_Ed, OP_CVTSI2SS, FLAG_NONE },	// x86-64: cvtsi2ss Vo, Eq
-	{ "movntps",  &Instruction::decode_Mo_Vo, OP_MOVNTPS, FLAG_NONE },	
+	{ "movntps",  &Instruction::decode_Mo_Vo, OP_MOVNTPS, FLAG_NONE },
 	{ "cvttss2si",  &Instruction::decode_Gd_Wo, OP_CVTTSS2SI, FLAG_NONE },	// x86-64: cvttss2si Gq, Wo
 	{ "cvtss2si",  &Instruction::decode_Gd_Wo, OP_CVTSS2SI, FLAG_NONE },	// x86-64: cvtss2si Gq, Wo
 	{ "ucomiss",  &Instruction::decode_Vo_Wo, OP_UCOMISS, FLAG_NONE },
 	{ "comiss",  &Instruction::decode_Vo_Wo, OP_COMISS, FLAG_NONE },
-	
+
 	/* 0x0f 0x30 - 0x0f 0x3f */
 	{ "wrmsr", &Instruction::decode0, OP_WRMSR, FLAG_NONE },
 	{ "rdtsc", &Instruction::decode0, OP_RDTSC, FLAG_NONE },
@@ -975,7 +975,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	/* 0x0f 0x40 - 0x0f 0x4f */
 	{ "cmovo", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovno", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
@@ -993,7 +993,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "cmovnl", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
 	{ "cmovnle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE },
-	
+
 	/* 0x0f 0x50 - 0x0f 0x5f */
 	{ "movmskps", &Instruction::decode_Gd_Uo, OP_MOVMSKPS, FLAG_NONE },	// x86-64: movmskps Gq, Uo
 	{ "sqrtss", &Instruction::decode_Vo_Wo, OP_SQRTSS, FLAG_NONE },
@@ -1011,7 +1011,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "minss", &Instruction::decode_Vo_Wo, OP_MINSS, FLAG_NONE },
 	{ "divss", &Instruction::decode_Vo_Wo, OP_DIVSS, FLAG_NONE },
 	{ "maxss", &Instruction::decode_Vo_Wo, OP_MAXSS, FLAG_NONE },
-	
+
 	/* 0x0f 0x60 - 0x0f 0x6f */
 	{ "punpcklbw", &Instruction::decode_Pq_Qd, OP_PUNPCKLBW, FLAG_NONE },
 	{ "punpcklwd", &Instruction::decode_Pq_Qd, OP_PUNPCKLWD, FLAG_NONE },
@@ -1029,7 +1029,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "movd", &Instruction::decode_Pd_Ed, OP_MOVD, FLAG_NONE },		// x86-64: movq Pd, Eq
 	{ "movdqu", &Instruction::decode_Vo_Wo, OP_MOVDQU, FLAG_NONE },
-	
+
 	/* 0x0f 0x70 - 0x0f 0x7f */
 	{ "pshufhw", &Instruction::decode_Vo_Wo_Ib, OP_PSHUFHW, FLAG_NONE },
 	{ "group13", &Instruction::decode_group13, OP_GROUP13, FLAG_NONE },
@@ -1047,7 +1047,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "movq", &Instruction::decode_Vq_Wq, OP_MOVQ, FLAG_NONE },
 	{ "movdqu", &Instruction::decode_Wo_Vo, OP_MOVDQU, FLAG_NONE },
-	
+
 	/* 0x0f 0x80 - 0x0f 0x8f */
 	{ "jo", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jno", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
@@ -1065,7 +1065,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "jnl", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jle", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
 	{ "jnle", &Instruction::decode_Jz, OP_JCC, FLAG_NONE },
-	
+
 	/* 0x0f 0x90 - 0x0f 0x9f */
 	{ "seto", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setno", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
@@ -1083,7 +1083,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "setnl", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setle", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
 	{ "setnle", &Instruction::decode_Eb, OP_SETCC, FLAG_NONE },
-	
+
 	/* 0x0f 0xa0 - 0x0f 0xaf */
 	{ "push", &Instruction::decode_SegFS, OP_PUSH, FLAG_NONE },
 	{ "pop", &Instruction::decode_SegFS, OP_POP, FLAG_NONE },
@@ -1101,7 +1101,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "shrd", &Instruction::decode_Ev_Gv_CL, OP_SHRD, FLAG_NONE },
 	{ "group16", &Instruction::decode_group16, OP_GROUP16, FLAG_NONE },
 	{ "imul",  &Instruction::decode_Gv_Ev, OP_IMUL, FLAG_NONE },
-	
+
 	/* 0x0f 0xb0 - 0x0f 0xbf */
 	{ "cmpxchg", &Instruction::decode_Eb_Gb, OP_CMPXCHG, FLAG_NONE },
 	{ "cmpxchg", &Instruction::decode_Ev_Gv, OP_CMPXCHG, FLAG_NONE },
@@ -1119,7 +1119,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "bsr", &Instruction::decode_Gv_Ev, OP_BSR, FLAG_NONE },
 	{ "movsx", &Instruction::decode_Gv_Eb, OP_MOVSX, FLAG_NONE },
 	{ "movsx", &Instruction::decode_Gv_Ew, OP_MOVSX, FLAG_NONE },
-	
+
 	/* 0x0f 0xc0 - 0x0f 0xcf */
 	{ "xadd", &Instruction::decode_Eb_Gb, OP_XADD, FLAG_NONE },
 	{ "xadd", &Instruction::decode_Ev_Gv, OP_XADD, FLAG_NONE },
@@ -1137,7 +1137,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "bswap", &Instruction::decode_rBP, OP_BSWAP, FLAG_NONE },
 	{ "bswap", &Instruction::decode_rSI, OP_BSWAP, FLAG_NONE },
 	{ "bswap", &Instruction::decode_rDI, OP_BSWAP, FLAG_NONE },
-	
+
 	/* 0x0f 0xd0 - 0x0f 0xdf */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "psrlw", &Instruction::decode_Pq_Qq, OP_PSRLW, FLAG_NONE },
@@ -1155,7 +1155,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
     { "paddusw", &Instruction::decode_Pq_Qq, OP_PADDUSW, FLAG_NONE },
     { "pmaxub", &Instruction::decode_Pq_Qq, OP_PMAXUB, FLAG_NONE },
     { "pandn", &Instruction::decode_Pq_Qq, OP_PANDN, FLAG_NONE },
-	
+
 	/* 0x0f 0xe0 - 0x0f 0xef */
 	{ "pavgb", &Instruction::decode_Pq_Qq, OP_PAVGB, FLAG_NONE },
 	{ "psraw", &Instruction::decode_Pq_Qq, OP_PSRAW, FLAG_NONE },
@@ -1168,12 +1168,12 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "psubsb", &Instruction::decode_Pq_Qq, OP_PSUBSB, FLAG_NONE },
 	{ "psubsw", &Instruction::decode_Pq_Qq, OP_PSUBSW, FLAG_NONE },
 	{ "pminsw", &Instruction::decode_Pq_Qq, OP_PMINSW, FLAG_NONE },
-	{ "por", &Instruction::decode_Pq_Qq, OP_POR, FLAG_NONE },  
+	{ "por", &Instruction::decode_Pq_Qq, OP_POR, FLAG_NONE },
 	{ "paddsb", &Instruction::decode_Pq_Qq, OP_PADDSB, FLAG_NONE },
 	{ "paddsw", &Instruction::decode_Pq_Qq, OP_PADDSW, FLAG_NONE },
 	{ "pmaxsw", &Instruction::decode_Pq_Qq, OP_PMAXSW, FLAG_NONE },
 	{ "pxor", &Instruction::decode_Pq_Qq, OP_PXOR, FLAG_NONE },
-	
+
 	/* 0x0f 0xf0 - 0x0f 0xff */
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "psllw", &Instruction::decode_Pq_Qq, OP_PSLLW, FLAG_NONE },
@@ -1186,7 +1186,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "psubb", &Instruction::decode_Pq_Qq, OP_PSUBB, FLAG_NONE },
 	{ "psubw", &Instruction::decode_Pq_Qq, OP_PSUBW, FLAG_NONE },
 	{ "psubd", &Instruction::decode_Pq_Qq, OP_PSUBD, FLAG_NONE },
-	{ "psubq", &Instruction::decode_Pq_Qq, OP_PSUBQ, FLAG_NONE },	
+	{ "psubq", &Instruction::decode_Pq_Qq, OP_PSUBQ, FLAG_NONE },
 	{ "paddb", &Instruction::decode_Pq_Qq, OP_PADDB, FLAG_NONE },
 	{ "paddw", &Instruction::decode_Pq_Qq, OP_PADDW, FLAG_NONE },
 	{ "paddd", &Instruction::decode_Pq_Qq, OP_PADDD, FLAG_NONE },

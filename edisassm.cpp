@@ -1,7 +1,7 @@
 /*
 Copyright (C) 2006 - 2011 Evan Teran
                           eteran@alum.rit.edu
-				   
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -23,18 +23,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <climits>
 #include <cstring>
 
-#define SHOW_BYTES
-
 enum DISPLAY_FLAGS {
 	FLAG_NONE		= 0x00,
 	FLAG_SHOW_BYTES = 0x01
 };
 
+//------------------------------------------------------------------------------
+// Name: disassemble(const uint8_t *start_ptr, const uint8_t *end_ptr, typename Instruction<M>::address_t rva, unsigned int flags)
+//------------------------------------------------------------------------------
 template <class M>
 void disassemble(const uint8_t *start_ptr, const uint8_t *end_ptr, typename Instruction<M>::address_t rva, unsigned int flags) {
-	
+
 	typedef Instruction<M> insn_t;
-	
+
 	const uint8_t *ptr = start_ptr;
 	while(ptr < end_ptr) {
 		insn_t instruction(ptr, end_ptr - ptr,  rva + (ptr - start_ptr), std::nothrow);
@@ -45,31 +46,37 @@ void disassemble(const uint8_t *start_ptr, const uint8_t *end_ptr, typename Inst
 					std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(ptr[i]) << " " << std::dec;;
 				}
 			}
-			std::cout << edisassm::to_string(instruction) << std::endl;
+			std::cout << edisassm::to_string(instruction) << '\n';
 			ptr += instruction.size();
 		} else {
-			std::cout << "(bad)" << std::endl;
+			std::cout << "(bad)\n";
 			ptr += 1;
 		}
 	}
 }
 
+//------------------------------------------------------------------------------
+// Name: print_usage(const char *arg0)
+//------------------------------------------------------------------------------
 void print_usage(const char *arg0) {
 	std::cerr << arg0 << " [-m32|-m64] [--rva <address>] [--show-bytes] <file>" << std::endl;
 	exit(-1);
 }
 
+//------------------------------------------------------------------------------
+// Name: main(int argc, char *argv[])
+//------------------------------------------------------------------------------
 int main(int argc, char *argv[]) {
-	
+
 	if(argc == 1) {
 		print_usage(argv[0]);
 	}
 
-	unsigned int flags		= FLAG_NONE;
-	bool x86_64_mode		= false;
-	uint64_t rva_address	= 0;
+	unsigned int flags    = FLAG_NONE;
+	bool x86_64_mode      = false;
+	uint64_t rva_address  = 0;
 	std::string filename;
-	
+
 	for(int i = 1; i < argc; ++i) {
 		if(argv[i][0] == '-') {
 			if(strcmp(argv[i], "-m32") == 0) {
@@ -91,10 +98,9 @@ int main(int argc, char *argv[]) {
 			filename = argv[i];
 		}
 	}
-	
+
 	std::ifstream file(filename.c_str(), std::ios::binary);
 	if(file) {
-
 		const std::vector<uint8_t> data((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 		const uint8_t *const start_ptr	= &data[0];
 		const uint8_t *const end_ptr	= start_ptr + data.size();

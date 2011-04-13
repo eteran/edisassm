@@ -1,7 +1,7 @@
 /*
 Copyright (C) 2006 - 2011 Evan Teran
                           eteran@alum.rit.edu
-				   
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -43,7 +43,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group7A[64] 
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	{ "monitor", &Instruction::decode0, OP_MONITOR, FLAG_NONE },
 	{ "mwait", &Instruction::decode0, OP_MWAIT, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -52,25 +52,25 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group7A[64] 
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+
 	{ "xgetbv", &Instruction::decode0, OP_XGETBV, FLAG_NONE },
 	{ "xsetbv", &Instruction::decode0, OP_XSETBV, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+
 	{ "smsw", &Instruction::decode_Rv_Mw, OP_SMSW, FLAG_NONE },
 	{ "smsw", &Instruction::decode_Rv_Mw, OP_SMSW, FLAG_NONE },
 	{ "smsw", &Instruction::decode_Rv_Mw, OP_SMSW, FLAG_NONE },
@@ -79,16 +79,16 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group7A[64] 
 	{ "smsw", &Instruction::decode_Rv_Mw, OP_SMSW, FLAG_NONE },
 	{ "smsw", &Instruction::decode_Rv_Mw, OP_SMSW, FLAG_NONE },
 	{ "smsw", &Instruction::decode_Rv_Mw, OP_SMSW, FLAG_NONE },
-	
+
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+
 	{ "lmsw", &Instruction::decode_Ew, OP_LMSW, FLAG_NONE },
 	{ "lmsw", &Instruction::decode_Ew, OP_LMSW, FLAG_NONE },
 	{ "lmsw", &Instruction::decode_Ew, OP_LMSW, FLAG_NONE },
@@ -97,13 +97,13 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group7A[64] 
 	{ "lmsw", &Instruction::decode_Ew, OP_LMSW, FLAG_NONE },
 	{ "lmsw", &Instruction::decode_Ew, OP_LMSW, FLAG_NONE },
 	{ "lmsw", &Instruction::decode_Ew, OP_LMSW, FLAG_NONE },
-	
+
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	// x86-64: swapgs
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },	
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }
 };

@@ -1,7 +1,7 @@
 /*
 Copyright (C) 2006 - 2011 Evan Teran
                           eteran@alum.rit.edu
-				   
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -29,27 +29,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace edisassm {
 	namespace util {
 		inline std::string toupper_copy(std::string s) {
-			std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper)); 
-			return s; 
+			std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper));
+			return s;
 		}
-		
+
 		inline std::string toupper_copy(std::string s, bool convert) {
 			if(convert) {
-				std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper)); 
+				std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper));
 			}
-			return s; 
+			return s;
 		}
-		
+
 		inline std::string &toupper(std::string &s) {
-			std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper)); 
-			return s; 
+			std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper));
+			return s;
 		}
-		
+
 		inline std::string &tolower(std::string &s) {
-			std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::tolower)); 
-			return s; 
+			std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::tolower));
+			return s;
 		}
-		
+
 		inline std::string &rtrim(std::string &s) {
 			s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
 			return s;
@@ -63,7 +63,7 @@ namespace edisassm {
 		inline std::string &trim(std::string &s) {
 			return ltrim(rtrim(s));
 		}
-		
+
 		template <class T>
 		static bool is_small_num(T value) {
 			return (value > -127 && value < 128);
