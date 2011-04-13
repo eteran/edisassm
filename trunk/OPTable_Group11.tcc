@@ -23,14 +23,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group11[8] = {
-	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
-	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
-	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
-	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
-	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
-	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
-	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
-	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
+	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE, 0 },
+	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE, 0 },
+	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE, 0 },
+	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE, 0 },
+	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE, 0 },
+	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE, 0 },
+	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE, 0 },
+	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE, 0 },
 };
 
 #endif
