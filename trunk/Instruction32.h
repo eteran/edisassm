@@ -902,7 +902,7 @@ void Instruction<M>::assemble(std::string instruction) {
 	}
 
 	find_opcode(opcode, Opcodes, operand_index);
-	
+
 	find_opcode(opcode, Opcodes_2Byte_NA, operand_index);
 	find_opcode(opcode, Opcodes_2Byte_66, operand_index);
 	find_opcode(opcode, Opcodes_2Byte_F2, operand_index);
@@ -917,7 +917,7 @@ void Instruction<M>::assemble(std::string instruction) {
 	// fpu
 	find_opcode(opcode, Opcodes_x87_Lo, operand_index);
 	find_opcode(opcode, Opcodes_x87_Hi, operand_index);
-	
+
 	// groups
 	find_opcode(opcode, Opcodes_Group1, operand_index);
 	find_opcode(opcode, Opcodes_Group2, operand_index);
@@ -944,7 +944,7 @@ void Instruction<M>::assemble(std::string instruction) {
 	find_opcode(opcode, Opcodes_Group16_Reg, operand_index);
 	find_opcode(opcode, Opcodes_Group16_Mem, operand_index);
 	find_opcode(opcode, Opcodes_Group17, operand_index);
-	
+
 	// other
 	find_opcode(opcode, Opcodes_nop_pause_xchg, operand_index);
 	find_opcode(opcode, Opcodes_cbw_cwde_cdqe, operand_index);

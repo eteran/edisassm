@@ -115,7 +115,7 @@ int main(int argc, char *argv[]) {
 		return -1;
 	}
 
-#if 0	
+#if 0
 	Instruction<edisassm::x86>::assemble("lock inc byte ptr[0x10], eax");
 #endif
 }

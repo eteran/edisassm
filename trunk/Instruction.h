@@ -1190,7 +1190,7 @@ private:
 	DECODE3(Vo, Wo, Ib)
 
 	DECODE3(Ev, Vo, Ib)
-	
+
 	DECODE3(Pq, Rd_Mw, Ib)
 	DECODE3(Pq, Rq_Mw, Ib)
 	DECODE3(Vo, Rd_Mw, Ib)
