@@ -388,7 +388,7 @@ public:
 		OP_PADDB,
 		OP_PADDW,
 		OP_PADDD,
-		OP_PABSD,	// intel says this is both MMX and SSSE3!
+		OP_PABSD, // intel says this is both MMX and SSSE3!
 		OP_PADDSB,
 		OP_PADDSW,
 		OP_PADDUSB,
@@ -1010,9 +1010,9 @@ private:
 
 	// macro for easier maintinance of these modes
 	// only works for "simple" ones though (no template usage in params)
-	#define DECODE2(op1, op2)															\
-	void decode_ ## op1 ## _ ## op2(const uint8_t *buf) {								\
-		decode2<&instruction_t::decode_ ## op1, &instruction_t::decode_ ## op2>(buf);	\
+	#define DECODE2(op1, op2)                                                         \
+	void decode_ ## op1 ## _ ## op2(const uint8_t *buf) {                             \
+		decode2<&instruction_t::decode_ ## op1, &instruction_t::decode_ ## op2>(buf); \
 	}
 
 	DECODE2(Gq, Mo)
@@ -1169,9 +1169,9 @@ private:
 
 	// macro for easier maintinance of these modes
 	// only works for "simple" ones though (no template usage in params)
-	#define DECODE3(op1, op2, op3)																						\
-	void decode_ ## op1 ## _ ## op2 ## _ ## op3(const uint8_t *buf) {													\
-		decode3<&instruction_t::decode_ ## op1, &instruction_t::decode_ ## op2, &instruction_t::decode_ ## op3>(buf);	\
+	#define DECODE3(op1, op2, op3)                                                                                    \
+	void decode_ ## op1 ## _ ## op2 ## _ ## op3(const uint8_t *buf) {                                                 \
+		decode3<&instruction_t::decode_ ## op1, &instruction_t::decode_ ## op2, &instruction_t::decode_ ## op3>(buf); \
 	}
 
 	// 3 operand modes
@@ -1315,24 +1315,24 @@ private:
 	static const opcode_entry Opcode_invalid;
 
 private:
-	operand_t				operands_[M::MAX_OPERANDS];
-	address_t				rva_;
-	const uint8_t *			buffer_;
-	std::size_t				buffer_size_;
-	const opcode_entry *	opcode_;
+	operand_t            operands_[M::MAX_OPERANDS];
+	address_t            rva_;
+	const uint8_t *      buffer_;
+	std::size_t          buffer_size_;
+	const opcode_entry * opcode_;
 
-	uint32_t				prefix_;
-	uint32_t				mandatory_prefix_;
-	uint8_t					operand_count_;
-	uint8_t					modrm_size_;
-	uint8_t					sib_size_;
-	uint8_t					disp_size_;
-	uint8_t					prefix_size_;
-	uint8_t					immediate_size_;
-	uint8_t					opcode_size_;
-	REX						rex_byte_;
-	uint8_t					rex_size_;
-	bool					private_buffer_;
+	uint32_t             prefix_;
+	uint32_t             mandatory_prefix_;
+	uint8_t              operand_count_;
+	uint8_t              modrm_size_;
+	uint8_t              sib_size_;
+	uint8_t              disp_size_;
+	uint8_t              prefix_size_;
+	uint8_t              immediate_size_;
+	uint8_t              opcode_size_;
+	REX                  rex_byte_;
+	uint8_t              rex_size_;
+	bool                 private_buffer_;
 };
 
 //------------------------------------------------------------------------------

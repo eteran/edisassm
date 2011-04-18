@@ -86,7 +86,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "lmsw", &Instruction::decode_Ew, OP_LMSW, FLAG_NONE, 1 },
 	{ "lmsw", &Instruction::decode_Ew, OP_LMSW, FLAG_NONE, 1 },
 
-	{ "swapgs", &Instruction::decode0, OP_SWAPGS, FLAG_NONE, 0 },	// x86: invalid
+	{ "swapgs", &Instruction::decode0, OP_SWAPGS, FLAG_NONE, 0 }, // x86: invalid
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
@@ -106,15 +106,15 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "add", &Instruction::decode_Gv_Ev, OP_ADD, FLAG_NONE, 2 },
 	{ "add", &Instruction::decode_AL_Ib, OP_ADD, FLAG_NONE, 2 },
 	{ "add", &Instruction::decode_rAX_Iz, OP_ADD, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
 	{ "or", &Instruction::decode_Eb_Gb, OP_OR, FLAG_NONE, 2 },
 	{ "or", &Instruction::decode_Ev_Gv, OP_OR, FLAG_NONE, 2 },
 	{ "or", &Instruction::decode_Gb_Eb, OP_OR, FLAG_NONE, 2 },
 	{ "or", &Instruction::decode_Gv_Ev, OP_OR, FLAG_NONE, 2 },
 	{ "or", &Instruction::decode_AL_Ib, OP_OR, FLAG_NONE, 2 },
 	{ "or", &Instruction::decode_rAX_Iz, OP_OR, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
 	{ "2byte", &Instruction::decode_2byte, OP_2BYTE, FLAG_NONE, -1 },
 
 	/* 0x10 - 0x1f */
@@ -124,16 +124,16 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "adc", &Instruction::decode_Gv_Ev, OP_ADC, FLAG_NONE, 2 },
 	{ "adc", &Instruction::decode_AL_Ib, OP_ADC, FLAG_NONE, 2 },
 	{ "adc", &Instruction::decode_rAX_Iz, OP_ADC, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
 	{ "sbb", &Instruction::decode_Eb_Gb, OP_SBB, FLAG_NONE, 2 },
 	{ "sbb", &Instruction::decode_Ev_Gv, OP_SBB, FLAG_NONE, 2 },
 	{ "sbb", &Instruction::decode_Gb_Eb, OP_SBB, FLAG_NONE, 2 },
 	{ "sbb", &Instruction::decode_Gv_Ev, OP_SBB, FLAG_NONE, 2 },
 	{ "sbb", &Instruction::decode_AL_Ib, OP_SBB, FLAG_NONE, 2 },
 	{ "sbb", &Instruction::decode_rAX_Iz, OP_SBB, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
 
 	/* 0x20 - 0x2f */
 	{ "and", &Instruction::decode_Eb_Gb, OP_AND, FLAG_NONE, 2 },
@@ -143,7 +143,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "and", &Instruction::decode_AL_Ib, OP_AND, FLAG_NONE, 2 },
 	{ "and", &Instruction::decode_rAX_Iz, OP_AND, FLAG_NONE, 2 },
 	{ "prefix es", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
 	{ "sub", &Instruction::decode_Eb_Gb, OP_SUB, FLAG_NONE, 2 },
 	{ "sub", &Instruction::decode_Ev_Gv, OP_SUB, FLAG_NONE, 2 },
 	{ "sub", &Instruction::decode_Gb_Eb, OP_SUB, FLAG_NONE, 2 },
@@ -151,7 +151,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "sub", &Instruction::decode_AL_Ib, OP_SUB, FLAG_NONE, 2 },
 	{ "sub", &Instruction::decode_rAX_Iz, OP_SUB, FLAG_NONE, 2 },
 	{ "prefix cs", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
 
 	/* 0x30 - 0x3f */
 	{ "xor", &Instruction::decode_Eb_Gb, OP_XOR, FLAG_NONE, 2 },
@@ -161,7 +161,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "xor", &Instruction::decode_AL_Ib, OP_XOR, FLAG_NONE, 2 },
 	{ "xor", &Instruction::decode_rAX_Iz, OP_XOR, FLAG_NONE, 2 },
 	{ "prefix ss", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
 	{ "cmp", &Instruction::decode_Eb_Gb, OP_CMP, FLAG_NONE, 2 },
 	{ "cmp", &Instruction::decode_Ev_Gv, OP_CMP, FLAG_NONE, 2 },
 	{ "cmp", &Instruction::decode_Gb_Eb, OP_CMP, FLAG_NONE, 2 },
@@ -169,25 +169,25 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "cmp", &Instruction::decode_AL_Ib, OP_CMP, FLAG_NONE, 2 },
 	{ "cmp", &Instruction::decode_rAX_Iz, OP_CMP, FLAG_NONE, 2 },
 	{ "prefix ds", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
 
 	/* 0x40 - 0x4f */
-	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },	// ia-32 only (REX byte)
-	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },	// ia-32 only (REX byte)
-	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },	// ia-32 only (REX byte)
-	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },	// ia-32 only (REX byte)
-	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },	// ia-32 only (REX byte)
-	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },	// ia-32 only (REX byte)
-	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },	// ia-32 only (REX byte)
-	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },	// ia-32 only (REX byte)
-	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },	// ia-32 only (REX byte)
-	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },	// ia-32 only (REX byte)
-	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },	// ia-32 only (REX byte)
-	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },	// ia-32 only (REX byte)
-	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },	// ia-32 only (REX byte)
-	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },	// ia-32 only (REX byte)
-	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },	// ia-32 only (REX byte)
-	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },	// ia-32 only (REX byte)
+	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 }, // ia-32 only (REX byte)
+	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 }, // ia-32 only (REX byte)
+	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 }, // ia-32 only (REX byte)
+	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 }, // ia-32 only (REX byte)
+	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 }, // ia-32 only (REX byte)
+	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 }, // ia-32 only (REX byte)
+	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 }, // ia-32 only (REX byte)
+	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 }, // ia-32 only (REX byte)
+	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 }, // ia-32 only (REX byte)
+	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 }, // ia-32 only (REX byte)
+	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 }, // ia-32 only (REX byte)
+	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 }, // ia-32 only (REX byte)
+	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 }, // ia-32 only (REX byte)
+	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 }, // ia-32 only (REX byte)
+	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 }, // ia-32 only (REX byte)
+	{ "prefix rex", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 }, // ia-32 only (REX byte)
 
 	/* 0x50 - 0x5f */
 	{ "push", &Instruction::decode_rAX, OP_PUSH, FLAG_NONE, 1 },
@@ -208,10 +208,10 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "pop", &Instruction::decode_rDI, OP_POP, FLAG_NONE, 1 },
 
 	/* 0x60 - 0x6f */
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
-	{ "movsxd", &Instruction::decode_Gv_Ev, OP_MOVSXD, FLAG_NONE, 2 },			// x86: arpl Ew,Gw
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
+	{ "movsxd", &Instruction::decode_Gv_Ev, OP_MOVSXD, FLAG_NONE, 2 },      // x86: arpl Ew,Gw
 	{ "prefix fs", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },
 	{ "prefix gs", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },
 	{ "prefix data16", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },
@@ -246,7 +246,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	/* 0x80 - 0x8f */
 	{ "group1", &Instruction::decode_group1, OP_GROUP1, FLAG_NONE, -1 },
 	{ "group1", &Instruction::decode_group1, OP_GROUP1, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
 	{ "group1", &Instruction::decode_group1, OP_GROUP1, FLAG_NONE, -1 },
 	{ "test",  &Instruction::decode_Eb_Gb, OP_TEST, FLAG_NONE, 2 },
 	{ "test",  &Instruction::decode_Ev_Gv, OP_TEST, FLAG_NONE, 2 },
@@ -272,7 +272,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "xchg",  &Instruction::decode_rDI_rAX_NOREX, OP_XCHG, FLAG_NONE, 2 },
 	{ "cbw/cwde/cdqe",  &Instruction::decode_cbw_cwde_cdqe, OP_CWDE, FLAG_NONE, -1 },
 	{ "cwd/cdq/cqo",  &Instruction::decode_cwd_cdq_cqo, OP_CDQ, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
 	{ "wait", &Instruction::decode0, OP_WAIT, FLAG_NONE, 0 },
 	{ "pushfw/pushfd/pushfq", &Instruction::decode_pushfw_pushfd_pushfq, OP_PUSHF, FLAG_NONE, -1 },
 	{ "popfw/popfd/popfq", &Instruction::decode_popfw_popfd_popfq, OP_POPF, FLAG_NONE, -1 },
@@ -320,8 +320,8 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "group2", &Instruction::decode_group2, OP_GROUP2, FLAG_NONE, -1 },
 	{ "ret", &Instruction::decode_Iw, OP_RET, FLAG_NONE, 1 },
 	{ "ret", &Instruction::decode0, OP_RET, FLAG_NONE, 0 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
 	{ "group12", &Instruction::decode_group12, OP_GROUP12, FLAG_NONE, -1 },
 	{ "group12", &Instruction::decode_group12, OP_GROUP12, FLAG_NONE, -1 },
 	{ "enter", &Instruction::decode_Iw_Ib, OP_ENTER, FLAG_NONE, 2 },
@@ -330,7 +330,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "retf", &Instruction::decode0, OP_RETF, FLAG_NONE, 0 },
 	{ "int3", &Instruction::decode0, OP_INT3, FLAG_NONE, 0 },
 	{ "int", &Instruction::decode_Ib, OP_INT, FLAG_NONE, 1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
 	{ "iretw/iret/iretq", &Instruction::decode_iretw_iret_iretq, OP_IRET, FLAG_NONE, -1 },
 
 	/* 0xd0 - 0xdf */
@@ -338,8 +338,8 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "group2", &Instruction::decode_group2D, OP_GROUP2, FLAG_NONE, -1 },
 	{ "group2", &Instruction::decode_group2D, OP_GROUP2, FLAG_NONE, -1 },
 	{ "group2", &Instruction::decode_group2D, OP_GROUP2, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "xlat", &Instruction::decode0, OP_XLAT, FLAG_NONE, 0 },
 	{ "esc0", &Instruction::decode_x87, OP_FPU, FLAG_NONE, -1 },
@@ -362,7 +362,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "out", &Instruction::decode_Ib_eAX, OP_OUT, FLAG_NONE, 2 },
 	{ "call", &Instruction::decode_Jz, OP_CALL, FLAG_NONE, 1 },
 	{ "jmp", &Instruction::decode_Jz, OP_JMP, FLAG_NONE, 1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// ia-32 only
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
 	{ "jmp", &Instruction::decode_Jb, OP_JMP, FLAG_NONE, 1 },
 	{ "in", &Instruction::decode_AL_DX, OP_IN, FLAG_NONE, 2 },
 	{ "in", &Instruction::decode_eAX_DX, OP_IN, FLAG_NONE, 2 },
@@ -483,7 +483,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "cmovnle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE, 2 },
 
 	/* 0x0f 0x50 - 0x0f 0x5f */
-	{ "movmskps", &Instruction::decode_Gq_Uo, OP_MOVMSKPS, FLAG_NONE, 2 },	// x86: movmskps Gd, Uo
+	{ "movmskps", &Instruction::decode_Gq_Uo, OP_MOVMSKPS, FLAG_NONE, 2 }, // x86: movmskps Gd, Uo
 	{ "sqrtps", &Instruction::decode_Vo_Wo, OP_SQRTPS, FLAG_NONE, 2 },
 	{ "rsqrtps", &Instruction::decode_Vo_Wo, OP_RSQRTPS, FLAG_NONE, 2 },
 	{ "rcpps", &Instruction::decode_Vo_Wo, OP_RCPPS, FLAG_NONE, 2 },
@@ -515,7 +515,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "packssdw", &Instruction::decode_Pq_Qq, OP_PACKSSDW, FLAG_NONE, 2 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "movq", &Instruction::decode_Pd_Eq, OP_MOVQ, FLAG_NONE, 2 },		// x86: movd Pd, Ed
+	{ "movq", &Instruction::decode_Pd_Eq, OP_MOVQ, FLAG_NONE, 2 }, // x86: movd Pd, Ed
 	{ "movq", &Instruction::decode_Pq_Qq, OP_MOVQ, FLAG_NONE, 2 },
 
 	/* 0x0f 0x70 - 0x0f 0x7f */
@@ -527,13 +527,13 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "pcmpeqw", &Instruction::decode_Pq_Qq, OP_PCMPEQW, FLAG_NONE, 2 },
 	{ "pcmpeqd", &Instruction::decode_Pq_Qq, OP_PCMPEQD, FLAG_NONE, 2 },
 	{ "emms", &Instruction::decode0, OP_EMMS, FLAG_NONE, 0 },
-	{ "vmread", &Instruction::decode_Eq_Gq, OP_VMREAD, FLAG_NONE, 2 },	// x86: vmread Ed, Gq
-	{ "vmwrite", &Instruction::decode_Gq_Eq, OP_VMWRITE, FLAG_NONE, 2 },	// x86: vmwrite Gd, Ed
+	{ "vmread", &Instruction::decode_Eq_Gq, OP_VMREAD, FLAG_NONE, 2 },   // x86: vmread Ed, Gq
+	{ "vmwrite", &Instruction::decode_Gq_Eq, OP_VMWRITE, FLAG_NONE, 2 }, // x86: vmwrite Gd, Ed
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "movq", &Instruction::decode_Eq_Pd, OP_MOVQ, FLAG_NONE, 2 },		// x86: movq Ed,Pd
+	{ "movq", &Instruction::decode_Eq_Pd, OP_MOVQ, FLAG_NONE, 2 },       // x86: movq Ed,Pd
 	{ "movq", &Instruction::decode_Qq_Pq, OP_MOVQ, FLAG_NONE, 2 },
 
 	/* 0x0f 0x80 - 0x0f 0x8f */
@@ -612,8 +612,8 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "xadd", &Instruction::decode_Eb_Gb, OP_XADD, FLAG_NONE, 2 },
 	{ "xadd", &Instruction::decode_Ev_Gv, OP_XADD, FLAG_NONE, 2 },
 	{ "cmpps", &Instruction::decode_Vo_Wo_Ib, OP_CMPPS, FLAG_NONE, 3 },
-	{ "movnti", &Instruction::decode_Nq_Gq, OP_MOVNTI, FLAG_NONE, 2 },	// x86: movnti Md, Gd
-	{ "pinsrw", &Instruction::decode_Pq_Rq_Mw_Ib, OP_PINSRW, FLAG_NONE, 3 },	// x86: pinsrw Pq, Rd/Mw,Ib
+	{ "movnti", &Instruction::decode_Nq_Gq, OP_MOVNTI, FLAG_NONE, 2 },       // x86: movnti Md, Gd
+	{ "pinsrw", &Instruction::decode_Pq_Rq_Mw_Ib, OP_PINSRW, FLAG_NONE, 3 }, // x86: pinsrw Pq, Rd/Mw,Ib
 	{ "pextrw", &Instruction::decode_Gd_Nq_Ib, OP_PEXTRW, FLAG_NONE, 3 },
 	{ "shufps", &Instruction::decode_Vo_Wo_Ib, OP_SHUFPS, FLAG_NONE, 3 },
 	{ "group9", &Instruction::decode_group9, OP_GROUP9, FLAG_NONE, -1 },
@@ -777,7 +777,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "cmovnle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE, 2 },
 
 	/* 0x0f 0x50 - 0x0f 0x5f */
-	{ "movmskpd", &Instruction::decode_Gq_Uo, OP_MOVMSKPD, FLAG_NONE, 2 },	// x86: movmskpd Gd, Uo
+	{ "movmskpd", &Instruction::decode_Gq_Uo, OP_MOVMSKPD, FLAG_NONE, 2 }, // x86: movmskpd Gd, Uo
 	{ "sqrtpd", &Instruction::decode_Vo_Wo, OP_SQRTPD, FLAG_NONE, 2 },
 	{ "rsqrtps", &Instruction::decode_Vo_Wo, OP_RSQRTPS, FLAG_NONE, 2 },
 	{ "rcpps", &Instruction::decode_Vo_Wo, OP_RCPPS, FLAG_NONE, 2 },
@@ -809,7 +809,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "packssdw", &Instruction::decode_Vo_Wo, OP_PACKSSDW, FLAG_NONE, 2 },
 	{ "punpcklqdq", &Instruction::decode_Vo_Wo, OP_PUNPCKLQDQ, FLAG_NONE, 2 },
 	{ "punpckhqdq", &Instruction::decode_Vo_Wo, OP_PUNPCKHQDQ, FLAG_NONE, 2 },
-	{ "movq", &Instruction::decode_Vo_Eq, OP_MOVQ, FLAG_NONE, 2 },		// x86: movd Vo, Ed
+	{ "movq", &Instruction::decode_Vo_Eq, OP_MOVQ, FLAG_NONE, 2 }, // x86: movd Vo, Ed
 	{ "movq", &Instruction::decode_Vo_Qq, OP_MOVQ, FLAG_NONE, 2 },
 
 	/* 0x0f 0x70 - 0x0f 0x7f */
@@ -821,13 +821,13 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "pcmpeqw", &Instruction::decode_Vo_Wo, OP_PCMPEQW, FLAG_NONE, 2 },
 	{ "pcmpeqd", &Instruction::decode_Vo_Wo, OP_PCMPEQD, FLAG_NONE, 2 },
 	{ "emms", &Instruction::decode0, OP_EMMS, FLAG_NONE, 0 },
-	{ "vmread", &Instruction::decode_Eq_Gq, OP_VMREAD, FLAG_NONE, 2 },	// x86: vmread Ed, Gd
-	{ "vmwrite", &Instruction::decode_Gq_Eq, OP_VMWRITE, FLAG_NONE, 2 },	// x86: vmwrite Gd, Ed
+	{ "vmread", &Instruction::decode_Eq_Gq, OP_VMREAD, FLAG_NONE, 2 },   // x86: vmread Ed, Gd
+	{ "vmwrite", &Instruction::decode_Gq_Eq, OP_VMWRITE, FLAG_NONE, 2 }, // x86: vmwrite Gd, Ed
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "haddpd", &Instruction::decode_Vo_Wo, OP_HADDPD, FLAG_NONE, 2 },
 	{ "hsubpd", &Instruction::decode_Vo_Wo, OP_HSUBPD, FLAG_NONE, 2 },
-	{ "movq", &Instruction::decode_Eq_Vo, OP_MOVD, FLAG_NONE, 2 },		// x86: movd Ed, Vo
+	{ "movq", &Instruction::decode_Eq_Vo, OP_MOVD, FLAG_NONE, 2 },       // x86: movd Ed, Vo
 	{ "movdqa", &Instruction::decode_Wo_Vo, OP_MOVDQA, FLAG_NONE, 2 },
 
 	/* 0x0f 0x80 - 0x0f 0x8f */
@@ -906,8 +906,8 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "xadd", &Instruction::decode_Eb_Gb, OP_XADD, FLAG_NONE, 2 },
 	{ "xadd", &Instruction::decode_Ev_Gv, OP_XADD, FLAG_NONE, 2 },
 	{ "cmppd", &Instruction::decode_Vo_Wo_Ib, OP_CMPPD, FLAG_NONE, 3 },
-	{ "movnti", &Instruction::decode_Nq_Gq, OP_MOVNTI, FLAG_NONE, 2 },		// x86: movnti Md, Gd
-	{ "pinsrw", &Instruction::decode_Vo_Rq_Mw_Ib, OP_PINSRW, FLAG_NONE, 3 },	// x86: pinsrw Vo, Rd/Mw,Ib
+	{ "movnti", &Instruction::decode_Nq_Gq, OP_MOVNTI, FLAG_NONE, 2 },       // x86: movnti Md, Gd
+	{ "pinsrw", &Instruction::decode_Vo_Rq_Mw_Ib, OP_PINSRW, FLAG_NONE, 3 }, // x86: pinsrw Vo, Rd/Mw,Ib
 	{ "pextrw", &Instruction::decode_Gd_Uo_Ib, OP_PEXTRW, FLAG_NONE, 3 },
 	{ "shufpd", &Instruction::decode_Vo_Wo_Ib, OP_SHUFPD, FLAG_NONE, 3 },
 	{ "group9", &Instruction::decode_group9, OP_GROUP9, FLAG_NONE, -1 },
@@ -1026,10 +1026,10 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "movaps", &Instruction::decode_Vo_Wo, OP_MOVAPS, FLAG_NONE, 2 },
 	{ "movaps", &Instruction::decode_Wo_Vo, OP_MOVAPS, FLAG_NONE, 2 },
-	{ "cvtsi2sd", &Instruction::decode_Vo_Eq, OP_CVTSI2SD, FLAG_NONE, 2 },	// x86: cvtsi2sd Vo, Ed
+	{ "cvtsi2sd", &Instruction::decode_Vo_Eq, OP_CVTSI2SD, FLAG_NONE, 2 },    // x86: cvtsi2sd Vo, Ed
 	{ "movntps",  &Instruction::decode_Mo_Vo, OP_MOVNTPS, FLAG_NONE, 2 },
-	{ "cvttsd2si",  &Instruction::decode_Gq_Wo, OP_CVTTSD2SI, FLAG_NONE, 2 },	// x86: cvttsd2si Gd, Wo
-	{ "cvtsd2si",  &Instruction::decode_Gq_Wo, OP_CVTSD2SI, FLAG_NONE, 2 },	// x86: cvtsd2si Gd, Wo
+	{ "cvttsd2si",  &Instruction::decode_Gq_Wo, OP_CVTTSD2SI, FLAG_NONE, 2 }, // x86: cvttsd2si Gd, Wo
+	{ "cvtsd2si",  &Instruction::decode_Gq_Wo, OP_CVTSD2SI, FLAG_NONE, 2 },   // x86: cvtsd2si Gd, Wo
 	{ "ucomiss",  &Instruction::decode_Vo_Wo, OP_UCOMISS, FLAG_NONE, 2 },
 	{ "comiss",  &Instruction::decode_Vo_Wo, OP_COMISS, FLAG_NONE, 2 },
 
@@ -1070,7 +1070,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "cmovnle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE, 2 },
 
 	/* 0x0f 0x50 - 0x0f 0x5f */
-	{ "movmskps", &Instruction::decode_Gq_Uo, OP_MOVMSKPS, FLAG_NONE, 2 },	// x86: movmskps Gd, Uo
+	{ "movmskps", &Instruction::decode_Gq_Uo, OP_MOVMSKPS, FLAG_NONE, 2 }, // x86: movmskps Gd, Uo
 	{ "sqrtsd", &Instruction::decode_Vo_Wo, OP_SQRTSD, FLAG_NONE, 2 },
 	{ "rsqrtps", &Instruction::decode_Vo_Wo, OP_RSQRTPS, FLAG_NONE, 2 },
 	{ "rcpps", &Instruction::decode_Vo_Wo, OP_RCPPS, FLAG_NONE, 2 },
@@ -1102,7 +1102,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "packssdw", &Instruction::decode_Pq_Qq, OP_PACKSSDW, FLAG_NONE, 2 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "movq", &Instruction::decode_Pd_Eq, OP_MOVQ, FLAG_NONE, 2 },		// x86: movq Pd, Ed
+	{ "movq", &Instruction::decode_Pd_Eq, OP_MOVQ, FLAG_NONE, 2 }, // x86: movq Pd, Ed
 	{ "movq", &Instruction::decode_Pq_Qq, OP_MOVQ, FLAG_NONE, 2 },
 
 	/* 0x0f 0x70 - 0x0f 0x7f */
@@ -1114,13 +1114,13 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "pcmpeqw", &Instruction::decode_Pq_Qq, OP_PCMPEQW, FLAG_NONE, 2 },
 	{ "pcmpeqd", &Instruction::decode_Pq_Qq, OP_PCMPEQD, FLAG_NONE, 2 },
 	{ "emms", &Instruction::decode0, OP_EMMS, FLAG_NONE, 0 },
-	{ "vmread", &Instruction::decode_Eq_Gq, OP_VMREAD, FLAG_NONE, 2 },	// x86: vmread Ed, Gd
-	{ "vmwrite", &Instruction::decode_Gq_Eq, OP_VMWRITE, FLAG_NONE, 2 },	// x86: vmwrite Gd, Ed
+	{ "vmread", &Instruction::decode_Eq_Gq, OP_VMREAD, FLAG_NONE, 2 },     // x86: vmread Ed, Gd
+	{ "vmwrite", &Instruction::decode_Gq_Eq, OP_VMWRITE, FLAG_NONE, 2 },   // x86: vmwrite Gd, Ed
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "haddps", &Instruction::decode_Vo_Wo, OP_HADDPS, FLAG_NONE, 2 },
 	{ "hsubps", &Instruction::decode_Vo_Wo, OP_HSUBPS, FLAG_NONE, 2 },
-	{ "movq", &Instruction::decode_Eq_Pd, OP_MOVD, FLAG_NONE, 2 },		// x86: movq Ed, Pd
+	{ "movq", &Instruction::decode_Eq_Pd, OP_MOVD, FLAG_NONE, 2 },         // x86: movq Ed, Pd
 	{ "movq", &Instruction::decode_Qq_Pq, OP_MOVQ, FLAG_NONE, 2 },
 
 	/* 0x0f 0x80 - 0x0f 0x8f */
@@ -1199,8 +1199,8 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "xadd", &Instruction::decode_Eb_Gb, OP_XADD, FLAG_NONE, 2 },
 	{ "xadd", &Instruction::decode_Ev_Gv, OP_XADD, FLAG_NONE, 2 },
 	{ "cmpsd", &Instruction::decode_Vo_Wo_Ib, OP_CMPSD, FLAG_NONE, 3 },
-	{ "movnti", &Instruction::decode_Nq_Gq, OP_MOVNTI, FLAG_NONE, 2 },	// x86: movnti Md, Gd
-	{ "pinsrw", &Instruction::decode_Pq_Rq_Mw_Ib, OP_PINSRW, FLAG_NONE, 3 },	// x86: pinsrw Pq, Rd/Mw,Ib
+	{ "movnti", &Instruction::decode_Nq_Gq, OP_MOVNTI, FLAG_NONE, 2 },       // x86: movnti Md, Gd
+	{ "pinsrw", &Instruction::decode_Pq_Rq_Mw_Ib, OP_PINSRW, FLAG_NONE, 3 }, // x86: pinsrw Pq, Rd/Mw,Ib
 	{ "pextrw", &Instruction::decode_Gd_Nq_Ib, OP_PEXTRW, FLAG_NONE, 3 },
 	{ "shufps", &Instruction::decode_Vo_Wo_Ib, OP_SHUFPS, FLAG_NONE, 3 },
 	{ "group9", &Instruction::decode_group9, OP_GROUP9, FLAG_NONE, -1 },
@@ -1319,10 +1319,10 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "movaps", &Instruction::decode_Vo_Wo, OP_MOVAPS, FLAG_NONE, 2 },
 	{ "movaps", &Instruction::decode_Wo_Vo, OP_MOVAPS, FLAG_NONE, 2 },
-	{ "cvtsi2ss", &Instruction::decode_Vo_Eq, OP_CVTSI2SS, FLAG_NONE, 2 },	// x86: cvtsi2ss Vo, Ed
+	{ "cvtsi2ss", &Instruction::decode_Vo_Eq, OP_CVTSI2SS, FLAG_NONE, 2 },    // x86: cvtsi2ss Vo, Ed
 	{ "movntps",  &Instruction::decode_Mo_Vo, OP_MOVNTPS, FLAG_NONE, 2 },
-	{ "cvttss2si",  &Instruction::decode_Gq_Wo, OP_CVTTSS2SI, FLAG_NONE, 2 },	// x86: cvttss2si Gd, Wo
-	{ "cvtss2si",  &Instruction::decode_Gq_Wo, OP_CVTSS2SI, FLAG_NONE, 2 },	// x86: cvtss2si Gd, Wo
+	{ "cvttss2si",  &Instruction::decode_Gq_Wo, OP_CVTTSS2SI, FLAG_NONE, 2 }, // x86: cvttss2si Gd, Wo
+	{ "cvtss2si",  &Instruction::decode_Gq_Wo, OP_CVTSS2SI, FLAG_NONE, 2 },   // x86: cvtss2si Gd, Wo
 	{ "ucomiss",  &Instruction::decode_Vo_Wo, OP_UCOMISS, FLAG_NONE, 2 },
 	{ "comiss",  &Instruction::decode_Vo_Wo, OP_COMISS, FLAG_NONE, 2 },
 
@@ -1363,7 +1363,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "cmovnle", &Instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_NONE, 2 },
 
 	/* 0x0f 0x50 - 0x0f 0x5f */
-	{ "movmskps", &Instruction::decode_Gq_Uo, OP_MOVMSKPS, FLAG_NONE, 2 },	// x86: movmskps Gd, Uo
+	{ "movmskps", &Instruction::decode_Gq_Uo, OP_MOVMSKPS, FLAG_NONE, 2 }, // x86: movmskps Gd, Uo
 	{ "sqrtss", &Instruction::decode_Vo_Wo, OP_SQRTSS, FLAG_NONE, 2 },
 	{ "rsqrtss", &Instruction::decode_Vo_Wo, OP_RSQRTSS, FLAG_NONE, 2 },
 	{ "rcpss", &Instruction::decode_Vo_Wo, OP_RCPSS, FLAG_NONE, 2 },
@@ -1395,7 +1395,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "packssdw", &Instruction::decode_Pq_Qq, OP_PACKSSDW, FLAG_NONE, 2 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "movq", &Instruction::decode_Pd_Eq, OP_MOVQ, FLAG_NONE, 2 },		// x86: movq Pd, Ed
+	{ "movq", &Instruction::decode_Pd_Eq, OP_MOVQ, FLAG_NONE, 2 }, // x86: movq Pd, Ed
 	{ "movdqu", &Instruction::decode_Vo_Wo, OP_MOVDQU, FLAG_NONE, 2 },
 
 	/* 0x0f 0x70 - 0x0f 0x7f */
@@ -1407,8 +1407,8 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "pcmpeqw", &Instruction::decode_Pq_Qq, OP_PCMPEQW, FLAG_NONE, 2 },
 	{ "pcmpeqd", &Instruction::decode_Pq_Qq, OP_PCMPEQD, FLAG_NONE, 2 },
 	{ "emms", &Instruction::decode0, OP_EMMS, FLAG_NONE, 0 },
-	{ "vmread", &Instruction::decode_Eq_Gq, OP_VMREAD, FLAG_NONE, 2 },	// x86: vmread Ed, Gd
-	{ "vmwrite", &Instruction::decode_Gq_Eq, OP_VMWRITE, FLAG_NONE, 2 },	// x86: vmwrite Gd, Ed
+	{ "vmread", &Instruction::decode_Eq_Gq, OP_VMREAD, FLAG_NONE, 2 },   // x86: vmread Ed, Gd
+	{ "vmwrite", &Instruction::decode_Gq_Eq, OP_VMWRITE, FLAG_NONE, 2 }, // x86: vmwrite Gd, Ed
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
@@ -1492,8 +1492,8 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "xadd", &Instruction::decode_Eb_Gb, OP_XADD, FLAG_NONE, 2 },
 	{ "xadd", &Instruction::decode_Ev_Gv, OP_XADD, FLAG_NONE, 2 },
 	{ "cmpss", &Instruction::decode_Vo_Wo_Ib, OP_CMPSS, FLAG_NONE, 3 },
-	{ "movnti", &Instruction::decode_Nq_Gq, OP_MOVNTI, FLAG_NONE, 2 },	// x86: movnti Md, Gd
-	{ "pinsrw", &Instruction::decode_Pq_Rq_Mw_Ib, OP_PINSRW, FLAG_NONE, 3 },	// x86: pinsrw Pq, Rd/Mw,Ib
+	{ "movnti", &Instruction::decode_Nq_Gq, OP_MOVNTI, FLAG_NONE, 2 },       // x86: movnti Md, Gd
+	{ "pinsrw", &Instruction::decode_Pq_Rq_Mw_Ib, OP_PINSRW, FLAG_NONE, 3 }, // x86: pinsrw Pq, Rd/Mw,Ib
 	{ "pextrw", &Instruction::decode_Gd_Nq_Ib, OP_PEXTRW, FLAG_NONE, 3 },
 	{ "shufps", &Instruction::decode_Vo_Wo_Ib, OP_SHUFPS, FLAG_NONE, 3 },
 	{ "group9", &Instruction::decode_group9, OP_GROUP9, FLAG_NONE, -1 },
@@ -1665,8 +1665,8 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	INVALID_BLOCK,
 
 	/* 0x0f 0x38 0x80 - 0x0f 0x38 0x8f */
-	{ "nvept", &Instruction::decode_Gq_Mo, OP_NVEPT, FLAG_NONE, 2 },		// x86: nvept Gd, Mo
-	{ "nvvpid", &Instruction::decode_Gq_Mo, OP_NVVPID, FLAG_NONE, 2 },	// x86: nvvpid Gd, Mo
+	{ "nvept", &Instruction::decode_Gq_Mo, OP_NVEPT, FLAG_NONE, 2 },   // x86: nvept Gd, Mo
+	{ "nvvpid", &Instruction::decode_Gq_Mo, OP_NVVPID, FLAG_NONE, 2 }, // x86: nvvpid Gd, Mo
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
@@ -1746,8 +1746,8 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "pextrb", &Instruction::decode_Rd_Mb_Vo_Ib, OP_PEXTRB, FLAG_NONE, 3 },
 	{ "pextrw", &Instruction::decode_Rd_Mw_Vo_Ib, OP_PEXTRW, FLAG_NONE, 3 },
-	{ "pextrq", &Instruction::decode_Eq_Vo_Ib, OP_PEXTRQ, FLAG_NONE, 3 },		// x86: pextrq Eq, Vo, Ib
-	{ "extractps", &Instruction::decode_Ed_Vo_Ib, OP_EXTRACTPS, FLAG_NONE, 3 },	// x86: extractps Ed, Vo, Ib // TODO: figure out if this should allow RAX or not?
+	{ "pextrq", &Instruction::decode_Eq_Vo_Ib, OP_PEXTRQ, FLAG_NONE, 3 },       // x86: pextrq Eq, Vo, Ib
+	{ "extractps", &Instruction::decode_Ed_Vo_Ib, OP_EXTRACTPS, FLAG_NONE, 3 }, // x86: extractps Ed, Vo, Ib // TODO: figure out if this should allow RAX or not?
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
@@ -1760,7 +1760,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	/* 0x0f 0x3a 0x20 - 0x0f 0x3a 0x2f */
 	{ "pinsrb", &Instruction::decode_Vo_Mb_Ib, OP_PINSRB, FLAG_NONE, 3 },
 	{ "insertps", &Instruction::decode_Vo_Md_Ib, OP_INSERTPS, FLAG_NONE, 3 },
-	{ "pinsrq", &Instruction::decode_Vo_Eq_Ib, OP_PINSRQ, FLAG_NONE, 3 },		// x86: pinsrq Vo, Eq, Ib
+	{ "pinsrq", &Instruction::decode_Vo_Eq_Ib, OP_PINSRQ, FLAG_NONE, 3 }, // x86: pinsrq Vo, Eq, Ib
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },

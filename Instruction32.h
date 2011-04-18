@@ -78,9 +78,9 @@ void Instruction<M>::decode_Gx(const uint8_t *buf) {
 		}
 	}
 
-	operand_t &operand	= next_operand();
-	operand.u.reg			= (*REG_DECODE)(regindex);
-	operand.type_		= operand_t::TYPE_REGISTER;
+	operand_t &operand = next_operand();
+	operand.u.reg      = (*REG_DECODE)(regindex);
+	operand.type_      = operand_t::TYPE_REGISTER;
 }
 
 //------------------------------------------------------------------------------
@@ -91,9 +91,9 @@ template <int index>
 void Instruction<M>::decode_STi(const uint8_t *buf) {
 	UNUSED(buf);
 
-	operand_t &operand	= next_operand();
-	operand.u.reg			= index_to_reg_fpu(index);
-	operand.type_		= operand_t::TYPE_REGISTER;
+	operand_t &operand = next_operand();
+	operand.u.reg      = index_to_reg_fpu(index);
+	operand.type_      = operand_t::TYPE_REGISTER;
 }
 
 //------------------------------------------------------------------------------
@@ -103,44 +103,44 @@ template <class M>
 template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
 void Instruction<M>::decode_ModRM_0_16(const uint8_t *buf, const ModRM &rm, operand_t &operand) {
 
-	operand.type_							= TYPE;
-	operand.u.expression.scale				= 1;
-	operand.u.expression.displacement_type	= operand_t::DISP_NONE;
+	operand.type_                          = TYPE;
+	operand.u.expression.scale             = 1;
+	operand.u.expression.displacement_type = operand_t::DISP_NONE;
 
 	switch(rm.rm()) {
 	case 0x00:
-		operand.u.expression.index			= operand_t::REG_SI;
-		operand.u.expression.base				= operand_t::REG_BX;
+		operand.u.expression.index = operand_t::REG_SI;
+		operand.u.expression.base  = operand_t::REG_BX;
 		break;
 	case 0x01:
-		operand.u.expression.index			= operand_t::REG_DI;
-		operand.u.expression.base				= operand_t::REG_BX;
+		operand.u.expression.index = operand_t::REG_DI;
+		operand.u.expression.base  = operand_t::REG_BX;
 		break;
 	case 0x02:
-		operand.u.expression.index			= operand_t::REG_SI;
-		operand.u.expression.base				= operand_t::REG_BP;
+		operand.u.expression.index = operand_t::REG_SI;
+		operand.u.expression.base  = operand_t::REG_BP;
 		break;
 	case 0x03:
-		operand.u.expression.index			= operand_t::REG_DI;
-		operand.u.expression.base				= operand_t::REG_BP;
+		operand.u.expression.index = operand_t::REG_DI;
+		operand.u.expression.base  = operand_t::REG_BP;
 		break;
 	case 0x04:
-		operand.u.expression.index			= operand_t::REG_SI;
-		operand.u.expression.base				= operand_t::REG_NULL;
+		operand.u.expression.index = operand_t::REG_SI;
+		operand.u.expression.base  = operand_t::REG_NULL;
 		break;
 	case 0x05:
-		operand.u.expression.index			= operand_t::REG_DI;
-		operand.u.expression.base				= operand_t::REG_NULL;
+		operand.u.expression.index = operand_t::REG_DI;
+		operand.u.expression.base  = operand_t::REG_NULL;
 		break;
 	case 0x06:
-		operand.u.expression.index			= operand_t::REG_NULL;
-		operand.u.expression.base				= operand_t::REG_NULL;
-		operand.u.expression.s_disp16			= get_displacement<int16_t>(buf);
-		operand.u.expression.displacement_type= operand_t::DISP_S16;
+		operand.u.expression.index             = operand_t::REG_NULL;
+		operand.u.expression.base              = operand_t::REG_NULL;
+		operand.u.expression.s_disp16          = get_displacement<int16_t>(buf);
+		operand.u.expression.displacement_type = operand_t::DISP_S16;
 		break;
 	case 0x07:
-		operand.u.expression.index			= operand_t::REG_NULL;
-		operand.u.expression.base				= operand_t::REG_BX;
+		operand.u.expression.index = operand_t::REG_NULL;
+		operand.u.expression.base  = operand_t::REG_BX;
 		break;
 	}
 }
@@ -152,43 +152,43 @@ template <class M>
 template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
 void Instruction<M>::decode_ModRM_1_16(const uint8_t *buf, const ModRM &rm, operand_t &operand) {
 
-	operand.type_							= TYPE;
-	operand.u.expression.scale				= 1;
-	operand.u.expression.s_disp8				= get_displacement<int8_t>(buf);
-	operand.u.expression.displacement_type	= operand_t::DISP_S8;
+	operand.type_                          = TYPE;
+	operand.u.expression.scale             = 1;
+	operand.u.expression.s_disp8           = get_displacement<int8_t>(buf);
+	operand.u.expression.displacement_type = operand_t::DISP_S8;
 
 	switch(rm.rm()) {
 	case 0x00:
-		operand.u.expression.index			= operand_t::REG_SI;
-		operand.u.expression.base				= operand_t::REG_BX;
+		operand.u.expression.index = operand_t::REG_SI;
+		operand.u.expression.base  = operand_t::REG_BX;
 		break;
 	case 0x01:
-		operand.u.expression.index			= operand_t::REG_DI;
-		operand.u.expression.base				= operand_t::REG_BX;
+		operand.u.expression.index = operand_t::REG_DI;
+		operand.u.expression.base  = operand_t::REG_BX;
 		break;
 	case 0x02:
-		operand.u.expression.index			= operand_t::REG_SI;
-		operand.u.expression.base				= operand_t::REG_BP;
+		operand.u.expression.index = operand_t::REG_SI;
+		operand.u.expression.base  = operand_t::REG_BP;
 		break;
 	case 0x03:
-		operand.u.expression.index			= operand_t::REG_DI;
-		operand.u.expression.base				= operand_t::REG_BP;
+		operand.u.expression.index = operand_t::REG_DI;
+		operand.u.expression.base  = operand_t::REG_BP;
 		break;
 	case 0x04:
-		operand.u.expression.index			= operand_t::REG_SI;
-		operand.u.expression.base				= operand_t::REG_NULL;
+		operand.u.expression.index = operand_t::REG_SI;
+		operand.u.expression.base  = operand_t::REG_NULL;
 		break;
 	case 0x05:
-		operand.u.expression.index			= operand_t::REG_DI;
-		operand.u.expression.base				= operand_t::REG_NULL;
+		operand.u.expression.index = operand_t::REG_DI;
+		operand.u.expression.base  = operand_t::REG_NULL;
 		break;
 	case 0x06:
-		operand.u.expression.index			= operand_t::REG_NULL;
-		operand.u.expression.base				= operand_t::REG_BP;
+		operand.u.expression.index = operand_t::REG_NULL;
+		operand.u.expression.base  = operand_t::REG_BP;
 		break;
 	case 0x07:
-		operand.u.expression.index			= operand_t::REG_NULL;
-		operand.u.expression.base				= operand_t::REG_BX;
+		operand.u.expression.index = operand_t::REG_NULL;
+		operand.u.expression.base  = operand_t::REG_BX;
 		break;
 	}
 }
@@ -200,43 +200,43 @@ template <class M>
 template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
 void Instruction<M>::decode_ModRM_2_16(const uint8_t *buf, const ModRM &rm, operand_t &operand) {
 
-	operand.type_							= TYPE;
-	operand.u.expression.scale				= 1;
-	operand.u.expression.s_disp16				= get_displacement<int16_t>(buf);
-	operand.u.expression.displacement_type	= operand_t::DISP_S16;
+	operand.type_                          = TYPE;
+	operand.u.expression.scale             = 1;
+	operand.u.expression.s_disp16          = get_displacement<int16_t>(buf);
+	operand.u.expression.displacement_type = operand_t::DISP_S16;
 
 	switch(rm.rm()) {
 	case 0x00:
-		operand.u.expression.index			= operand_t::REG_SI;
-		operand.u.expression.base				= operand_t::REG_BX;
+		operand.u.expression.index = operand_t::REG_SI;
+		operand.u.expression.base  = operand_t::REG_BX;
 		break;
 	case 0x01:
-		operand.u.expression.index			= operand_t::REG_DI;
-		operand.u.expression.base				= operand_t::REG_BX;
+		operand.u.expression.index = operand_t::REG_DI;
+		operand.u.expression.base  = operand_t::REG_BX;
 		break;
 	case 0x02:
-		operand.u.expression.index			= operand_t::REG_SI;
-		operand.u.expression.base				= operand_t::REG_BP;
+		operand.u.expression.index = operand_t::REG_SI;
+		operand.u.expression.base  = operand_t::REG_BP;
 		break;
 	case 0x03:
-		operand.u.expression.index			= operand_t::REG_DI;
-		operand.u.expression.base				= operand_t::REG_BP;
+		operand.u.expression.index = operand_t::REG_DI;
+		operand.u.expression.base  = operand_t::REG_BP;
 		break;
 	case 0x04:
-		operand.u.expression.index			= operand_t::REG_SI;
-		operand.u.expression.base				= operand_t::REG_NULL;
+		operand.u.expression.index = operand_t::REG_SI;
+		operand.u.expression.base  = operand_t::REG_NULL;
 		break;
 	case 0x05:
-		operand.u.expression.index			= operand_t::REG_DI;
-		operand.u.expression.base				= operand_t::REG_NULL;
+		operand.u.expression.index = operand_t::REG_DI;
+		operand.u.expression.base  = operand_t::REG_NULL;
 		break;
 	case 0x06:
-		operand.u.expression.index			= operand_t::REG_NULL;
-		operand.u.expression.base				= operand_t::REG_BP;
+		operand.u.expression.index = operand_t::REG_NULL;
+		operand.u.expression.base  = operand_t::REG_BP;
 		break;
 	case 0x07:
-		operand.u.expression.index			= operand_t::REG_NULL;
-		operand.u.expression.base				= operand_t::REG_BX;
+		operand.u.expression.index = operand_t::REG_NULL;
+		operand.u.expression.base  = operand_t::REG_BX;
 		break;
 	}
 }
@@ -251,8 +251,8 @@ void Instruction<M>::decode_Reg(const uint8_t *buf) {
 
 	operand_t &operand = next_operand();
 
-	operand.u.reg 	= REG;
-	operand.type_	= operand_t::TYPE_REGISTER;
+	operand.u.reg = REG;
+	operand.type_ = operand_t::TYPE_REGISTER;
 }
 
 //------------------------------------------------------------------------------
@@ -265,11 +265,12 @@ void Instruction<M>::decode_const_Iq(const uint8_t *buf) {
 
 	operand_t &operand = next_operand();
 
-	operand.u.sqword	= IMM;
-	operand.type_	= operand_t::TYPE_IMMEDIATE64;
+	operand.u.sqword = IMM;
+	operand.type_    = operand_t::TYPE_IMMEDIATE64;
+	
 	// NOTE: so far this is only used for implicit constants, other
 	// ones may need a size!
-	//immediate_size_	+= sizeof(int64_t);
+	//immediate_size_ += sizeof(int64_t);
 }
 
 //------------------------------------------------------------------------------
@@ -282,11 +283,12 @@ void Instruction<M>::decode_const_Id(const uint8_t *buf) {
 
 	operand_t &operand = next_operand();
 
-	operand.u.sdword	= IMM;
-	operand.type_	= operand_t::TYPE_IMMEDIATE32;
+	operand.u.sdword = IMM;
+	operand.type_    = operand_t::TYPE_IMMEDIATE32;
+	
 	// NOTE: so far this is only used for implicit constants, other
 	// ones may need a size!
-	//immediate_size_	+= sizeof(int32_t);
+	//immediate_size_ += sizeof(int32_t);
 }
 
 //------------------------------------------------------------------------------
@@ -300,11 +302,12 @@ void Instruction<M>::decode_const_Iw(const uint8_t *buf) {
 
 	operand_t &operand = next_operand();
 
-	operand.u.sword	= IMM;
-	operand.type_	= operand_t::TYPE_IMMEDIATE16;
+	operand.u.sword = IMM;
+	operand.type_   = operand_t::TYPE_IMMEDIATE16;
+	
 	// NOTE: so far this is only used for implicit constants, other
 	// ones may need a size!
-	//immediate_size_	+= sizeof(int16_t);
+	//immediate_size_ += sizeof(int16_t);
 }
 
 //------------------------------------------------------------------------------
@@ -317,11 +320,12 @@ void Instruction<M>::decode_const_Ib(const uint8_t *buf) {
 
 	operand_t &operand = next_operand();
 
-	operand.u.sbyte	= IMM;
-	operand.type_	= operand_t::TYPE_IMMEDIATE8;
+	operand.u.sbyte = IMM;
+	operand.type_   = operand_t::TYPE_IMMEDIATE8;
+	
 	// NOTE: so far this is only used for implicit constants, other
 	// ones may need a size!
-	//immediate_size_	+= sizeof(int8_t);
+	//immediate_size_ += sizeof(int8_t);
 }
 
 //------------------------------------------------------------------------------
@@ -386,25 +390,25 @@ void Instruction<M>::decode_ModRM_0_32(const uint8_t *buf, const ModRM &rm, oper
 		if(sibindex != 0x04) {
 
 			if(M::BITS == 64 && enable_64_bit) {
-				operand.u.expression.index	= index_to_reg_64(sibindex);
+				operand.u.expression.index = index_to_reg_64(sibindex);
 			} else {
-				operand.u.expression.index	= index_to_reg_32(sibindex);
+				operand.u.expression.index = index_to_reg_32(sibindex);
 			}
 
 
-			operand.u.expression.scale	= 1 << sib.scale();
+			operand.u.expression.scale = 1 << sib.scale();
 		} else {
-			operand.u.expression.index	= operand_t::REG_NULL;
-			operand.u.expression.scale	= 1;
+			operand.u.expression.index = operand_t::REG_NULL;
+			operand.u.expression.scale = 1;
 		}
 
 		if(sib.base() == 0x05) {
 
 			// we could only get here if modrm.mod == 0x00
 			// so it is always sdword
-			operand.u.expression.base					= operand_t::REG_NULL;
-			operand.u.expression.s_disp32				= get_displacement<int32_t>(buf);
-			operand.u.expression.displacement_type	= operand_t::DISP_S32;
+			operand.u.expression.base              = operand_t::REG_NULL;
+			operand.u.expression.s_disp32          = get_displacement<int32_t>(buf);
+			operand.u.expression.displacement_type = operand_t::DISP_S32;
 
 		} else {
 
@@ -415,29 +419,29 @@ void Instruction<M>::decode_ModRM_0_32(const uint8_t *buf, const ModRM &rm, oper
 			}
 
 			if(M::BITS == 64 && enable_64_bit) {
-				operand.u.expression.base				= index_to_reg_64(sibbase);
+				operand.u.expression.base = index_to_reg_64(sibbase);
 			} else {
-				operand.u.expression.base				= index_to_reg_32(sibbase);
+				operand.u.expression.base = index_to_reg_32(sibbase);
 			}
-			operand.u.expression.displacement_type	= operand_t::DISP_NONE;
+			operand.u.expression.displacement_type = operand_t::DISP_NONE;
 		}
 	} else if(rm.rm() == 0x05) {
 		if(M::BITS == 64 && enable_64_bit) {
-			operand.u.expression.index				= operand_t::REG_NULL;
-			operand.u.expression.scale				= 1;
-			operand.u.expression.base					= operand_t::REG_RIP;
-			operand.u.expression.s_disp32				= get_displacement<int32_t>(buf);
-			operand.u.expression.displacement_type	= operand_t::DISP_S32;
+			operand.u.expression.index             = operand_t::REG_NULL;
+			operand.u.expression.scale             = 1;
+			operand.u.expression.base              = operand_t::REG_RIP;
+			operand.u.expression.s_disp32          = get_displacement<int32_t>(buf);
+			operand.u.expression.displacement_type = operand_t::DISP_S32;
 		} else {
-			operand.u.expression.index				= operand_t::REG_NULL;
-			operand.u.expression.scale				= 1;
-			operand.u.expression.base					= operand_t::REG_NULL;
-			operand.u.expression.s_disp32				= get_displacement<int32_t>(buf);
-			operand.u.expression.displacement_type	= operand_t::DISP_S32;
+			operand.u.expression.index             = operand_t::REG_NULL;
+			operand.u.expression.scale             = 1;
+			operand.u.expression.base              = operand_t::REG_NULL;
+			operand.u.expression.s_disp32          = get_displacement<int32_t>(buf);
+			operand.u.expression.displacement_type = operand_t::DISP_S32;
 		}
 	} else {
-		operand.u.expression.index				= operand_t::REG_NULL;
-		operand.u.expression.scale				= 1;
+		operand.u.expression.index = operand_t::REG_NULL;
+		operand.u.expression.scale = 1;
 
 		int rmbase = rm.rm();
 
@@ -446,12 +450,12 @@ void Instruction<M>::decode_ModRM_0_32(const uint8_t *buf, const ModRM &rm, oper
 		}
 
 		if(M::BITS == 64 && enable_64_bit) {
-			operand.u.expression.base					= index_to_reg_64(rmbase);
+			operand.u.expression.base = index_to_reg_64(rmbase);
 		} else {
-			operand.u.expression.base					= index_to_reg_32(rmbase);
+			operand.u.expression.base = index_to_reg_32(rmbase);
 		}
-		operand.u.expression.s_disp8				= 0;
-		operand.u.expression.displacement_type	= operand_t::DISP_NONE;
+		operand.u.expression.s_disp8           = 0;
+		operand.u.expression.displacement_type = operand_t::DISP_NONE;
 	}
 }
 
@@ -481,9 +485,9 @@ void Instruction<M>::decode_ModRM_1_32(const uint8_t *buf, const ModRM &rm, oper
 		}
 
 		if(M::BITS == 64 && enable_64_bit) {
-			operand.u.expression.base	= index_to_reg_64(sibbase);
+			operand.u.expression.base = index_to_reg_64(sibbase);
 		} else {
-			operand.u.expression.base	= index_to_reg_32(sibbase);
+			operand.u.expression.base = index_to_reg_32(sibbase);
 		}
 		operand.u.expression.scale = 1 << sib.scale();
 
@@ -520,9 +524,9 @@ void Instruction<M>::decode_ModRM_1_32(const uint8_t *buf, const ModRM &rm, oper
 
 	}
 
-	operand.type_							= TYPE;
-	operand.u.expression.s_disp8				= get_displacement<int8_t>(buf);
-	operand.u.expression.displacement_type	= operand_t::DISP_S8;
+	operand.type_                          = TYPE;
+	operand.u.expression.s_disp8           = get_displacement<int8_t>(buf);
+	operand.u.expression.displacement_type = operand_t::DISP_S8;
 }
 
 //------------------------------------------------------------------------------
@@ -555,7 +559,7 @@ void Instruction<M>::decode_ModRM_2_32(const uint8_t *buf, const ModRM &rm, oper
 			operand.u.expression.base = index_to_reg_32(sibbase);
 		}
 
-		operand.u.expression.scale	= 1 << sib.scale();
+		operand.u.expression.scale = 1 << sib.scale();
 
 		int sibindex = sib.index();
 
@@ -605,7 +609,7 @@ void Instruction<M>::decode_ModRM_3_32(const uint8_t *buf, const ModRM &rm, oper
 	UNUSED(buf);
 	UNUSED(enable_64_bit);
 
-	int rmbase	= rm.rm();
+	int rmbase = rm.rm();
 
 	if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 		rmbase |= (rex_byte_.b() << 3);
@@ -616,7 +620,7 @@ void Instruction<M>::decode_ModRM_3_32(const uint8_t *buf, const ModRM &rm, oper
 		}
 	}
 
-	operand.u.reg   = (*REG_DECODE)(rmbase);
+	operand.u.reg = (*REG_DECODE)(rmbase);
 	operand.type_ = operand_t::TYPE_REGISTER;
 }
 
@@ -1076,21 +1080,21 @@ void Instruction<M>::decode_invalid(const uint8_t *buf) {
 	throw invalid_instruction(Instruction<M>::size());
 }
 
-template <class M> void Instruction<M>::decode_cbw_cwde_cdqe(const uint8_t *buf)				{ decode_size_sensitive(buf, Opcodes_cbw_cwde_cdqe); }
-template <class M> void Instruction<M>::decode_cwd_cdq_cqo(const uint8_t *buf)					{ decode_size_sensitive(buf, Opcodes_cwd_cdq_cqo);}
-template <class M> void Instruction<M>::decode_stosw_stosd_stosq(const uint8_t *buf)			{ decode_size_sensitive(buf, Opcodes_stosw_stosd_stosq);}
-template <class M> void Instruction<M>::decode_lodsw_lodsd_lodsq(const uint8_t *buf)			{ decode_size_sensitive(buf, Opcodes_lodsw_lodsd_lodsq);}
-template <class M> void Instruction<M>::decode_scasw_scasd_scasq(const uint8_t *buf)			{ decode_size_sensitive(buf, Opcodes_scasw_scasd_scasq);}
-template <class M> void Instruction<M>::decode_iretw_iret_iretq(const uint8_t *buf)				{ decode_size_sensitive(buf, Opcodes_iretw_iret_iretq);}
-template <class M> void Instruction<M>::decode_movsw_movsd_movsq(const uint8_t *buf)			{ decode_size_sensitive(buf, Opcodes_movsw_movsd_movsq);}
-template <class M> void Instruction<M>::decode_popfw_popfd_popfq(const uint8_t *buf)			{ decode_size_sensitive(buf, Opcodes_popfw_popfd_popfq);}
-template <class M> void Instruction<M>::decode_pushfw_pushfd_pushfq(const uint8_t *buf)			{ decode_size_sensitive(buf, Opcodes_pushfw_pushfd_pushfq);}
-template <class M> void Instruction<M>::decode_invalid_cmpxchg8b_cmpxchg16b(const uint8_t *buf)	{ decode_size_sensitive(buf, Opcodes_invalid_cmpxchg8b_cmpxchg16b);}
-template <class M> void Instruction<M>::decode_insw_insd_invalid(const uint8_t *buf)			{ decode_size_sensitive(buf, Opcodes_insw_insd_invalid);}
-template <class M> void Instruction<M>::decode_outsw_outsd_invalid(const uint8_t *buf)			{ decode_size_sensitive(buf, Opcodes_outsw_outsd_invalid);}
-template <class M> void Instruction<M>::decode_cmpsw_cmpsd_invalid(const uint8_t *buf)			{ decode_size_sensitive(buf, Opcodes_cmpsw_cmpsd_invalid);}
-template <class M> void Instruction<M>::decode_pushaw_pushad_invalid(const uint8_t *buf)		{ decode_size_sensitive(buf, Opcodes_pushaw_pushad_invalid);}
-template <class M> void Instruction<M>::decode_popaw_popad_invalid(const uint8_t *buf)			{ decode_size_sensitive(buf, Opcodes_popaw_popad_invalid);}
+template <class M> void Instruction<M>::decode_cbw_cwde_cdqe(const uint8_t *buf)                { decode_size_sensitive(buf, Opcodes_cbw_cwde_cdqe); }
+template <class M> void Instruction<M>::decode_cwd_cdq_cqo(const uint8_t *buf)                  { decode_size_sensitive(buf, Opcodes_cwd_cdq_cqo);}
+template <class M> void Instruction<M>::decode_stosw_stosd_stosq(const uint8_t *buf)            { decode_size_sensitive(buf, Opcodes_stosw_stosd_stosq);}
+template <class M> void Instruction<M>::decode_lodsw_lodsd_lodsq(const uint8_t *buf)            { decode_size_sensitive(buf, Opcodes_lodsw_lodsd_lodsq);}
+template <class M> void Instruction<M>::decode_scasw_scasd_scasq(const uint8_t *buf)            { decode_size_sensitive(buf, Opcodes_scasw_scasd_scasq);}
+template <class M> void Instruction<M>::decode_iretw_iret_iretq(const uint8_t *buf)             { decode_size_sensitive(buf, Opcodes_iretw_iret_iretq);}
+template <class M> void Instruction<M>::decode_movsw_movsd_movsq(const uint8_t *buf)            { decode_size_sensitive(buf, Opcodes_movsw_movsd_movsq);}
+template <class M> void Instruction<M>::decode_popfw_popfd_popfq(const uint8_t *buf)            { decode_size_sensitive(buf, Opcodes_popfw_popfd_popfq);}
+template <class M> void Instruction<M>::decode_pushfw_pushfd_pushfq(const uint8_t *buf)         { decode_size_sensitive(buf, Opcodes_pushfw_pushfd_pushfq);}
+template <class M> void Instruction<M>::decode_invalid_cmpxchg8b_cmpxchg16b(const uint8_t *buf) { decode_size_sensitive(buf, Opcodes_invalid_cmpxchg8b_cmpxchg16b);}
+template <class M> void Instruction<M>::decode_insw_insd_invalid(const uint8_t *buf)            { decode_size_sensitive(buf, Opcodes_insw_insd_invalid);}
+template <class M> void Instruction<M>::decode_outsw_outsd_invalid(const uint8_t *buf)          { decode_size_sensitive(buf, Opcodes_outsw_outsd_invalid);}
+template <class M> void Instruction<M>::decode_cmpsw_cmpsd_invalid(const uint8_t *buf)          { decode_size_sensitive(buf, Opcodes_cmpsw_cmpsd_invalid);}
+template <class M> void Instruction<M>::decode_pushaw_pushad_invalid(const uint8_t *buf)        { decode_size_sensitive(buf, Opcodes_pushaw_pushad_invalid);}
+template <class M> void Instruction<M>::decode_popaw_popad_invalid(const uint8_t *buf)          { decode_size_sensitive(buf, Opcodes_popaw_popad_invalid);}
 
 //------------------------------------------------------------------------------
 // Name: decode_x87(const uint8_t *buf)
@@ -1595,14 +1599,13 @@ void Instruction<M>::decode_group17(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_Ap(const uint8_t *buf) {
 
-	operand_t &operand		= next_operand();
-
-	operand.type_			= operand_t::TYPE_ABSOLUTE;
+	operand_t &operand = next_operand();
+	operand.type_      = operand_t::TYPE_ABSOLUTE;
 
 	if(prefix_ & PREFIX_OPERAND) {
-		operand.u.absolute.offset	= get_immediate<uint16_t>(buf);
+		operand.u.absolute.offset = get_immediate<uint16_t>(buf);
 	} else {
-		operand.u.absolute.offset	= get_immediate<uint32_t>(buf);
+		operand.u.absolute.offset = get_immediate<uint32_t>(buf);
 	}
 
 	operand.u.absolute.seg = get_immediate<uint16_t>(buf);
@@ -1615,8 +1618,8 @@ template <class M>
 void Instruction<M>::decode_Ib(const uint8_t *buf) {
 	operand_t &operand = next_operand();
 
-	operand.u.sbyte	= get_immediate<int8_t>(buf);
-	operand.type_	= operand_t::TYPE_IMMEDIATE8;
+	operand.u.sbyte = get_immediate<int8_t>(buf);
+	operand.type_   = operand_t::TYPE_IMMEDIATE8;
 }
 
 //------------------------------------------------------------------------------
@@ -1626,8 +1629,8 @@ template <class M>
 void Instruction<M>::decode_Iw(const uint8_t *buf) {
 	operand_t &operand = next_operand();
 
-	operand.u.sword	= get_immediate<int16_t>(buf);
-	operand.type_	= operand_t::TYPE_IMMEDIATE16;
+	operand.u.sword = get_immediate<int16_t>(buf);
+	operand.type_   = operand_t::TYPE_IMMEDIATE16;
 }
 
 //------------------------------------------------------------------------------
@@ -1637,8 +1640,8 @@ template <class M>
 void Instruction<M>::decode_Id(const uint8_t *buf) {
 	operand_t &operand = next_operand();
 
-	operand.u.sdword	= get_immediate<int32_t>(buf);
-	operand.type_	= operand_t::TYPE_IMMEDIATE32;
+	operand.u.sdword = get_immediate<int32_t>(buf);
+	operand.type_    = operand_t::TYPE_IMMEDIATE32;
 }
 
 //------------------------------------------------------------------------------
@@ -1648,8 +1651,8 @@ template <class M>
 void Instruction<M>::decode_Iq(const uint8_t *buf) {
 	operand_t &operand = next_operand();
 
-	operand.u.sqword	= get_immediate<int64_t>(buf);
-	operand.type_	= operand_t::TYPE_IMMEDIATE64;
+	operand.u.sqword = get_immediate<int64_t>(buf);
+	operand.type_    = operand_t::TYPE_IMMEDIATE64;
 }
 
 //------------------------------------------------------------------------------
@@ -1660,8 +1663,8 @@ void Instruction<M>::decode_Jb(const uint8_t *buf) {
 
 	operand_t &operand = next_operand();
 
-	operand.u.sbyte	= get_immediate<int8_t>(buf);
-	operand.type_	= operand_t::TYPE_REL8;
+	operand.u.sbyte = get_immediate<int8_t>(buf);
+	operand.type_   = operand_t::TYPE_REL8;
 }
 
 //------------------------------------------------------------------------------
@@ -1672,8 +1675,8 @@ void Instruction<M>::decode_Jw(const uint8_t *buf) {
 
 	operand_t &operand = next_operand();
 
-	operand.u.sword	= get_immediate<int16_t>(buf);
-	operand.type_	= operand_t::TYPE_REL16;
+	operand.u.sword = get_immediate<int16_t>(buf);
+	operand.type_   = operand_t::TYPE_REL16;
 }
 
 //------------------------------------------------------------------------------
@@ -1757,12 +1760,12 @@ template <class M>
 void Instruction<M>::decode_Ob(const uint8_t *buf) {
 	operand_t &operand = next_operand();
 
-	operand.type_							= operand_t::TYPE_EXPRESSION8;
-	operand.u.expression.displacement_type	= operand_t::DISP_S32;
-	operand.u.expression.index				= operand_t::REG_NULL;
-	operand.u.expression.base					= operand_t::REG_NULL;
-	operand.u.expression.scale				= 1;
-	operand.u.expression.s_disp32				= get_displacement<int32_t>(buf);
+	operand.type_                          = operand_t::TYPE_EXPRESSION8;
+	operand.u.expression.displacement_type = operand_t::DISP_S32;
+	operand.u.expression.index             = operand_t::REG_NULL;
+	operand.u.expression.base              = operand_t::REG_NULL;
+	operand.u.expression.scale             = 1;
+	operand.u.expression.s_disp32          = get_displacement<int32_t>(buf);
 }
 
 //------------------------------------------------------------------------------
@@ -1772,12 +1775,12 @@ template <class M>
 void Instruction<M>::decode_Ow(const uint8_t *buf) {
 	operand_t &operand = next_operand();
 
-	operand.type_							= operand_t::TYPE_EXPRESSION16;
-	operand.u.expression.displacement_type	= operand_t::DISP_S32;
-	operand.u.expression.index				= operand_t::REG_NULL;
-	operand.u.expression.base					= operand_t::REG_NULL;
-	operand.u.expression.scale				= 1;
-	operand.u.expression.s_disp32				= get_displacement<int32_t>(buf);
+	operand.type_                          = operand_t::TYPE_EXPRESSION16;
+	operand.u.expression.displacement_type = operand_t::DISP_S32;
+	operand.u.expression.index             = operand_t::REG_NULL;
+	operand.u.expression.base              = operand_t::REG_NULL;
+	operand.u.expression.scale             = 1;
+	operand.u.expression.s_disp32          = get_displacement<int32_t>(buf);
 }
 
 //------------------------------------------------------------------------------
@@ -1787,12 +1790,12 @@ template <class M>
 void Instruction<M>::decode_Od(const uint8_t *buf) {
 	operand_t &operand = next_operand();
 
-	operand.type_							= operand_t::TYPE_EXPRESSION32;
-	operand.u.expression.displacement_type	= operand_t::DISP_S32;
-	operand.u.expression.index				= operand_t::REG_NULL;
-	operand.u.expression.base					= operand_t::REG_NULL;
-	operand.u.expression.scale				= 1;
-	operand.u.expression.s_disp32				= get_displacement<int32_t>(buf);
+	operand.type_                          = operand_t::TYPE_EXPRESSION32;
+	operand.u.expression.displacement_type = operand_t::DISP_S32;
+	operand.u.expression.index             = operand_t::REG_NULL;
+	operand.u.expression.base              = operand_t::REG_NULL;
+	operand.u.expression.scale             = 1;
+	operand.u.expression.s_disp32          = get_displacement<int32_t>(buf);
 }
 
 //------------------------------------------------------------------------------
@@ -2191,9 +2194,9 @@ void Instruction<M>::decode_rAX_rAX_NOREX(const uint8_t *buf) {
 		opcode_ = &Opcodes_nop_pause_xchg[2];
 	} else if(prefix_ & PREFIX_REP) {
 		mandatory_prefix_ |= PREFIX_REP;
-		opcode_ = &Opcodes_nop_pause_xchg[1];	/* with 0xf3 */
+		opcode_ = &Opcodes_nop_pause_xchg[1]; /* with 0xf3 */
 	} else {
-		opcode_ = &Opcodes_nop_pause_xchg[0];	/* without 0xf3 */
+		opcode_ = &Opcodes_nop_pause_xchg[0]; /* without 0xf3 */
 	}
 
 	(this->*(opcode_->decoder))(buf);
