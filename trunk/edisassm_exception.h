@@ -30,9 +30,9 @@ private:
 	std::size_t size_;
 };
 
-struct instruction_too_big		: invalid_instruction { instruction_too_big(std::size_t size)	 : invalid_instruction(size) {} };
-struct invalid_operand			: invalid_instruction { invalid_operand(std::size_t size)		 : invalid_instruction(size) {} };
-struct too_many_operands		: invalid_instruction { too_many_operands(std::size_t size) 	 : invalid_instruction(size) {} };
-struct multiple_displacements	: invalid_instruction { multiple_displacements(std::size_t size) : invalid_instruction(size) {} };
+struct instruction_too_big    : invalid_instruction { instruction_too_big(std::size_t size)    : invalid_instruction(size) {} };
+struct invalid_operand        : invalid_instruction { invalid_operand(std::size_t size)        : invalid_instruction(size) {} };
+struct too_many_operands      : invalid_instruction { too_many_operands(std::size_t size)      : invalid_instruction(size) {} };
+struct multiple_displacements : invalid_instruction { multiple_displacements(std::size_t size) : invalid_instruction(size) {} };
 
 #endif

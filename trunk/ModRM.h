@@ -38,9 +38,9 @@ private:
 	uint8_t value_;
 
 public:
-	uint8_t rm() const	{ return value_ & 0x07; }
-	uint8_t reg() const	{ return (value_ >> 3) & 0x07; }
-	uint8_t mod() const	{ return (value_ >> 6) & 0x03; }
+	uint8_t rm() const  { return value_ & 0x07; }
+	uint8_t reg() const { return (value_ >> 3) & 0x07; }
+	uint8_t mod() const { return (value_ >> 6) & 0x03; }
 };
 
 #endif

@@ -38,11 +38,11 @@ private:
 	uint8_t value_;
 
 public:
-	bool is_rex() const	{ return (value_ & 0xf0) == 0x40; }
-	uint8_t w() const	{ return (value_ >> 3) & 0x01; }	// 64 bit mode
-	uint8_t r() const	{ return (value_ >> 2) & 0x01; }	// modRM extention
-	uint8_t x() const	{ return (value_ >> 1) & 0x01; }	// SIB extention
-	uint8_t b() const	{ return (value_ >> 0) & 0x01; }	// ModRM OR SIB base or Opcode Reg extention
+	bool is_rex() const { return (value_ & 0xf0) == 0x40; }
+	uint8_t w() const   { return (value_ >> 3) & 0x01; } // 64 bit mode
+	uint8_t r() const   { return (value_ >> 2) & 0x01; } // modRM extention
+	uint8_t x() const   { return (value_ >> 1) & 0x01; } // SIB extention
+	uint8_t b() const   { return (value_ >> 0) & 0x01; } // ModRM OR SIB base or Opcode Reg extention
 };
 
 #endif
