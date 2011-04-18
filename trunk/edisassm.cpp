@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <cstring>
 
 enum DISPLAY_FLAGS {
-	FLAG_NONE		= 0x00,
+	FLAG_NONE       = 0x00,
 	FLAG_SHOW_BYTES = 0x01
 };
 
@@ -102,8 +102,8 @@ int main(int argc, char *argv[]) {
 	std::ifstream file(filename.c_str(), std::ios::binary);
 	if(file) {
 		const std::vector<uint8_t> data((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-		const uint8_t *const start_ptr	= &data[0];
-		const uint8_t *const end_ptr	= start_ptr + data.size();
+		const uint8_t *const start_ptr = &data[0];
+		const uint8_t *const end_ptr   = start_ptr + data.size();
 
 		if(x86_64_mode) {
 			disassemble<edisassm::x86_64>(start_ptr, end_ptr, rva_address, flags);
