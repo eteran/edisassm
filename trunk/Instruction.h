@@ -1225,25 +1225,25 @@ private:
 	std::string format(bool upper) const;
 
 public:
+	Type type() const                                 { return opcode_->type; }
+	address_t rva() const                             { return rva_; }
+	bool valid() const                                { return type() != OP_INVALID; }
+	const operand_t &operand(std::size_t index) const { return operands_[index]; }
+	const uint8_t *buffer() const                     { return buffer_; }
+	operator void *() const                           { return reinterpret_cast<void *>(valid()); }
 	std::string format_prefix() const;
 	std::string mnemonic() const                      { return opcode_->mnemonic; }
+	uint32_t prefix() const                           { return prefix_; }
 	unsigned int operand_count() const                { return operand_count_; }
 	unsigned int prefix_size() const                  { return prefix_size_; }
 	unsigned int size() const                         { return prefix_size_ + rex_size_ + opcode_size_ + modrm_size_ + sib_size_ + disp_size_ + immediate_size_; }
-	uint32_t prefix() const                           { return prefix_; }
-	address_t rva() const                             { return rva_; }
-	bool valid() const                                { return type() != OP_INVALID; }
-	Type type() const                                 { return opcode_->type; }
-	const uint8_t *buffer() const                     { return buffer_; }
-	const operand_t &operand(std::size_t index) const { return operands_[index]; }
-	operator void *() const                           { return reinterpret_cast<void *>(valid()); }
 
 private:
 	int operand_size() const;
 
 private:
 	struct opcode_entry {
-		const char * mnemonic;
+		const char  *mnemonic;
 		decoder_t    decoder;
 		Type         type;
 		unsigned int flags;
@@ -1315,24 +1315,24 @@ private:
 	static const opcode_entry Opcode_invalid;
 
 private:
-	operand_t            operands_[M::MAX_OPERANDS];
-	address_t            rva_;
-	const uint8_t *      buffer_;
-	std::size_t          buffer_size_;
-	const opcode_entry * opcode_;
+	operand_t           operands_[M::MAX_OPERANDS];
+	address_t           rva_;
+	const uint8_t      *buffer_;
+	std::size_t         buffer_size_;
+	const opcode_entry *opcode_;
 
-	uint32_t             prefix_;
-	uint32_t             mandatory_prefix_;
-	uint8_t              operand_count_;
-	uint8_t              modrm_size_;
-	uint8_t              sib_size_;
-	uint8_t              disp_size_;
-	uint8_t              prefix_size_;
-	uint8_t              immediate_size_;
-	uint8_t              opcode_size_;
-	REX                  rex_byte_;
-	uint8_t              rex_size_;
-	bool                 private_buffer_;
+	uint32_t            prefix_;
+	uint32_t            mandatory_prefix_;
+	uint8_t             operand_count_;
+	uint8_t             modrm_size_;
+	uint8_t             sib_size_;
+	uint8_t             disp_size_;
+	uint8_t             prefix_size_;
+	uint8_t             immediate_size_;
+	uint8_t             opcode_size_;
+	REX                 rex_byte_;
+	uint8_t             rex_size_;
+	bool                private_buffer_;
 };
 
 //------------------------------------------------------------------------------

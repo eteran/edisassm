@@ -50,7 +50,7 @@ private:
 	typedef Instruction<M>        instruction_t;
 
 private:
-	instruction_t * owner_;
+	instruction_t *owner_;
 
 public:
 	enum Register {
@@ -213,14 +213,14 @@ private:
 	static std::string hex_string(T value, bool upper);
 
 public:
-	void swap(Operand &other);
+	Type complete_type() const           { return type_; }
+	Type general_type() const;
+	address_t relative_target() const;
+	bool valid() const                   { return type_ != TYPE_INVALID; }
 	instruction_t *owner() const         { return owner_; }
 	int32_t displacement() const;
 	int64_t immediate() const;
-	address_t relative_target() const;
-	Type general_type() const;
-	Type complete_type() const           { return type_; }
-	bool valid() const                   { return type_ != TYPE_INVALID; }
+	void swap(Operand &other);
 
 private:
 	void invalidate()                    { type_ = TYPE_INVALID; }
