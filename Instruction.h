@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "edisassm_exception.h"
 #include "edisassm_model.h"
 #include "edisassm_types.h"
+#include "edisassm_string.h"
 #include <cstddef>
 
 #ifdef QT_CORE_LIB
@@ -1219,7 +1220,6 @@ private:
 	static typename operand_t::Register index_to_reg_dr(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_DR0 + index); }
 	static typename operand_t::Register index_to_reg_tr(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_TR0 + index); }
 
-
 private:
 	std::string format() const;
 	std::string format(bool upper) const;
@@ -1247,7 +1247,7 @@ private:
 		decoder_t    decoder;
 		Type         type;
 		unsigned int flags;
-		unsigned int operand_count;
+		int          operand_count;
 	};
 
 private:
@@ -1315,7 +1315,7 @@ private:
 	static const opcode_entry Opcode_invalid;
 
 private:
-	operand_t           operands_[M::MAX_OPERANDS];
+	operand_t           operands_[MAX_OPERANDS];
 	address_t           rva_;
 	const uint8_t      *buffer_;
 	std::size_t         buffer_size_;
@@ -1416,35 +1416,6 @@ bool operator==(const Instruction<M> &lhs, const Instruction<M> &rhs) {
 template <class M>
 bool operator!=(const Instruction<M> &lhs, const Instruction<M> &rhs) {
 	return !(lhs == rhs);
-}
-
-namespace edisassm {
-
-//------------------------------------------------------------------------------
-// Name: to_string(const Instruction<M> &insn, bool upper = false)
-//------------------------------------------------------------------------------
-template <class M>
-std::string to_string(const Instruction<M> &insn, bool upper = false) {
-	std::ostringstream ss;
-
-	if(upper) {
-		ss << edisassm::util::toupper_copy(insn.format_prefix());
-		ss << edisassm::util::toupper_copy(insn.mnemonic());
-	} else {
-		ss << insn.format_prefix();
-		ss << insn.mnemonic();
-	}
-
-	const std::size_t count = insn.operand_count();
-	if(count != 0) {
-		ss << ' ' << to_string(insn.operand(0), upper);
-		for(std::size_t i = 1; i < count; ++i) {
-			ss << ", " << to_string(insn.operand(i), upper);
-		}
-	}
-
-	return ss.str();
-}
 }
 
 #endif
