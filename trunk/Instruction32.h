@@ -19,8 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef INSTRUCTION_20080314_TCC_
 #define INSTRUCTION_20080314_TCC_
 
-#include <sstream>
-#include <string>
 #include <locale>
 #include <iostream>
 #include <cassert>
@@ -68,7 +66,7 @@ void Instruction<M>::decode_Gx(const uint8_t *buf) {
 	modrm_size_ = 1;
 
 	int regindex = rm.reg();
-	if(M::BITS == 64 && rex_byte_.is_rex()) {
+	if(BITS == 64 && rex_byte_.is_rex()) {
 		regindex |= (rex_byte_.r() << 3);
 
 		if(REG_DECODE == &index_to_reg_8) {
@@ -383,13 +381,13 @@ void Instruction<M>::decode_ModRM_0_32(const uint8_t *buf, const ModRM &rm, oper
 
 		int sibindex = sib.index();
 
-		if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+		if(BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 			sibindex |= (rex_byte_.x() << 3);
 		}
 
 		if(sibindex != 0x04) {
 
-			if(M::BITS == 64 && enable_64_bit) {
+			if(BITS == 64 && enable_64_bit) {
 				operand.u.expression.index = index_to_reg_64(sibindex);
 			} else {
 				operand.u.expression.index = index_to_reg_32(sibindex);
@@ -414,11 +412,11 @@ void Instruction<M>::decode_ModRM_0_32(const uint8_t *buf, const ModRM &rm, oper
 
 			int sibbase = sib.base();
 
-			if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+			if(BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 				sibbase |= (rex_byte_.b() << 3);
 			}
 
-			if(M::BITS == 64 && enable_64_bit) {
+			if(BITS == 64 && enable_64_bit) {
 				operand.u.expression.base = index_to_reg_64(sibbase);
 			} else {
 				operand.u.expression.base = index_to_reg_32(sibbase);
@@ -426,7 +424,7 @@ void Instruction<M>::decode_ModRM_0_32(const uint8_t *buf, const ModRM &rm, oper
 			operand.u.expression.displacement_type = operand_t::DISP_NONE;
 		}
 	} else if(rm.rm() == 0x05) {
-		if(M::BITS == 64 && enable_64_bit) {
+		if(BITS == 64 && enable_64_bit) {
 			operand.u.expression.index             = operand_t::REG_NULL;
 			operand.u.expression.scale             = 1;
 			operand.u.expression.base              = operand_t::REG_RIP;
@@ -445,11 +443,11 @@ void Instruction<M>::decode_ModRM_0_32(const uint8_t *buf, const ModRM &rm, oper
 
 		int rmbase = rm.rm();
 
-		if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+		if(BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 			rmbase |= (rex_byte_.b() << 3);
 		}
 
-		if(M::BITS == 64 && enable_64_bit) {
+		if(BITS == 64 && enable_64_bit) {
 			operand.u.expression.base = index_to_reg_64(rmbase);
 		} else {
 			operand.u.expression.base = index_to_reg_32(rmbase);
@@ -480,11 +478,11 @@ void Instruction<M>::decode_ModRM_1_32(const uint8_t *buf, const ModRM &rm, oper
 
 		int sibbase = sib.base();
 
-		if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+		if(BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 			sibbase |= (rex_byte_.b() << 3);
 		}
 
-		if(M::BITS == 64 && enable_64_bit) {
+		if(BITS == 64 && enable_64_bit) {
 			operand.u.expression.base = index_to_reg_64(sibbase);
 		} else {
 			operand.u.expression.base = index_to_reg_32(sibbase);
@@ -493,12 +491,12 @@ void Instruction<M>::decode_ModRM_1_32(const uint8_t *buf, const ModRM &rm, oper
 
 		int sibindex = sib.index();
 
-		if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+		if(BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 			sibindex |= (rex_byte_.x() << 3);
 		}
 
 		if(sibindex != 0x04) {
-			if(M::BITS == 64 && enable_64_bit) {
+			if(BITS == 64 && enable_64_bit) {
 				operand.u.expression.index = index_to_reg_64(sibindex);
 			} else {
 				operand.u.expression.index = index_to_reg_32(sibindex);
@@ -512,11 +510,11 @@ void Instruction<M>::decode_ModRM_1_32(const uint8_t *buf, const ModRM &rm, oper
 
 		int rmbase = rm.rm();
 
-		if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+		if(BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 			rmbase |= (rex_byte_.b() << 3);
 		}
 
-		if(M::BITS == 64 && enable_64_bit) {
+		if(BITS == 64 && enable_64_bit) {
 			operand.u.expression.base = index_to_reg_64(rmbase);
 		} else {
 			operand.u.expression.base = index_to_reg_32(rmbase);
@@ -549,11 +547,11 @@ void Instruction<M>::decode_ModRM_2_32(const uint8_t *buf, const ModRM &rm, oper
 
 		int sibbase = sib.base();
 
-		if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+		if(BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 			sibbase |= (rex_byte_.b() << 3);
 		}
 
-		if(M::BITS == 64 && enable_64_bit) {
+		if(BITS == 64 && enable_64_bit) {
 			operand.u.expression.base = index_to_reg_64(sibbase);
 		} else {
 			operand.u.expression.base = index_to_reg_32(sibbase);
@@ -563,12 +561,12 @@ void Instruction<M>::decode_ModRM_2_32(const uint8_t *buf, const ModRM &rm, oper
 
 		int sibindex = sib.index();
 
-		if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+		if(BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 			sibindex |= (rex_byte_.x() << 3);
 		}
 
 		if(sibindex != 0x04) {
-			if(M::BITS == 64 && enable_64_bit) {
+			if(BITS == 64 && enable_64_bit) {
 				operand.u.expression.index = index_to_reg_64(sibindex);
 			} else {
 				operand.u.expression.index = index_to_reg_32(sibindex);
@@ -583,11 +581,11 @@ void Instruction<M>::decode_ModRM_2_32(const uint8_t *buf, const ModRM &rm, oper
 
 		int rmbase = rm.rm();
 
-		if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+		if(BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 			rmbase |= (rex_byte_.b() << 3);
 		}
 
-		if(M::BITS == 64 && enable_64_bit) {
+		if(BITS == 64 && enable_64_bit) {
 			operand.u.expression.base = index_to_reg_64(rmbase);
 		} else {
 			operand.u.expression.base = index_to_reg_32(rmbase);
@@ -611,7 +609,7 @@ void Instruction<M>::decode_ModRM_3_32(const uint8_t *buf, const ModRM &rm, oper
 
 	int rmbase = rm.rm();
 
-	if(M::BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
+	if(BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
 		rmbase |= (rex_byte_.b() << 3);
 		if(REG_DECODE == &index_to_reg_8) {
 			if(rmbase > 3 && rmbase < 8) {
@@ -654,7 +652,7 @@ void Instruction<M>::decode_Ex(const uint8_t *buf) {
 	operand_t &operand = next_operand();
 
 	if(prefix_ & PREFIX_ADDRESS) {
-		if(M::BITS == 64) {
+		if(BITS == 64) {
 			switch(rm.mod()) {
 			case 0x00:
 				decode_ModRM_0_32<operand_t::TYPE_EXPRESSION32, REG_DECODE>(buf, rm, operand, false);
@@ -754,7 +752,6 @@ Instruction<M>::~Instruction() {
 template <class M>
 void Instruction<M>::initialize(const uint8_t *buf, std::size_t n) {
 
-
 	opcode_ = &Opcode_invalid;
 
 	for(int i = 0; i < M::MAX_OPERANDS; ++i) {
@@ -767,7 +764,7 @@ void Instruction<M>::initialize(const uint8_t *buf, std::size_t n) {
 	bounds_check(size() + 1);
 
 	// find the entry in the table
-	opcode_ = &Opcodes[*buf];
+	opcode_      = &Opcodes[*buf];
 	opcode_size_ = 1;
 
 	// decode it
@@ -825,7 +822,7 @@ template <class M>
 void Instruction<M>::swap(Instruction &other) {
 	using std::swap;
 
-	for(int i = 0; i < M::MAX_OPERANDS; ++i) {
+	for(int i = 0; i < MAX_OPERANDS; ++i) {
 		operands_[i].swap(other.operands_[i]);
 	}
 
@@ -1044,7 +1041,7 @@ void Instruction<M>::process_prefixes(const uint8_t *&buf, std::size_t size) {
 		}
 	} while(!done);
 
-	if(M::BITS == 64) {
+	if(BITS == 64) {
 		if(size != 0) {
 			rex_byte_ = *buf;
 			if(rex_byte_.is_rex()) {
@@ -1062,7 +1059,7 @@ void Instruction<M>::process_prefixes(const uint8_t *&buf, std::size_t size) {
 template <class M>
 typename Instruction<M>::operand_t &Instruction<M>::next_operand() {
 
-	if(operand_count_ >= M::MAX_OPERANDS) {
+	if(operand_count_ >= MAX_OPERANDS) {
 		throw too_many_operands(size());
 	}
 
@@ -1827,7 +1824,7 @@ void Instruction<M>::decode_Mv(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_AL(const uint8_t *buf) {
-	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+	if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		decode_Reg<operand_t::REG_R8B>(buf);
 	} else {
 		decode_Reg<operand_t::REG_AL>(buf);
@@ -1839,7 +1836,7 @@ void Instruction<M>::decode_AL(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_CL(const uint8_t *buf) {
-	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+	if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		decode_Reg<operand_t::REG_R9B>(buf);
 	} else {
 		decode_Reg<operand_t::REG_CL>(buf);
@@ -1851,7 +1848,7 @@ void Instruction<M>::decode_CL(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_DL(const uint8_t *buf) {
-	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+	if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		decode_Reg<operand_t::REG_R10B>(buf);
 	} else {
 		decode_Reg<operand_t::REG_DL>(buf);
@@ -1863,7 +1860,7 @@ void Instruction<M>::decode_DL(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_BL(const uint8_t *buf) {
-	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+	if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		decode_Reg<operand_t::REG_R11B>(buf);
 	} else {
 		decode_Reg<operand_t::REG_BL>(buf);
@@ -1875,7 +1872,7 @@ void Instruction<M>::decode_BL(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_AH(const uint8_t *buf) {
-	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+	if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		decode_Reg<operand_t::REG_R12B>(buf);
 	} else {
 		decode_Reg<operand_t::REG_AH>(buf);
@@ -1887,7 +1884,7 @@ void Instruction<M>::decode_AH(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_CH(const uint8_t *buf) {
-	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+	if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		decode_Reg<operand_t::REG_R13B>(buf);
 	} else {
 		decode_Reg<operand_t::REG_CH>(buf);
@@ -1899,7 +1896,7 @@ void Instruction<M>::decode_CH(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_DH(const uint8_t *buf) {
-	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+	if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		decode_Reg<operand_t::REG_R14B>(buf);
 	} else {
 		decode_Reg<operand_t::REG_DH>(buf);
@@ -1911,7 +1908,7 @@ void Instruction<M>::decode_DH(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_BH(const uint8_t *buf) {
-	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+	if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		decode_Reg<operand_t::REG_R15B>(buf);
 	} else {
 		decode_Reg<operand_t::REG_BH>(buf);
@@ -1947,21 +1944,21 @@ template <class M>
 void Instruction<M>::decode_rAX(const uint8_t *buf) {
 	switch(operand_size()) {
 	case 16:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R8W>(buf);
 		} else {
 			decode_Reg<operand_t::REG_AX>(buf);
 		}
 		break;
 	case 32:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R8D>(buf);
 		} else {
 			decode_Reg<operand_t::REG_EAX>(buf);
 		}
 		break;
 	case 64:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R8>(buf);
 		} else {
 			decode_Reg<operand_t::REG_RAX>(buf);
@@ -1977,21 +1974,21 @@ template <class M>
 void Instruction<M>::decode_rCX(const uint8_t *buf) {
 	switch(operand_size()) {
 	case 16:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R9W>(buf);
 		} else {
 			decode_Reg<operand_t::REG_CX>(buf);
 		}
 		break;
 	case 32:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R9D>(buf);
 		} else {
 			decode_Reg<operand_t::REG_ECX>(buf);
 		}
 		break;
 	case 64:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R9>(buf);
 		} else {
 			decode_Reg<operand_t::REG_RCX>(buf);
@@ -2007,21 +2004,21 @@ template <class M>
 void Instruction<M>::decode_rDX(const uint8_t *buf) {
 	switch(operand_size()) {
 	case 16:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R10W>(buf);
 		} else {
 			decode_Reg<operand_t::REG_DX>(buf);
 		}
 		break;
 	case 32:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R10D>(buf);
 		} else {
 			decode_Reg<operand_t::REG_EDX>(buf);
 		}
 		break;
 	case 64:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R10>(buf);
 		} else {
 			decode_Reg<operand_t::REG_RDX>(buf);
@@ -2037,21 +2034,21 @@ template <class M>
 void Instruction<M>::decode_rBX(const uint8_t *buf) {
 	switch(operand_size()) {
 	case 16:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R11W>(buf);
 		} else {
 			decode_Reg<operand_t::REG_BX>(buf);
 		}
 		break;
 	case 32:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R11D>(buf);
 		} else {
 			decode_Reg<operand_t::REG_EBX>(buf);
 		}
 		break;
 	case 64:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R11>(buf);
 		} else {
 			decode_Reg<operand_t::REG_RBX>(buf);
@@ -2067,21 +2064,21 @@ template <class M>
 void Instruction<M>::decode_rSP(const uint8_t *buf) {
 	switch(operand_size()) {
 	case 16:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R12W>(buf);
 		} else {
 			decode_Reg<operand_t::REG_SP>(buf);
 		}
 		break;
 	case 32:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R12D>(buf);
 		} else {
 			decode_Reg<operand_t::REG_ESP>(buf);
 		}
 		break;
 	case 64:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R12>(buf);
 		} else {
 			decode_Reg<operand_t::REG_RSP>(buf);
@@ -2097,21 +2094,21 @@ template <class M>
 void Instruction<M>::decode_rBP(const uint8_t *buf) {
 	switch(operand_size()) {
 	case 16:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R13W>(buf);
 		} else {
 			decode_Reg<operand_t::REG_BP>(buf);
 		}
 		break;
 	case 32:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R13D>(buf);
 		} else {
 			decode_Reg<operand_t::REG_EBP>(buf);
 		}
 		break;
 	case 64:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R13>(buf);
 		} else {
 			decode_Reg<operand_t::REG_RBP>(buf);
@@ -2127,21 +2124,21 @@ template <class M>
 void Instruction<M>::decode_rSI(const uint8_t *buf) {
 	switch(operand_size()) {
 	case 16:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R14W>(buf);
 		} else {
 			decode_Reg<operand_t::REG_SI>(buf);
 		}
 		break;
 	case 32:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R14D>(buf);
 		} else {
 			decode_Reg<operand_t::REG_ESI>(buf);
 		}
 		break;
 	case 64:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R14>(buf);
 		} else {
 			decode_Reg<operand_t::REG_RSI>(buf);
@@ -2157,21 +2154,21 @@ template <class M>
 void Instruction<M>::decode_rDI(const uint8_t *buf) {
 	switch(operand_size()) {
 	case 16:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R15W>(buf);
 		} else {
 			decode_Reg<operand_t::REG_DI>(buf);
 		}
 		break;
 	case 32:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R15D>(buf);
 		} else {
 			decode_Reg<operand_t::REG_EDI>(buf);
 		}
 		break;
 	case 64:
-		if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+		if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 			decode_Reg<operand_t::REG_R15>(buf);
 		} else {
 			decode_Reg<operand_t::REG_RDI>(buf);
@@ -2180,8 +2177,6 @@ void Instruction<M>::decode_rDI(const uint8_t *buf) {
 	}
 }
 
-
-//EMIT_ALT_NAME_HANDLER(nop, pause, PREFIX_REP, &Instruction::decode, OP_NOP, OP_PAUSE)
 //------------------------------------------------------------------------------
 // Name: decode_rAX_rAX_NOREX(const uint8_t *buf
 // NOTE: special case because this represents 3 possible ops!
@@ -2190,7 +2185,7 @@ template <class M>
 void Instruction<M>::decode_rAX_rAX_NOREX(const uint8_t *buf) {
 
 	// TODO: does F3 or xchg r8, rAX take precidence
-	if(M::BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
+	if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		opcode_ = &Opcodes_nop_pause_xchg[2];
 	} else if(prefix_ & PREFIX_REP) {
 		mandatory_prefix_ |= PREFIX_REP;
@@ -2215,12 +2210,12 @@ int Instruction<M>::operand_size() const {
 	}
 
 	// we check if 64-bit mode is enabled
-	if(M::BITS == 64) {
+	if(BITS == 64) {
 		if(rex_byte_.is_rex() && rex_byte_.w()) {
 			ret = 64;
 		} else {
 			const Type type = opcode_->type;
-			// push/pop/jmp/call defaults to 64-bit even without prefix
+			// push/pop/jmp/call/jcc defaults to 64-bit even without prefix
 			if(type == OP_PUSH || type == OP_POP || type == OP_PUSHF || type == OP_POPF || type == OP_CALL || type == OP_JMP || type == OP_JCC) {
 				ret = 64;
 			}

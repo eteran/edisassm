@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "edisassm_types.h"
 #include "edisassm_util.h"
 #include "edisassm_exception.h"
+#include "edisassm_string.h"
 
 template <class M>
 class Instruction;
@@ -30,10 +31,6 @@ class Instruction;
 template <class M>
 class Operand;
 
-namespace edisassm {
-	template<class M>
-	std::string to_string(const Operand<M> &operand, bool upper = false);
-}
 
 template <class M>
 class Operand {
