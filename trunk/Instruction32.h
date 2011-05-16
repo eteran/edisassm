@@ -265,7 +265,7 @@ void Instruction<M>::decode_const_Iq(const uint8_t *buf) {
 
 	operand.u.sqword = IMM;
 	operand.type_    = operand_t::TYPE_IMMEDIATE64;
-	
+
 	// NOTE: so far this is only used for implicit constants, other
 	// ones may need a size!
 	//immediate_size_ += sizeof(int64_t);
@@ -283,7 +283,7 @@ void Instruction<M>::decode_const_Id(const uint8_t *buf) {
 
 	operand.u.sdword = IMM;
 	operand.type_    = operand_t::TYPE_IMMEDIATE32;
-	
+
 	// NOTE: so far this is only used for implicit constants, other
 	// ones may need a size!
 	//immediate_size_ += sizeof(int32_t);
@@ -302,7 +302,7 @@ void Instruction<M>::decode_const_Iw(const uint8_t *buf) {
 
 	operand.u.sword = IMM;
 	operand.type_   = operand_t::TYPE_IMMEDIATE16;
-	
+
 	// NOTE: so far this is only used for implicit constants, other
 	// ones may need a size!
 	//immediate_size_ += sizeof(int16_t);
@@ -320,7 +320,7 @@ void Instruction<M>::decode_const_Ib(const uint8_t *buf) {
 
 	operand.u.sbyte = IMM;
 	operand.type_   = operand_t::TYPE_IMMEDIATE8;
-	
+
 	// NOTE: so far this is only used for implicit constants, other
 	// ones may need a size!
 	//immediate_size_ += sizeof(int8_t);
