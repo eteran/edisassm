@@ -113,9 +113,9 @@ std::string Operand<M>::format_immediate(bool upper) const {
 template <class M>
 typename Operand<M>::address_t Operand<M>::relative_target() const {
 
-	const address_t rva		= owner_->rva();
-	const unsigned int size	= owner_->size();
-	const address_t offset	= rva + size;
+	const address_t rva     = owner_->rva();
+	const unsigned int size = owner_->size();
+	const address_t offset  = rva + size;
 
 	switch(type_) {
 	case TYPE_REL8:
@@ -286,7 +286,7 @@ template <class M>
 std::string Operand<M>::format_absolute(bool upper) const {
 	std::ostringstream ss;
 
-	ss	<< edisassm::util::toupper_copy("far ", upper)
+	ss << edisassm::util::toupper_copy("far ", upper)
 		<< hex_string(u.absolute.seg, upper)
 		<< ':'
 		<< hex_string(u.absolute.offset, upper);
