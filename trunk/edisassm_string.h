@@ -30,6 +30,16 @@ class Operand;
 
 namespace edisassm {
 
+
+//------------------------------------------------------------------------------
+// Name: to_string(const Operand<M> &operand)
+// Desc: creates a std::string which represents the given operand
+//------------------------------------------------------------------------------
+template<class M>
+std::string to_string(const Operand<M> &operand) {
+	return to_string(operand, false);
+}
+
 //------------------------------------------------------------------------------
 // Name: to_string(const Operand<M> &operand, bool upper)
 // Desc: creates a std::string which represents the given operand
@@ -38,11 +48,11 @@ template<class M>
 std::string to_string(const Operand<M> &operand, bool upper) {
 
 	switch(operand.general_type()) {
-	case Operand<M>::TYPE_REGISTER:		return operand.format_register(upper);
-	case Operand<M>::TYPE_IMMEDIATE:	return operand.format_immediate(upper);
-	case Operand<M>::TYPE_REL:			return operand.format_relative(upper);
-	case Operand<M>::TYPE_EXPRESSION:	return operand.format_expression(upper);
-	case Operand<M>::TYPE_ABSOLUTE:		return operand.format_absolute(upper);
+	case Operand<M>::TYPE_REGISTER:   return operand.format_register(upper);
+	case Operand<M>::TYPE_IMMEDIATE:  return operand.format_immediate(upper);
+	case Operand<M>::TYPE_REL:        return operand.format_relative(upper);
+	case Operand<M>::TYPE_EXPRESSION: return operand.format_expression(upper);
+	case Operand<M>::TYPE_ABSOLUTE:   return operand.format_absolute(upper);
 	default:
 		return upper ? "(INVALID)" : "(invalid)";
 		// is it better to throw, or return a string?
