@@ -65,7 +65,7 @@ namespace edisassm {
 		}
 
 		template <class T>
-		static bool is_small_num(T value) {
+		bool is_small_num(T value) {
 			return (value > -127 && value < 128);
 		}
 	}

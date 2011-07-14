@@ -710,7 +710,7 @@ private:
 	operand_t &next_operand();
 
 private:
-	// convinience binders,
+	// convenience binders,
 	template <decoder_t F1, decoder_t F2, decoder_t F3>
 	void decode3(const uint8_t *buf) {
 		(this->*F1)(buf);
@@ -1009,7 +1009,7 @@ private:
 	void decode_STi_ST(const uint8_t *buf) { decode2<&instruction_t::template decode_STi<index>, &instruction_t::template decode_Reg<operand_t::REG_ST> >(buf); }
 
 
-	// macro for easier maintinance of these modes
+	// macro for easier maintenance of these modes
 	// only works for "simple" ones though (no template usage in params)
 	#define DECODE2(op1, op2)                                                         \
 	void decode_ ## op1 ## _ ## op2(const uint8_t *buf) {                             \
@@ -1168,7 +1168,7 @@ private:
 
 private:
 
-	// macro for easier maintinance of these modes
+	// macro for easier maintenance of these modes
 	// only works for "simple" ones though (no template usage in params)
 	#define DECODE3(op1, op2, op3)                                                                                    \
 	void decode_ ## op1 ## _ ## op2 ## _ ## op3(const uint8_t *buf) {                                                 \

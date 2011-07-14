@@ -975,7 +975,7 @@ void Instruction<M>::process_prefixes(const uint8_t *&buf, std::size_t size) {
 
 	// we only allow one prefix from each group to be set,
 	// currently, the last one from a given group in the stream
-	// will take precidence
+	// will take precedence
 	do {
 		if(size == 0) {
 			break;
@@ -2184,7 +2184,7 @@ void Instruction<M>::decode_rDI(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_rAX_rAX_NOREX(const uint8_t *buf) {
 
-	// TODO: does F3 or xchg r8, rAX take precidence
+	// TODO: does F3 or xchg r8, rAX take precedence
 	if(BITS == 64 && rex_byte_.is_rex() && rex_byte_.b()) {
 		opcode_ = &Opcodes_nop_pause_xchg[2];
 	} else if(prefix_ & PREFIX_REP) {
