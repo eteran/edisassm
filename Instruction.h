@@ -111,7 +111,7 @@ public:
 		FLAG_RING0          = 0x00000008,
 		FLAG_UNDOCUMENTED   = 0x00000010,
 		FLAG_AMD            = 0x00000020,
-		FLAG_INTEL          = 0x00000040,
+		FLAG_INTEL          = 0x00000040
 	};
 
 	enum Prefix {
