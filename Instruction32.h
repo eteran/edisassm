@@ -57,13 +57,7 @@ template <class M>
 template <typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
 void Instruction<M>::decode_Gx(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM rm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM rm = get_modrm(buf);
 
 	int regindex = rm.reg();
 	if(BITS == 64 && rex_byte_.is_rex()) {
@@ -327,6 +321,35 @@ void Instruction<M>::decode_const_Ib(const uint8_t *buf) {
 }
 
 //------------------------------------------------------------------------------
+// Name: get_modrm(const uint8_t *buf)
+//------------------------------------------------------------------------------
+template <class M>
+ModRM Instruction<M>::get_modrm(const uint8_t *buf) {
+	// we got enough room for the ModRM byte?
+	if(modrm_size_ == 0) {
+		bounds_check(size() + 1);
+	}
+
+	modrm_size_ = 1;
+	return ModRM(buf[opcode_size_]);
+}
+
+
+//------------------------------------------------------------------------------
+// Name: get_modrm(const uint8_t *buf)
+//------------------------------------------------------------------------------
+template <class M>
+SIB Instruction<M>::get_sib(const uint8_t *buf) {
+	// we got enough room for the SIB byte?
+	if(sib_size_ == 0) {
+		bounds_check(size() + 1);
+	}
+
+	sib_size_ = 1;
+	return SIB(buf[opcode_size_ + modrm_size_]);
+}
+
+//------------------------------------------------------------------------------
 // Name: get_immediate(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
@@ -370,14 +393,7 @@ void Instruction<M>::decode_ModRM_0_32(const uint8_t *buf, const ModRM &rm, oper
 	operand.type_ = TYPE;
 
 	if(rm.rm() == 0x04) {
-		// we got enough room for the SIB byte?
-		if(sib_size_ == 0) {
-			bounds_check(size() + 1);
-		}
-
-		sib_size_ = 1;
-		const SIB sib(buf[opcode_size_ + modrm_size_]);
-
+		const SIB sib = get_sib(buf);
 
 		int sibindex = sib.index();
 
@@ -468,13 +484,7 @@ void Instruction<M>::decode_ModRM_1_32(const uint8_t *buf, const ModRM &rm, oper
 
 	if(rm.rm() == 0x04) {
 
-		// we got enough room for the SIB byte?
-		if(sib_size_ == 0) {
-			bounds_check(size() + 1);
-		}
-
-		sib_size_ = 1;
-		const SIB sib(buf[opcode_size_ + modrm_size_]);
+		const SIB sib = get_sib(buf);
 
 		int sibbase = sib.base();
 
@@ -537,13 +547,7 @@ void Instruction<M>::decode_ModRM_2_32(const uint8_t *buf, const ModRM &rm, oper
 	UNUSED(enable_64_bit);
 
 	if(rm.rm() == 0x04) {
-		// we got enough room for the SIB byte?
-		if(sib_size_ == 0) {
-			bounds_check(size() + 1);
-		}
-
-		sib_size_ = 1;
-		const SIB sib(buf[opcode_size_ + modrm_size_]);
+		const SIB sib = get_sib(buf);
 
 		int sibbase = sib.base();
 
@@ -641,13 +645,7 @@ template <class M>
 template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
 void Instruction<M>::decode_Ex(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM rm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM rm = get_modrm(buf);
 
 	operand_t &operand = next_operand();
 
@@ -1101,13 +1099,7 @@ template <class M> void Instruction<M>::decode_popaw_popad_invalid(const uint8_t
 template <class M>
 void Instruction<M>::decode_x87(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	const uint8_t esc_num = (buf[0] - 0xd8);
 	const uint8_t byte2 = buf[opcode_size_];
@@ -1214,13 +1206,7 @@ void Instruction<M>::decode_3byte_3A(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group1(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	opcode_ = &Opcodes_Group1[modrm.reg() + 8 * (buf[0] & 3)];
 	(this->*(opcode_->decoder))(buf);
@@ -1232,13 +1218,7 @@ void Instruction<M>::decode_group1(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group2(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	opcode_ = &Opcodes_Group2[modrm.reg() + 8 * (buf[0] & 1)];
 	(this->*(opcode_->decoder))(buf);
@@ -1250,13 +1230,7 @@ void Instruction<M>::decode_group2(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group2D(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	opcode_ = &Opcodes_Group2D[modrm.reg() + 8 * (buf[0] & 3)];
 	(this->*(opcode_->decoder))(buf);
@@ -1268,13 +1242,7 @@ void Instruction<M>::decode_group2D(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group3(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	opcode_ = &Opcodes_Group3[modrm.reg() + 8 * ((buf[0] - 6) & 1)];
 	(this->*(opcode_->decoder))(buf);
@@ -1286,13 +1254,7 @@ void Instruction<M>::decode_group3(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group4(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	opcode_ = &Opcodes_Group4[modrm.reg()];
 	(this->*(opcode_->decoder))(buf);
@@ -1304,13 +1266,7 @@ void Instruction<M>::decode_group4(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group5(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	opcode_ = &Opcodes_Group5[modrm.reg()];
 	(this->*(opcode_->decoder))(buf);
@@ -1322,13 +1278,7 @@ void Instruction<M>::decode_group5(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group6(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	opcode_ = &Opcodes_Group6[modrm.reg()];
 	(this->*(opcode_->decoder))(buf);
@@ -1340,13 +1290,7 @@ void Instruction<M>::decode_group6(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group7(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	const uint8_t index = modrm.reg();
 
@@ -1364,13 +1308,7 @@ void Instruction<M>::decode_group7(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group8(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	opcode_ = &Opcodes_Group8[modrm.reg()];
 	(this->*(opcode_->decoder))(buf);
@@ -1382,13 +1320,7 @@ void Instruction<M>::decode_group8(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group9(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	const uint8_t index = modrm.reg();
 
@@ -1415,13 +1347,7 @@ void Instruction<M>::decode_group9(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group10(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	opcode_ = &Opcodes_Group10[modrm.reg()];
 	(this->*(opcode_->decoder))(buf);
@@ -1434,13 +1360,7 @@ void Instruction<M>::decode_group10(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group11(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	opcode_ = &Opcodes_Group11[modrm.reg()];
 	(this->*(opcode_->decoder))(buf);
@@ -1453,13 +1373,7 @@ void Instruction<M>::decode_group11(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group12(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	opcode_ = &Opcodes_Group12[modrm.reg() + 8 * ((buf[0] - 6) & 1)];
 	(this->*(opcode_->decoder))(buf);
@@ -1471,13 +1385,7 @@ void Instruction<M>::decode_group12(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group13(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	const uint8_t index = modrm.reg();
 
@@ -1499,13 +1407,7 @@ void Instruction<M>::decode_group13(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group14(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	const uint8_t index = modrm.reg();
 
@@ -1527,13 +1429,7 @@ void Instruction<M>::decode_group14(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group15(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	const uint8_t index = modrm.reg();
 
@@ -1554,13 +1450,7 @@ void Instruction<M>::decode_group15(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group16(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	const uint8_t index = modrm.reg();
 
@@ -1579,13 +1469,7 @@ void Instruction<M>::decode_group16(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_group17(const uint8_t *buf) {
 
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
-
-	const ModRM modrm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM modrm = get_modrm(buf);
 
 	opcode_ = &Opcodes_Group17[modrm.reg() + 8 * (buf[1] - 0x18)];
 	(this->*(opcode_->decoder))(buf);
@@ -2263,13 +2147,8 @@ std::string Instruction<M>::format_prefix() const {
 template <class M>
 template <void (Instruction<M>::*F1)(const uint8_t *), void (Instruction<M>::*F2)(const uint8_t *)>
 void Instruction<M>::decode_Reg_Mem(const uint8_t *buf) {
-	// we got enough room for the ModRM byte?
-	if(modrm_size_ == 0) {
-		bounds_check(size() + 1);
-	}
 
-	const ModRM rm(buf[opcode_size_]);
-	modrm_size_ = 1;
+	const ModRM rm = get_modrm(buf);
 
 	if(rm.mod() == 0x03) {
 		(this->*F1)(buf);
