@@ -30,7 +30,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group15[8] =
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "psllq", &Instruction::decode_Nq_Ib, OP_PSLLQ, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 };
 
 template <class M>
@@ -42,7 +42,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group15_66[8
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "psllq", &Instruction::decode_Uo_Ib, OP_PSLLQ, FLAG_NONE, 2 },
-	{ "pslldq", &Instruction::decode_Uo_Ib, OP_PSLLDQ, FLAG_NONE, 2 }
+	{ "pslldq", &Instruction::decode_Uo_Ib, OP_PSLLDQ, FLAG_NONE, 2 },
 };
 
 #endif

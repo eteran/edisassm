@@ -30,7 +30,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group14[8] =
 	{ "psrad", &Instruction::decode_Nq_Ib, OP_PSRAD, FLAG_NONE, 2 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "pslld", &Instruction::decode_Nq_Ib, OP_PSLLD, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 };
 
 template <class M>
@@ -42,7 +42,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group14_66[8
 	{ "psrad", &Instruction::decode_Uo_Ib, OP_PSRAD, FLAG_NONE, 2 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "pslld", &Instruction::decode_Uo_Ib, OP_PSLLD, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 };
 
 #endif
