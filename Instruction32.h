@@ -960,7 +960,7 @@ void Instruction<M>::assemble(std::string instruction) {
 	find_opcode(opcode, Opcodes_invalid_cmpxchg8b_cmpxchg16b, operand_index);
 	find_opcode(opcode, Opcodes_insw_insd_invalid, operand_index);
 	find_opcode(opcode, Opcodes_outsw_outsd_invalid, operand_index);
-	find_opcode(opcode, Opcodes_cmpsw_cmpsd_invalid, operand_index);
+	find_opcode(opcode, Opcodes_cmpsw_cmpsd_cmpsq, operand_index);
 	find_opcode(opcode, Opcodes_pushaw_pushad_invalid, operand_index);
 	find_opcode(opcode, Opcodes_popaw_popad_invalid, operand_index);
 }
@@ -1089,7 +1089,7 @@ template <class M> void Instruction<M>::decode_pushfw_pushfd_pushfq(const uint8_
 template <class M> void Instruction<M>::decode_invalid_cmpxchg8b_cmpxchg16b(const uint8_t *buf) { decode_size_sensitive(buf, Opcodes_invalid_cmpxchg8b_cmpxchg16b);}
 template <class M> void Instruction<M>::decode_insw_insd_invalid(const uint8_t *buf)            { decode_size_sensitive(buf, Opcodes_insw_insd_invalid);}
 template <class M> void Instruction<M>::decode_outsw_outsd_invalid(const uint8_t *buf)          { decode_size_sensitive(buf, Opcodes_outsw_outsd_invalid);}
-template <class M> void Instruction<M>::decode_cmpsw_cmpsd_invalid(const uint8_t *buf)          { decode_size_sensitive(buf, Opcodes_cmpsw_cmpsd_invalid);}
+template <class M> void Instruction<M>::decode_cmpsw_cmpsd_cmpsq(const uint8_t *buf)            { decode_size_sensitive(buf, Opcodes_cmpsw_cmpsd_cmpsq);}
 template <class M> void Instruction<M>::decode_pushaw_pushad_invalid(const uint8_t *buf)        { decode_size_sensitive(buf, Opcodes_pushaw_pushad_invalid);}
 template <class M> void Instruction<M>::decode_popaw_popad_invalid(const uint8_t *buf)          { decode_size_sensitive(buf, Opcodes_popaw_popad_invalid);}
 
@@ -1326,11 +1326,9 @@ void Instruction<M>::decode_group9(const uint8_t *buf) {
 
 	if(prefix_ & PREFIX_OPERAND) {
 		// 0x66
-		mandatory_prefix_ |= PREFIX_OPERAND;
 		opcode_ = &Opcodes_Group9_66[index];
 	} else if(prefix_ & PREFIX_REP) {
 		// 0xf3
-		mandatory_prefix_ |= PREFIX_REP;
 		opcode_ = &Opcodes_Group9_F3[index];
 	} else {
 		// N/A

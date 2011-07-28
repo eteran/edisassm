@@ -212,7 +212,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "movsb", &Instruction::decode0, OP_MOVS, FLAG_NONE, 0 },
 	{ "movsw/movsd/movsq", &Instruction::decode_movsw_movsd_movsq, OP_MOVS, FLAG_NONE, 3 },
 	{ "cmpsb", &Instruction::decode0, OP_CMPS, FLAG_NONE, 0 },
-	{ "cmpsw/cmpsd", &Instruction::decode_cmpsw_cmpsd_invalid, OP_CMPS, FLAG_NONE, 3 },
+	{ "cmpsw/cmpsd/cmpsq", &Instruction::decode_cmpsw_cmpsd_cmpsq, OP_CMPS, FLAG_NONE, 3 },
 	{ "test", &Instruction::decode_AL_Ib, OP_TEST, FLAG_NONE, 2 },
 	{ "test", &Instruction::decode_rAX_Iz, OP_TEST, FLAG_NONE, 2 },
 	{ "stosb", &Instruction::decode0, OP_STOS, FLAG_NONE, 0 },
@@ -265,7 +265,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "group2", &Instruction::decode_group2D, OP_GROUP2, FLAG_NONE, -1 },
 	{ "aam", &Instruction::decode_Ib, OP_AAM, FLAG_NONE, 1 },					// ia-32 only
 	{ "aad", &Instruction::decode_Ib, OP_AAD, FLAG_NONE, 1 },					// ia-32 only
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
+	{ "salc", &Instruction::decode0, OP_SALC, FLAG_UNDOCUMENTED, 0 },
 	{ "xlat", &Instruction::decode0, OP_XLAT, FLAG_NONE, 0 },
 	{ "esc0", &Instruction::decode_x87, OP_FPU, FLAG_NONE, -1 },
 	{ "esc1", &Instruction::decode_x87, OP_FPU, FLAG_NONE, -1 },

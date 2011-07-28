@@ -22,6 +22,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define INSTRUCTION64_20070427_TCC_
 
 template <>
+const typename Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>::Opcodes_cmpsw_cmpsd_cmpsq[3] = {
+	{ "cmpsw",  &Instruction::decode0, OP_CMPS, FLAG_NONE, 0 },
+	{ "cmpsd",  &Instruction::decode0, OP_CMPS, FLAG_NONE, 0 },
+	{ "cmpsq",  &Instruction::decode0, OP_CMPS, FLAG_AMD, 0 }, // x86: invalid
+};
+
+template <>
 const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>::Opcodes_Group7A[64] = {
 	{ "vmcall", &Instruction::decode0, OP_VMCALL, FLAG_NONE, 0 },
 	{ "vmlaunch", &Instruction::decode0, OP_VMLAUNCH, FLAG_NONE, 0 },
@@ -50,14 +57,14 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
+	{ "vmrun", &Instruction::decode0, OP_VMRUN, FLAG_AMD, 0 },
+	{ "vmmcall", &Instruction::decode0, OP_VMMCALL, FLAG_AMD, 0 },
+	{ "vmload", &Instruction::decode0, OP_VMLOAD, FLAG_AMD, 0 },
+	{ "vmsave", &Instruction::decode0, OP_VMSAVE, FLAG_AMD, 0 },
+	{ "stgi", &Instruction::decode0, OP_STGI, FLAG_AMD, 0 },
+	{ "clgi", &Instruction::decode0, OP_CLGI, FLAG_AMD, 0 },
+	{ "skinit", &Instruction::decode0, OP_SKINIT, FLAG_AMD, 0 },
+	{ "invlpga", &Instruction::decode0, OP_INVLPGA, FLAG_AMD, 0 },
 
 	{ "smsw", &Instruction::decode_Rv_Mw, OP_SMSW, FLAG_NONE, 2 },
 	{ "smsw", &Instruction::decode_Rv_Mw, OP_SMSW, FLAG_NONE, 2 },
@@ -87,13 +94,13 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "lmsw", &Instruction::decode_Ew, OP_LMSW, FLAG_NONE, 1 },
 
 	{ "swapgs", &Instruction::decode0, OP_SWAPGS, FLAG_NONE, 0 }, // x86: invalid
+	{ "rdtscp", &Instruction::decode0, OP_RDTSCP, FLAG_AMD, 0 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }
 };
 
 template <>
@@ -287,7 +294,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "movsb", &Instruction::decode0, OP_MOVS, FLAG_NONE, 0 },
 	{ "movsw/movsd/movsq", &Instruction::decode_movsw_movsd_movsq, OP_MOVS, FLAG_NONE, -1 },
 	{ "cmpsb", &Instruction::decode0, OP_CMPS, FLAG_NONE, 0 },
-	{ "cmpsw/cmpsd", &Instruction::decode_cmpsw_cmpsd_invalid, OP_CMPS, FLAG_NONE, -1 },
+	{ "cmpsw/cmpsd/cmpsq", &Instruction::decode_cmpsw_cmpsd_cmpsq, OP_CMPS, FLAG_NONE, -1 },
 	{ "test", &Instruction::decode_AL_Ib, OP_TEST, FLAG_NONE, 2 },
 	{ "test", &Instruction::decode_rAX_Iz, OP_TEST, FLAG_NONE, 2 },
 	{ "stosb", &Instruction::decode0, OP_STOS, FLAG_NONE, 0 },
@@ -385,7 +392,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "cld", &Instruction::decode0, OP_CLD, FLAG_NONE, 0 },
 	{ "std", &Instruction::decode0, OP_STD, FLAG_NONE, 0 },
 	{ "group4", &Instruction::decode_group4, OP_GROUP4, FLAG_NONE, -1 },
-	{ "group5", &Instruction::decode_group5, OP_GROUP5, FLAG_NONE, -1 }
+	{ "group5", &Instruction::decode_group5, OP_GROUP5, FLAG_NONE, -1 },
 };
 
 
@@ -678,7 +685,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "paddb", &Instruction::decode_Pq_Qq, OP_PADDB, FLAG_NONE, 2 },
 	{ "paddw", &Instruction::decode_Pq_Qq, OP_PADDW, FLAG_NONE, 2 },
 	{ "paddd", &Instruction::decode_Pq_Qq, OP_PADDD, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 };
 
 
@@ -972,7 +979,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "paddb", &Instruction::decode_Vo_Wo, OP_PADDB, FLAG_NONE, 2 },
 	{ "paddw", &Instruction::decode_Vo_Wo, OP_PADDW, FLAG_NONE, 2 },
 	{ "paddd", &Instruction::decode_Vo_Wo, OP_PADDD, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 };
 
 // 2 byte opcodes with a f2 prefix
@@ -1265,7 +1272,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "paddb", &Instruction::decode_Pq_Qq, OP_PADDB, FLAG_NONE, 2 },
 	{ "paddw", &Instruction::decode_Pq_Qq, OP_PADDW, FLAG_NONE, 2 },
 	{ "paddd", &Instruction::decode_Pq_Qq, OP_PADDD, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 };
 
 // 2 byte opcodes with a f3 prefix
@@ -1558,7 +1565,7 @@ const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>:
 	{ "paddb", &Instruction::decode_Pq_Qq, OP_PADDB, FLAG_NONE, 2 },
 	{ "paddw", &Instruction::decode_Pq_Qq, OP_PADDW, FLAG_NONE, 2 },
 	{ "paddd", &Instruction::decode_Pq_Qq, OP_PADDD, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 };
 
 
