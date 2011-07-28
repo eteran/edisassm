@@ -707,7 +707,7 @@ void Instruction<M>::decode_Ex(const uint8_t *buf) {
 //------------------------------------------------------------------------------
 template <class M>
 Instruction<M>::Instruction(const uint8_t *buf, std::size_t size, address_t rva, const std::nothrow_t&) throw()
-		: rva_(rva), buffer_(buf), buffer_size_(size), opcode_(0),
+		: rva_(rva), buffer_(buf), buffer_size_(size), opcode_(&Opcode_invalid),
 		prefix_(0), mandatory_prefix_(0), operand_count_(0), modrm_size_(0),
 		sib_size_(0), disp_size_(0), prefix_size_(0), immediate_size_(0),
 		opcode_size_(0), rex_byte_(0), rex_size_(0), private_buffer_(false) {
@@ -717,6 +717,10 @@ Instruction<M>::Instruction(const uint8_t *buf, std::size_t size, address_t rva,
 	} catch(const instruction_too_big &) {
 		//throw;
 	} catch(const invalid_operand &) {
+		//throw;
+	} catch(const too_many_operands &) {
+		//throw;
+	} catch(const multiple_displacements &) {
 		//throw;
 	} catch(const invalid_instruction &) {
 		//throw;
@@ -728,7 +732,7 @@ Instruction<M>::Instruction(const uint8_t *buf, std::size_t size, address_t rva,
 //------------------------------------------------------------------------------
 template <class M>
 Instruction<M>::Instruction(const uint8_t *buf, std::size_t size, address_t rva)
-		: rva_(rva), buffer_(buf), buffer_size_(size), opcode_(0),
+		: rva_(rva), buffer_(buf), buffer_size_(size), opcode_(&Opcode_invalid),
 		prefix_(0), mandatory_prefix_(0), operand_count_(0), modrm_size_(0),
 		sib_size_(0), disp_size_(0), prefix_size_(0), immediate_size_(0),
 		opcode_size_(0), rex_byte_(0), rex_size_(0), private_buffer_(false) {
@@ -751,8 +755,6 @@ Instruction<M>::~Instruction() {
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::initialize(const uint8_t *buf, std::size_t n) {
-
-	opcode_ = &Opcode_invalid;
 
 	for(int i = 0; i < M::MAX_OPERANDS; ++i) {
 		operands_[i].invalidate();
