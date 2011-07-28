@@ -57,7 +57,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group1[32] =
 	{ "and", &Instruction::decode_Ev_Ib, OP_AND, FLAG_NONE, 2 },
 	{ "sub", &Instruction::decode_Ev_Ib, OP_SUB, FLAG_NONE, 2 },
 	{ "xor", &Instruction::decode_Ev_Ib, OP_XOR, FLAG_NONE, 2 },
-	{ "cmp", &Instruction::decode_Ev_Ib, OP_CMP, FLAG_NONE, 2 }
+	{ "cmp", &Instruction::decode_Ev_Ib, OP_CMP, FLAG_NONE, 2 },
 };
 
 #endif

@@ -30,7 +30,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group9[8] = 
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "vmptrld", &Instruction::decode_Mq, OP_VMPTRLD, FLAG_NONE, 1 },
-	{ "vmptrst", &Instruction::decode_Mq, OP_VMPTRST, FLAG_NONE, 1 }
+	{ "vmptrst", &Instruction::decode_Mq, OP_VMPTRST, FLAG_NONE, 1 },
 };
 
 template <class M>
@@ -42,7 +42,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group9_66[8]
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "vmclear", &Instruction::decode_Mq, OP_VMCLEAR, FLAG_NONE, 1 },
-	{ "vmptrst", &Instruction::decode_Mq, OP_VMPTRST, FLAG_NONE, 1 }
+	{ "vmptrst", &Instruction::decode_Mq, OP_VMPTRST, FLAG_NONE, 1 },
 };
 
 template <class M>
@@ -54,7 +54,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group9_F3[8]
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "vmxon", &Instruction::decode_Mq, OP_VMXON, FLAG_NONE, 1 },
-	{ "vmptrst", &Instruction::decode_Mq, OP_VMPTRST, FLAG_NONE, 1 }
+	{ "vmptrst", &Instruction::decode_Mq, OP_VMPTRST, FLAG_NONE, 1 },
 };
 
 #endif

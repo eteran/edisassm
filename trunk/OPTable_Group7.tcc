@@ -105,7 +105,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group7A[64] 
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 };
 
 

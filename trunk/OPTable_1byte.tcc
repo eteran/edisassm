@@ -310,7 +310,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "cld", &Instruction::decode0, OP_CLD, FLAG_NONE, 0 },
 	{ "std", &Instruction::decode0, OP_STD, FLAG_NONE, 0 },
 	{ "group4", &Instruction::decode_group4, OP_GROUP4, FLAG_NONE, -1 },
-	{ "group5", &Instruction::decode_group5, OP_GROUP5, FLAG_NONE, -1 }
+	{ "group5", &Instruction::decode_group5, OP_GROUP5, FLAG_NONE, -1 },
 };
 
 #endif
