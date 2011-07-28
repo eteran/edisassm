@@ -1807,9 +1807,9 @@ void Instruction<M>::decode_BH(const uint8_t *buf) {
 template <class M>
 void Instruction<M>::decode_rAX_NOREX(const uint8_t *buf) {
 	switch(operand_size()) {;
-	case 16: decode_Reg<operand_t::REG_AX>(buf); break;
+	case 16: decode_Reg<operand_t::REG_AX>(buf);  break;
 	case 32: decode_Reg<operand_t::REG_EAX>(buf); break;
-	case 64: decode_Reg<operand_t::REG_RAX>(buf);  break;
+	case 64: decode_Reg<operand_t::REG_RAX>(buf); break;
 	}
 }
 
