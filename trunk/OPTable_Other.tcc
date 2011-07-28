@@ -23,7 +23,6 @@ template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcode_invalid =
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 };
 
-
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_nop_pause_xchg[3] = {
 	{ "nop",	&Instruction::decode0, OP_NOP, FLAG_NONE, 0 },
@@ -116,7 +115,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_outsw_outsd_
 };
 
 template <class M>
-const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_cmpsw_cmpsd_invalid[3] = {
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_cmpsw_cmpsd_cmpsq[3] = {
 	{ "cmpsw",  &Instruction::decode0, OP_CMPS, FLAG_NONE, 0 },
 	{ "cmpsd",  &Instruction::decode0, OP_CMPS, FLAG_NONE, 0 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },

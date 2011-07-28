@@ -108,7 +108,10 @@ public:
 		FLAG_TEST_FLAGS     = 0x00000001,
 		FLAG_WRITES_FLAGS   = 0x00000002,
 		FLAG_MODIFIES_STACK = 0x00000004,
-		FLAG_RING0          = 0x00000008
+		FLAG_RING0          = 0x00000008,
+		FLAG_UNDOCUMENTED   = 0x00000010,
+		FLAG_AMD            = 0x00000020,
+		FLAG_INTEL          = 0x00000040,
 	};
 
 	enum Prefix {
@@ -682,6 +685,20 @@ public:
 		OP_FYL2XP1,
 		OP_FYLSX,
 		OP_WAIT,
+		
+		// AMD extensions
+		OP_VMRUN,
+		OP_VMMCALL,
+		OP_VMLOAD,
+		OP_VMSAVE,
+		OP_STGI,
+		OP_CLGI,
+		OP_SKINIT,
+		OP_INVLPGA,
+		OP_RDTSCP,
+		
+		// undocumented
+		OP_SALC,
 
 		// these aren't really valid, should never been seen in any external API
 		OP_GROUP1,
@@ -769,7 +786,7 @@ private:
 
 
 	// no 64-bit variant
-	void decode_cmpsw_cmpsd_invalid(const uint8_t *buf);
+	void decode_cmpsw_cmpsd_cmpsq(const uint8_t *buf);
 	void decode_outsw_outsd_invalid(const uint8_t *buf);
 	void decode_insw_insd_invalid(const uint8_t *buf);
 	void decode_pushaw_pushad_invalid(const uint8_t *buf);
@@ -1313,7 +1330,7 @@ private:
 	static const opcode_entry Opcodes_invalid_cmpxchg8b_cmpxchg16b[3];
 	static const opcode_entry Opcodes_insw_insd_invalid[3];
 	static const opcode_entry Opcodes_outsw_outsd_invalid[3];
-	static const opcode_entry Opcodes_cmpsw_cmpsd_invalid[3];
+	static const opcode_entry Opcodes_cmpsw_cmpsd_cmpsq[3];
 	static const opcode_entry Opcodes_pushaw_pushad_invalid[3];
 	static const opcode_entry Opcodes_popaw_popad_invalid[3];
 

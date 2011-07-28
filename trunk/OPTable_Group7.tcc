@@ -62,14 +62,14 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group7A[64] 
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
+	{ "vmrun", &Instruction::decode0, OP_VMRUN, FLAG_AMD, 0 },
+	{ "vmmcall", &Instruction::decode0, OP_VMMCALL, FLAG_AMD, 0 },
+	{ "vmload", &Instruction::decode0, OP_VMLOAD, FLAG_AMD, 0 },
+	{ "vmsave", &Instruction::decode0, OP_VMSAVE, FLAG_AMD, 0 },
+	{ "stgi", &Instruction::decode0, OP_STGI, FLAG_AMD, 0 },
+	{ "clgi", &Instruction::decode0, OP_CLGI, FLAG_AMD, 0 },
+	{ "skinit", &Instruction::decode0, OP_SKINIT, FLAG_AMD, 0 },
+	{ "invlpga", &Instruction::decode0, OP_INVLPGA, FLAG_AMD, 0 },
 
 	{ "smsw", &Instruction::decode_Rv_Mw, OP_SMSW, FLAG_NONE, 2 },
 	{ "smsw", &Instruction::decode_Rv_Mw, OP_SMSW, FLAG_NONE, 2 },
@@ -99,7 +99,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group7A[64] 
 	{ "lmsw", &Instruction::decode_Ew, OP_LMSW, FLAG_NONE, 1 },
 
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },	// x86-64: swapgs
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
+	{ "rdtscp", &Instruction::decode0, OP_RDTSCP, FLAG_AMD, 0 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
