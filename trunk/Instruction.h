@@ -25,6 +25,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "edisassm_types.h"
 #include "edisassm_string.h"
 #include <cstddef>
+#include "ModRM.h"
+#include "SIB.h"
 
 #ifdef QT_CORE_LIB
 #include <QtGlobal>
@@ -806,6 +808,10 @@ private:
 	void decode_3byte_3A(const uint8_t *buf);
 
 private:
+	ModRM get_modrm(const uint8_t *buf);
+	
+	SIB get_sib(const uint8_t *buf);
+
 	template <typename operand_t::Register REG>
 	void decode_Reg(const uint8_t *buf);
 
