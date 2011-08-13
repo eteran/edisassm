@@ -91,14 +91,6 @@ public:
 public:
 	void swap(Instruction &other);
 
-public:
-	// NOTE: not functional yet!
-	static void assemble(std::string instruction);
-
-private:
-	template <class T, int N>
-	static void find_opcode(const std::string &opcode, T (&table)[N], int opcode_count);
-
 private:
 	void initialize(const uint8_t *buf, std::size_t size);
 
