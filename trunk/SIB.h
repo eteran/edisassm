@@ -41,7 +41,6 @@ public:
 	uint8_t base() const  { return value_ & 0x07; }
 	uint8_t index() const { return (value_ >> 3) & 0x07; }
 	uint8_t scale() const { return (value_ >> 6) & 0x03; }
-
 };
 
 #endif

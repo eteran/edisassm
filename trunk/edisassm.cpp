@@ -114,8 +114,4 @@ int main(int argc, char *argv[]) {
 		std::cerr << "could not open the file: " << filename << std::endl;
 		return -1;
 	}
-
-#if 0
-	Instruction<edisassm::x86>::assemble("lock inc byte ptr[0x10], eax");
-#endif
 }
