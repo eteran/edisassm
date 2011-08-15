@@ -893,7 +893,15 @@ private:
 
 	// special cases for things like SMSW Rv/Mw
 	template <decoder_t F1, decoder_t F2>
-	void decode_Reg_Mem(const uint8_t *buf);
+	void decode_Reg_Mem(const uint8_t *buf) {
+		const ModRM rm = get_modrm(buf);
+
+		if(rm.mod() == 0x03) {
+			(this->*F1)(buf);
+		} else {
+			(this->*F2)(buf);
+		}
+	}
 
 	void decode_Rv_Mw(const uint8_t *buf) { decode_Reg_Mem<&instruction_t::decode_Rv, &instruction_t::decode_Mw>(buf); }
 	void decode_Rq_Mw(const uint8_t *buf) { decode_Reg_Mem<&instruction_t::decode_Rq, &instruction_t::decode_Mw>(buf); }
