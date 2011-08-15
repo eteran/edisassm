@@ -27,6 +27,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <cstddef>
 #include "ModRM.h"
 #include "SIB.h"
+#include "Operand.h"
+#include "REX.h"
 
 #ifdef QT_CORE_LIB
 #include <QtGlobal>
@@ -58,11 +60,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }
 #endif
-
-#include "Operand.h"
-#include "REX.h"
-
-class ModRM;
 
 template <class M>
 class EDB_EXPORT Instruction {
