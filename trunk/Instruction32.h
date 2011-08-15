@@ -713,14 +713,19 @@ Instruction<M>::Instruction(const uint8_t *buf, std::size_t size, address_t rva,
 	try {
 		initialize(buf, size);
 	} catch(const instruction_too_big &) {
+		opcode_ = &Opcode_invalid;
 		//throw;
 	} catch(const invalid_operand &) {
+		opcode_ = &Opcode_invalid;
 		//throw;
 	} catch(const too_many_operands &) {
+		opcode_ = &Opcode_invalid;
 		//throw;
 	} catch(const multiple_displacements &) {
+		opcode_ = &Opcode_invalid;
 		//throw;
 	} catch(const invalid_instruction &) {
+		opcode_ = &Opcode_invalid;
 		//throw;
 	}
 }
@@ -760,8 +765,10 @@ void Instruction<M>::initialize(const uint8_t *buf, std::size_t n) {
 
 	process_prefixes(buf, n);
 
+
 	// is there any space left for the opcode/operands?
 	bounds_check(size() + 1);
+	
 
 	// find the entry in the table
 	opcode_      = &Opcodes[*buf];
