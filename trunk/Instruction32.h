@@ -2018,21 +2018,5 @@ std::string Instruction<M>::format_prefix() const {
 	return ret;
 }
 
-//------------------------------------------------------------------------------
-// Name: decode_Reg_Mem(const uint8_t *buf)
-//------------------------------------------------------------------------------
-template <class M>
-template <void (Instruction<M>::*F1)(const uint8_t *), void (Instruction<M>::*F2)(const uint8_t *)>
-void Instruction<M>::decode_Reg_Mem(const uint8_t *buf) {
-
-	const ModRM rm = get_modrm(buf);
-
-	if(rm.mod() == 0x03) {
-		(this->*F1)(buf);
-	} else {
-		(this->*F2)(buf);
-	}
-}
-
 #endif
 
