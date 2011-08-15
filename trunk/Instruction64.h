@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define INSTRUCTION64_20070427_TCC_
 
 template <>
-const typename Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>::Opcodes_cmpsw_cmpsd_cmpsq[3] = {
+const Instruction<edisassm::x86_64>::opcode_entry Instruction<edisassm::x86_64>::Opcodes_cmpsw_cmpsd_cmpsq[3] = {
 	{ "cmpsw",  &Instruction::decode0, OP_CMPS, FLAG_NONE, 0 },
 	{ "cmpsd",  &Instruction::decode0, OP_CMPS, FLAG_NONE, 0 },
 	{ "cmpsq",  &Instruction::decode0, OP_CMPS, FLAG_AMD, 0 }, // x86: invalid
