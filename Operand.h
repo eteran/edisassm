@@ -19,10 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef OPERAND_20070521_H_
 #define OPERAND_20070521_H_
 
-#include <string>
 #include "edisassm_types.h"
-#include "edisassm_util.h"
-#include "edisassm_exception.h"
 #include "edisassm_string.h"
 
 template <class M>
@@ -30,7 +27,6 @@ class Instruction;
 
 template <class M>
 class Operand;
-
 
 template <class M>
 class Operand {
@@ -45,9 +41,6 @@ private:
 	typedef Operand<M>            operand_t;
 	typedef typename M::address_t address_t;
 	typedef Instruction<M>        instruction_t;
-
-private:
-	instruction_t *owner_;
 
 public:
 	enum Register {
@@ -135,9 +128,6 @@ public:
 		TYPE_MASK          = 0xffffff00
 	};
 
-private:
-	Type type_;
-
 public:
 	enum DisplacementType {
 		DISP_NONE,
@@ -171,20 +161,6 @@ public:
 		uint8_t          scale;
 	};
 
-	union U {
-		int8_t       sbyte;
-		int16_t      sword;
-		int32_t      sdword;
-		int64_t      sqword;
-		uint8_t      byte;
-		uint16_t     word;
-		uint32_t     dword;
-		uint64_t     qword;
-		Register     reg;
-		absolute_t   absolute;
-		expression_t expression;
-	} u;
-
 public:
 	int8_t sbyte() const   { return u.sbyte; }
 	int16_t sword() const  { return u.sword; }
@@ -199,32 +175,39 @@ public:
 	const absolute_t absolute() const     { return u.absolute; }
 	const expression_t expression() const { return u.expression; }
 
-private:
-	std::string format_immediate(bool upper) const;
-	std::string format_relative(bool upper) const;
-	std::string format_expression(bool upper) const;
-	std::string format_absolute(bool upper) const;
-	std::string format_register(bool upper) const;
-
-	template <class T>
-	static std::string hex_string(T value, bool upper);
-
 public:
 	Type complete_type() const           { return type_; }
 	Type general_type() const;
-	address_t relative_target() const;
-	bool valid() const                   { return type_ != TYPE_INVALID; }
 	instruction_t *owner() const         { return owner_; }
+	bool valid() const                   { return type_ != TYPE_INVALID; }
+	void swap(Operand &other);
+	
+public:
+	address_t relative_target() const;
 	int32_t displacement() const;
 	int64_t immediate() const;
-	void swap(Operand &other);
-
+	
 private:
 	void invalidate()                    { type_ = TYPE_INVALID; }
 	void set_owner(instruction_t *owner) { owner_ = owner; }
 
-public:
-	static std::string register_name(Register reg);
+private:
+	instruction_t *owner_;
+	Type           type_;
+
+	union U {
+		int8_t       sbyte;
+		int16_t      sword;
+		int32_t      sdword;
+		int64_t      sqword;
+		uint8_t      byte;
+		uint16_t     word;
+		uint32_t     dword;
+		uint64_t     qword;
+		Register     reg;
+		absolute_t   absolute;
+		expression_t expression;
+	} u;
 
 private:
 	template<class U>

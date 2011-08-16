@@ -59,19 +59,19 @@ void Instruction<M>::decode_Gx(const uint8_t *buf) {
 
 	const ModRM rm = get_modrm(buf);
 
-	int regindex = rm.reg();
+	int reg_index = rm.reg();
 	if(BITS == 64 && rex_byte_.is_rex()) {
-		regindex |= (rex_byte_.r() << 3);
+		reg_index |= (rex_byte_.r() << 3);
 
 		if(REG_DECODE == &index_to_reg_8) {
-			if(regindex > 3 && regindex < 8) {
-				regindex += 12;
+			if(reg_index > 3 && reg_index < 8) {
+				reg_index += 12;
 			}
 		}
 	}
 
 	operand_t &operand = next_operand();
-	operand.u.reg      = (*REG_DECODE)(regindex);
+	operand.u.reg      = (*REG_DECODE)(reg_index);
 	operand.type_      = operand_t::TYPE_REGISTER;
 }
 
@@ -336,7 +336,7 @@ ModRM Instruction<M>::get_modrm(const uint8_t *buf) {
 
 
 //------------------------------------------------------------------------------
-// Name: get_modrm(const uint8_t *buf)
+// Name: get_sib(const uint8_t *buf)
 //------------------------------------------------------------------------------
 template <class M>
 SIB Instruction<M>::get_sib(const uint8_t *buf) {
@@ -373,7 +373,7 @@ T Instruction<M>::get_displacement(const uint8_t *buf) {
 
 	// there should only every be one displacement value!
 	if(disp_size_ != 0) {
-		throw multiple_displacements(size());
+		throw edisassm::multiple_displacements(size());
 	}
 
 	const T ret = *reinterpret_cast<const T *>(&buf[opcode_size_ + modrm_size_ + sib_size_ + disp_size_]);
@@ -395,18 +395,18 @@ void Instruction<M>::decode_ModRM_0_32(const uint8_t *buf, const ModRM &rm, oper
 	if(rm.rm() == 0x04) {
 		const SIB sib = get_sib(buf);
 
-		int sibindex = sib.index();
+		int sib_index = sib.index();
 
 		if(BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
-			sibindex |= (rex_byte_.x() << 3);
+			sib_index |= (rex_byte_.x() << 3);
 		}
 
-		if(sibindex != 0x04) {
+		if(sib_index != 0x04) {
 
 			if(BITS == 64 && enable_64_bit) {
-				operand.u.expression.index = index_to_reg_64(sibindex);
+				operand.u.expression.index = index_to_reg_64(sib_index);
 			} else {
-				operand.u.expression.index = index_to_reg_32(sibindex);
+				operand.u.expression.index = index_to_reg_32(sib_index);
 			}
 
 
@@ -499,17 +499,17 @@ void Instruction<M>::decode_ModRM_1_32(const uint8_t *buf, const ModRM &rm, oper
 		}
 		operand.u.expression.scale = 1 << sib.scale();
 
-		int sibindex = sib.index();
+		int sib_index = sib.index();
 
 		if(BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
-			sibindex |= (rex_byte_.x() << 3);
+			sib_index |= (rex_byte_.x() << 3);
 		}
 
-		if(sibindex != 0x04) {
+		if(sib_index != 0x04) {
 			if(BITS == 64 && enable_64_bit) {
-				operand.u.expression.index = index_to_reg_64(sibindex);
+				operand.u.expression.index = index_to_reg_64(sib_index);
 			} else {
-				operand.u.expression.index = index_to_reg_32(sibindex);
+				operand.u.expression.index = index_to_reg_32(sib_index);
 			}
 		} else {
 			operand.u.expression.index = operand_t::REG_NULL;
@@ -563,17 +563,17 @@ void Instruction<M>::decode_ModRM_2_32(const uint8_t *buf, const ModRM &rm, oper
 
 		operand.u.expression.scale = 1 << sib.scale();
 
-		int sibindex = sib.index();
+		int sib_index = sib.index();
 
 		if(BITS == 64 && rex_byte_.is_rex() && enable_64_bit) {
-			sibindex |= (rex_byte_.x() << 3);
+			sib_index |= (rex_byte_.x() << 3);
 		}
 
-		if(sibindex != 0x04) {
+		if(sib_index != 0x04) {
 			if(BITS == 64 && enable_64_bit) {
-				operand.u.expression.index = index_to_reg_64(sibindex);
+				operand.u.expression.index = index_to_reg_64(sib_index);
 			} else {
-				operand.u.expression.index = index_to_reg_32(sibindex);
+				operand.u.expression.index = index_to_reg_32(sib_index);
 			}
 
 		} else {
@@ -597,7 +597,7 @@ void Instruction<M>::decode_ModRM_2_32(const uint8_t *buf, const ModRM &rm, oper
 
 	}
 
-	operand.type_                        = TYPE;
+	operand.type_                          = TYPE;
 	operand.u.expression.s_disp32          = get_displacement<int32_t>(buf);
 	operand.u.expression.displacement_type = operand_t::DISP_S32;
 }
@@ -635,7 +635,7 @@ void Instruction<M>::decode_ModRM_Invalid(const uint8_t *buf, const ModRM &rm, o
 	UNUSED(rm);
 	UNUSED(operand);
 	UNUSED(buf);
-	throw invalid_operand(size());
+	throw edisassm::invalid_operand(size());
 }
 
 //------------------------------------------------------------------------------
@@ -712,19 +712,7 @@ Instruction<M>::Instruction(const uint8_t *buf, std::size_t size, address_t rva,
 
 	try {
 		initialize(buf, size);
-	} catch(const instruction_too_big &) {
-		opcode_ = &Opcode_invalid;
-		//throw;
-	} catch(const invalid_operand &) {
-		opcode_ = &Opcode_invalid;
-		//throw;
-	} catch(const too_many_operands &) {
-		opcode_ = &Opcode_invalid;
-		//throw;
-	} catch(const multiple_displacements &) {
-		opcode_ = &Opcode_invalid;
-		//throw;
-	} catch(const invalid_instruction &) {
+	} catch(const edisassm::invalid_instruction &) {
 		opcode_ = &Opcode_invalid;
 		//throw;
 	}
@@ -946,7 +934,7 @@ template <class M>
 typename Instruction<M>::operand_t &Instruction<M>::next_operand() {
 
 	if(operand_count_ >= MAX_OPERANDS) {
-		throw too_many_operands(size());
+		throw edisassm::too_many_operands(size());
 	}
 
 	operand_t &ret = operands_[operand_count_++];
@@ -960,7 +948,7 @@ typename Instruction<M>::operand_t &Instruction<M>::next_operand() {
 template <class M>
 void Instruction<M>::decode_invalid(const uint8_t *buf) {
 	UNUSED(buf);
-	throw invalid_instruction(Instruction<M>::size());
+	throw edisassm::invalid_instruction(Instruction<M>::size());
 }
 
 template <class M> void Instruction<M>::decode_cbw_cwde_cdqe(const uint8_t *buf)                { decode_size_sensitive(buf, Opcodes_cbw_cwde_cdqe); }
@@ -1573,7 +1561,7 @@ void Instruction<M>::decode_Ov(const uint8_t *buf) {
 	switch(operand_size()) {
 	case 16: decode_Ow(buf); break;
 	case 32: decode_Od(buf); break;
-	case 64: throw invalid_instruction(size()); break;
+	case 64: throw edisassm::invalid_instruction(size()); break;
 	}
 }
 

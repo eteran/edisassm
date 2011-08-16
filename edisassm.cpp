@@ -42,9 +42,7 @@ void disassemble(const uint8_t *start_ptr, const uint8_t *end_ptr, typename Inst
 		if(instruction) {
 			std::cout << std::hex << (rva + (ptr - start_ptr)) << ": ";
 			if(flags & FLAG_SHOW_BYTES) {
-				for(unsigned int i = 0; i < instruction.size(); ++i) {
-					std::cout << std::hex << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(ptr[i]) << " " << std::dec;;
-				}
+				std::cout << edisassm::to_byte_string(instruction) << " ";
 			}
 			std::cout << edisassm::to_string(instruction) << '\n';
 			ptr += instruction.size();
