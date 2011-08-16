@@ -198,7 +198,7 @@ std::string format_expression(const Operand<M> &operand, bool upper) {
 	};
 
 	std::ostringstream ss;
-	ss << util::toupper_copy(expression_strings[operand.general_type() - Operand<M>::TYPE_EXPRESSION], upper);
+	ss << util::toupper_copy(expression_strings[operand.complete_type() - Operand<M>::TYPE_EXPRESSION], upper);
 
 	const uint32_t prefix = operand.owner()->prefix();
 
@@ -209,7 +209,6 @@ std::string format_expression(const Operand<M> &operand, bool upper) {
 	else if(prefix & instruction_t::PREFIX_FS) ss << util::toupper_copy("fs:", upper);
 	else if(prefix & instruction_t::PREFIX_GS) ss << util::toupper_copy("gs:", upper);
 	
-
 	bool only_disp = true;
 
 	ss << '[';
