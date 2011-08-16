@@ -49,75 +49,6 @@ std::string hex_string(T value, bool upper) {
 }
 
 //------------------------------------------------------------------------------
-// Name: register_name(typename Operand<M>::Register reg)
-// Desc: returns a string for a given register
-//------------------------------------------------------------------------------
-template <class M>
-std::string register_name(typename Operand<M>::Register reg) {
-
-	static const char *names[] = {
-		"",
-
-		"rax",	"rcx",	"rdx",	"rbx",
-		"rsp",	"rbp",	"rsi",	"rdi",
-		"r8",	"r9",	"r10",	"r11",
-		"r12",	"r13",	"r14",	"r15",
-
-		"eax",	"ecx",	"edx",	"ebx",
-		"esp",	"ebp",	"esi",	"edi",
-		"r8d",	"r9d",	"r10d",	"r11d",
-		"r12d",	"r13d",	"r14d",	"r15d",
-
-		"ax",	"cx",	"dx",	"bx",
-		"sp",	"bp",	"si",	"di",
-		"r8w",	"r9w",	"r10w",	"r11w",
-		"r12w",	"r13w",	"r14w",	"r15w",
-
-		"al",	"cl",	"dl",	"bl",
-		"ah",	"ch",	"dh",	"bh",
-		"r8b",	"r9b",	"r10b",	"r11b",
-		"r12b",	"r13b",	"r14b",	"r15b",
-		"spl",	"bpl",	"sil",	"dil",
-
-		"es",	"cs",	"ss",	"ds",
-		"fs",	"gs",	"seg7",	"seg8",
-
-		"cr0",	"cr1",	"cr2",	"cr3",
-		"cr4",	"cr5",	"cr6",	"cr7",
-		"cr8",	"cr9",	"cr10",	"cr11",
-		"cr12",	"cr13",	"cr14",	"cr15",
-
-		"dr0",	"dr1",	"dr2",	"dr3",
-		"dr4",	"dr5",	"dr6",	"dr7",
-		"dr8",	"dr9",	"dr10",	"dr11",
-		"dr12",	"dr13",	"dr14",	"dr15",
-
-		"tr0",	"tr1",	"tr2",	"tr3",
-		"tr4",	"tr5",	"tr6",	"tr7",
-
-		"mm0",	"mm1",	"mm2",	"mm3",
-		"mm4",	"mm5",	"mm6",	"mm7",
-
-		"xmm0",	"xmm1",	"xmm2",	"xmm3",
-		"xmm4",	"xmm5",	"xmm6",	"xmm7",
-		"xmm8",	"xmm9",	"xmm10","xmm11",
-		"xmm12","xmm13","xmm14","xmm15",
-
-		"st",
-		"st(0)", "st(1)", "st(2)", "st(3)",
-		"st(4)", "st(5)", "st(6)", "st(7)",
-
-		"rip",
-		"eip",
-
-		"(invalid)"
-	};
-
-	assert(reg < sizeof(names) / sizeof(names[0]));
-	return names[reg];
-}
-
-//------------------------------------------------------------------------------
 // Name: format_register(const Operand<M> &operand, bool upper)
 // Desc: returns a register type operand as a string
 //------------------------------------------------------------------------------
@@ -351,6 +282,75 @@ std::string format_expression(const Operand<M> &operand, bool upper) {
 
 	return ss.str();
 }
+}
+
+//------------------------------------------------------------------------------
+// Name: register_name(typename Operand<M>::Register reg)
+// Desc: returns a string for a given register
+//------------------------------------------------------------------------------
+template <class M>
+std::string register_name(typename Operand<M>::Register reg) {
+
+	static const char *names[] = {
+		"",
+
+		"rax",	"rcx",	"rdx",	"rbx",
+		"rsp",	"rbp",	"rsi",	"rdi",
+		"r8",	"r9",	"r10",	"r11",
+		"r12",	"r13",	"r14",	"r15",
+
+		"eax",	"ecx",	"edx",	"ebx",
+		"esp",	"ebp",	"esi",	"edi",
+		"r8d",	"r9d",	"r10d",	"r11d",
+		"r12d",	"r13d",	"r14d",	"r15d",
+
+		"ax",	"cx",	"dx",	"bx",
+		"sp",	"bp",	"si",	"di",
+		"r8w",	"r9w",	"r10w",	"r11w",
+		"r12w",	"r13w",	"r14w",	"r15w",
+
+		"al",	"cl",	"dl",	"bl",
+		"ah",	"ch",	"dh",	"bh",
+		"r8b",	"r9b",	"r10b",	"r11b",
+		"r12b",	"r13b",	"r14b",	"r15b",
+		"spl",	"bpl",	"sil",	"dil",
+
+		"es",	"cs",	"ss",	"ds",
+		"fs",	"gs",	"seg7",	"seg8",
+
+		"cr0",	"cr1",	"cr2",	"cr3",
+		"cr4",	"cr5",	"cr6",	"cr7",
+		"cr8",	"cr9",	"cr10",	"cr11",
+		"cr12",	"cr13",	"cr14",	"cr15",
+
+		"dr0",	"dr1",	"dr2",	"dr3",
+		"dr4",	"dr5",	"dr6",	"dr7",
+		"dr8",	"dr9",	"dr10",	"dr11",
+		"dr12",	"dr13",	"dr14",	"dr15",
+
+		"tr0",	"tr1",	"tr2",	"tr3",
+		"tr4",	"tr5",	"tr6",	"tr7",
+
+		"mm0",	"mm1",	"mm2",	"mm3",
+		"mm4",	"mm5",	"mm6",	"mm7",
+
+		"xmm0",	"xmm1",	"xmm2",	"xmm3",
+		"xmm4",	"xmm5",	"xmm6",	"xmm7",
+		"xmm8",	"xmm9",	"xmm10","xmm11",
+		"xmm12","xmm13","xmm14","xmm15",
+
+		"st",
+		"st(0)", "st(1)", "st(2)", "st(3)",
+		"st(4)", "st(5)", "st(6)", "st(7)",
+
+		"rip",
+		"eip",
+
+		"(invalid)"
+	};
+
+	assert(reg < sizeof(names) / sizeof(names[0]));
+	return names[reg];
 }
 
 //------------------------------------------------------------------------------
