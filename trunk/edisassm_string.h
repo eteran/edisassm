@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define EDISASSM_STRING_20110422_H_
 
 #include <string>
-#include <sstream>
 
 template <class M>
 class Instruction;
@@ -30,63 +29,87 @@ class Operand;
 
 namespace edisassm {
 
+	struct syntax_intel {};
+	//struct syntax_att   {};
+	
+	//------------------------------------------------------------------------------
+	// Name: to_string(const Instruction<M> &insn, bool upper, const syntax_intel &)
+	// Desc: creates a std::string which represents the given instruction
+	//------------------------------------------------------------------------------
+	template <class M>
+	std::string to_string(const Instruction<M> &insn, bool upper, const syntax_intel &);
+	
+	//------------------------------------------------------------------------------
+	// Name: to_string(const Operand<M> &operand, bool upper, const syntax_intel &)
+	// Desc: creates a std::string which represents the given operand
+	//------------------------------------------------------------------------------
+	template<class M>
+	std::string to_string(const Operand<M> &operand, bool upper, const syntax_intel &);
 
-//------------------------------------------------------------------------------
-// Name: to_string(const Operand<M> &operand)
-// Desc: creates a std::string which represents the given operand
-//------------------------------------------------------------------------------
-template<class M>
-std::string to_string(const Operand<M> &operand) {
-	return to_string(operand, false);
-}
+	//------------------------------------------------------------------------------
+	// Name: to_string(const Instruction<M> &insn, const syntax_intel &)
+	// Desc: creates a std::string which represents the given instruction
+	//------------------------------------------------------------------------------
+	template <class M>
+	std::string to_string(const Instruction<M> &insn, const syntax_intel &);
 
-//------------------------------------------------------------------------------
-// Name: to_string(const Operand<M> &operand, bool upper)
-// Desc: creates a std::string which represents the given operand
-//------------------------------------------------------------------------------
-template<class M>
-std::string to_string(const Operand<M> &operand, bool upper) {
-
-	switch(operand.general_type()) {
-	case Operand<M>::TYPE_REGISTER:   return operand.format_register(upper);
-	case Operand<M>::TYPE_IMMEDIATE:  return operand.format_immediate(upper);
-	case Operand<M>::TYPE_REL:        return operand.format_relative(upper);
-	case Operand<M>::TYPE_EXPRESSION: return operand.format_expression(upper);
-	case Operand<M>::TYPE_ABSOLUTE:   return operand.format_absolute(upper);
-	default:
-		return upper ? "(INVALID)" : "(invalid)";
-		// is it better to throw, or return a string?
-		//throw invalid_operand(owner_->size());
-	}
-}
-
-//------------------------------------------------------------------------------
-// Name: to_string(const Instruction<M> &insn, bool upper = false)
-// Desc: creates a std::string which represents the given instruction
-//------------------------------------------------------------------------------
-template <class M>
-std::string to_string(const Instruction<M> &insn, bool upper = false) {
-	std::ostringstream ss;
-
-	if(upper) {
-		ss << edisassm::util::toupper_copy(insn.format_prefix());
-		ss << edisassm::util::toupper_copy(insn.mnemonic());
-	} else {
-		ss << insn.format_prefix();
-		ss << insn.mnemonic();
+	//------------------------------------------------------------------------------
+	// Name: to_string(const Operand<M> &operand, const syntax_intel &)
+	// Desc: creates a std::string which represents the given operand
+	//------------------------------------------------------------------------------
+	template<class M>
+	std::string to_string(const Operand<M> &operand, const syntax_intel &);
+	
+	//------------------------------------------------------------------------------
+	// Name: to_string(const Instruction<M> &insn)
+	// Desc: creates a std::string which represents the given instruction
+	//------------------------------------------------------------------------------
+	template <class M>
+	std::string to_string(const Instruction<M> &insn) {
+		return to_string(insn, syntax_intel());
 	}
 
-	const std::size_t count = insn.operand_count();
-	if(count != 0) {
-		ss << ' ' << to_string(insn.operand(0), upper);
-		for(std::size_t i = 1; i < count; ++i) {
-			ss << ", " << to_string(insn.operand(i), upper);
-		}
+	//------------------------------------------------------------------------------
+	// Name: to_string(const Operand<M> &operand)
+	// Desc: creates a std::string which represents the given operand
+	//------------------------------------------------------------------------------
+	template<class M>
+	std::string to_string(const Operand<M> &operand) {
+		return to_string(operand, syntax_intel());
+	}
+	
+	//------------------------------------------------------------------------------
+	// Name: to_string(const Instruction<M> &insn, bool upper)
+	// Desc: creates a std::string which represents the given instruction
+	//------------------------------------------------------------------------------
+	template <class M>
+	std::string to_string(const Instruction<M> &insn, bool upper) {
+		return to_string(insn, upper, syntax_intel());
 	}
 
-	return ss.str();
+	//------------------------------------------------------------------------------
+	// Name: to_string(const Operand<M> &operand, bool upper)
+	// Desc: creates a std::string which represents the given operand
+	//------------------------------------------------------------------------------
+	template<class M>
+	std::string to_string(const Operand<M> &operand, bool upper) {
+		return to_string(operand, upper, syntax_intel());
+	}
+	
+	//------------------------------------------------------------------------------
+	// Name: to_byte_string(const Instruction<M> &insn, bool upper)
+	// Desc: creates a std::string which represents the given instruction
+	//------------------------------------------------------------------------------
+	template <class M>
+	std::string to_byte_string(const Instruction<M> &insn, bool upper);
+	
+	//------------------------------------------------------------------------------
+	// Name: to_byte_string(const Instruction<M> &insn)
+	// Desc: creates a std::string which represents the given instruction
+	//------------------------------------------------------------------------------
+	template <class M>
+	std::string to_byte_string(const Instruction<M> &insn);
 }
 
-}
-
+#include "edisassm_string.tcc"
 #endif

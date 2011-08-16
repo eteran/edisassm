@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "edisassm_model.h"
 #include "edisassm_types.h"
 #include "edisassm_string.h"
+#include "edisassm_ops.h"
 #include <cstddef>
 #include "ModRM.h"
 #include "SIB.h"
@@ -746,7 +747,7 @@ private:
 	// tests if the new size is allowed
 	void bounds_check(std::size_t new_size) {
 		if(new_size > buffer_size_) {
-			throw instruction_too_big(instruction_t::size());
+			throw edisassm::instruction_too_big(instruction_t::size());
 		}
 	}
 
@@ -910,31 +911,31 @@ private:
 
 	// TODO: throw an error if any of these return REG_INVALID
 	// ModRM Memory Only
-	void decode_Mo(const uint8_t *buf)   { decode_Ex<operand_t::TYPE_EXPRESSION128, &Instruction<M>::indexToRegInvalid>(buf); }
-	void decode_M(const uint8_t *buf)    { decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<M>::indexToRegInvalid>(buf); }
-	void decode_Ms(const uint8_t *buf)   { decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<M>::indexToRegInvalid>(buf); }
-	void decode_M108(const uint8_t *buf) { decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<M>::indexToRegInvalid>(buf); }  // Note this can be 108 or 98, but we just say "expression"
-	void decode_M512(const uint8_t *buf) { decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<M>::indexToRegInvalid>(buf); }  // Note this can be 512 or 256, but we just say "expression"
-	void decode_M28(const uint8_t *buf)  { decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<M>::indexToRegInvalid>(buf); }  // Note this can be 28 or 14, but we just say "expression"
-	void decode_Mw(const uint8_t *buf)   { decode_Ex<operand_t::TYPE_EXPRESSION16, &Instruction<M>::indexToRegInvalid>(buf); }
+	void decode_Mo(const uint8_t *buf)   { decode_Ex<operand_t::TYPE_EXPRESSION128, &Instruction<M>::index_to_reg_invalid>(buf); }
+	void decode_M(const uint8_t *buf)    { decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<M>::index_to_reg_invalid>(buf); }
+	void decode_Ms(const uint8_t *buf)   { decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<M>::index_to_reg_invalid>(buf); }
+	void decode_M108(const uint8_t *buf) { decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<M>::index_to_reg_invalid>(buf); }  // Note this can be 108 or 98, but we just say "expression"
+	void decode_M512(const uint8_t *buf) { decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<M>::index_to_reg_invalid>(buf); }  // Note this can be 512 or 256, but we just say "expression"
+	void decode_M28(const uint8_t *buf)  { decode_Ex<operand_t::TYPE_EXPRESSION, &Instruction<M>::index_to_reg_invalid>(buf); }  // Note this can be 28 or 14, but we just say "expression"
+	void decode_Mw(const uint8_t *buf)   { decode_Ex<operand_t::TYPE_EXPRESSION16, &Instruction<M>::index_to_reg_invalid>(buf); }
 	void decode_Mp(const uint8_t *buf)   { decode_Ep(buf);}
-	void decode_Mdq(const uint8_t *buf)  { decode_Ex<operand_t::TYPE_EXPRESSION128, &Instruction<M>::indexToRegInvalid>(buf); }
-	void decode_Mq(const uint8_t *buf)   { decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<M>::indexToRegInvalid>(buf); }
-	void decode_Md(const uint8_t *buf)   { decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::indexToRegInvalid>(buf); }
-	void decode_Mb(const uint8_t *buf)   { decode_Ex<operand_t::TYPE_EXPRESSION8, &Instruction<M>::indexToRegInvalid>(buf); }
-	void decode_Ma(const uint8_t *buf)   { if(prefix_ & PREFIX_OPERAND) { decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::indexToRegInvalid>(buf); } else { decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<M>::indexToRegInvalid>(buf); } }
+	void decode_Mdq(const uint8_t *buf)  { decode_Ex<operand_t::TYPE_EXPRESSION128, &Instruction<M>::index_to_reg_invalid>(buf); }
+	void decode_Mq(const uint8_t *buf)   { decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<M>::index_to_reg_invalid>(buf); }
+	void decode_Md(const uint8_t *buf)   { decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::index_to_reg_invalid>(buf); }
+	void decode_Mb(const uint8_t *buf)   { decode_Ex<operand_t::TYPE_EXPRESSION8, &Instruction<M>::index_to_reg_invalid>(buf); }
+	void decode_Ma(const uint8_t *buf)   { if(prefix_ & PREFIX_OPERAND) { decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::index_to_reg_invalid>(buf); } else { decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<M>::index_to_reg_invalid>(buf); } }
 	void decode_Mv(const uint8_t *buf);
-	void decode_Ep(const uint8_t *buf)   { if(prefix_ & PREFIX_OPERAND) { decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::indexToRegInvalid>(buf); } else { decode_Ex<operand_t::TYPE_EXPRESSION48, &Instruction<M>::indexToRegInvalid>(buf); } }
+	void decode_Ep(const uint8_t *buf)   { if(prefix_ & PREFIX_OPERAND) { decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::index_to_reg_invalid>(buf); } else { decode_Ex<operand_t::TYPE_EXPRESSION48, &Instruction<M>::index_to_reg_invalid>(buf); } }
 
 
 	// FPU memory only
-	void decode_WordInteger(const uint8_t *buf)  { decode_Ex<operand_t::TYPE_EXPRESSION16, &Instruction<M>::indexToRegInvalid>(buf); }
-	void decode_SingleReal(const uint8_t *buf)   { decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::indexToRegInvalid>(buf); }
-	void decode_ShortInteger(const uint8_t *buf) { decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::indexToRegInvalid>(buf); }
-	void decode_DoubleReal(const uint8_t *buf)   { decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<M>::indexToRegInvalid>(buf); }
-	void decode_LongInteger(const uint8_t *buf)  { decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<M>::indexToRegInvalid>(buf); }
-	void decode_ExtendedReal(const uint8_t *buf) { decode_Ex<operand_t::TYPE_EXPRESSION80, &Instruction<M>::indexToRegInvalid>(buf); }
-	void decode_PackedBCD(const uint8_t *buf)    { decode_Ex<operand_t::TYPE_EXPRESSION80, &Instruction<M>::indexToRegInvalid>(buf); }
+	void decode_WordInteger(const uint8_t *buf)  { decode_Ex<operand_t::TYPE_EXPRESSION16, &Instruction<M>::index_to_reg_invalid>(buf); }
+	void decode_SingleReal(const uint8_t *buf)   { decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::index_to_reg_invalid>(buf); }
+	void decode_ShortInteger(const uint8_t *buf) { decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction<M>::index_to_reg_invalid>(buf); }
+	void decode_DoubleReal(const uint8_t *buf)   { decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<M>::index_to_reg_invalid>(buf); }
+	void decode_LongInteger(const uint8_t *buf)  { decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction<M>::index_to_reg_invalid>(buf); }
+	void decode_ExtendedReal(const uint8_t *buf) { decode_Ex<operand_t::TYPE_EXPRESSION80, &Instruction<M>::index_to_reg_invalid>(buf); }
+	void decode_PackedBCD(const uint8_t *buf)    { decode_Ex<operand_t::TYPE_EXPRESSION80, &Instruction<M>::index_to_reg_invalid>(buf); }
 
 	// ModRM selects a register only (mod must be 0x3)
 	// TODO: throw an error if any of these return TYPE_INVALID
@@ -1227,7 +1228,7 @@ private:
 	void decode_Ev_Gv_Reg(const uint8_t *buf) { decode3<&instruction_t::decode_Ev, &instruction_t::decode_Gv, &instruction_t::template decode_Reg<REG> >(buf); }
 
 private:
-	static typename operand_t::Register indexToRegInvalid(uint8_t)       { return operand_t::REG_INVALID; }
+	static typename operand_t::Register index_to_reg_invalid(uint8_t)    { return operand_t::REG_INVALID; }
 	static typename operand_t::Register index_to_reg_8(uint8_t index)    { return static_cast<typename operand_t::Register>(operand_t::REG_AL + index); }
 	static typename operand_t::Register index_to_reg_16(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_AX + index); }
 	static typename operand_t::Register index_to_reg_32(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_EAX + index); }
@@ -1355,88 +1356,4 @@ private:
 	bool                private_buffer_;
 };
 
-//------------------------------------------------------------------------------
-// Name: operator==(const Instruction<M> &lhs, const Instruction<M> &rhs)
-//------------------------------------------------------------------------------
-template <class M>
-bool operator==(const Instruction<M> &lhs, const Instruction<M> &rhs) {
-	// invalid ops match nothing
-	if(!lhs.valid() || !rhs.valid()) {
-		return false;
-	}
-
-	// do the types match?
-	if(lhs.type() != rhs.type()) {
-		return false;
-	}
-
-	const unsigned int lhs_operand_count = lhs.operand_count();
-	const unsigned int rhs_operand_count = rhs.operand_count();
-
-	// do the number of operands match?
-	if(lhs_operand_count != rhs_operand_count) {
-		return false;
-	}
-
-	// compare the type and value of each operand
-	for(unsigned int i = 0; i < lhs_operand_count; ++i) {
-
-		const typename Instruction<M>::operand_t &lhs_operand = lhs.operand(i);
-		const typename Instruction<M>::operand_t &rhs_operand = rhs.operand(i);
-
-		typename Instruction<M>::operand_t::Type lhs_operand_type = lhs_operand.general_type();
-		typename Instruction<M>::operand_t::Type rhs_operand_type = rhs_operand.general_type();
-
-		if(lhs_operand_type != rhs_operand_type) {
-			return false;
-		}
-
-		// TODO: support generics
-		switch(lhs_operand_type) {
-		case Operand<M>::TYPE_REGISTER:
-			if(lhs_operand.reg != rhs_operand.reg) {
-				return false;
-			}
-			break;
-		case Operand<M>::TYPE_IMMEDIATE:
-			if(lhs_operand.immediate() != rhs_operand.immediate()) {
-				return false;
-			}
-			break;
-		case Operand<M>::TYPE_REL:
-			if(lhs_operand.relative_target() != rhs_operand.relative_target()) {
-				return false;
-			}
-			break;
-		case Operand<M>::TYPE_ABSOLUTE:
-			if(lhs_operand.absolute.offset != rhs_operand.absolute.offset) {
-				return false;
-			}
-
-			if(lhs_operand.absolute.seg != rhs_operand.absolute.seg) {
-				return false;
-			}
-			break;
-		default:
-		case Operand<M>::TYPE_EXPRESSION:
-			// TODO: do this way more efficiently...
-			if(lhs_operand.format() != rhs_operand.format()) {
-				return false;
-			}
-			break;
-		}
-	}
-
-	return true;
-}
-
-//------------------------------------------------------------------------------
-// Name: operator!=(const Instruction<M> &lhs, const Instruction<M> &rhs)
-//------------------------------------------------------------------------------
-template <class M>
-bool operator!=(const Instruction<M> &lhs, const Instruction<M> &rhs) {
-	return !(lhs == rhs);
-}
-
 #endif
-
