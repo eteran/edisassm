@@ -1983,35 +1983,5 @@ int Instruction<M>::operand_size() const {
 	return ret;
 }
 
-//------------------------------------------------------------------------------
-// Name: format_prefix() const
-//------------------------------------------------------------------------------
-template <class M>
-std::string Instruction<M>::format_prefix() const {
-	std::string ret;
-
-	if((prefix_ & PREFIX_LOCK) && !(mandatory_prefix_ & PREFIX_LOCK)) {
-		// TODO: this is only legal for the memory dest versions of:
-		// ADD, ADC, AND, BTC, BTR, BTS, CMPXCHG, CMPXCH8B, (CMPXCH16B?)
-		// DEC, INC, NEG, NOT, OR, SBB, SUB, XOR, XADD, XCHG
-		ret = "lock ";
-
-	} else if((prefix_ & PREFIX_REP) && !(mandatory_prefix_ & PREFIX_REP)) {
-		if(type() == OP_CMPS || type() == OP_SCAS) {
-			ret = "repe ";
-		} else {
-			// TODO: this is only legal for:
-			// INS, OUTS, MOVS, LODS and STOS
-			ret = "rep ";
-		}
-	} else if((prefix_ & PREFIX_REPNE) && !(mandatory_prefix_ & PREFIX_REPNE)) {
-		// TODO: this is only legal for:
-		// CMPS and SCAS
-		ret = "repne ";
-	}
-
-	return ret;
-}
-
 #endif
 

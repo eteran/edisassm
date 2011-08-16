@@ -1252,9 +1252,9 @@ public:
 	const operand_t &operand(std::size_t index) const { return operands_[index]; }
 	const uint8_t *buffer() const                     { return buffer_; }
 	operator void *() const                           { return reinterpret_cast<void *>(valid()); }
-	std::string format_prefix() const;
 	std::string mnemonic() const                      { return opcode_->mnemonic; }
 	uint32_t prefix() const                           { return prefix_; }
+	uint32_t mandatory_prefix() const                 { return mandatory_prefix_; }
 	unsigned int operand_count() const                { return operand_count_; }
 	unsigned int prefix_size() const                  { return prefix_size_; }
 	unsigned int size() const                         { return prefix_size_ + rex_size_ + opcode_size_ + modrm_size_ + sib_size_ + disp_size_ + immediate_size_; }

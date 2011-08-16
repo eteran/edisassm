@@ -64,6 +64,36 @@ std::string format_register(const Operand<M> &operand, bool upper) {
 }
 
 //------------------------------------------------------------------------------
+// Name: format_prefix(const Instruction<M> &insn)
+//------------------------------------------------------------------------------
+template <class M>
+std::string format_prefix(const Instruction<M> &insn) {
+	std::string ret;
+
+	if((insn.prefix() & Instruction<M>::PREFIX_LOCK) && !(insn.mandatory_prefix() & Instruction<M>::PREFIX_LOCK)) {
+		// TODO: this is only legal for the memory dest versions of:
+		// ADD, ADC, AND, BTC, BTR, BTS, CMPXCHG, CMPXCH8B, (CMPXCH16B?)
+		// DEC, INC, NEG, NOT, OR, SBB, SUB, XOR, XADD, XCHG
+		ret = "lock ";
+
+	} else if((insn.prefix() & Instruction<M>::PREFIX_REP) && !(insn.mandatory_prefix() & Instruction<M>::PREFIX_REP)) {
+		if(insn.type() == Instruction<M>::OP_CMPS || insn.type() == Instruction<M>::OP_SCAS) {
+			ret = "repe ";
+		} else {
+			// TODO: this is only legal for:
+			// INS, OUTS, MOVS, LODS and STOS
+			ret = "rep ";
+		}
+	} else if((insn.prefix() & Instruction<M>::PREFIX_REPNE) && !(insn.mandatory_prefix() & Instruction<M>::PREFIX_REPNE)) {
+		// TODO: this is only legal for:
+		// CMPS and SCAS
+		ret = "repne ";
+	}
+
+	return ret;
+}
+
+//------------------------------------------------------------------------------
 // Name: 
 // Desc: 
 //------------------------------------------------------------------------------
@@ -370,7 +400,7 @@ template <class M>
 std::string to_string(const Instruction<M> &insn, const syntax_intel &) {
 	std::ostringstream ss;
 
-	ss << insn.format_prefix();
+	ss << format_prefix(insn);
 	ss << insn.mnemonic();
 
 	const std::size_t count = insn.operand_count();
@@ -413,10 +443,10 @@ std::string to_string(const Instruction<M> &insn, bool upper, const syntax_intel
 	std::ostringstream ss;
 
 	if(upper) {
-		ss << util::toupper_copy(insn.format_prefix());
+		ss << util::toupper_copy(format_prefix(insn));
 		ss << util::toupper_copy(insn.mnemonic());
 	} else {
-		ss << insn.format_prefix();
+		ss << format_prefix(insn);
 		ss << insn.mnemonic();
 	}
 
