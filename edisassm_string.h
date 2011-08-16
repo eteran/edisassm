@@ -109,6 +109,13 @@ namespace edisassm {
 	//------------------------------------------------------------------------------
 	template <class M>
 	std::string to_byte_string(const Instruction<M> &insn);
+	
+	//------------------------------------------------------------------------------
+	// Name: register_name(typename Operand<M>::Register reg)
+	// Desc: creates a std::string which represents the given register
+	//------------------------------------------------------------------------------
+	template <class M>
+	std::string register_name(typename Operand<M>::Register reg);
 }
 
 #include "edisassm_string.tcc"
