@@ -33,13 +33,6 @@ namespace edisassm {
 			return s;
 		}
 
-		inline std::string toupper_copy(std::string s, bool convert) {
-			if(convert) {
-				std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper));
-			}
-			return s;
-		}
-
 		inline std::string &toupper(std::string &s) {
 			std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper));
 			return s;
