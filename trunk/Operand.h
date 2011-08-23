@@ -208,10 +208,6 @@ private:
 		absolute_t   absolute;
 		expression_t expression;
 	} u;
-
-private:
-	template<class U>
-	friend std::string edisassm::to_string(const Operand<U> &operand, bool upper);
 };
 
 #include "Operand.tcc"
