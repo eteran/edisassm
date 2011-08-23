@@ -1241,10 +1241,6 @@ private:
 	static typename operand_t::Register index_to_reg_dr(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_DR0 + index); }
 	static typename operand_t::Register index_to_reg_tr(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_TR0 + index); }
 
-private:
-	std::string format() const;
-	std::string format(bool upper) const;
-
 public:
 	Type type() const                                 { return opcode_->type; }
 	address_t rva() const                             { return rva_; }
