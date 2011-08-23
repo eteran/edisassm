@@ -66,7 +66,7 @@ namespace edisassm {
 	//------------------------------------------------------------------------------
 	template <class M>
 	std::string to_string(const Instruction<M> &insn) {
-		return to_string(insn, syntax_intel_lcase());
+		return to_string(insn, syntax_intel());
 	}
 
 	//------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ namespace edisassm {
 	//------------------------------------------------------------------------------
 	template<class M>
 	std::string to_string(const Operand<M> &operand) {
-		return to_string(operand, syntax_intel_lcase());
+		return to_string(operand, syntax_intel());
 	}
 
 	//------------------------------------------------------------------------------
