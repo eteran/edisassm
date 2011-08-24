@@ -39,8 +39,7 @@ std::string hex_string(T value, const upper_case&) {
 
 	std::ostringstream ss;
 	ss << "0x";
-	ss << std::uppercase;
-	ss << std::hex << std::setw(sizeof(T) * 2) << std::setfill('0') << static_cast<typename M::address_t>(value);
+	ss << std::uppercase << std::hex << std::setw(sizeof(T) * 2) << std::setfill('0') << static_cast<typename M::address_t>(value);
 	return ss.str();
 }
 
@@ -63,13 +62,13 @@ std::string hex_string(T value, const lower_case&) {
 // Name: 
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_absolute(const Operand<M> &operand, const upper_case&) {
+std::string format_absolute(const Operand<M> &operand, const upper_case &format) {
 	std::ostringstream ss;
 
 	ss << "FAR "
-	   << hex_string<M>(operand.absolute().seg, upper_case())
+	   << hex_string<M>(operand.absolute().seg, format)
 	   << ':'
-	   << hex_string<M>(operand.absolute().offset, upper_case());
+	   << hex_string<M>(operand.absolute().offset, format);
 
 	return ss.str();
 }
@@ -78,13 +77,13 @@ std::string format_absolute(const Operand<M> &operand, const upper_case&) {
 // Name: 
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_absolute(const Operand<M> &operand, const lower_case&) {
+std::string format_absolute(const Operand<M> &operand, const lower_case &format) {
 	std::ostringstream ss;
 
 	ss << "far "
-	   << hex_string<M>(operand.absolute().seg, lower_case())
+	   << hex_string<M>(operand.absolute().seg, format)
 	   << ':'
-	   << hex_string<M>(operand.absolute().offset, lower_case());
+	   << hex_string<M>(operand.absolute().offset, format);
 
 	return ss.str();
 }
@@ -97,7 +96,6 @@ template <class M, class T>
 std::string format_register(const Operand<M> &operand, const T &format) {
 	return register_name<M>(operand.reg(), format);
 }
-
 
 //------------------------------------------------------------------------------
 // Name: 
@@ -167,26 +165,29 @@ std::string format_immediate(const Operand<M> &operand, const T &format) {
 	return ss.str();
 }
 
-
 //------------------------------------------------------------------------------
-// Name: format_prefix(const Instruction<M> &insn)
+// Name: format_prefix(const Instruction<M> &insn, const lower_case &)
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_prefix(const Instruction<M> &insn) {
+std::string format_prefix(const Instruction<M> &insn, const lower_case &) {
 	std::string ret;
 
 	if((insn.prefix() & Instruction<M>::PREFIX_LOCK) && !(insn.mandatory_prefix() & Instruction<M>::PREFIX_LOCK)) {
+		
 		// TODO: this is only legal for the memory dest versions of:
 		// ADD, ADC, AND, BTC, BTR, BTS, CMPXCHG, CMPXCH8B, (CMPXCH16B?)
 		// DEC, INC, NEG, NOT, OR, SBB, SUB, XOR, XADD, XCHG
+		
 		ret = "lock ";
 
 	} else if((insn.prefix() & Instruction<M>::PREFIX_REP) && !(insn.mandatory_prefix() & Instruction<M>::PREFIX_REP)) {
 		if(insn.type() == Instruction<M>::OP_CMPS || insn.type() == Instruction<M>::OP_SCAS) {
 			ret = "repe ";
 		} else {
+			
 			// TODO: this is only legal for:
 			// INS, OUTS, MOVS, LODS and STOS
+			
 			ret = "rep ";
 		}
 	} else if((insn.prefix() & Instruction<M>::PREFIX_REPNE) && !(insn.mandatory_prefix() & Instruction<M>::PREFIX_REPNE)) {
@@ -198,15 +199,45 @@ std::string format_prefix(const Instruction<M> &insn) {
 	return ret;
 }
 
+//------------------------------------------------------------------------------
+// Name: format_prefix(const Instruction<M> &insn, const upper_case &)
+//------------------------------------------------------------------------------
+template <class M>
+std::string format_prefix(const Instruction<M> &insn, const upper_case &) {
+	std::string ret;
 
+	if((insn.prefix() & Instruction<M>::PREFIX_LOCK) && !(insn.mandatory_prefix() & Instruction<M>::PREFIX_LOCK)) {
+		
+		// TODO: this is only legal for the memory dest versions of:
+		// ADD, ADC, AND, BTC, BTR, BTS, CMPXCHG, CMPXCH8B, (CMPXCH16B?)
+		// DEC, INC, NEG, NOT, OR, SBB, SUB, XOR, XADD, XCHG
+		
+		ret = "LOCK ";
 
+	} else if((insn.prefix() & Instruction<M>::PREFIX_REP) && !(insn.mandatory_prefix() & Instruction<M>::PREFIX_REP)) {
+		if(insn.type() == Instruction<M>::OP_CMPS || insn.type() == Instruction<M>::OP_SCAS) {
+			ret = "REPE ";
+		} else {
+			
+			// TODO: this is only legal for:
+			// INS, OUTS, MOVS, LODS and STOS
+			
+			ret = "REP ";
+		}
+	} else if((insn.prefix() & Instruction<M>::PREFIX_REPNE) && !(insn.mandatory_prefix() & Instruction<M>::PREFIX_REPNE)) {
+		// TODO: this is only legal for:
+		// CMPS and SCAS
+		ret = "REPNE ";
+	}
 
+	return ret;
+}
 
 //------------------------------------------------------------------------------
 // Name: 
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_expression(const Operand<M> &operand, const upper_case&) {
+std::string format_expression(const Operand<M> &operand, const upper_case &format) {
 
 	typedef Instruction<M> instruction_t;
 
@@ -239,7 +270,7 @@ std::string format_expression(const Operand<M> &operand, const upper_case&) {
 
 	// the base, if any
 	if(operand.expression().base != Operand<M>::REG_NULL) {
-		ss << register_name<M>(operand.expression().base, upper_case());
+		ss << register_name<M>(operand.expression().base, format);
 		only_disp = false;
 	}
 
@@ -248,7 +279,7 @@ std::string format_expression(const Operand<M> &operand, const upper_case&) {
 		if(!only_disp) {
 			ss << '+';
 		}
-		ss << register_name<M>(operand.expression().index, upper_case());
+		ss << register_name<M>(operand.expression().index, format);
 		only_disp = false;
 
 		// the scale, if any
@@ -266,7 +297,7 @@ std::string format_expression(const Operand<M> &operand, const upper_case&) {
 			if(!only_disp) {
 				ss << '+';
 			}
-			ss << hex_string<M>(operand.expression().u_disp32, upper_case());
+			ss << hex_string<M>(operand.expression().u_disp32, format);
 			break;
 		}
 		// FALL THROUGH
@@ -277,7 +308,7 @@ std::string format_expression(const Operand<M> &operand, const upper_case&) {
 			if(!only_disp) {
 				ss << '+';
 			}
-			ss << hex_string<M>(operand.expression().u_disp16, upper_case());
+			ss << hex_string<M>(operand.expression().u_disp16, format);
 			break;
 		}
 		// FALL THROUGH
@@ -286,7 +317,7 @@ std::string format_expression(const Operand<M> &operand, const upper_case&) {
 			if(!only_disp) {
 				ss << '+';
 			}
-			ss << hex_string<M>(operand.expression().u_disp8, upper_case());
+			ss << hex_string<M>(operand.expression().u_disp8, format);
 		}
 		break;
 
@@ -296,10 +327,10 @@ std::string format_expression(const Operand<M> &operand, const upper_case&) {
 		} else {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string<M>(operand.expression().s_disp32, upper_case());
+				ss << hex_string<M>(operand.expression().s_disp32, format);
 			} else {
 				ss << '+';
-				ss << hex_string<M>(operand.expression().s_disp32, upper_case());
+				ss << hex_string<M>(operand.expression().s_disp32, format);
 			}
 			break;
 		}
@@ -310,7 +341,7 @@ std::string format_expression(const Operand<M> &operand, const upper_case&) {
 		} else {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string<M>(operand.expression().s_disp16, upper_case());
+				ss << hex_string<M>(operand.expression().s_disp16, format);
 			} else {
 				ss << std::showpos << static_cast<int32_t>(operand.expression().s_disp16);
 			}
@@ -321,7 +352,7 @@ std::string format_expression(const Operand<M> &operand, const upper_case&) {
 		if(operand.expression().s_disp8 != 0 || only_disp) {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string<M>(operand.expression().s_disp8, upper_case());
+				ss << hex_string<M>(operand.expression().s_disp8, format);
 			} else {
 				ss << std::showpos << static_cast<int32_t>(operand.expression().s_disp8);
 			}
@@ -341,7 +372,7 @@ std::string format_expression(const Operand<M> &operand, const upper_case&) {
 // Name: 
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_expression(const Operand<M> &operand, const lower_case&) {
+std::string format_expression(const Operand<M> &operand, const lower_case &format) {
 
 	typedef Instruction<M> instruction_t;
 
@@ -374,7 +405,7 @@ std::string format_expression(const Operand<M> &operand, const lower_case&) {
 
 	// the base, if any
 	if(operand.expression().base != Operand<M>::REG_NULL) {
-		ss << register_name<M>(operand.expression().base, lower_case());
+		ss << register_name<M>(operand.expression().base, format);
 		only_disp = false;
 	}
 
@@ -383,7 +414,7 @@ std::string format_expression(const Operand<M> &operand, const lower_case&) {
 		if(!only_disp) {
 			ss << '+';
 		}
-		ss << register_name<M>(operand.expression().index, lower_case());
+		ss << register_name<M>(operand.expression().index, format);
 		only_disp = false;
 
 		// the scale, if any
@@ -401,7 +432,7 @@ std::string format_expression(const Operand<M> &operand, const lower_case&) {
 			if(!only_disp) {
 				ss << '+';
 			}
-			ss << hex_string<M>(operand.expression().u_disp32, lower_case());
+			ss << hex_string<M>(operand.expression().u_disp32, format);
 			break;
 		}
 		// FALL THROUGH
@@ -412,7 +443,7 @@ std::string format_expression(const Operand<M> &operand, const lower_case&) {
 			if(!only_disp) {
 				ss << '+';
 			}
-			ss << hex_string<M>(operand.expression().u_disp16, lower_case());
+			ss << hex_string<M>(operand.expression().u_disp16, format);
 			break;
 		}
 		// FALL THROUGH
@@ -421,7 +452,7 @@ std::string format_expression(const Operand<M> &operand, const lower_case&) {
 			if(!only_disp) {
 				ss << '+';
 			}
-			ss << hex_string<M>(operand.expression().u_disp8, lower_case());
+			ss << hex_string<M>(operand.expression().u_disp8, format);
 		}
 		break;
 
@@ -431,10 +462,10 @@ std::string format_expression(const Operand<M> &operand, const lower_case&) {
 		} else {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string<M>(operand.expression().s_disp32, lower_case());
+				ss << hex_string<M>(operand.expression().s_disp32, format);
 			} else {
 				ss << '+';
-				ss << hex_string<M>(operand.expression().s_disp32, lower_case());
+				ss << hex_string<M>(operand.expression().s_disp32, format);
 			}
 			break;
 		}
@@ -445,7 +476,7 @@ std::string format_expression(const Operand<M> &operand, const lower_case&) {
 		} else {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string<M>(operand.expression().s_disp16, lower_case());
+				ss << hex_string<M>(operand.expression().s_disp16, format);
 			} else {
 				ss << std::showpos << static_cast<int32_t>(operand.expression().s_disp16);
 			}
@@ -456,7 +487,7 @@ std::string format_expression(const Operand<M> &operand, const lower_case&) {
 		if(operand.expression().s_disp8 != 0 || only_disp) {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string<M>(operand.expression().s_disp8, lower_case());
+				ss << hex_string<M>(operand.expression().s_disp8, format);
 			} else {
 				ss << std::showpos << static_cast<int32_t>(operand.expression().s_disp8);
 			}
@@ -641,7 +672,7 @@ std::string to_string(const Instruction<M> &insn, const syntax_intel_lcase &synt
 
 	std::ostringstream ss;
 
-	ss << format_prefix(insn);
+	ss << format_prefix(insn, syntax);
 	ss << insn.mnemonic();
 
 	const std::size_t count = insn.operand_count();
@@ -664,7 +695,7 @@ std::string to_string(const Instruction<M> &insn, const syntax_intel_ucase &synt
 	
 	std::ostringstream ss;
 
-	ss << util::toupper_copy(format_prefix(insn));
+	ss << format_prefix(insn, syntax);
 	ss << util::toupper_copy(insn.mnemonic());
 
 	const std::size_t count = insn.operand_count();
