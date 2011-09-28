@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef EDISASSM_TYPES_20080215_H_
 #define EDISASSM_TYPES_20080215_H_
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && _MSC_VER < 1600
   typedef unsigned __int8  uint8_t;
   typedef unsigned __int16 uint16_t;
   typedef unsigned __int32 uint32_t;
