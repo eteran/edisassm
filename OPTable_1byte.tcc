@@ -133,8 +133,8 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "pop", &Instruction::decode_rDI, OP_POP, FLAG_NONE, 1 },
 
 	/* 0x60 - 0x6f */
-	{ "pushaw/pushad", &Instruction::decode_pushaw_pushad_invalid, OP_PUSHA, FLAG_NONE, 3 }, // ia-32 only
-	{ "popaw/popad", &Instruction::decode_popaw_popad_invalid, OP_POPA, FLAG_NONE, 3 }, // ia-32 only
+	{ "pushaw/pushad", &Instruction::decode_pushaw_pushad_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
+	{ "popaw/popad", &Instruction::decode_popaw_popad_invalid, OP_INVALID, FLAG_NONE, -1 }, // ia-32 only
 	{ "bound", &Instruction::decode_Gv_Ma, OP_BOUND, FLAG_NONE, 2 }, // ia-32 only
 	{ "arpl", &Instruction::decode_Ew_Gw, OP_ARPL, FLAG_NONE, 2 }, // x86-64: movsxd Gv,Ev
 	{ "prefix fs", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE, -1 },
@@ -146,9 +146,9 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "push", &Instruction::decode_Ib, OP_PUSH, FLAG_NONE, 1 },
 	{ "imul", &Instruction::decode_Gv_Ev_Ib, OP_IMUL, FLAG_NONE, 3 },
 	{ "insb", &Instruction::decode0, OP_INS, FLAG_NONE, 0 },
-	{ "insw/insd", &Instruction::decode_insw_insd_invalid, OP_INS, FLAG_NONE, 3 },
+	{ "insw/insd", &Instruction::decode_insw_insd_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "outsb", &Instruction::decode0, OP_OUTS, FLAG_NONE, 0 },
-	{ "outsw/outsd", &Instruction::decode_outsw_outsd_invalid, OP_OUTS, FLAG_NONE, 3 },
+	{ "outsw/outsd", &Instruction::decode_outsw_outsd_invalid, OP_INVALID, FLAG_NONE, -1 },
 
 	/* 0x70 - 0x7f */
 	{ "jo", &Instruction::decode_Jb, OP_JCC, FLAG_NONE, 1 },
@@ -195,12 +195,12 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "xchg", &Instruction::decode_rBP_rAX_NOREX, OP_XCHG, FLAG_NONE, 3 },
 	{ "xchg", &Instruction::decode_rSI_rAX_NOREX, OP_XCHG, FLAG_NONE, 3 },
 	{ "xchg", &Instruction::decode_rDI_rAX_NOREX, OP_XCHG, FLAG_NONE, 3 },
-	{ "cbw/cwde/cdqe", &Instruction::decode_cbw_cwde_cdqe, OP_CWDE, FLAG_NONE, 3 },
-	{ "cwd/cdq/cqo", &Instruction::decode_cwd_cdq_cqo, OP_CDQ, FLAG_NONE, 3 },
+	{ "cbw/cwde/cdqe", &Instruction::decode_cbw_cwde_cdqe, OP_INVALID, FLAG_NONE, -1 },
+	{ "cwd/cdq/cqo", &Instruction::decode_cwd_cdq_cqo, OP_INVALID, FLAG_NONE, -1 },
 	{ "callf", &Instruction::decode_Ap, OP_CALL, FLAG_NONE, 1 }, // ia-32 only
-	{ "wait", &Instruction::decode0, OP_WAIT, FLAG_NONE, 0 },
-	{ "pushfw/pushfd/pushfq", &Instruction::decode_pushfw_pushfd_pushfq, OP_PUSHF, FLAG_NONE, 3 },
-	{ "popfw/popfd/popfq", &Instruction::decode_popfw_popfd_popfq, OP_POPF, FLAG_NONE, 3 },
+	{ "wait/feni/fdisi/finit/fclex", &Instruction::wait_feni_fdisi_finit_fclex, OP_INVALID, FLAG_NONE, -1 },
+	{ "pushfw/pushfd/pushfq", &Instruction::decode_pushfw_pushfd_pushfq, OP_INVALID, FLAG_NONE, -1 },
+	{ "popfw/popfd/popfq", &Instruction::decode_popfw_popfd_popfq, OP_INVALID, FLAG_NONE, -1 },
 	{ "sahf", &Instruction::decode0, OP_SAHF, FLAG_NONE, 0 },
 	{ "lahf", &Instruction::decode0, OP_LAHF, FLAG_NONE, 0 },
 
@@ -210,17 +210,17 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "mov", &Instruction::decode_Ob_AL, OP_MOV, FLAG_NONE, 2 },
 	{ "mov", &Instruction::decode_Ov_rAX, OP_MOV, FLAG_NONE, 2 },
 	{ "movsb", &Instruction::decode0, OP_MOVS, FLAG_NONE, 0 },
-	{ "movsw/movsd/movsq", &Instruction::decode_movsw_movsd_movsq, OP_MOVS, FLAG_NONE, 3 },
+	{ "movsw/movsd/movsq", &Instruction::decode_movsw_movsd_movsq, OP_INVALID, FLAG_NONE, -1 },
 	{ "cmpsb", &Instruction::decode0, OP_CMPS, FLAG_NONE, 0 },
-	{ "cmpsw/cmpsd/cmpsq", &Instruction::decode_cmpsw_cmpsd_cmpsq, OP_CMPS, FLAG_NONE, 3 },
+	{ "cmpsw/cmpsd/cmpsq", &Instruction::decode_cmpsw_cmpsd_cmpsq, OP_INVALID, FLAG_NONE, -1 },
 	{ "test", &Instruction::decode_AL_Ib, OP_TEST, FLAG_NONE, 2 },
 	{ "test", &Instruction::decode_rAX_Iz, OP_TEST, FLAG_NONE, 2 },
 	{ "stosb", &Instruction::decode0, OP_STOS, FLAG_NONE, 0 },
-	{ "stosw/stosd/stosq", &Instruction::decode_stosw_stosd_stosq, OP_STOS, FLAG_NONE, 3 },
+	{ "stosw/stosd/stosq", &Instruction::decode_stosw_stosd_stosq, OP_INVALID, FLAG_NONE, -1 },
 	{ "lodsb", &Instruction::decode0, OP_LODS, FLAG_NONE, 0 },
-	{ "lodsw/lodsd/lodsq", &Instruction::decode_lodsw_lodsd_lodsq, OP_LODS, FLAG_NONE, 3 },
+	{ "lodsw/lodsd/lodsq", &Instruction::decode_lodsw_lodsd_lodsq, OP_INVALID, FLAG_NONE, -1 },
 	{ "scasb", &Instruction::decode0, OP_SCAS, FLAG_NONE, 0 },
-	{ "scasw/scasd/scasq", &Instruction::decode_scasw_scasd_scasq, OP_SCAS, FLAG_NONE, 3 },
+	{ "scasw/scasd/scasq", &Instruction::decode_scasw_scasd_scasq, OP_INVALID, FLAG_NONE, -1 },
 
 	/* 0xb0 - 0xbf */
 	{ "mov", &Instruction::decode_AL_Ib, OP_MOV, FLAG_NONE, 2 },
@@ -256,7 +256,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "int3", &Instruction::decode0, OP_INT3, FLAG_NONE, 0 },
 	{ "int", &Instruction::decode_Ib, OP_INT, FLAG_NONE, 1 },
 	{ "into", &Instruction::decode0, OP_INTO, FLAG_NONE, 0 }, // ia-32 only
-	{ "iretw/iret/iretq", &Instruction::decode_iretw_iret_iretq, OP_IRET, FLAG_NONE, 3 },
+	{ "iretw/iret/iretq", &Instruction::decode_iretw_iret_iretq, OP_INVALID, FLAG_NONE, -1 },
 
 	/* 0xd0 - 0xdf */
 	{ "group2", &Instruction::decode_group2D, OP_GROUP2, FLAG_NONE, -1 },

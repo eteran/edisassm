@@ -610,10 +610,12 @@ public:
 		OP_FCOMPP,
 		OP_FCOS,
 		OP_FDECSTP,
+		OP_FDISI,
 		OP_FDIV,
 		OP_FDIVP,
 		OP_FDIVR,
 		OP_FDIVRP,
+		OP_FENI,
 		OP_FFREE,
 		OP_FIADD,
 		OP_FICOM,
@@ -640,12 +642,15 @@ public:
 		OP_FLDZ,
 		OP_FMUL,
 		OP_FMULP,
+		OP_FNCLEX,
+		OP_FNDISI,
+		OP_FNENI,
+		OP_FNINIT,
 		OP_FNOP,
 		OP_FPATAN,
 		OP_FPREM,
 		OP_FPREM1,
 		OP_FPTAN,
-		OP_FPXTRACT,
 		OP_FRNDINT,
 		OP_FRSTOR,
 		OP_FSAVE,
@@ -672,10 +677,11 @@ public:
 		OP_FXCH,
 		OP_FXRSTOR,
 		OP_FXSAVE,
+		OP_FXTRACT,
+		OP_FYL2X,
 		OP_FYL2XP1,
-		OP_FYLSX,
 		OP_WAIT,
-		
+
 		// AMD extensions
 		OP_VMRUN,
 		OP_VMMCALL,
@@ -760,6 +766,9 @@ private:
 		}
 		(this->*(opcode_->decoder))(buf);
 	}
+	
+	// special FPU variants..
+	void wait_feni_fdisi_finit_fclex(const uint8_t *buf);
 
 	// special cased names
 	void decode_cwd_cdq_cqo(const uint8_t *buf);
