@@ -967,6 +967,54 @@ template <class M> void Instruction<M>::decode_cmpsw_cmpsd_cmpsq(const uint8_t *
 template <class M> void Instruction<M>::decode_pushaw_pushad_invalid(const uint8_t *buf)        { decode_size_sensitive(buf, Opcodes_pushaw_pushad_invalid);}
 template <class M> void Instruction<M>::decode_popaw_popad_invalid(const uint8_t *buf)          { decode_size_sensitive(buf, Opcodes_popaw_popad_invalid);}
 
+
+//------------------------------------------------------------------------------
+// Name: wait_feni_fdisi_finit_fclex(const uint8_t *buf)
+//------------------------------------------------------------------------------
+template <class M>
+void Instruction<M>::wait_feni_fdisi_finit_fclex(const uint8_t *buf) {
+	
+	
+	static const opcode_entry Opcodes_wait_finit_fclex[5] = {
+		{ "feni", &Instruction::decode0,  OP_FENI, FLAG_NONE, 0 },
+		{ "fdisi", &Instruction::decode0, OP_FDISI, FLAG_NONE, 0 },
+		{ "fclex", &Instruction::decode0, OP_FCLEX, FLAG_NONE, 0 },
+		{ "finit", &Instruction::decode0, OP_FINIT, FLAG_NONE, 0 },
+		{ "wait", &Instruction::decode0,  OP_WAIT, FLAG_NONE, 0 },
+	};
+		
+	if(buf[0] != 0x9b) {
+		throw edisassm::invalid_instruction(size());
+	}
+	
+	opcode_ = &Opcodes_wait_finit_fclex[4];
+	opcode_size_ = 1;
+	
+	if(size() + 2 <= buffer_size_) {	
+		if(buf[1] == 0xdb) {
+			switch(buf[2]) {
+			case 0xe0:
+				opcode_ = &Opcodes_wait_finit_fclex[0];
+				opcode_size_ = 3;
+				break;
+			case 0xe1:
+				opcode_ = &Opcodes_wait_finit_fclex[1];
+				opcode_size_ = 3;
+				break;
+			case 0xe2:
+				opcode_ = &Opcodes_wait_finit_fclex[2];
+				opcode_size_ = 3;
+				break;
+			case 0xe3:
+				opcode_ = &Opcodes_wait_finit_fclex[3];
+				opcode_size_ = 3;
+				break;
+			}
+		}
+	}
+}
+
+
 //------------------------------------------------------------------------------
 // Name: decode_x87(const uint8_t *buf)
 //------------------------------------------------------------------------------
