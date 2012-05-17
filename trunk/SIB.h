@@ -21,27 +21,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "edisassm_types.h"
 
-class SIB {
-public:
-	SIB(uint8_t value) : value_(value) {
-	}
-
-	SIB(const SIB &other) : value_(other.value_) {
-	}
-
-	SIB &operator=(const SIB &rhs) {
-		value_ = rhs.value_;
-		return *this;
-	}
-
-private:
-	uint8_t value_;
-
-public:
-	uint8_t base() const  { return value_ & 0x07; }
-	uint8_t index() const { return (value_ >> 3) & 0x07; }
-	uint8_t scale() const { return (value_ >> 6) & 0x03; }
-};
+namespace sib {
+	inline uint8_t base(uint8_t value)  { return value & 0x07; }
+	inline uint8_t index(uint8_t value) { return (value >> 3) & 0x07; }
+	inline uint8_t scale(uint8_t value) { return (value >> 6) & 0x03; }
+}
 
 #endif
 
