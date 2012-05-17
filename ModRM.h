@@ -21,26 +21,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "edisassm_types.h"
 
-class ModRM {
-public:
-	ModRM(uint8_t value) : value_(value) {
-	}
-
-	ModRM(const ModRM &other) : value_(other.value_) {
-	}
-
-	ModRM &operator=(const ModRM &rhs) {
-		value_ = rhs.value_;
-		return *this;
-	}
-
-private:
-	uint8_t value_;
-
-public:
-	uint8_t rm() const  { return value_ & 0x07; }
-	uint8_t reg() const { return (value_ >> 3) & 0x07; }
-	uint8_t mod() const { return (value_ >> 6) & 0x03; }
-};
+namespace modrm {
+	inline uint8_t rm(uint8_t value)  { return value & 0x07; }
+	inline uint8_t reg(uint8_t value) { return (value >> 3) & 0x07; }
+	inline uint8_t mod(uint8_t value) { return (value >> 6) & 0x03; }
+}
 
 #endif

@@ -29,26 +29,28 @@ enum DISPLAY_FLAGS {
 };
 
 //------------------------------------------------------------------------------
-// Name: disassemble(const uint8_t *start_ptr, const uint8_t *end_ptr, typename Instruction<M>::address_t rva, unsigned int flags)
+// Name: disassemble(const uint8_t *first, const uint8_t *end_ptr, typename Instruction<M>::address_t rva, unsigned int flags)
 //------------------------------------------------------------------------------
-template <class M>
-void disassemble(const uint8_t *start_ptr, const uint8_t *end_ptr, typename Instruction<M>::address_t rva, unsigned int flags) {
+template <class M, class In>
+void disassemble(In first, In last, typename Instruction<M>::address_t rva, unsigned int flags) {
 
 	typedef Instruction<M> insn_t;
-
-	const uint8_t *ptr = start_ptr;
-	while(ptr < end_ptr) {
-		insn_t instruction(ptr, end_ptr - ptr,  rva + (ptr - start_ptr), std::nothrow);
+	
+	while(first != last) {
+	
+		insn_t instruction(first, last, rva, std::nothrow);
 		if(instruction) {
-			std::cout << std::hex << (rva + (ptr - start_ptr)) << ": ";
+			std::cout << std::hex << rva << ": ";
 			if(flags & FLAG_SHOW_BYTES) {
 				std::cout << edisassm::to_byte_string(instruction) << " ";
 			}
 			std::cout << edisassm::to_string(instruction) << '\n';
-			ptr += instruction.size();
+			first += instruction.size();
+			rva   += instruction.size();
 		} else {
 			std::cout << "(bad)\n";
-			ptr += 1;
+			first += 1;
+			rva   += 1;
 		}
 	}
 }
@@ -100,13 +102,13 @@ int main(int argc, char *argv[]) {
 	std::ifstream file(filename.c_str(), std::ios::binary);
 	if(file) {
 		const std::vector<uint8_t> data((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-		const uint8_t *const start_ptr = &data[0];
-		const uint8_t *const end_ptr   = start_ptr + data.size();
+		const uint8_t *const first = &data[0];
+		const uint8_t *const last  = first + data.size();
 
 		if(x86_64_mode) {
-			disassemble<edisassm::x86_64>(start_ptr, end_ptr, rva_address, flags);
+			disassemble<edisassm::x86_64>(first, last, rva_address, flags);
 		} else {
-			disassemble<edisassm::x86>(start_ptr, end_ptr, rva_address, flags);
+			disassemble<edisassm::x86>(first, last, rva_address, flags);
 		}
 	} else {
 		std::cerr << "could not open the file: " << filename << std::endl;

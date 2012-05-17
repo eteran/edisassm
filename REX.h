@@ -21,29 +21,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "edisassm_types.h"
 
-class REX {
-public:
-	REX(uint8_t value) : value_(value) {
-	}
-
-	REX(const REX &other) : value_(other.value_) {
-	}
-
-	REX &operator=(const REX &rhs) {
-		value_ = rhs.value_;
-		return *this;
-	}
-
-private:
-	uint8_t value_;
-
-public:
-	bool is_rex() const { return (value_ & 0xf0) == 0x40; }
-	uint8_t w() const   { return (value_ >> 3) & 0x01; } // 64 bit mode
-	uint8_t r() const   { return (value_ >> 2) & 0x01; } // modRM extension
-	uint8_t x() const   { return (value_ >> 1) & 0x01; } // SIB extension
-	uint8_t b() const   { return (value_ >> 0) & 0x01; } // ModRM OR SIB base or Opcode Reg extension
-};
+namespace rex {
+	inline bool is_rex(uint8_t value)   { return (value & 0xf0) == 0x40; }
+	inline uint8_t w(uint8_t value) { return (value >> 3) & 0x01; } // 64 bit mode
+	inline uint8_t r(uint8_t value) { return (value >> 2) & 0x01; } // modRM extension
+	inline uint8_t x(uint8_t value) { return (value >> 1) & 0x01; } // SIB extension
+	inline uint8_t b(uint8_t value) { return (value >> 0) & 0x01; } // ModRM OR SIB base or Opcode Reg extension
+}
 
 #endif
 
