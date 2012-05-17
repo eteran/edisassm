@@ -1,0 +1,5 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
+INCLUDE_DIRECTORIES(..)
+SET(edisassmtest_SOURCES edisassmtest.cpp ../Instruction.cpp)
+ADD_EXECUTABLE(edisassmtest ${edisassmtest_SOURCES})

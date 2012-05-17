@@ -35,6 +35,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group7[8] = 
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group7A[64] = {
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "vmcall", &Instruction::decode0, OP_VMCALL, FLAG_NONE, 0 },
 	{ "vmlaunch", &Instruction::decode0, OP_VMLAUNCH, FLAG_NONE, 0 },
 	{ "vmresume", &Instruction::decode0, OP_VMRESUME, FLAG_NONE, 0 },
@@ -42,8 +43,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group7A[64] 
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-
+	
 	{ "monitor", &Instruction::decode0, OP_MONITOR, FLAG_NONE, 0 },
 	{ "mwait", &Instruction::decode0, OP_MWAIT, FLAG_NONE, 0 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
