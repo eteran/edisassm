@@ -1016,17 +1016,14 @@ void Instruction<M>::wait_feni_fdisi_finit_fclex() {
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_x87() {
-
-	byte2_ = next_byte();
-
+	
 	const uint8_t modrm_byte = get_modrm();
-
 	const uint8_t esc_num = (byte1_ - 0xd8);
 
-	if((byte2_ & 0xc0) != 0xc0) {
+	if((modrm_byte & 0xc0) != 0xc0) {
 		opcode_ = &Opcodes_x87_Lo[modrm::reg(modrm_byte) + esc_num * 8];
 	} else {
-		opcode_ = &Opcodes_x87_Hi[(byte2_ & 0x3f) + esc_num * 64];
+		opcode_ = &Opcodes_x87_Hi[(modrm_byte & 0x3f) + esc_num * 64];
 	}
 
 	(this->*(opcode_->decoder))();
