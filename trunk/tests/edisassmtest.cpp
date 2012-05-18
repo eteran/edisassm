@@ -4248,6 +4248,15 @@ int main() {
 			return -1;
 		}
 		
+		if(insn.size() != p->size) {
+			std::cout << "\n----------\n";
+			std::cout << edisassm::to_byte_string(insn) << " incorrect size" << std::endl;
+			std::cout << "FAIL" << std::endl;
+			return -1;
+		}
+				
+		std::cout << " " << edisassm::to_byte_string(insn) << " '" << edisassm::to_string(insn) << "' ";
+		
 		std::cout << "OK" << std::endl;
 	}
 }

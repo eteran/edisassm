@@ -25,11 +25,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "edisassm_types.h"
 #include "edisassm_string.h"
 #include "edisassm_ops.h"
-#include <cstddef>
-#include "ModRM.h"
-#include "SIB.h"
 #include "Operand.h"
-#include "REX.h"
+#include <cstddef>
+
 
 #ifdef QT_CORE_LIB
 #include <QtGlobal>
@@ -61,6 +59,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }
 #endif
+
+namespace {
+	struct modrm_32 { static const int value = 32; };
+	struct modrm_64 { static const int value = 64; };
+}
 
 template <class M>
 class EDB_EXPORT Instruction {
@@ -115,7 +118,7 @@ public:
 			modrm_byte_(0x00), sib_byte_(0x00), rex_byte_(0x00), rva_(rva), 
 			opcode_(&Opcode_invalid), prefix_(0x00000000), mandatory_prefix_(0x00000000),
 			operand_count_(0), modrm_size_(0), sib_size_(0), disp_size_(0), prefix_size_(0),
-			immediate_size_(0), opcode_size_(0), rex_size_(0) {
+			immediate_size_(0), rex_size_(0) {
 
 		try {
 			initialize();
@@ -132,7 +135,7 @@ public:
 			modrm_byte_(0x00), sib_byte_(0x00), rex_byte_(0x00), rva_(rva), 
 			opcode_(&Opcode_invalid), prefix_(0x00000000), mandatory_prefix_(0x00000000),
 			operand_count_(0), modrm_size_(0), sib_size_(0), disp_size_(0), prefix_size_(0),
-			immediate_size_(0), opcode_size_(0), rex_size_(0) {
+			immediate_size_(0), rex_size_(0) {
 
 		initialize();
 	}
@@ -839,7 +842,6 @@ private:
 
 	void decode_invalid_cmpxchg8b_cmpxchg16b();
 
-
 	// no 64-bit variant
 	void decode_cmpsw_cmpsd_cmpsq();
 	void decode_outsw_outsd_invalid();
@@ -919,17 +921,17 @@ private:
 	template <typename operand_t::Type TYPE, typename operand_t::Register (*REG_DECODE)(uint8_t)>
 	void decode_ModRM_2_16(uint8_t modrm_byte, operand_t &operand);
 
-	template <typename operand_t::Type TYPE, typename operand_t::Register (*REG_DECODE)(uint8_t)>
-	void decode_ModRM_0_32(uint8_t modrm_byte, operand_t &operand, bool enable_64_bit = true);
+	template <typename operand_t::Type TYPE, typename operand_t::Register (*REG_DECODE)(uint8_t), class DecodeMode>
+	void decode_ModRM_0_32(uint8_t modrm_byte, operand_t &operand);
 
-	template <typename operand_t::Type TYPE, typename operand_t::Register (*REG_DECODE)(uint8_t)>
-	void decode_ModRM_1_32(uint8_t modrm_byte, operand_t &operand, bool enable_64_bit = true);
+	template <typename operand_t::Type TYPE, typename operand_t::Register (*REG_DECODE)(uint8_t), class DecodeMode>
+	void decode_ModRM_1_32(uint8_t modrm_byte, operand_t &operand);
 
-	template <typename operand_t::Type TYPE, typename operand_t::Register (*REG_DECODE)(uint8_t)>
-	void decode_ModRM_2_32(uint8_t modrm_byte, operand_t &operand, bool enable_64_bit = true);
+	template <typename operand_t::Type TYPE, typename operand_t::Register (*REG_DECODE)(uint8_t), class DecodeMode>
+	void decode_ModRM_2_32(uint8_t modrm_byte, operand_t &operand);
 
-	template <typename operand_t::Type TYPE, typename operand_t::Register (*REG_DECODE)(uint8_t)>
-	void decode_ModRM_3_32(uint8_t modrm_byte, operand_t &operand, bool enable_64_bit = true);
+	template <typename operand_t::Type TYPE, typename operand_t::Register (*REG_DECODE)(uint8_t), class DecodeMode>
+	void decode_ModRM_3_32(uint8_t modrm_byte, operand_t &operand);
 
 	template <typename operand_t::Type TYPE, typename operand_t::Register (*REG_DECODE)(uint8_t)>
 	void decode_ModRM_Invalid(uint8_t modrm_byte, operand_t &operand);
@@ -955,15 +957,7 @@ private:
 
 	// special cases for things like SMSW Rv/Mw
 	template <decoder_t F1, decoder_t F2>
-	void decode_Reg_Mem() {
-		const uint8_t modrm_byte = get_modrm();
-
-		if(modrm::mod(modrm_byte) == 0x03) {
-			(this->*F1)();
-		} else {
-			(this->*F2)();
-		}
-	}
+	void decode_Reg_Mem();
 
 	void decode_Rv_Mw() { decode_Reg_Mem<&instruction_t::decode_Rv, &instruction_t::decode_Mw>(); }
 	void decode_Rq_Mw() { decode_Reg_Mem<&instruction_t::decode_Rq, &instruction_t::decode_Mw>(); }
@@ -1024,7 +1018,7 @@ private:
 	void decode_Pq() { decode_Gx<&Instruction<M>::index_to_reg_mmx>(); }
 	void decode_Pd() { decode_Gx<&Instruction<M>::index_to_reg_mmx>(); }
 
-	// Decode [C/D/T]Rx from ModRM reg
+	// Decode [S/C/D/T]Rx from ModRM reg
 	void decode_Sw() { decode_Gx<&Instruction<M>::index_to_reg_seg>(); }
 	void decode_Cd() { decode_Gx<&Instruction<M>::index_to_reg_cr>(); }
 	void decode_Dd() { decode_Gx<&Instruction<M>::index_to_reg_dr>(); }
@@ -1037,7 +1031,6 @@ private:
 	void decode_Iq();
 	void decode_Iv();
 	void decode_Iz() { if(prefix_ & PREFIX_OPERAND) { decode_Iw(); } else { decode_Id(); } }
-
 
 	// EIP relative
 	void decode_Jb();
@@ -1294,17 +1287,17 @@ private:
 
 private:
 	static typename operand_t::Register index_to_reg_invalid(uint8_t)    { return operand_t::REG_INVALID; }
-	static typename operand_t::Register index_to_reg_8(uint8_t index)    { return static_cast<typename operand_t::Register>(operand_t::REG_AL + index); }
-	static typename operand_t::Register index_to_reg_16(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_AX + index); }
-	static typename operand_t::Register index_to_reg_32(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_EAX + index); }
-	static typename operand_t::Register index_to_reg_64(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_RAX + index); }
-	static typename operand_t::Register index_to_reg_seg(uint8_t index)  { return static_cast<typename operand_t::Register>(operand_t::REG_ES + index); }
-	static typename operand_t::Register index_to_reg_mmx(uint8_t index)  { return static_cast<typename operand_t::Register>(operand_t::REG_MM0 + index); }
+	static typename operand_t::Register index_to_reg_8(uint8_t index)    { return static_cast<typename operand_t::Register>(operand_t::REG_AL   + index); }
+	static typename operand_t::Register index_to_reg_16(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_AX   + index); }
+	static typename operand_t::Register index_to_reg_32(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_EAX  + index); }
+	static typename operand_t::Register index_to_reg_64(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_RAX  + index); }
+	static typename operand_t::Register index_to_reg_seg(uint8_t index)  { return static_cast<typename operand_t::Register>(operand_t::REG_ES   + index); }
+	static typename operand_t::Register index_to_reg_mmx(uint8_t index)  { return static_cast<typename operand_t::Register>(operand_t::REG_MM0  + index); }
 	static typename operand_t::Register index_to_reg_xmmx(uint8_t index) { return static_cast<typename operand_t::Register>(operand_t::REG_XMM0 + index); }
-	static typename operand_t::Register index_to_reg_fpu(uint8_t index)  { return static_cast<typename operand_t::Register>(operand_t::REG_ST0 + index); }
-	static typename operand_t::Register index_to_reg_cr(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_CR0 + index); }
-	static typename operand_t::Register index_to_reg_dr(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_DR0 + index); }
-	static typename operand_t::Register index_to_reg_tr(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_TR0 + index); }
+	static typename operand_t::Register index_to_reg_fpu(uint8_t index)  { return static_cast<typename operand_t::Register>(operand_t::REG_ST0  + index); }
+	static typename operand_t::Register index_to_reg_cr(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_CR0  + index); }
+	static typename operand_t::Register index_to_reg_dr(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_DR0  + index); }
+	static typename operand_t::Register index_to_reg_tr(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_TR0  + index); }
 
 public:
 	Type type() const                                 { return opcode_->type; }
@@ -1422,7 +1415,6 @@ private:
 	uint8_t             disp_size_;
 	uint8_t             prefix_size_;
 	uint8_t             immediate_size_;
-	uint8_t             opcode_size_;	
 	uint8_t             rex_size_;
 };
 
