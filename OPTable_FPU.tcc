@@ -42,8 +42,8 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Lo[64] =
 	{ "fstp", &Instruction::decode_SingleReal, OP_FSTP, FLAG_NONE, 1 },
 	{ "fldenv", &Instruction::decode_M28, OP_FLDENV, FLAG_NONE, 1 },
 	{ "fldcw", &Instruction::decode_Mw, OP_FLDCW, FLAG_NONE, 1 },
-	{ "fstenv", &Instruction::decode_M28, OP_FSTENV, FLAG_NONE, 1 },
-	{ "fstcw", &Instruction::decode_Mw, OP_FSTCW, FLAG_NONE, 1 },
+	{ "fnstenv", &Instruction::decode_M28, OP_FNSTENV, FLAG_NONE, 1 },
+	{ "fnstcw", &Instruction::decode_Mw, OP_FNSTCW, FLAG_NONE, 1 },
 
 	/* 0xda 0x00 - 0xda 0xbf */
 	{ "fiadd", &Instruction::decode_ShortInteger, OP_FIADD, FLAG_NONE, 1 },
@@ -82,8 +82,8 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Lo[64] =
 	{ "fstp", &Instruction::decode_DoubleReal, OP_FSTP, FLAG_NONE, 1 },
 	{ "frstor", &Instruction::decode_M108, OP_FRSTOR, FLAG_NONE, 1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "fsave", &Instruction::decode_M108, OP_FSAVE, FLAG_NONE, 1 },
-	{ "fstsw", &Instruction::decode_Mw, OP_FSTSW, FLAG_NONE, 1 },
+	{ "fnsave", &Instruction::decode_M108, OP_FNSAVE, FLAG_NONE, 1 },
+	{ "fnstsw", &Instruction::decode_Mw, OP_FNSTSW, FLAG_NONE, 1 },
 
 	/* 0xde 0x00 - 0xde 0xbf */
 	{ "fiadd", &Instruction::decode_WordInteger, OP_FIADD, FLAG_NONE, 1 },
@@ -346,7 +346,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Hi[0x200
 	{ "fndisi", &Instruction::decode0, OP_FNDISI, FLAG_NONE, 0 },
 	{ "fnclex", &Instruction::decode0, OP_FNCLEX, FLAG_NONE, 0 },
 	{ "fninit", &Instruction::decode0, OP_FNINIT, FLAG_NONE, 0 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
+	{ "fnsetpm", &Instruction::decode0, OP_FNSETPM, FLAG_NONE, 0 }, // 286 only
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
@@ -606,7 +606,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Hi[0x200
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "fstsw", &Instruction::template decode_Reg<operand_t::REG_AX>, OP_FSTSW, FLAG_NONE, 1 },
+	{ "fnstsw",  &Instruction::decode_AX, OP_FNSTSW, FLAG_NONE, 1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },

@@ -659,7 +659,7 @@ template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DE
 void Instruction<M>::decode_Ex() {
 
 	const uint8_t modrm_byte = get_modrm();
-
+	
 	operand_t &operand = next_operand();
 
 	if(prefix_ & PREFIX_ADDRESS) {
@@ -765,9 +765,6 @@ Instruction<M>::Instruction(const Instruction &other) :
 	}
 	
 	std::copy(other.bytes_, other.bytes_ + sizeof(other.bytes_), bytes_);
-	
-	
-
 }
 
 //------------------------------------------------------------------------------
@@ -962,52 +959,129 @@ template <class M> void Instruction<M>::decode_popaw_popad_invalid()          { 
 
 
 //------------------------------------------------------------------------------
-// Name: wait_feni_fdisi_finit_fclex()
+// Name: wait_or_wait_prefix()
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::wait_feni_fdisi_finit_fclex() {
+void Instruction<M>::wait_or_wait_prefix() {
 	
 	// opcode 0x9b... is annoying :-P
-	
-	static const opcode_entry Opcodes_wait_finit_fclex[5] = {
-		{ "feni",  &Instruction::decode0, OP_FENI,  FLAG_NONE, 0 },
-		{ "fdisi", &Instruction::decode0, OP_FDISI, FLAG_NONE, 0 },
-		{ "fclex", &Instruction::decode0, OP_FCLEX, FLAG_NONE, 0 },
-		{ "finit", &Instruction::decode0, OP_FINIT, FLAG_NONE, 0 },
-		{ "wait",  &Instruction::decode0, OP_WAIT,  FLAG_NONE, 0 },
+	static const opcode_entry Opcodes_wait[1] = {
+		{ "wait",   &Instruction::decode0, OP_WAIT,   FLAG_NONE, 0 },
 	};
 	
-	opcode_ = &Opcodes_wait_finit_fclex[4];
+	static const opcode_entry Opcodes_wait_prefix_d9[2] = {
+		{ "fstenv", &Instruction::decode_M, OP_FSTENV, FLAG_NONE, 1 },
+		{ "fstcw", &Instruction::decode_Mw, OP_FSTCW, FLAG_NONE, 1 },
+	};
+
+	static const opcode_entry Opcodes_wait_prefix_db[5] = {
+		{ "feni",   &Instruction::decode0, OP_FENI,   FLAG_NONE, 0 },
+		{ "fdisi",  &Instruction::decode0, OP_FDISI,  FLAG_NONE, 0 },
+		{ "fclex",  &Instruction::decode0, OP_FCLEX,  FLAG_NONE, 0 },
+		{ "finit",  &Instruction::decode0, OP_FINIT,  FLAG_NONE, 0 },
+		{ "fsetpm", &Instruction::decode0, OP_FSETPM, FLAG_NONE, 0 },
+	};
+	
+	static const opcode_entry Opcodes_wait_prefix_dd[2] = {
+		{ "fsave", &Instruction::decode_M, OP_FSAVE, FLAG_NONE, 1 },
+		{ "fstsw", &Instruction::decode_Mw, OP_FSTSW, FLAG_NONE, 1 },
+	};
+	
+	static const opcode_entry Opcodes_wait_prefix_df[2] = {
+		{ "fstsw", &Instruction::decode_AX, OP_FSTSW, FLAG_NONE, 1 },
+	};
+	
+	opcode_ = &Opcodes_wait[0];
 	opcode_size_ = 1;
 	
-	if(!byte_stream_->empty() && byte_stream_->peek() == 0xdb) {
-
-		// consume the 0xdb
-		next_byte();
-
+	if(!byte_stream_->empty()) {
 		switch(byte_stream_->peek()) {
-		case 0xe0:
-			opcode_ = &Opcodes_wait_finit_fclex[0];
-			opcode_size_ = 3;
-			next_byte();
+		case 0xd9:
+			{
+				// consume the 0xd9
+				next_byte();
+
+				switch(modrm::reg(byte_stream_->peek())) {
+				case 0x06:
+					opcode_ = &Opcodes_wait_prefix_d9[0];
+					opcode_size_ = 2;
+					break;
+				case 0x07:
+					opcode_ = &Opcodes_wait_prefix_d9[1];
+					opcode_size_ = 2;
+					break;
+				}
+			}
 			break;
-		case 0xe1:
-			opcode_ = &Opcodes_wait_finit_fclex[1];
-			opcode_size_ = 3;
-			next_byte();
+		case 0xdb:
+			{
+				// consume the 0xdb
+				next_byte();
+
+				switch(byte_stream_->peek()) {
+				case 0xe0:
+					opcode_ = &Opcodes_wait_prefix_db[0];
+					opcode_size_ = 3;
+					next_byte();
+					break;
+				case 0xe1:
+					opcode_ = &Opcodes_wait_prefix_db[1];
+					opcode_size_ = 3;
+					next_byte();
+					break;
+				case 0xe2:
+					opcode_ = &Opcodes_wait_prefix_db[2];
+					opcode_size_ = 3;
+					next_byte();
+					break;
+				case 0xe3:
+					opcode_ = &Opcodes_wait_prefix_db[3];
+					opcode_size_ = 3;
+					next_byte();
+					break;
+				case 0xe4:
+					opcode_ = &Opcodes_wait_prefix_db[4];
+					opcode_size_ = 3;
+					next_byte();
+					break;
+				}
+			}
 			break;
-		case 0xe2:
-			opcode_ = &Opcodes_wait_finit_fclex[2];
-			opcode_size_ = 3;
-			next_byte();
+		case 0xdd:
+			{
+				// consume the 0xdd
+				next_byte();
+
+				switch(modrm::reg(byte_stream_->peek())) {
+				case 0x06:
+					opcode_ = &Opcodes_wait_prefix_dd[0];
+					opcode_size_ = 2;
+					break;
+				case 0x07:
+					opcode_ = &Opcodes_wait_prefix_dd[1];
+					opcode_size_ = 2;
+					break;
+				}
+			}
 			break;
-		case 0xe3:
-			opcode_ = &Opcodes_wait_finit_fclex[3];
-			opcode_size_ = 3;
-			next_byte();
+		case 0xdf:
+			{
+				// consume the 0xdf
+				next_byte();
+
+				switch(byte_stream_->peek()) {
+				case 0xe0:
+					opcode_ = &Opcodes_wait_prefix_df[0];
+					opcode_size_ = 3;
+					next_byte();
+					break;
+				}
+			}
 			break;
 		}
 	}
+	
+	(this->*(opcode_->decoder))();
 }
 
 
