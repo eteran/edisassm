@@ -1,3 +1,30 @@
+[BITS 32]
+fclex
+fdisi
+feni
+finit
+fsetpm
+
+fnclex
+fndisi
+fneni
+fninit
+fnsetpm
+
+fsave [eax]
+fsave [ebx]
+fsave [ecx]
+fnsave [eax]
+
+fsave [ebp-108]
+
+
+
+fnstsw ax
+fstsw ax
+fstsw [eax]
+fnstsw [eax]
+
 mov eax,eax
 mov eax,ebx
 mov eax,ecx
@@ -5600,8 +5627,6 @@ fldln2
 fldpi
 fldz
 fnclex
-fndisi
-fneni
 fninit
 fnop
 fpatan

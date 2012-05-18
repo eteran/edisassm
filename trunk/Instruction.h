@@ -676,6 +676,8 @@ public:
 		OP_FFREE,
 		OP_FIADD,
 		OP_FICOM,
+		OP_FNSTSW,
+		OP_FNSAVE,
 		OP_FICOMP,
 		OP_FIDIV,
 		OP_FIDIVR,
@@ -683,6 +685,8 @@ public:
 		OP_FIMUL,
 		OP_FINCSTP,
 		OP_FINIT,
+		OP_FSETPM,
+		OP_FNSETPM,
 		OP_FIST,
 		OP_FISTP,
 		OP_FISUB,
@@ -717,7 +721,9 @@ public:
 		OP_FSQRT,
 		OP_FST,
 		OP_FSTCW,
+		OP_FNSTCW,
 		OP_FSTENV,
+		OP_FNSTENV,
 		OP_FSTP,
 		OP_FSTSW,
 		OP_FSUB,
@@ -818,7 +824,7 @@ private:
 	}
 	
 	// special FPU variants..
-	void wait_feni_fdisi_finit_fclex();
+	void wait_or_wait_prefix();
 
 	// special cased names
 	void decode_cwd_cdq_cqo();
@@ -1068,6 +1074,7 @@ private:
 	void decode_CH();
 	void decode_DH();
 	void decode_BH();
+	void decode_AX() { decode_Reg<operand_t::REG_AX>(); }
 	void decode_DX() { decode_Reg<operand_t::REG_DX>(); }
 
 	// simple wrappers around some of the these for cleaner tables

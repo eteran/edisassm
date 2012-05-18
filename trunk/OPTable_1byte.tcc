@@ -198,7 +198,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "cbw/cwde/cdqe", &Instruction::decode_cbw_cwde_cdqe, OP_INVALID, FLAG_NONE, -1 },
 	{ "cwd/cdq/cqo", &Instruction::decode_cwd_cdq_cqo, OP_INVALID, FLAG_NONE, -1 },
 	{ "callf", &Instruction::decode_Ap, OP_CALL, FLAG_NONE, 1 }, // ia-32 only
-	{ "wait/feni/fdisi/finit/fclex", &Instruction::wait_feni_fdisi_finit_fclex, OP_INVALID, FLAG_NONE, -1 },
+	{ "wait/prefix wait", &Instruction::wait_or_wait_prefix, OP_INVALID, FLAG_NONE, -1 },
 	{ "pushfw/pushfd/pushfq", &Instruction::decode_pushfw_pushfd_pushfq, OP_INVALID, FLAG_NONE, -1 },
 	{ "popfw/popfd/popfq", &Instruction::decode_popfw_popfd_popfq, OP_INVALID, FLAG_NONE, -1 },
 	{ "sahf", &Instruction::decode0, OP_SAHF, FLAG_NONE, 0 },
