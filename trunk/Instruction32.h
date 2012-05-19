@@ -356,24 +356,24 @@ T Instruction<M>::get_displacement() {
 		ret = next_byte();
 		break;
 	case 2:
-		ret = (ret & 0xff00) | static_cast<T>(next_byte());
-		ret = (ret & 0x00ff) | (static_cast<T>(next_byte()) << 8);
+		ret = (ret & 0xff00) | static_cast<uint16_t>(next_byte());
+		ret = (ret & 0x00ff) | (static_cast<uint16_t>(next_byte()) << 8);
 		break;
 	case 4:
-		ret = (ret & 0xffffff00) | static_cast<T>(next_byte());
-		ret = (ret & 0xffff00ff) | (static_cast<T>(next_byte()) << 8);
-		ret = (ret & 0xff00ffff) | (static_cast<T>(next_byte()) << 16);
-		ret = (ret & 0x00ffffff) | (static_cast<T>(next_byte()) << 24);
+		ret = (ret & 0xffffff00) | static_cast<uint32_t>(next_byte());
+		ret = (ret & 0xffff00ff) | (static_cast<uint32_t>(next_byte()) << 8);
+		ret = (ret & 0xff00ffff) | (static_cast<uint32_t>(next_byte()) << 16);
+		ret = (ret & 0x00ffffff) | (static_cast<uint32_t>(next_byte()) << 24);
 		break;
 	case 8:
-		ret = (ret & 0xffffffffffffff00) | static_cast<T>(next_byte());
-		ret = (ret & 0xffffffffffff00ff) | (static_cast<T>(next_byte()) << 8);
-		ret = (ret & 0xffffffffff00ffff) | (static_cast<T>(next_byte()) << 16);
-		ret = (ret & 0xffffffff00ffffff) | (static_cast<T>(next_byte()) << 24);
-		ret = (ret & 0xffffff00ffffffff) | (static_cast<T>(next_byte()) << 32);
-		ret = (ret & 0xffff00ffffffffff) | (static_cast<T>(next_byte()) << 40);
-		ret = (ret & 0xff00ffffffffffff) | (static_cast<T>(next_byte()) << 48);
-		ret = (ret & 0x00ffffffffffffff) | (static_cast<T>(next_byte()) << 56);
+		ret = (ret & 0xffffffffffffff00) | static_cast<uint64_t>(next_byte());
+		ret = (ret & 0xffffffffffff00ff) | (static_cast<uint64_t>(next_byte()) << 8);
+		ret = (ret & 0xffffffffff00ffff) | (static_cast<uint64_t>(next_byte()) << 16);
+		ret = (ret & 0xffffffff00ffffff) | (static_cast<uint64_t>(next_byte()) << 24);
+		ret = (ret & 0xffffff00ffffffff) | (static_cast<uint64_t>(next_byte()) << 32);
+		ret = (ret & 0xffff00ffffffffff) | (static_cast<uint64_t>(next_byte()) << 40);
+		ret = (ret & 0xff00ffffffffffff) | (static_cast<uint64_t>(next_byte()) << 48);
+		ret = (ret & 0x00ffffffffffffff) | (static_cast<uint64_t>(next_byte()) << 56);
 		break;
 	default:
 		throw edisassm::invalid_instruction(byte_index_);
@@ -397,24 +397,24 @@ T Instruction<M>::get_immediate() {
 		ret = next_byte();
 		break;
 	case 2:
-		ret = (ret & 0xff00) | static_cast<T>(next_byte());
-		ret = (ret & 0x00ff) | (static_cast<T>(next_byte()) << 8);
+		ret = (ret & 0xff00) | static_cast<uint16_t>(next_byte());
+		ret = (ret & 0x00ff) | (static_cast<uint16_t>(next_byte()) << 8);
 		break;
 	case 4:
-		ret = (ret & 0xffffff00) | static_cast<T>(next_byte());
-		ret = (ret & 0xffff00ff) | (static_cast<T>(next_byte()) << 8);
-		ret = (ret & 0xff00ffff) | (static_cast<T>(next_byte()) << 16);
-		ret = (ret & 0x00ffffff) | (static_cast<T>(next_byte()) << 24);
+		ret = (ret & 0xffffff00) | static_cast<uint32_t>(next_byte());
+		ret = (ret & 0xffff00ff) | (static_cast<uint32_t>(next_byte()) << 8);
+		ret = (ret & 0xff00ffff) | (static_cast<uint32_t>(next_byte()) << 16);
+		ret = (ret & 0x00ffffff) | (static_cast<uint32_t>(next_byte()) << 24);
 		break;
 	case 8:
-		ret = (ret & 0xffffffffffffff00) | static_cast<T>(next_byte());
-		ret = (ret & 0xffffffffffff00ff) | (static_cast<T>(next_byte()) << 8);
-		ret = (ret & 0xffffffffff00ffff) | (static_cast<T>(next_byte()) << 16);
-		ret = (ret & 0xffffffff00ffffff) | (static_cast<T>(next_byte()) << 24);
-		ret = (ret & 0xffffff00ffffffff) | (static_cast<T>(next_byte()) << 32);
-		ret = (ret & 0xffff00ffffffffff) | (static_cast<T>(next_byte()) << 40);
-		ret = (ret & 0xff00ffffffffffff) | (static_cast<T>(next_byte()) << 48);
-		ret = (ret & 0x00ffffffffffffff) | (static_cast<T>(next_byte()) << 56);
+		ret = (ret & 0xffffffffffffff00) | static_cast<uint64_t>(next_byte());
+		ret = (ret & 0xffffffffffff00ff) | (static_cast<uint64_t>(next_byte()) << 8);
+		ret = (ret & 0xffffffffff00ffff) | (static_cast<uint64_t>(next_byte()) << 16);
+		ret = (ret & 0xffffffff00ffffff) | (static_cast<uint64_t>(next_byte()) << 24);
+		ret = (ret & 0xffffff00ffffffff) | (static_cast<uint64_t>(next_byte()) << 32);
+		ret = (ret & 0xffff00ffffffffff) | (static_cast<uint64_t>(next_byte()) << 40);
+		ret = (ret & 0xff00ffffffffffff) | (static_cast<uint64_t>(next_byte()) << 48);
+		ret = (ret & 0x00ffffffffffffff) | (static_cast<uint64_t>(next_byte()) << 56);
 		break;
 	default:
 		throw edisassm::invalid_instruction(byte_index_);
