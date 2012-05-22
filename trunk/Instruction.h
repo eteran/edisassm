@@ -900,12 +900,20 @@ private:
 	template <int8_t IMM>
 	void decode_const_Ib();
 
-	template <class T>
-	T get_immediate();
+	int8_t   get_immediate_s8();
+	int16_t  get_immediate_s16();
+	int32_t  get_immediate_s32();
+	int64_t  get_immediate_s64();
+	uint8_t  get_immediate_u8();
+	uint16_t get_immediate_u16();
+	uint32_t get_immediate_u32();
+	uint64_t get_immediate_u64();
 
-	template <class T>
-	T get_displacement();
-
+	int8_t  get_displacement_s8();
+	int16_t get_displacement_s16();
+	int32_t get_displacement_s32();
+	int64_t get_displacement_s64();
+	
 	template <int index>
 	void decode_STi();
 
@@ -1304,7 +1312,7 @@ public:
 	address_t rva() const                             { return rva_; }
 	bool valid() const                                { return type() != OP_INVALID; }
 	const operand_t &operand(std::size_t index) const { return operands_[index]; }
-	const uint8_t *buffer() const                     { return bytes_; }
+	const uint8_t *bytes() const                      { return bytes_; }
 	operator void *() const                           { return reinterpret_cast<void *>(valid()); }
 	std::string mnemonic() const                      { return opcode_->mnemonic; }
 	uint32_t prefix() const                           { return prefix_; }

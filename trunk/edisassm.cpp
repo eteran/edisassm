@@ -59,8 +59,45 @@ void disassemble(In first, In last, typename Instruction<M>::address_t rva, unsi
 // Name: print_usage(const char *arg0)
 //------------------------------------------------------------------------------
 void print_usage(const char *arg0) {
-	std::cerr << arg0 << " [-m32|-m64] [--rva <address>] [--show-bytes] <file>" << std::endl;
+	std::cerr << arg0 << " [-m32|-m64] [-x] [--rva <address>] [--show-bytes] [<filename> | -]" << std::endl;
 	exit(-1);
+}
+
+//------------------------------------------------------------------------------
+// Name: 
+//------------------------------------------------------------------------------
+std::vector<uint8_t> get_input(const std::string &filename, bool hex_chars) {
+
+	std::vector<uint8_t> r;
+	
+	std::ifstream file;
+	std::istream *s = 0;
+
+	if(filename == "-") {
+		s = &std::cin;
+	} else {
+		file.open(filename.c_str(), std::ios::binary);
+		if(file) {
+			s = &file;
+		} else {
+			std::cerr << "could not open the file: " << filename << std::endl;
+		}
+	}
+	
+	if(s) {
+		std::istream &stream = *s;
+		
+		if(hex_chars) {
+			uint32_t x;
+			while(stream >> std::hex >> x) {
+				r.push_back(x);
+			}
+		} else {
+			r.assign(std::istreambuf_iterator<char>(stream), std::istreambuf_iterator<char>());
+		}
+	}
+	
+	return r;
 }
 
 //------------------------------------------------------------------------------
@@ -74,6 +111,7 @@ int main(int argc, char *argv[]) {
 
 	unsigned int flags    = FLAG_NONE;
 	bool x86_64_mode      = false;
+	bool hex_chars        = false;
 	uint64_t rva_address  = 0;
 	std::string filename;
 
@@ -83,6 +121,8 @@ int main(int argc, char *argv[]) {
 				x86_64_mode = false;
 			} else if(strcmp(argv[i], "-m64") == 0) {
 				x86_64_mode = true;
+			} else if(strcmp(argv[i], "-x") == 0) {
+				hex_chars = true;
 			} else if(strcmp(argv[i], "--rva") == 0) {
 				++i;
 				if(argv[i] == 0) {
@@ -91,27 +131,29 @@ int main(int argc, char *argv[]) {
 				rva_address = strtoul(argv[i], 0, 0);
 			} else if(strcmp(argv[i], "--show-bytes") == 0) {
 				flags |= FLAG_SHOW_BYTES;
+			} else if(strcmp(argv[i], "-") == 0) {
+				filename = argv[i];
+				break;
 			} else {
 				print_usage(argv[0]);
 			}
 		} else {
 			filename = argv[i];
+			break;
 		}
 	}
+	
+	if(filename.empty()) {
+		print_usage(argv[0]);
+	}
 
-	std::ifstream file(filename.c_str(), std::ios::binary);
-	if(file) {
-		const std::vector<uint8_t> data((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-		const uint8_t *const first = &data[0];
-		const uint8_t *const last  = first + data.size();
+	const std::vector<uint8_t> data = get_input(filename, hex_chars);
+	const uint8_t *const first = &data[0];
+	const uint8_t *const last  = first + data.size();
 
-		if(x86_64_mode) {
-			disassemble<edisassm::x86_64>(first, last, rva_address, flags);
-		} else {
-			disassemble<edisassm::x86>(first, last, rva_address, flags);
-		}
+	if(x86_64_mode) {
+		disassemble<edisassm::x86_64>(first, last, rva_address, flags);
 	} else {
-		std::cerr << "could not open the file: " << filename << std::endl;
-		return -1;
+		disassemble<edisassm::x86>(first, last, rva_address, flags);
 	}
 }
