@@ -402,14 +402,14 @@ int64_t Instruction<M>::get_displacement_s64() {
 	}
 	
 	int64_t ret = 0;
-	ret = (ret & UINT64_C(0xffffffffffffff00)) | static_cast<int64_t>(next_byte());
-	ret = (ret & UINT64_C(0xffffffffffff00ff)) | (static_cast<int64_t>(next_byte()) << 8);
-	ret = (ret & UINT64_C(0xffffffffff00ffff)) | (static_cast<int64_t>(next_byte()) << 16);
-	ret = (ret & UINT64_C(0xffffffff00ffffff)) | (static_cast<int64_t>(next_byte()) << 24);
-	ret = (ret & UINT64_C(0xffffff00ffffffff)) | (static_cast<int64_t>(next_byte()) << 32);
-	ret = (ret & UINT64_C(0xffff00ffffffffff)) | (static_cast<int64_t>(next_byte()) << 40);
-	ret = (ret & UINT64_C(0xff00ffffffffffff)) | (static_cast<int64_t>(next_byte()) << 48);
-	ret = (ret & UINT64_C(0x00ffffffffffffff)) | (static_cast<int64_t>(next_byte()) << 56);
+	ret = (ret & 0xffffffffffffff00ULL) | static_cast<int64_t>(next_byte());
+	ret = (ret & 0xffffffffffff00ffULL) | (static_cast<int64_t>(next_byte()) << 8);
+	ret = (ret & 0xffffffffff00ffffULL) | (static_cast<int64_t>(next_byte()) << 16);
+	ret = (ret & 0xffffffff00ffffffULL) | (static_cast<int64_t>(next_byte()) << 24);
+	ret = (ret & 0xffffff00ffffffffULL) | (static_cast<int64_t>(next_byte()) << 32);
+	ret = (ret & 0xffff00ffffffffffULL) | (static_cast<int64_t>(next_byte()) << 40);
+	ret = (ret & 0xff00ffffffffffffULL) | (static_cast<int64_t>(next_byte()) << 48);
+	ret = (ret & 0x00ffffffffffffffULL) | (static_cast<int64_t>(next_byte()) << 56);
 
 	
 	disp_size_ = sizeof(int64_t);
@@ -468,14 +468,14 @@ int64_t Instruction<M>::get_immediate_s64() {
 
 	int64_t ret = 0;
 
-	ret = (ret & UINT64_C(0xffffffffffffff00)) | static_cast<int64_t>(next_byte());
-	ret = (ret & UINT64_C(0xffffffffffff00ff)) | (static_cast<int64_t>(next_byte()) << 8);
-	ret = (ret & UINT64_C(0xffffffffff00ffff)) | (static_cast<int64_t>(next_byte()) << 16);
-	ret = (ret & UINT64_C(0xffffffff00ffffff)) | (static_cast<int64_t>(next_byte()) << 24);
-	ret = (ret & UINT64_C(0xffffff00ffffffff)) | (static_cast<int64_t>(next_byte()) << 32);
-	ret = (ret & UINT64_C(0xffff00ffffffffff)) | (static_cast<int64_t>(next_byte()) << 40);
-	ret = (ret & UINT64_C(0xff00ffffffffffff)) | (static_cast<int64_t>(next_byte()) << 48);
-	ret = (ret & UINT64_C(0x00ffffffffffffff)) | (static_cast<int64_t>(next_byte()) << 56);
+	ret = (ret & 0xffffffffffffff00ULL) | static_cast<int64_t>(next_byte());
+	ret = (ret & 0xffffffffffff00ffULL) | (static_cast<int64_t>(next_byte()) << 8);
+	ret = (ret & 0xffffffffff00ffffULL) | (static_cast<int64_t>(next_byte()) << 16);
+	ret = (ret & 0xffffffff00ffffffULL) | (static_cast<int64_t>(next_byte()) << 24);
+	ret = (ret & 0xffffff00ffffffffULL) | (static_cast<int64_t>(next_byte()) << 32);
+	ret = (ret & 0xffff00ffffffffffULL) | (static_cast<int64_t>(next_byte()) << 40);
+	ret = (ret & 0xff00ffffffffffffULL) | (static_cast<int64_t>(next_byte()) << 48);
+	ret = (ret & 0x00ffffffffffffffULL) | (static_cast<int64_t>(next_byte()) << 56);
 
 	immediate_size_ += sizeof(int64_t);
 	return ret;
@@ -533,14 +533,14 @@ uint64_t Instruction<M>::get_immediate_u64() {
 
 	uint64_t ret = 0;
 
-	ret = (ret & UINT64_C(0xffffffffffffff00)) | static_cast<uint64_t>(next_byte());
-	ret = (ret & UINT64_C(0xffffffffffff00ff)) | (static_cast<uint64_t>(next_byte()) << 8);
-	ret = (ret & UINT64_C(0xffffffffff00ffff)) | (static_cast<uint64_t>(next_byte()) << 16);
-	ret = (ret & UINT64_C(0xffffffff00ffffff)) | (static_cast<uint64_t>(next_byte()) << 24);
-	ret = (ret & UINT64_C(0xffffff00ffffffff)) | (static_cast<uint64_t>(next_byte()) << 32);
-	ret = (ret & UINT64_C(0xffff00ffffffffff)) | (static_cast<uint64_t>(next_byte()) << 40);
-	ret = (ret & UINT64_C(0xff00ffffffffffff)) | (static_cast<uint64_t>(next_byte()) << 48);
-	ret = (ret & UINT64_C(0x00ffffffffffffff)) | (static_cast<uint64_t>(next_byte()) << 56);
+	ret = (ret & 0xffffffffffffff00ULL) | static_cast<uint64_t>(next_byte());
+	ret = (ret & 0xffffffffffff00ffULL) | (static_cast<uint64_t>(next_byte()) << 8);
+	ret = (ret & 0xffffffffff00ffffULL) | (static_cast<uint64_t>(next_byte()) << 16);
+	ret = (ret & 0xffffffff00ffffffULL) | (static_cast<uint64_t>(next_byte()) << 24);
+	ret = (ret & 0xffffff00ffffffffULL) | (static_cast<uint64_t>(next_byte()) << 32);
+	ret = (ret & 0xffff00ffffffffffULL) | (static_cast<uint64_t>(next_byte()) << 40);
+	ret = (ret & 0xff00ffffffffffffULL) | (static_cast<uint64_t>(next_byte()) << 48);
+	ret = (ret & 0x00ffffffffffffffULL) | (static_cast<uint64_t>(next_byte()) << 56);
 	
 	immediate_size_ += sizeof(uint64_t);
 	return ret;
