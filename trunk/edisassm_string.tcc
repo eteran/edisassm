@@ -569,7 +569,7 @@ std::string register_name(typename Operand<M>::Register reg, const lower_case&) 
 		"(invalid)"
 	};
 
-	assert(reg < sizeof(names) / sizeof(names[0]));
+	assert(static_cast<size_t>(reg) < sizeof(names) / sizeof(names[0]));
 	return names[reg];
 }
 
@@ -638,7 +638,7 @@ std::string register_name(typename Operand<M>::Register reg, const upper_case&) 
 		"(INVALID)"
 	};
 
-	assert(reg < sizeof(names) / sizeof(names[0]));
+	assert(static_cast<size_t>(reg) < sizeof(names) / sizeof(names[0]));
 	return names[reg];
 }
 
