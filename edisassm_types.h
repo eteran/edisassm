@@ -29,7 +29,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   typedef __int32          int32_t;
   typedef __int64          int64_t;
 #else
-	#define __STDC_CONSTANT_MACROS
 	#include <stdint.h>
 #endif
 

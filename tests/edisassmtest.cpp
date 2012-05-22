@@ -8,7 +8,7 @@
 static const int test_count = 4208;
 
 struct test_data_t {
-	int size;
+	unsigned size;
 	const char *bytes;
 	const char *result;
 } test32_data[test_count] = {
