@@ -719,7 +719,7 @@ std::string to_byte_string(const Instruction<M> &insn, const upper_case&) {
 
 	std::ostringstream ss;
 
-	const uint8_t *const ptr = insn.buffer();
+	const uint8_t *const ptr = insn.bytes();
 	const unsigned int size = insn.size();
 	if(size != 0) {
 		ss << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(ptr[0]);
@@ -740,7 +740,7 @@ template <class M>
 std::string to_byte_string(const Instruction<M> &insn, const lower_case&) {
 	std::ostringstream ss;
 	
-	const uint8_t *const ptr = insn.buffer();
+	const uint8_t *const ptr = insn.bytes();
 	
 	ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(ptr[0]);
 	for(unsigned int i = 1; i < insn.size(); ++i) {

@@ -124,7 +124,7 @@ void Instruction<M>::decode_ModRM_0_16(uint8_t rm, operand_t &operand) {
 	case 0x06:
 		operand.u.expression.index             = operand_t::REG_NULL;
 		operand.u.expression.base              = operand_t::REG_NULL;
-		operand.u.expression.s_disp16          = get_displacement<int16_t>();
+		operand.u.expression.s_disp16          = get_displacement_s16();
 		operand.u.expression.displacement_type = operand_t::DISP_S16;
 		break;
 	case 0x07:
@@ -143,7 +143,7 @@ void Instruction<M>::decode_ModRM_1_16(uint8_t rm, operand_t &operand) {
 
 	operand.type_                          = TYPE;
 	operand.u.expression.scale             = 1;
-	operand.u.expression.s_disp8           = get_displacement<int8_t>();
+	operand.u.expression.s_disp8           = get_displacement_s8();
 	operand.u.expression.displacement_type = operand_t::DISP_S8;
 
 	switch(modrm::rm(rm)) {
@@ -191,7 +191,7 @@ void Instruction<M>::decode_ModRM_2_16(uint8_t rm, operand_t &operand) {
 
 	operand.type_                          = TYPE;
 	operand.u.expression.scale             = 1;
-	operand.u.expression.s_disp16          = get_displacement<int16_t>();
+	operand.u.expression.s_disp16          = get_displacement_s16();
 	operand.u.expression.displacement_type = operand_t::DISP_S16;
 
 	switch(modrm::rm(rm)) {
@@ -339,93 +339,212 @@ uint8_t Instruction<M>::get_sib() {
 }
 
 //------------------------------------------------------------------------------
-// Name: get_displacement()
+// Name: get_displacement_s8()
 //------------------------------------------------------------------------------
 template <class M>
-template <class T>
-T Instruction<M>::get_displacement() {
-
+int8_t Instruction<M>::get_displacement_s8() {
 	// there should only every be one displacement value!
 	if(disp_size_ != 0) {
 		throw edisassm::multiple_displacements(byte_index_);
 	}
 	
-	T ret = 0;
-	switch(sizeof(T)) {
-	case 1:
-		ret = next_byte();
-		break;
-	case 2:
-		ret = (ret & 0xff00) | static_cast<uint16_t>(next_byte());
-		ret = (ret & 0x00ff) | (static_cast<uint16_t>(next_byte()) << 8);
-		break;
-	case 4:
-		ret = (ret & 0xffffff00) | static_cast<uint32_t>(next_byte());
-		ret = (ret & 0xffff00ff) | (static_cast<uint32_t>(next_byte()) << 8);
-		ret = (ret & 0xff00ffff) | (static_cast<uint32_t>(next_byte()) << 16);
-		ret = (ret & 0x00ffffff) | (static_cast<uint32_t>(next_byte()) << 24);
-		break;
-	case 8:
-		ret = (ret & 0xffffffffffffff00) | static_cast<uint64_t>(next_byte());
-		ret = (ret & 0xffffffffffff00ff) | (static_cast<uint64_t>(next_byte()) << 8);
-		ret = (ret & 0xffffffffff00ffff) | (static_cast<uint64_t>(next_byte()) << 16);
-		ret = (ret & 0xffffffff00ffffff) | (static_cast<uint64_t>(next_byte()) << 24);
-		ret = (ret & 0xffffff00ffffffff) | (static_cast<uint64_t>(next_byte()) << 32);
-		ret = (ret & 0xffff00ffffffffff) | (static_cast<uint64_t>(next_byte()) << 40);
-		ret = (ret & 0xff00ffffffffffff) | (static_cast<uint64_t>(next_byte()) << 48);
-		ret = (ret & 0x00ffffffffffffff) | (static_cast<uint64_t>(next_byte()) << 56);
-		break;
-	default:
-		throw edisassm::invalid_instruction(byte_index_);
-		break;
-	}
-	
-	disp_size_ = sizeof(T);
+	int8_t ret = next_byte();
+	disp_size_ = sizeof(int8_t);
 	return ret;
 }
 
 //------------------------------------------------------------------------------
-// Name: get_immediate()
+// Name: get_displacement_s16()
 //------------------------------------------------------------------------------
 template <class M>
-template <class T>
-T Instruction<M>::get_immediate() {
-
-	T ret = 0;
-	switch(sizeof(T)) {
-	case 1:
-		ret = next_byte();
-		break;
-	case 2:
-		ret = (ret & 0xff00) | static_cast<uint16_t>(next_byte());
-		ret = (ret & 0x00ff) | (static_cast<uint16_t>(next_byte()) << 8);
-		break;
-	case 4:
-		ret = (ret & 0xffffff00) | static_cast<uint32_t>(next_byte());
-		ret = (ret & 0xffff00ff) | (static_cast<uint32_t>(next_byte()) << 8);
-		ret = (ret & 0xff00ffff) | (static_cast<uint32_t>(next_byte()) << 16);
-		ret = (ret & 0x00ffffff) | (static_cast<uint32_t>(next_byte()) << 24);
-		break;
-	case 8:
-		ret = (ret & 0xffffffffffffff00) | static_cast<uint64_t>(next_byte());
-		ret = (ret & 0xffffffffffff00ff) | (static_cast<uint64_t>(next_byte()) << 8);
-		ret = (ret & 0xffffffffff00ffff) | (static_cast<uint64_t>(next_byte()) << 16);
-		ret = (ret & 0xffffffff00ffffff) | (static_cast<uint64_t>(next_byte()) << 24);
-		ret = (ret & 0xffffff00ffffffff) | (static_cast<uint64_t>(next_byte()) << 32);
-		ret = (ret & 0xffff00ffffffffff) | (static_cast<uint64_t>(next_byte()) << 40);
-		ret = (ret & 0xff00ffffffffffff) | (static_cast<uint64_t>(next_byte()) << 48);
-		ret = (ret & 0x00ffffffffffffff) | (static_cast<uint64_t>(next_byte()) << 56);
-		break;
-	default:
-		throw edisassm::invalid_instruction(byte_index_);
-		break;
+int16_t Instruction<M>::get_displacement_s16() {
+	// there should only every be one displacement value!
+	if(disp_size_ != 0) {
+		throw edisassm::multiple_displacements(byte_index_);
 	}
 	
-	immediate_size_ += sizeof(T);
+	int16_t ret = 0;
+	ret = (ret & 0xff00) | static_cast<int16_t>(next_byte());
+	ret = (ret & 0x00ff) | (static_cast<int16_t>(next_byte()) << 8);
+
+	disp_size_ = sizeof(int16_t);
 	return ret;
 }
 
+//------------------------------------------------------------------------------
+// Name: get_displacement_s32()
+//------------------------------------------------------------------------------
+template <class M>
+int32_t Instruction<M>::get_displacement_s32() {
+	// there should only every be one displacement value!
+	if(disp_size_ != 0) {
+		throw edisassm::multiple_displacements(byte_index_);
+	}
+	
+	int32_t ret = 0;
+	ret = (ret & 0xffffff00) | static_cast<int32_t>(next_byte());
+	ret = (ret & 0xffff00ff) | (static_cast<int32_t>(next_byte()) << 8);
+	ret = (ret & 0xff00ffff) | (static_cast<int32_t>(next_byte()) << 16);
+	ret = (ret & 0x00ffffff) | (static_cast<int32_t>(next_byte()) << 24);
 
+	disp_size_ = sizeof(int32_t);
+	return ret;
+}
+
+//------------------------------------------------------------------------------
+// Name: get_displacement_s64()
+//------------------------------------------------------------------------------
+template <class M>
+int64_t Instruction<M>::get_displacement_s64() {
+	// there should only every be one displacement value!
+	if(disp_size_ != 0) {
+		throw edisassm::multiple_displacements(byte_index_);
+	}
+	
+	int64_t ret = 0;
+	ret = (ret & 0xffffffffffffff00) | static_cast<int64_t>(next_byte());
+	ret = (ret & 0xffffffffffff00ff) | (static_cast<int64_t>(next_byte()) << 8);
+	ret = (ret & 0xffffffffff00ffff) | (static_cast<int64_t>(next_byte()) << 16);
+	ret = (ret & 0xffffffff00ffffff) | (static_cast<int64_t>(next_byte()) << 24);
+	ret = (ret & 0xffffff00ffffffff) | (static_cast<int64_t>(next_byte()) << 32);
+	ret = (ret & 0xffff00ffffffffff) | (static_cast<int64_t>(next_byte()) << 40);
+	ret = (ret & 0xff00ffffffffffff) | (static_cast<int64_t>(next_byte()) << 48);
+	ret = (ret & 0x00ffffffffffffff) | (static_cast<int64_t>(next_byte()) << 56);
+
+	
+	disp_size_ = sizeof(int64_t);
+	return ret;
+}
+
+//------------------------------------------------------------------------------
+// Name: 
+//------------------------------------------------------------------------------
+template <class M>
+int8_t Instruction<M>::get_immediate_s8() {
+	
+	int8_t ret = next_byte();	
+	
+	immediate_size_ += sizeof(int8_t);
+	return ret;
+}
+
+//------------------------------------------------------------------------------
+// Name: 
+//------------------------------------------------------------------------------
+template <class M>
+int16_t Instruction<M>::get_immediate_s16() {
+	
+	int16_t ret = 0;
+	ret = (ret & 0xff00) | static_cast<int16_t>(next_byte());
+	ret = (ret & 0x00ff) | (static_cast<int16_t>(next_byte()) << 8);
+
+	immediate_size_ += sizeof(int16_t);
+	return ret;
+}
+
+//------------------------------------------------------------------------------
+// Name: 
+//------------------------------------------------------------------------------
+template <class M>
+int32_t Instruction<M>::get_immediate_s32() {
+	
+	int32_t ret = 0;
+
+	ret = (ret & 0xffffff00) | static_cast<int32_t>(next_byte());
+	ret = (ret & 0xffff00ff) | (static_cast<int32_t>(next_byte()) << 8);
+	ret = (ret & 0xff00ffff) | (static_cast<int32_t>(next_byte()) << 16);
+	ret = (ret & 0x00ffffff) | (static_cast<int32_t>(next_byte()) << 24);
+
+	
+	immediate_size_ += sizeof(int32_t);
+	return ret;
+}
+
+//------------------------------------------------------------------------------
+// Name: 
+//------------------------------------------------------------------------------
+template <class M>
+int64_t Instruction<M>::get_immediate_s64() {
+
+	int64_t ret = 0;
+
+	ret = (ret & 0xffffffffffffff00) | static_cast<int64_t>(next_byte());
+	ret = (ret & 0xffffffffffff00ff) | (static_cast<int64_t>(next_byte()) << 8);
+	ret = (ret & 0xffffffffff00ffff) | (static_cast<int64_t>(next_byte()) << 16);
+	ret = (ret & 0xffffffff00ffffff) | (static_cast<int64_t>(next_byte()) << 24);
+	ret = (ret & 0xffffff00ffffffff) | (static_cast<int64_t>(next_byte()) << 32);
+	ret = (ret & 0xffff00ffffffffff) | (static_cast<int64_t>(next_byte()) << 40);
+	ret = (ret & 0xff00ffffffffffff) | (static_cast<int64_t>(next_byte()) << 48);
+	ret = (ret & 0x00ffffffffffffff) | (static_cast<int64_t>(next_byte()) << 56);
+
+	immediate_size_ += sizeof(int64_t);
+	return ret;
+}
+
+//------------------------------------------------------------------------------
+// Name: 
+//------------------------------------------------------------------------------
+template <class M>
+uint8_t Instruction<M>::get_immediate_u8() {
+	
+	uint8_t ret = next_byte();
+	
+	immediate_size_ += sizeof(uint8_t);
+	return ret;
+}
+
+//------------------------------------------------------------------------------
+// Name: 
+//------------------------------------------------------------------------------
+template <class M>
+uint16_t Instruction<M>::get_immediate_u16() {
+
+	uint16_t ret = 0;
+
+	ret = (ret & 0xff00) | static_cast<uint16_t>(next_byte());
+	ret = (ret & 0x00ff) | (static_cast<uint16_t>(next_byte()) << 8);
+	
+	immediate_size_ += sizeof(uint16_t);
+	return ret;
+}
+
+//------------------------------------------------------------------------------
+// Name: 
+//------------------------------------------------------------------------------
+template <class M>
+uint32_t Instruction<M>::get_immediate_u32() {
+
+	uint32_t ret = 0;
+
+	ret = (ret & 0xffffff00) | static_cast<uint32_t>(next_byte());
+	ret = (ret & 0xffff00ff) | (static_cast<uint32_t>(next_byte()) << 8);
+	ret = (ret & 0xff00ffff) | (static_cast<uint32_t>(next_byte()) << 16);
+	ret = (ret & 0x00ffffff) | (static_cast<uint32_t>(next_byte()) << 24);
+	
+	immediate_size_ += sizeof(uint32_t);
+	return ret;
+}
+
+//------------------------------------------------------------------------------
+// Name: 
+//------------------------------------------------------------------------------
+template <class M>
+uint64_t Instruction<M>::get_immediate_u64() {
+
+	uint64_t ret = 0;
+
+	ret = (ret & 0xffffffffffffff00) | static_cast<uint64_t>(next_byte());
+	ret = (ret & 0xffffffffffff00ff) | (static_cast<uint64_t>(next_byte()) << 8);
+	ret = (ret & 0xffffffffff00ffff) | (static_cast<uint64_t>(next_byte()) << 16);
+	ret = (ret & 0xffffffff00ffffff) | (static_cast<uint64_t>(next_byte()) << 24);
+	ret = (ret & 0xffffff00ffffffff) | (static_cast<uint64_t>(next_byte()) << 32);
+	ret = (ret & 0xffff00ffffffffff) | (static_cast<uint64_t>(next_byte()) << 40);
+	ret = (ret & 0xff00ffffffffffff) | (static_cast<uint64_t>(next_byte()) << 48);
+	ret = (ret & 0x00ffffffffffffff) | (static_cast<uint64_t>(next_byte()) << 56);
+	
+	immediate_size_ += sizeof(uint64_t);
+	return ret;
+}
 
 //------------------------------------------------------------------------------
 // Name: decode_ModRM_0_32(uint8_t rm, operand_t &operand)
@@ -465,7 +584,7 @@ void Instruction<M>::decode_ModRM_0_32(uint8_t rm, operand_t &operand) {
 			// we could only get here if modrm.mod == 0x00
 			// so it is always sdword
 			operand.u.expression.base              = operand_t::REG_NULL;
-			operand.u.expression.s_disp32          = get_displacement<int32_t>();
+			operand.u.expression.s_disp32          = get_displacement_s32();
 			operand.u.expression.displacement_type = operand_t::DISP_S32;
 
 		} else {
@@ -488,13 +607,13 @@ void Instruction<M>::decode_ModRM_0_32(uint8_t rm, operand_t &operand) {
 			operand.u.expression.index             = operand_t::REG_NULL;
 			operand.u.expression.scale             = 1;
 			operand.u.expression.base              = operand_t::REG_RIP;
-			operand.u.expression.s_disp32          = get_displacement<int32_t>();
+			operand.u.expression.s_disp32          = get_displacement_s32();
 			operand.u.expression.displacement_type = operand_t::DISP_S32;
 		} else {
 			operand.u.expression.index             = operand_t::REG_NULL;
 			operand.u.expression.scale             = 1;
 			operand.u.expression.base              = operand_t::REG_NULL;
-			operand.u.expression.s_disp32          = get_displacement<int32_t>();
+			operand.u.expression.s_disp32          = get_displacement_s32();
 			operand.u.expression.displacement_type = operand_t::DISP_S32;
 		}
 	} else {
@@ -575,7 +694,7 @@ void Instruction<M>::decode_ModRM_1_32(uint8_t rm, operand_t &operand) {
 	}
 
 	operand.type_                          = TYPE;
-	operand.u.expression.s_disp8           = get_displacement<int8_t>();
+	operand.u.expression.s_disp8           = get_displacement_s8();
 	operand.u.expression.displacement_type = operand_t::DISP_S8;
 }
 
@@ -638,7 +757,7 @@ void Instruction<M>::decode_ModRM_2_32(uint8_t rm, operand_t &operand) {
 	}
 
 	operand.type_                          = TYPE;
-	operand.u.expression.s_disp32          = get_displacement<int32_t>();
+	operand.u.expression.s_disp32          = get_displacement_s32();
 	operand.u.expression.displacement_type = operand_t::DISP_S32;
 }
 
@@ -1470,12 +1589,12 @@ void Instruction<M>::decode_Ap() {
 	operand.type_      = operand_t::TYPE_ABSOLUTE;
 
 	if(prefix_ & PREFIX_OPERAND) {
-		operand.u.absolute.offset = get_immediate<uint16_t>();
+		operand.u.absolute.offset = get_immediate_u16();
 	} else {
-		operand.u.absolute.offset = get_immediate<uint32_t>();
+		operand.u.absolute.offset = get_immediate_u32();
 	}
 
-	operand.u.absolute.seg = get_immediate<uint16_t>();
+	operand.u.absolute.seg = get_immediate_u16();
 }
 
 //------------------------------------------------------------------------------
@@ -1485,7 +1604,7 @@ template <class M>
 void Instruction<M>::decode_Ib() {
 	operand_t &operand = next_operand();
 
-	operand.u.sbyte = get_immediate<int8_t>();
+	operand.u.sbyte = get_immediate_s8();
 	operand.type_   = operand_t::TYPE_IMMEDIATE8;
 }
 
@@ -1496,7 +1615,7 @@ template <class M>
 void Instruction<M>::decode_Iw() {
 	operand_t &operand = next_operand();
 
-	operand.u.sword = get_immediate<int16_t>();
+	operand.u.sword = get_immediate_s16();
 	operand.type_   = operand_t::TYPE_IMMEDIATE16;
 }
 
@@ -1507,7 +1626,7 @@ template <class M>
 void Instruction<M>::decode_Id() {
 	operand_t &operand = next_operand();
 
-	operand.u.sdword = get_immediate<int32_t>();
+	operand.u.sdword = get_immediate_s32();
 	operand.type_    = operand_t::TYPE_IMMEDIATE32;
 }
 
@@ -1518,7 +1637,7 @@ template <class M>
 void Instruction<M>::decode_Iq() {
 	operand_t &operand = next_operand();
 
-	operand.u.sqword = get_immediate<int64_t>();
+	operand.u.sqword = get_immediate_s64();
 	operand.type_    = operand_t::TYPE_IMMEDIATE64;
 }
 
@@ -1530,7 +1649,7 @@ void Instruction<M>::decode_Jb() {
 
 	operand_t &operand = next_operand();
 
-	operand.u.sbyte = get_immediate<int8_t>();
+	operand.u.sbyte = get_immediate_s8();
 	operand.type_   = operand_t::TYPE_REL8;
 }
 
@@ -1542,7 +1661,7 @@ void Instruction<M>::decode_Jw() {
 
 	operand_t &operand = next_operand();
 
-	operand.u.sword = get_immediate<int16_t>();
+	operand.u.sword = get_immediate_s16();
 	operand.type_   = operand_t::TYPE_REL16;
 }
 
@@ -1554,7 +1673,7 @@ void Instruction<M>::decode_Jd() {
 
 	operand_t &operand = next_operand();
 
-	operand.u.sdword = get_immediate<int32_t>();
+	operand.u.sdword = get_immediate_s32();
 	operand.type_    = operand_t::TYPE_REL32;
 }
 
@@ -1566,7 +1685,7 @@ void Instruction<M>::decode_Jq() {
 
 	operand_t &operand = next_operand();
 
-	operand.u.sqword = get_immediate<int64_t>();
+	operand.u.sqword = get_immediate_s64();
 	operand.type_    = operand_t::TYPE_REL64;
 }
 
@@ -1632,7 +1751,7 @@ void Instruction<M>::decode_Ob() {
 	operand.u.expression.index             = operand_t::REG_NULL;
 	operand.u.expression.base              = operand_t::REG_NULL;
 	operand.u.expression.scale             = 1;
-	operand.u.expression.s_disp32          = get_displacement<int32_t>();
+	operand.u.expression.s_disp32          = get_displacement_s32();
 }
 
 //------------------------------------------------------------------------------
@@ -1647,7 +1766,7 @@ void Instruction<M>::decode_Ow() {
 	operand.u.expression.index             = operand_t::REG_NULL;
 	operand.u.expression.base              = operand_t::REG_NULL;
 	operand.u.expression.scale             = 1;
-	operand.u.expression.s_disp32          = get_displacement<int32_t>();
+	operand.u.expression.s_disp32          = get_displacement_s32();
 }
 
 //------------------------------------------------------------------------------
@@ -1662,7 +1781,7 @@ void Instruction<M>::decode_Od() {
 	operand.u.expression.index             = operand_t::REG_NULL;
 	operand.u.expression.base              = operand_t::REG_NULL;
 	operand.u.expression.scale             = 1;
-	operand.u.expression.s_disp32          = get_displacement<int32_t>();
+	operand.u.expression.s_disp32          = get_displacement_s32();
 }
 
 //------------------------------------------------------------------------------
