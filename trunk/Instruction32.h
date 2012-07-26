@@ -396,12 +396,23 @@ int32_t Instruction<M>::get_displacement_s32() {
 //------------------------------------------------------------------------------
 template <class M>
 int64_t Instruction<M>::get_displacement_s64() {
+
 	// there should only every be one displacement value!
 	if(disp_size_ != 0) {
 		throw edisassm::multiple_displacements(byte_index_);
 	}
 	
 	int64_t ret = 0;
+<<<<<<< .mine
+	ret = (ret & 0xffffffffffffff00LL) | static_cast<int64_t>(next_byte());
+	ret = (ret & 0xffffffffffff00ffLL) | (static_cast<int64_t>(next_byte()) << 8);
+	ret = (ret & 0xffffffffff00ffffLL) | (static_cast<int64_t>(next_byte()) << 16);
+	ret = (ret & 0xffffffff00ffffffLL) | (static_cast<int64_t>(next_byte()) << 24);
+	ret = (ret & 0xffffff00ffffffffLL) | (static_cast<int64_t>(next_byte()) << 32);
+	ret = (ret & 0xffff00ffffffffffLL) | (static_cast<int64_t>(next_byte()) << 40);
+	ret = (ret & 0xff00ffffffffffffLL) | (static_cast<int64_t>(next_byte()) << 48);
+	ret = (ret & 0x00ffffffffffffffLL) | (static_cast<int64_t>(next_byte()) << 56);
+=======
 	ret = (ret & 0xffffffffffffff00ULL) | static_cast<int64_t>(next_byte());
 	ret = (ret & 0xffffffffffff00ffULL) | (static_cast<int64_t>(next_byte()) << 8);
 	ret = (ret & 0xffffffffff00ffffULL) | (static_cast<int64_t>(next_byte()) << 16);
@@ -410,8 +421,8 @@ int64_t Instruction<M>::get_displacement_s64() {
 	ret = (ret & 0xffff00ffffffffffULL) | (static_cast<int64_t>(next_byte()) << 40);
 	ret = (ret & 0xff00ffffffffffffULL) | (static_cast<int64_t>(next_byte()) << 48);
 	ret = (ret & 0x00ffffffffffffffULL) | (static_cast<int64_t>(next_byte()) << 56);
+>>>>>>> .r65
 
-	
 	disp_size_ = sizeof(int64_t);
 	return ret;
 }
@@ -468,6 +479,16 @@ int64_t Instruction<M>::get_immediate_s64() {
 
 	int64_t ret = 0;
 
+<<<<<<< .mine
+	ret = (ret & 0xffffffffffffff00LL) | static_cast<int64_t>(next_byte());
+	ret = (ret & 0xffffffffffff00ffLL) | (static_cast<int64_t>(next_byte()) << 8);
+	ret = (ret & 0xffffffffff00ffffLL) | (static_cast<int64_t>(next_byte()) << 16);
+	ret = (ret & 0xffffffff00ffffffLL) | (static_cast<int64_t>(next_byte()) << 24);
+	ret = (ret & 0xffffff00ffffffffLL) | (static_cast<int64_t>(next_byte()) << 32);
+	ret = (ret & 0xffff00ffffffffffLL) | (static_cast<int64_t>(next_byte()) << 40);
+	ret = (ret & 0xff00ffffffffffffLL) | (static_cast<int64_t>(next_byte()) << 48);
+	ret = (ret & 0x00ffffffffffffffLL) | (static_cast<int64_t>(next_byte()) << 56);
+=======
 	ret = (ret & 0xffffffffffffff00ULL) | static_cast<int64_t>(next_byte());
 	ret = (ret & 0xffffffffffff00ffULL) | (static_cast<int64_t>(next_byte()) << 8);
 	ret = (ret & 0xffffffffff00ffffULL) | (static_cast<int64_t>(next_byte()) << 16);
@@ -476,6 +497,7 @@ int64_t Instruction<M>::get_immediate_s64() {
 	ret = (ret & 0xffff00ffffffffffULL) | (static_cast<int64_t>(next_byte()) << 40);
 	ret = (ret & 0xff00ffffffffffffULL) | (static_cast<int64_t>(next_byte()) << 48);
 	ret = (ret & 0x00ffffffffffffffULL) | (static_cast<int64_t>(next_byte()) << 56);
+>>>>>>> .r65
 
 	immediate_size_ += sizeof(int64_t);
 	return ret;
