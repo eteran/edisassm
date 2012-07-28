@@ -26,6 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "edisassm_string.h"
 #include "edisassm_ops.h"
 #include "Operand.h"
+#include "ModRM.h"
 #include <cstddef>
 
 
@@ -965,7 +966,15 @@ private:
 
 	// special cases for things like SMSW Rv/Mw
 	template <decoder_t F1, decoder_t F2>
-	void decode_Reg_Mem();
+	void decode_Reg_Mem() {
+		const uint8_t modrm_byte = get_modrm();
+
+		if(modrm::mod(modrm_byte) == 0x03) {
+			(this->*F1)();
+		} else {
+			(this->*F2)();
+		}
+	}
 
 	void decode_Rv_Mw() { decode_Reg_Mem<&instruction_t::decode_Rv, &instruction_t::decode_Mw>(); }
 	void decode_Rq_Mw() { decode_Reg_Mem<&instruction_t::decode_Rq, &instruction_t::decode_Mw>(); }
