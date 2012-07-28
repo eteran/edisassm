@@ -2214,20 +2214,5 @@ int Instruction<M>::operand_size() const {
 	return ret;
 }
 
-//------------------------------------------------------------------------------
-// Name: decode_Reg_Mem()
-//------------------------------------------------------------------------------
-template <class M>
-template <typename Instruction<M>::decoder_t F1, typename Instruction<M>::decoder_t F2>
-void Instruction<M>::decode_Reg_Mem() {
-	const uint8_t modrm_byte = get_modrm();
-
-	if(modrm::mod(modrm_byte) == 0x03) {
-		(this->*F1)();
-	} else {
-		(this->*F2)();
-	}
-}
-
 #endif
 
