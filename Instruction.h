@@ -165,7 +165,9 @@ public:
 		FLAG_AMD            = 0x00000020,
 		FLAG_INTEL          = 0x00000040,
 		FLAG_32BIT_ONLY     = 0x00000080,
-		FLAG_64BIT_ONLY     = 0x00000100
+		FLAG_64BIT_ONLY     = 0x00000100,
+		FLAG_FPU            = 0x00000200,
+		FLAG_286_ONLY       = 0x00000400
 	};
 
 	enum Prefix {
