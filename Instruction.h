@@ -43,22 +43,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #ifndef INVALID_BLOCK
 #define INVALID_BLOCK \
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },\
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },\
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }
 #endif
 
 namespace {
@@ -156,13 +156,16 @@ private:
 public:
 	enum Flags {
 		FLAG_NONE           = 0x00000000,
-		FLAG_TEST_FLAGS     = 0x00000001,
-		FLAG_WRITES_FLAGS   = 0x00000002,
-		FLAG_MODIFIES_STACK = 0x00000004,
+		FLAG_R_FLAGS        = 0x00000001,
+		FLAG_W_FLAGS        = 0x00000002,
+		FLAG_RW_FLAGS       = (FLAG_R_FLAGS | FLAG_W_FLAGS),
+		FLAG_W_STACK        = 0x00000004,
 		FLAG_RING0          = 0x00000008,
 		FLAG_UNDOCUMENTED   = 0x00000010,
 		FLAG_AMD            = 0x00000020,
-		FLAG_INTEL          = 0x00000040
+		FLAG_INTEL          = 0x00000040,
+		FLAG_32BIT_ONLY     = 0x00000080,
+		FLAG_64BIT_ONLY     = 0x00000100
 	};
 
 	enum Prefix {
@@ -764,23 +767,7 @@ public:
 		OP_SALC,
 
 		// these aren't really valid, should never been seen in any external API
-		OP_GROUP1,
-		OP_GROUP2,
-		OP_GROUP3,
-		OP_GROUP4,
-		OP_GROUP5,
-		OP_GROUP6,
-		OP_GROUP7,
-		OP_GROUP8,
-		OP_GROUP9,
-		OP_GROUP10,
-		OP_GROUP11,
-		OP_GROUP12,
-		OP_GROUP13,
-		OP_GROUP14,
-		OP_GROUP15,
-		OP_GROUP16,
-		OP_GROUP17,
+		OP_GROUP,
 		OP_PREFIX,
 		OP_2BYTE,
 		OP_3BYTE,
@@ -1339,7 +1326,6 @@ private:
 		decoder_t    decoder;
 		Type         type;
 		unsigned int flags;
-		int          operand_count;
 	};
 
 private:
