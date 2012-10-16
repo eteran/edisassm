@@ -23,26 +23,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group13[8] = {
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "psrlw", &Instruction::decode_Nq_Ib, OP_PSRLW, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "psraw", &Instruction::decode_Nq_Ib, OP_PSRAW, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "psllw", &Instruction::decode_Nq_Ib, OP_PSLLW, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psrlw", &Instruction::decode_Nq_Ib, OP_PSRLW, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psraw", &Instruction::decode_Nq_Ib, OP_PSRAW, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psllw", &Instruction::decode_Nq_Ib, OP_PSLLW, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group13_66[8] = {
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "psrlw", &Instruction::decode_Uo_Ib, OP_PSRLW, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "psraw", &Instruction::decode_Uo_Ib, OP_PSRAW, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "psllw", &Instruction::decode_Uo_Ib, OP_PSLLW, FLAG_NONE, 2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psrlw", &Instruction::decode_Uo_Ib, OP_PSRLW, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psraw", &Instruction::decode_Uo_Ib, OP_PSRAW, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psllw", &Instruction::decode_Uo_Ib, OP_PSLLW, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
 
 

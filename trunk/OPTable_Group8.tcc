@@ -23,14 +23,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group8[8] = {
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
-	{ "bt", &Instruction::decode_Ev_Ib, OP_BT, FLAG_NONE, 2 },
-	{ "bts", &Instruction::decode_Ev_Ib, OP_BTS, FLAG_NONE, 2 },
-	{ "btr", &Instruction::decode_Ev_Ib, OP_BTR, FLAG_NONE, 2 },
-	{ "btc", &Instruction::decode_Ev_Ib, OP_BTC, FLAG_NONE, 2 },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "bt", &Instruction::decode_Ev_Ib, OP_BT, FLAG_NONE },
+	{ "bts", &Instruction::decode_Ev_Ib, OP_BTS, FLAG_NONE },
+	{ "btr", &Instruction::decode_Ev_Ib, OP_BTR, FLAG_NONE },
+	{ "btc", &Instruction::decode_Ev_Ib, OP_BTC, FLAG_NONE },
 };
 
 #endif

@@ -1107,29 +1107,29 @@ void Instruction<M>::wait_or_wait_prefix() {
 	
 	// opcode 0x9b... is annoying :-P
 	static const opcode_entry Opcodes_wait[1] = {
-		{ "wait",   &Instruction::decode0, OP_WAIT,   FLAG_NONE, 0 },
+		{ "wait",   &Instruction::decode0, OP_WAIT,   FLAG_NONE },
 	};
 	
 	static const opcode_entry Opcodes_wait_prefix_d9[2] = {
-		{ "fstenv", &Instruction::decode_M, OP_FSTENV, FLAG_NONE, 1 },
-		{ "fstcw", &Instruction::decode_Mw, OP_FSTCW, FLAG_NONE, 1 },
+		{ "fstenv", &Instruction::decode_M, OP_FSTENV, FLAG_NONE },
+		{ "fstcw", &Instruction::decode_Mw, OP_FSTCW, FLAG_NONE },
 	};
 
 	static const opcode_entry Opcodes_wait_prefix_db[5] = {
-		{ "feni",   &Instruction::decode0, OP_FENI,   FLAG_NONE, 0 },
-		{ "fdisi",  &Instruction::decode0, OP_FDISI,  FLAG_NONE, 0 },
-		{ "fclex",  &Instruction::decode0, OP_FCLEX,  FLAG_NONE, 0 },
-		{ "finit",  &Instruction::decode0, OP_FINIT,  FLAG_NONE, 0 },
-		{ "fsetpm", &Instruction::decode0, OP_FSETPM, FLAG_NONE, 0 },
+		{ "feni",   &Instruction::decode0, OP_FENI,   FLAG_NONE },
+		{ "fdisi",  &Instruction::decode0, OP_FDISI,  FLAG_NONE },
+		{ "fclex",  &Instruction::decode0, OP_FCLEX,  FLAG_NONE },
+		{ "finit",  &Instruction::decode0, OP_FINIT,  FLAG_NONE },
+		{ "fsetpm", &Instruction::decode0, OP_FSETPM, FLAG_NONE },
 	};
 	
 	static const opcode_entry Opcodes_wait_prefix_dd[2] = {
-		{ "fsave", &Instruction::decode_M, OP_FSAVE, FLAG_NONE, 1 },
-		{ "fstsw", &Instruction::decode_Mw, OP_FSTSW, FLAG_NONE, 1 },
+		{ "fsave", &Instruction::decode_M, OP_FSAVE, FLAG_NONE },
+		{ "fstsw", &Instruction::decode_Mw, OP_FSTSW, FLAG_NONE },
 	};
 	
 	static const opcode_entry Opcodes_wait_prefix_df[2] = {
-		{ "fstsw", &Instruction::decode_AX, OP_FSTSW, FLAG_NONE, 1 },
+		{ "fstsw", &Instruction::decode_AX, OP_FSTSW, FLAG_NONE },
 	};
 	
 	opcode_ = &Opcodes_wait[0];

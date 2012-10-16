@@ -23,14 +23,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group6[8] = {
-	{ "sldt", &Instruction::decode_Rv_Mw, OP_SLDT, FLAG_NONE, 2 },
-	{ "str", &Instruction::decode_Rv_Mw, OP_STR, FLAG_NONE, 2 },
-	{ "lldt", &Instruction::decode_Ew, OP_LLDT, FLAG_NONE, 1 },
-	{ "ltr", &Instruction::decode_Ew, OP_LTR, FLAG_NONE, 1 },
-	{ "verr", &Instruction::decode_Ew, OP_VERR, FLAG_NONE, 1 },
-	{ "verw", &Instruction::decode_Ew, OP_VERW, FLAG_NONE, 1 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 }, // NOTE: jmpe Ev on x86-64
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE, -1 },
+	{ "sldt", &Instruction::decode_Rv_Mw, OP_SLDT, FLAG_NONE },
+	{ "str", &Instruction::decode_Rv_Mw, OP_STR, FLAG_NONE },
+	{ "lldt", &Instruction::decode_Ew, OP_LLDT, FLAG_NONE },
+	{ "ltr", &Instruction::decode_Ew, OP_LTR, FLAG_NONE },
+	{ "verr", &Instruction::decode_Ew, OP_VERR, FLAG_NONE },
+	{ "verw", &Instruction::decode_Ew, OP_VERW, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }, // NOTE: jmpe Ev on x86-64
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
 
 #endif
