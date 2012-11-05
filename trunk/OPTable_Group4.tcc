@@ -23,8 +23,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group4[8] = {
-	{ "inc", &Instruction::decode_Eb, OP_INC, FLAG_NONE },
-	{ "dec", &Instruction::decode_Eb, OP_DEC, FLAG_NONE },
+	{ "inc",     &Instruction::decode_Eb,      OP_INC,     FLAG_W_FLAGS },
+	{ "dec",     &Instruction::decode_Eb,      OP_DEC,     FLAG_W_FLAGS },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },

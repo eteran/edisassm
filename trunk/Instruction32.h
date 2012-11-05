@@ -1098,6 +1098,25 @@ template <class M> void Instruction<M>::decode_cmpsw_cmpsd_cmpsq()            { 
 template <class M> void Instruction<M>::decode_pushaw_pushad_invalid()        { decode_size_sensitive(Opcodes_pushaw_pushad_invalid);}
 template <class M> void Instruction<M>::decode_popaw_popad_invalid()          { decode_size_sensitive(Opcodes_popaw_popad_invalid);}
 
+//------------------------------------------------------------------------------
+// Name: wait_or_wait_prefix()
+//------------------------------------------------------------------------------
+template <class M>
+void Instruction<M>::decode_jcxz_jecxz_jrcxz() {
+
+	static const opcode_entry opcodes[3] = {
+		{ "jcxz",  &Instruction::decode_Jb, OP_JCC, FLAG_R_FLAGS },
+		{ "jecxz", &Instruction::decode_Jb, OP_JCC, FLAG_R_FLAGS },
+		{ "jrcxz", &Instruction::decode_Jb, OP_JCC, FLAG_R_FLAGS }
+	};
+
+	switch(address_size()) {
+	case 16: opcode_ = &opcodes[0]; break;
+	case 32: opcode_ = &opcodes[1]; break;
+	case 64: opcode_ = &opcodes[2]; break;
+	}
+	(this->*(opcode_->decoder))();
+}
 
 //------------------------------------------------------------------------------
 // Name: wait_or_wait_prefix()
@@ -1111,25 +1130,25 @@ void Instruction<M>::wait_or_wait_prefix() {
 	};
 	
 	static const opcode_entry Opcodes_wait_prefix_d9[2] = {
-		{ "fstenv", &Instruction::decode_M, OP_FSTENV, FLAG_NONE },
-		{ "fstcw", &Instruction::decode_Mw, OP_FSTCW, FLAG_NONE },
+		{ "fstenv", &Instruction::decode_M,  OP_FSTENV, FLAG_FPU },
+		{ "fstcw",  &Instruction::decode_Mw, OP_FSTCW,  FLAG_FPU },
 	};
 
 	static const opcode_entry Opcodes_wait_prefix_db[5] = {
-		{ "feni",   &Instruction::decode0, OP_FENI,   FLAG_NONE },
-		{ "fdisi",  &Instruction::decode0, OP_FDISI,  FLAG_NONE },
-		{ "fclex",  &Instruction::decode0, OP_FCLEX,  FLAG_NONE },
-		{ "finit",  &Instruction::decode0, OP_FINIT,  FLAG_NONE },
-		{ "fsetpm", &Instruction::decode0, OP_FSETPM, FLAG_NONE },
+		{ "feni",   &Instruction::decode0, OP_FENI,   FLAG_FPU },
+		{ "fdisi",  &Instruction::decode0, OP_FDISI,  FLAG_FPU },
+		{ "fclex",  &Instruction::decode0, OP_FCLEX,  FLAG_FPU | FLAG_W_FLAGS },
+		{ "finit",  &Instruction::decode0, OP_FINIT,  FLAG_FPU },
+		{ "fsetpm", &Instruction::decode0, OP_FSETPM, FLAG_FPU },
 	};
 	
 	static const opcode_entry Opcodes_wait_prefix_dd[2] = {
-		{ "fsave", &Instruction::decode_M, OP_FSAVE, FLAG_NONE },
-		{ "fstsw", &Instruction::decode_Mw, OP_FSTSW, FLAG_NONE },
+		{ "fsave", &Instruction::decode_M,  OP_FSAVE, FLAG_FPU },
+		{ "fstsw", &Instruction::decode_Mw, OP_FSTSW, FLAG_FPU },
 	};
 	
 	static const opcode_entry Opcodes_wait_prefix_df[2] = {
-		{ "fstsw", &Instruction::decode_AX, OP_FSTSW, FLAG_NONE },
+		{ "fstsw", &Instruction::decode_AX, OP_FSTSW, FLAG_FPU },
 	};
 	
 	opcode_ = &Opcodes_wait[0];
@@ -2212,6 +2231,23 @@ int Instruction<M>::operand_size() const {
 	}
 
 	return ret;
+}
+
+//------------------------------------------------------------------------------
+// Name: operand_size() const
+//------------------------------------------------------------------------------
+template <class M>
+int Instruction<M>::address_size() const {	
+	
+	if(prefix_ & PREFIX_ADDRESS) {
+		if(BITS == 64) {
+			return 32;
+		} else {
+			return 16;
+		}
+	} else {
+		return BITS;
+	}
 }
 
 #endif

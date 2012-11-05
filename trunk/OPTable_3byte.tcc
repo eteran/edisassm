@@ -197,8 +197,8 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_3Byte_38_F2[
 	INVALID_BLOCK,
 
 	/* 0x0f 0x38 0xf0 - 0x0f 0x38 0xff */
-	{ "crc32", &Instruction::decode_Gq_Eb, OP_CRC32, FLAG_NONE },
-	{ "crc32", &Instruction::decode_Gq_Eq, OP_CRC32, FLAG_NONE },
+	{ "crc32",   &Instruction::decode_Gq_Eb,   OP_CRC32,   FLAG_SSE4_2 },
+	{ "crc32",   &Instruction::decode_Gq_Eq,   OP_CRC32,   FLAG_SSE4_2 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -241,8 +241,8 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_3Byte_38_66[
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "blendvps", &Instruction::decode_Vo_Wo, OP_BLENDVPS, FLAG_NONE },
-	{ "blendvpd", &Instruction::decode_Vo_Wo, OP_BLENDVPD, FLAG_NONE },
+	{ "blendvps", &Instruction::decode_Vo_Wo, OP_BLENDVPS, FLAG_SSE4_1 },
+	{ "blendvpd", &Instruction::decode_Vo_Wo, OP_BLENDVPD, FLAG_SSE4_1 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "ptest", &Instruction::decode_Vo_Wo, OP_PTEST, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -375,20 +375,20 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_3Byte_38_66[
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_3Byte_3A_66[0x100] = {
 	/* 0x0f 0x3a 0x00 - 0x0f 0x3a 0x0f */
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid,  OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid,  OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid,  OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid,  OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid,  OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid,  OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid,  OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid,  OP_INVALID, FLAG_NONE },
 	{ "roundps", &Instruction::decode_Vo_Wo_Ib, OP_ROUNDPS, FLAG_NONE },
 	{ "roundpd", &Instruction::decode_Vo_Wo_Ib, OP_ROUNDPD, FLAG_NONE },
 	{ "roundss", &Instruction::decode_Vo_Wo_Ib, OP_ROUNDSS, FLAG_NONE },
 	{ "roundsd", &Instruction::decode_Vo_Wo_Ib, OP_ROUNDSD, FLAG_NONE },
-	{ "blendps", &Instruction::decode_Vo_Wo_Ib, OP_BLENDPS, FLAG_NONE },
-	{ "blendpd", &Instruction::decode_Vo_Wo_Ib, OP_BLENDPD, FLAG_NONE },
+	{ "blendps", &Instruction::decode_Vo_Wo_Ib, OP_BLENDPS, FLAG_SSE4_1 },
+	{ "blendpd", &Instruction::decode_Vo_Wo_Ib, OP_BLENDPD, FLAG_SSE4_1 },
 	{ "pblendw", &Instruction::decode_Vo_Wo_Ib, OP_PBLENDW, FLAG_NONE },
 	{ "palignr", &Instruction::decode_Vo_Wo_Ib, OP_PALIGNR, FLAG_NONE },
 
@@ -400,7 +400,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_3Byte_3A_66[
 	{ "pextrb", &Instruction::decode_Rd_Mb_Vo_Ib, OP_PEXTRB, FLAG_NONE },
 	{ "pextrw", &Instruction::decode_Rd_Mw_Vo_Ib, OP_PEXTRW, FLAG_NONE },
 	{ "pextrd", &Instruction::decode_Ed_Vo_Ib, OP_PEXTRD, FLAG_NONE },		// x86-64: pextrq Eq, Vo, Ib
-	{ "extractps", &Instruction::decode_Ed_Vo_Ib, OP_EXTRACTPS, FLAG_NONE },	// x86-64: extractps Ev, Vo, Ib
+	{ "extractps", &Instruction::decode_Ed_Vo_Ib, OP_EXTRACTPS, FLAG_SSE4_1 },	// x86-64: extractps Ev, Vo, Ib
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -411,29 +411,29 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_3Byte_3A_66[
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 
 	/* 0x0f 0x3a 0x20 - 0x0f 0x3a 0x2f */
-	{ "pinsrb", &Instruction::decode_Vo_Mb_Ib, OP_PINSRB, FLAG_NONE },
-	{ "insertps", &Instruction::decode_Vo_Md_Ib, OP_INSERTPS, FLAG_NONE },
-	{ "pinsrd", &Instruction::decode_Vo_Ed_Ib, OP_PINSRD, FLAG_NONE },		// x86-64: pinsrq Vo, Eq, Ib
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "pinsrb",   &Instruction::decode_Vo_Mb_Ib, OP_PINSRB,   FLAG_NONE },
+	{ "insertps", &Instruction::decode_Vo_Md_Ib, OP_INSERTPS, FLAG_SSE4_1 },
+	{ "pinsrd",   &Instruction::decode_Vo_Ed_Ib, OP_PINSRD,   FLAG_NONE },		// x86-64: pinsrq Vo, Eq, Ib
+	{ "invalid",  &Instruction::decode_invalid,  OP_INVALID,  FLAG_NONE },
+	{ "invalid",  &Instruction::decode_invalid,  OP_INVALID,  FLAG_NONE },
+	{ "invalid",  &Instruction::decode_invalid,  OP_INVALID,  FLAG_NONE },
+	{ "invalid",  &Instruction::decode_invalid,  OP_INVALID,  FLAG_NONE },
+	{ "invalid",  &Instruction::decode_invalid,  OP_INVALID,  FLAG_NONE },
+	{ "invalid",  &Instruction::decode_invalid,  OP_INVALID,  FLAG_NONE },
+	{ "invalid",  &Instruction::decode_invalid,  OP_INVALID,  FLAG_NONE },
+	{ "invalid",  &Instruction::decode_invalid,  OP_INVALID,  FLAG_NONE },
+	{ "invalid",  &Instruction::decode_invalid,  OP_INVALID,  FLAG_NONE },
+	{ "invalid",  &Instruction::decode_invalid,  OP_INVALID,  FLAG_NONE },
+	{ "invalid",  &Instruction::decode_invalid,  OP_INVALID,  FLAG_NONE },
+	{ "invalid",  &Instruction::decode_invalid,  OP_INVALID,  FLAG_NONE },
+	{ "invalid",  &Instruction::decode_invalid,  OP_INVALID,  FLAG_NONE },
 
 	/* 0x0f 0x3a 0x30 - 0x0f 0x3a 0x3f */
 	INVALID_BLOCK,
 
 	/* 0x0f 0x3a 0x40 - 0x0f 0x3a 0x4f */
-	{ "dpps", &Instruction::decode_Vo_Wo_Ib, OP_DPPS, FLAG_NONE },
-	{ "dppd", &Instruction::decode_Vo_Wo_Ib, OP_DPPD, FLAG_NONE },
+	{ "dpps", &Instruction::decode_Vo_Wo_Ib, OP_DPPS, FLAG_SSE4_1 },
+	{ "dppd", &Instruction::decode_Vo_Wo_Ib, OP_DPPD, FLAG_SSE4_1 },
 	{ "mpsadbw", &Instruction::decode_Vo_Wo_Ib, OP_MPSADBW, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },

@@ -23,13 +23,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group5[8] = {
-	{ "inc", &Instruction::decode_Ev, OP_INC, FLAG_NONE },
-	{ "dec", &Instruction::decode_Ev, OP_DEC, FLAG_NONE },
-	{ "call", &Instruction::decode_Ev, OP_CALL, FLAG_NONE },
-	{ "callf", &Instruction::decode_Ep, OP_CALL, FLAG_NONE },
-	{ "jmp", &Instruction::decode_Ev, OP_JMP, FLAG_NONE },
-	{ "jmpf", &Instruction::decode_Ep, OP_JMP, FLAG_NONE },
-	{ "push", &Instruction::decode_Ev, OP_PUSH, FLAG_NONE },
+	{ "inc",     &Instruction::decode_Ev,      OP_INC,     FLAG_W_FLAGS },
+	{ "dec",     &Instruction::decode_Ev,      OP_DEC,     FLAG_W_FLAGS },
+	{ "call",    &Instruction::decode_Ev,      OP_CALL,    FLAG_W_STACK },
+	{ "callf",   &Instruction::decode_Ep,      OP_CALL,    FLAG_32BIT_ONLY | FLAG_W_STACK },
+	{ "jmp",     &Instruction::decode_Ev,      OP_JMP,     FLAG_NONE },
+	{ "jmpf",    &Instruction::decode_Ep,      OP_JMP,     FLAG_NONE },
+	{ "push",    &Instruction::decode_Ev,      OP_PUSH,    FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
 
