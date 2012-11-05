@@ -253,8 +253,8 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "leave",            &Instruction::decode0,                 OP_LEAVE, FLAG_W_STACK },
 	{ "retf",             &Instruction::decode_Iw,               OP_RETF,  FLAG_W_STACK },
 	{ "retf",             &Instruction::decode0,                 OP_RETF,  FLAG_W_STACK },
-	{ "int3",             &Instruction::decode0,                 OP_INT3,  FLAG_W_FLAGS },
-	{ "int",              &Instruction::decode_Ib,               OP_INT,   FLAG_W_FLAGS },
+	{ "int3",             &Instruction::decode0,                 OP_INT3,  FLAG_RW_FLAGS },
+	{ "int",              &Instruction::decode_Ib,               OP_INT,   FLAG_RW_FLAGS },
 	{ "into",             &Instruction::decode0,                 OP_INTO,  FLAG_RW_FLAGS | FLAG_32BIT_ONLY }, // ia-32 only
 	{ "iretw/iret/iretq", &Instruction::decode_iretw_iret_iretq, OP_GROUP, FLAG_W_STACK | FLAG_R_FLAGS },
 
@@ -277,22 +277,22 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "esc7",   &Instruction::decode_x87,     OP_FPU,   FLAG_NONE },
 
 	/* 0xe0 - 0xef */
-	{ "loopne", &Instruction::decode_Jb,     OP_LOOPNE, FLAG_R_FLAGS },
-	{ "loope",  &Instruction::decode_Jb,     OP_LOOPE,  FLAG_R_FLAGS },
-	{ "loop",   &Instruction::decode_Jb,     OP_LOOP,   FLAG_NONE },
-	{ "jcez",   &Instruction::decode_Jb,     OP_JCC,    FLAG_NONE },
-	{ "in",     &Instruction::decode_AL_Ib,  OP_IN,     FLAG_NONE },
-	{ "in",     &Instruction::decode_eAX_Ib, OP_IN,     FLAG_NONE },
-	{ "out",    &Instruction::decode_Ib_AL,  OP_OUT,    FLAG_NONE },
-	{ "out",    &Instruction::decode_Ib_eAX, OP_OUT,    FLAG_NONE },
-	{ "call",   &Instruction::decode_Jz,     OP_CALL,   FLAG_NONE },
-	{ "jmp",    &Instruction::decode_Jz,     OP_JMP,    FLAG_NONE },
-	{ "jmp",    &Instruction::decode_Ap,     OP_JMP,    FLAG_32BIT_ONLY }, // ia-32 only
-	{ "jmp",    &Instruction::decode_Jb,     OP_JMP,    FLAG_NONE },
-	{ "in",     &Instruction::decode_AL_DX,  OP_IN,     FLAG_NONE },
-	{ "in",     &Instruction::decode_eAX_DX, OP_IN,     FLAG_NONE },
-	{ "out",    &Instruction::decode_DX_AL,  OP_OUT,    FLAG_NONE },
-	{ "out",    &Instruction::decode_DX_eAX, OP_OUT,    FLAG_NONE },
+	{ "loopne",           &Instruction::decode_Jb,               OP_LOOPNE, FLAG_NONE },
+	{ "loope",            &Instruction::decode_Jb,               OP_LOOPE,  FLAG_NONE },
+	{ "loop",             &Instruction::decode_Jb,               OP_LOOP,   FLAG_NONE },
+	{ "jcxz/jecxz/jrcxz", &Instruction::decode_jcxz_jecxz_jrcxz, OP_JCC,    FLAG_NONE },
+	{ "in",               &Instruction::decode_AL_Ib,            OP_IN,     FLAG_NONE },
+	{ "in",               &Instruction::decode_eAX_Ib,           OP_IN,     FLAG_NONE },
+	{ "out",              &Instruction::decode_Ib_AL,            OP_OUT,    FLAG_NONE },
+	{ "out",              &Instruction::decode_Ib_eAX,           OP_OUT,    FLAG_NONE },
+	{ "call",             &Instruction::decode_Jz,               OP_CALL,   FLAG_W_STACK },
+	{ "jmp",              &Instruction::decode_Jz,               OP_JMP,    FLAG_NONE },
+	{ "jmp",              &Instruction::decode_Ap,               OP_JMP,    FLAG_32BIT_ONLY }, // ia-32 only
+	{ "jmp",              &Instruction::decode_Jb,               OP_JMP,    FLAG_NONE },
+	{ "in",               &Instruction::decode_AL_DX,            OP_IN,     FLAG_NONE },
+	{ "in",               &Instruction::decode_eAX_DX,           OP_IN,     FLAG_NONE },
+	{ "out",              &Instruction::decode_DX_AL,            OP_OUT,    FLAG_NONE },
+	{ "out",              &Instruction::decode_DX_eAX,           OP_OUT,    FLAG_NONE },
 
 	/* 0xf0 - 0xff */
 	{ "prefix lock",  &Instruction::decode_invalid, OP_PREFIX,  FLAG_NONE },

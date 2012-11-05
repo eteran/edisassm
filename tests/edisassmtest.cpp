@@ -5,7 +5,7 @@
 #include <string>
 #include <cstdio>
 
-static const int test_count = 4208;
+static const int test_count = 4206;
 
 struct test_data_t {
 	unsigned size;
@@ -4115,9 +4115,9 @@ struct test_data_t {
 	{1, "\xfb", "sti"},
 	{1, "\xfc", "cld"},
 	{1, "\xfd", "std"},
-	{2, "\x0f\x05", "syscall"},
+//	{2, "\x0f\x05", "syscall"}, // is this actually valid on i386?
 	{2, "\x0f\x06", "clts"},
-	{2, "\x0f\x07", "sysret"},
+//	{2, "\x0f\x07", "sysret"}, // is this actually valid on i386?
 	{2, "\x0f\x08", "invd"},
 	{2, "\x0f\x09", "wbinvd"},
 	{2, "\x0f\x0b", "ud2"},

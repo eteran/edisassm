@@ -27,10 +27,10 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group8[8] = 
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "bt", &Instruction::decode_Ev_Ib, OP_BT, FLAG_NONE },
-	{ "bts", &Instruction::decode_Ev_Ib, OP_BTS, FLAG_NONE },
-	{ "btr", &Instruction::decode_Ev_Ib, OP_BTR, FLAG_NONE },
-	{ "btc", &Instruction::decode_Ev_Ib, OP_BTC, FLAG_NONE },
+	{ "bt",      &Instruction::decode_Ev_Ib,   OP_BT,      FLAG_W_FLAGS },
+	{ "bts",     &Instruction::decode_Ev_Ib,   OP_BTS,     FLAG_W_FLAGS },
+	{ "btr",     &Instruction::decode_Ev_Ib,   OP_BTR,     FLAG_W_FLAGS },
+	{ "btc",     &Instruction::decode_Ev_Ib,   OP_BTC,     FLAG_W_FLAGS },
 };
 
 #endif

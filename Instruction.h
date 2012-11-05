@@ -167,7 +167,15 @@ public:
 		FLAG_32BIT_ONLY     = 0x00000080,
 		FLAG_64BIT_ONLY     = 0x00000100,
 		FLAG_FPU            = 0x00000200,
-		FLAG_286_ONLY       = 0x00000400
+		FLAG_286_ONLY       = 0x00000400,
+		FLAG_MMX            = 0x00000800,
+		FLAG_SSE            = 0x00001000,
+		FLAG_SSE2           = 0x00002000,
+		FLAG_SSE3           = 0x00004000,
+		FLAG_SSE4           = 0x00008000,
+		FLAG_SSE4a          = 0x00010000,
+		FLAG_SSE4_1         = 0x00020000,
+		FLAG_SSE4_2         = 0x00040000
 	};
 
 	enum Prefix {
@@ -575,7 +583,7 @@ public:
 		OP_ORPD,
 		OP_XORPD,
 		OP_CMPPD,
-		OP_CMPSD,
+		OP_CMPSD, // TODO: this mnemonic conflicts with non-SSE opcode A7!
 		OP_COMISD,
 		OP_UCOMISD,
 		OP_SHUFPD,
@@ -829,6 +837,7 @@ private:
 	void decode_pushfw_pushfd_pushfq();
 	void decode_popfw_popfd_popfq();
 	void decode_movsw_movsd_movsq();
+	void decode_jcxz_jecxz_jrcxz();
 
 	void decode_invalid_cmpxchg8b_cmpxchg16b();
 
@@ -1321,6 +1330,7 @@ public:
 
 private:
 	int operand_size() const;
+	int address_size() const;
 
 private:
 	struct opcode_entry {
