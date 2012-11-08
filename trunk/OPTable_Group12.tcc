@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group12[16] = {
-	{ "mov", &Instruction::decode_Eb_Ib, OP_MOV, FLAG_NONE },
+	{ "mov",     &Instruction::decode_Eb_Ib,   OP_MOV,     FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -32,7 +32,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group12[16] 
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 
-	{ "mov", &Instruction::decode_Ev_Iz, OP_MOV, FLAG_NONE },
+	{ "mov",     &Instruction::decode_Ev_Iz,   OP_MOV,     FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },

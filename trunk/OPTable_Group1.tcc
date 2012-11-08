@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group1[32] = {
 	{ "add", &Instruction::decode_Eb_Ib, OP_ADD, FLAG_W_FLAGS },
-	{ "or", &Instruction::decode_Eb_Ib, OP_OR, FLAG_NONE },
+	{ "or",  &Instruction::decode_Eb_Ib, OP_OR,  FLAG_W_FLAGS },
 	{ "adc", &Instruction::decode_Eb_Ib, OP_ADC, FLAG_RW_FLAGS },
 	{ "sbb", &Instruction::decode_Eb_Ib, OP_SBB, FLAG_NONE },
 	{ "and", &Instruction::decode_Eb_Ib, OP_AND, FLAG_W_FLAGS },
@@ -33,7 +33,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group1[32] =
 	{ "cmp", &Instruction::decode_Eb_Ib, OP_CMP, FLAG_W_FLAGS },
 
 	{ "add", &Instruction::decode_Ev_Iz, OP_ADD, FLAG_W_FLAGS },
-	{ "or", &Instruction::decode_Ev_Iz, OP_OR, FLAG_NONE },
+	{ "or",  &Instruction::decode_Ev_Iz, OP_OR,  FLAG_W_FLAGS },
 	{ "adc", &Instruction::decode_Ev_Iz, OP_ADC, FLAG_RW_FLAGS },
 	{ "sbb", &Instruction::decode_Ev_Iz, OP_SBB, FLAG_NONE },
 	{ "and", &Instruction::decode_Ev_Iz, OP_AND, FLAG_W_FLAGS },
@@ -42,7 +42,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group1[32] =
 	{ "cmp", &Instruction::decode_Ev_Iz, OP_CMP, FLAG_W_FLAGS },
 
 	{ "add", &Instruction::decode_Eb_Ib, OP_ADD, FLAG_W_FLAGS },
-	{ "or", &Instruction::decode_Eb_Ib, OP_OR, FLAG_NONE },
+	{ "or",  &Instruction::decode_Eb_Ib, OP_OR,  FLAG_W_FLAGS },
 	{ "adc", &Instruction::decode_Eb_Ib, OP_ADC, FLAG_RW_FLAGS },
 	{ "sbb", &Instruction::decode_Eb_Ib, OP_SBB, FLAG_NONE },
 	{ "and", &Instruction::decode_Eb_Ib, OP_AND, FLAG_W_FLAGS },
@@ -51,7 +51,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group1[32] =
 	{ "cmp", &Instruction::decode_Eb_Ib, OP_CMP, FLAG_W_FLAGS },
 
 	{ "add", &Instruction::decode_Ev_Ib, OP_ADD, FLAG_W_FLAGS },
-	{ "or", &Instruction::decode_Ev_Ib, OP_OR, FLAG_NONE },
+	{ "or",  &Instruction::decode_Ev_Ib, OP_OR,  FLAG_W_FLAGS },
 	{ "adc", &Instruction::decode_Ev_Ib, OP_ADC, FLAG_RW_FLAGS },
 	{ "sbb", &Instruction::decode_Ev_Ib, OP_SBB, FLAG_NONE },
 	{ "and", &Instruction::decode_Ev_Ib, OP_AND, FLAG_W_FLAGS },

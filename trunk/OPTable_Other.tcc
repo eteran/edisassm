@@ -25,14 +25,14 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcode_invalid =
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_nop_pause_xchg[3] = {
-	{ "nop",	&Instruction::decode0, OP_NOP, FLAG_NONE },
-	{ "pause",	&Instruction::decode0, OP_PAUSE, FLAG_NONE },
-	{ "xchg", 	&Instruction::template decode2<&instruction_t::decode_rAX, &instruction_t::decode_rAX_NOREX>, OP_XCHG, FLAG_NONE },
+	{ "nop",	&Instruction::decode0,                                                                        OP_NOP,   FLAG_NONE },
+	{ "pause",	&Instruction::decode0,                                                                        OP_PAUSE, FLAG_SSE2 },
+	{ "xchg", 	&Instruction::template decode2<&instruction_t::decode_rAX, &instruction_t::decode_rAX_NOREX>, OP_XCHG,  FLAG_NONE },
 };
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_cbw_cwde_cdqe[3] = {
-	{ "cbw",  &Instruction::decode0, OP_CBW, FLAG_NONE },
+	{ "cbw",  &Instruction::decode0, OP_CBW,  FLAG_NONE },
 	{ "cwde", &Instruction::decode0, OP_CWDE, FLAG_NONE },
 	{ "cdqe", &Instruction::decode0, OP_CDQE, FLAG_NONE },
 };
@@ -53,9 +53,9 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_stosw_stosd_
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_lodsw_lodsd_lodsq[3] = {
-	{ "lodsw", &Instruction::decode0, OP_LODS, FLAG_NONE },
-	{ "lodsd", &Instruction::decode0, OP_LODS, FLAG_NONE },
-	{ "lodsq", &Instruction::decode0, OP_LODS, FLAG_NONE },
+	{ "lodsw", &Instruction::decode0, OP_LODS, FLAG_R_FLAGS },
+	{ "lodsd", &Instruction::decode0, OP_LODS, FLAG_R_FLAGS },
+	{ "lodsq", &Instruction::decode0, OP_LODS, FLAG_R_FLAGS },
 };
 
 template <class M>
@@ -67,16 +67,16 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_scasw_scasd_
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_iretw_iret_iretq[3] = {
-	{ "iretw", &Instruction::decode0, OP_IRET, FLAG_W_FLAGS },
-	{ "iret",  &Instruction::decode0, OP_IRET, FLAG_W_FLAGS },
-	{ "iretq", &Instruction::decode0, OP_IRET, FLAG_W_FLAGS },
+	{ "iretw", &Instruction::decode0, OP_IRET, FLAG_W_FLAGS | FLAG_W_STACK },
+	{ "iret",  &Instruction::decode0, OP_IRET, FLAG_W_FLAGS | FLAG_W_STACK },
+	{ "iretq", &Instruction::decode0, OP_IRET, FLAG_W_FLAGS | FLAG_W_STACK },
 };
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_movsw_movsd_movsq[3] = {
-	{ "movsw", &Instruction::decode0, OP_MOVS, FLAG_NONE },
-	{ "movsd", &Instruction::decode0, OP_MOVS, FLAG_NONE },
-	{ "movsq", &Instruction::decode0, OP_MOVS, FLAG_NONE },
+	{ "movsw", &Instruction::decode0, OP_MOVS, FLAG_R_FLAGS },
+	{ "movsd", &Instruction::decode0, OP_MOVS, FLAG_R_FLAGS },
+	{ "movsq", &Instruction::decode0, OP_MOVS, FLAG_R_FLAGS },
 };
 
 template <class M>
@@ -123,15 +123,15 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_cmpsw_cmpsd_
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_pushaw_pushad_invalid[3] = {
-	{ "pushaw",  &Instruction::decode0,        OP_PUSHA,   FLAG_NONE },
-	{ "pushad",  &Instruction::decode0,        OP_PUSHA,   FLAG_NONE },
+	{ "pushaw",  &Instruction::decode0,        OP_PUSHA,   FLAG_NONE }, // ia-32 only
+	{ "pushad",  &Instruction::decode0,        OP_PUSHA,   FLAG_NONE }, // ia-32 only
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_popaw_popad_invalid[3] = {
-	{ "popaw",   &Instruction::decode0,        OP_POPA,    FLAG_NONE },
-	{ "popad",   &Instruction::decode0,        OP_POPA,    FLAG_NONE },
+	{ "popaw",   &Instruction::decode0,        OP_POPA,    FLAG_NONE }, // ia-32 only
+	{ "popad",   &Instruction::decode0,        OP_POPA,    FLAG_NONE }, // ia-32 only
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
 
