@@ -23,23 +23,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group3[16] = {
-	{ "test", &Instruction::decode_Eb_Ib, OP_TEST, FLAG_NONE },
+	{ "test",    &Instruction::decode_Eb_Ib,   OP_TEST,    FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "not", &Instruction::decode_Eb, OP_NOT, FLAG_NONE },
-	{ "neg", &Instruction::decode_Eb, OP_NEG, FLAG_NONE },
-	{ "mul", &Instruction::decode_Eb, OP_MUL, FLAG_NONE },
-	{ "imul", &Instruction::decode_Eb, OP_IMUL, FLAG_W_FLAGS },
-	{ "div", &Instruction::decode_Eb, OP_DIV, FLAG_NONE },
-	{ "idiv", &Instruction::decode_Eb, OP_IDIV, FLAG_NONE },
+	{ "not",     &Instruction::decode_Eb,      OP_NOT,     FLAG_NONE },
+	{ "neg",     &Instruction::decode_Eb,      OP_NEG,     FLAG_W_FLAGS },
+	{ "mul",     &Instruction::decode_Eb,      OP_MUL,     FLAG_W_FLAGS },
+	{ "imul",    &Instruction::decode_Eb,      OP_IMUL,    FLAG_W_FLAGS },
+	{ "div",     &Instruction::decode_Eb,      OP_DIV,     FLAG_NONE },
+	{ "idiv",    &Instruction::decode_Eb,      OP_IDIV,    FLAG_NONE },
 
-	{ "test", &Instruction::decode_Ev_Iz, OP_TEST, FLAG_NONE },
+	{ "test",    &Instruction::decode_Ev_Iz,   OP_TEST,    FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "not", &Instruction::decode_Ev, OP_NOT, FLAG_NONE },
-	{ "neg", &Instruction::decode_Ev, OP_NEG, FLAG_NONE },
-	{ "mul", &Instruction::decode_Ev, OP_MUL, FLAG_NONE },
-	{ "imul", &Instruction::decode_Ev, OP_IMUL, FLAG_W_FLAGS },
-	{ "div", &Instruction::decode_Ev, OP_DIV, FLAG_NONE },
-	{ "idiv", &Instruction::decode_Ev, OP_IDIV, FLAG_NONE },
+	{ "not",     &Instruction::decode_Ev,      OP_NOT,     FLAG_NONE },
+	{ "neg",     &Instruction::decode_Ev,      OP_NEG,     FLAG_W_FLAGS },
+	{ "mul",     &Instruction::decode_Ev,      OP_MUL,     FLAG_W_FLAGS },
+	{ "imul",    &Instruction::decode_Ev,      OP_IMUL,    FLAG_W_FLAGS },
+	{ "div",     &Instruction::decode_Ev,      OP_DIV,     FLAG_NONE },
+	{ "idiv",    &Instruction::decode_Ev,      OP_IDIV,    FLAG_NONE },
 };
 
 #endif

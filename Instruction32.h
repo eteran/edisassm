@@ -865,10 +865,10 @@ Instruction<M>::~Instruction() {
 }
 
 //------------------------------------------------------------------------------
-// Name: initialize()
+// Name: disassemble()
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::initialize() {
+void Instruction<M>::disassemble() {
 
 	for(int i = 0; i < M::MAX_OPERANDS; ++i) {
 		operands_[i].invalidate();
@@ -2234,7 +2234,7 @@ int Instruction<M>::operand_size() const {
 }
 
 //------------------------------------------------------------------------------
-// Name: operand_size() const
+// Name: address_size() const
 //------------------------------------------------------------------------------
 template <class M>
 int Instruction<M>::address_size() const {	

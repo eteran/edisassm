@@ -36,16 +36,16 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group7[8] = 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group7A[64] = {
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "vmcall", &Instruction::decode0, OP_VMCALL, FLAG_NONE },
-	{ "vmlaunch", &Instruction::decode0, OP_VMLAUNCH, FLAG_NONE },
-	{ "vmresume", &Instruction::decode0, OP_VMRESUME, FLAG_NONE },
-	{ "vmxoff", &Instruction::decode0, OP_VMXOFF, FLAG_NONE },
+	{ "vmcall", &Instruction::decode0, OP_VMCALL, FLAG_INTEL_VT },
+	{ "vmlaunch", &Instruction::decode0, OP_VMLAUNCH, FLAG_INTEL_VT },
+	{ "vmresume", &Instruction::decode0, OP_VMRESUME, FLAG_INTEL_VT },
+	{ "vmxoff", &Instruction::decode0, OP_VMXOFF, FLAG_INTEL_VT },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	
-	{ "monitor", &Instruction::decode0, OP_MONITOR, FLAG_NONE },
-	{ "mwait", &Instruction::decode0, OP_MWAIT, FLAG_NONE },
+	{ "monitor", &Instruction::decode0, OP_MONITOR, FLAG_SSE3 },
+	{ "mwait", &Instruction::decode0, OP_MWAIT, FLAG_SSE3 },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
