@@ -25,11 +25,11 @@ template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group5[8] = {
 	{ "inc",     &Instruction::decode_Ev,      OP_INC,     FLAG_W_FLAGS },
 	{ "dec",     &Instruction::decode_Ev,      OP_DEC,     FLAG_W_FLAGS },
-	{ "call",    &Instruction::decode_Ev,      OP_CALL,    FLAG_W_STACK },
-	{ "callf",   &Instruction::decode_Ep,      OP_CALL,    FLAG_32BIT_ONLY | FLAG_W_STACK },
+	{ "call",    &Instruction::decode_Ev,      OP_CALL,    FLAG_STACK },
+	{ "callf",   &Instruction::decode_Ep,      OP_CALL,    FLAG_32BIT_ONLY | FLAG_STACK },
 	{ "jmp",     &Instruction::decode_Ev,      OP_JMP,     FLAG_NONE },
 	{ "jmpf",    &Instruction::decode_Ep,      OP_JMP,     FLAG_NONE },
-	{ "push",    &Instruction::decode_Ev,      OP_PUSH,    FLAG_NONE },
+	{ "push",    &Instruction::decode_Ev,      OP_PUSH,    FLAG_STACK },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
 

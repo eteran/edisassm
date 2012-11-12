@@ -57,7 +57,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Lo[64] =
 
 	/* 0xdb 0x00 - 0xdb 0xbf */
 	{ "fild",    &Instruction::decode_ShortInteger, OP_FILD,    FLAG_FPU },
-	{ "fisttp",  &Instruction::decode_ShortInteger, OP_FISTTP,  FLAG_FPU },
+	{ "fisttp",  &Instruction::decode_ShortInteger, OP_FISTTP,  FLAG_FPU | FLAG_SSE3 },
 	{ "fist",    &Instruction::decode_ShortInteger, OP_FIST,    FLAG_FPU },
 	{ "fistp",   &Instruction::decode_ShortInteger, OP_FISTP,   FLAG_FPU },
 	{ "invalid", &Instruction::decode_invalid,      OP_INVALID, FLAG_NONE },
@@ -77,7 +77,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Lo[64] =
 
 	/* 0xdd 0x00 - 0xdd 0xbf */
 	{ "fld",     &Instruction::decode_DoubleReal,  OP_FLD,     FLAG_FPU },
-	{ "fisttp",  &Instruction::decode_LongInteger, OP_FISTTP,  FLAG_FPU },
+	{ "fisttp",  &Instruction::decode_LongInteger, OP_FISTTP,  FLAG_FPU | FLAG_SSE3 },
 	{ "fst",     &Instruction::decode_DoubleReal,  OP_FST,     FLAG_FPU },
 	{ "fstp",    &Instruction::decode_DoubleReal,  OP_FSTP,    FLAG_FPU },
 	{ "frstor",  &Instruction::decode_M108,        OP_FRSTOR,  FLAG_FPU },
@@ -97,7 +97,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Lo[64] =
 
 	/* 0xdf 0x00 - 0xdf 0xbf */
 	{ "fild",   &Instruction::decode_WordInteger, OP_FILD,   FLAG_FPU },
-	{ "fisttp", &Instruction::decode_WordInteger, OP_FISTTP, FLAG_FPU },
+	{ "fisttp", &Instruction::decode_WordInteger, OP_FISTTP, FLAG_FPU | FLAG_SSE3 },
 	{ "fist",   &Instruction::decode_WordInteger, OP_FIST,   FLAG_FPU },
 	{ "fistp",  &Instruction::decode_WordInteger, OP_FISTP,  FLAG_FPU },
 	{ "fbld",   &Instruction::decode_PackedBCD,   OP_FBLD,   FLAG_FPU },

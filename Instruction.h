@@ -159,7 +159,7 @@ public:
 		FLAG_R_FLAGS        = 0x00000001,
 		FLAG_W_FLAGS        = 0x00000002,
 		FLAG_RW_FLAGS       = (FLAG_R_FLAGS | FLAG_W_FLAGS),
-		FLAG_W_STACK        = 0x00000004,
+		FLAG_STACK          = 0x00000004,
 		FLAG_RING0          = 0x00000008,
 		FLAG_UNDOCUMENTED   = 0x00000010,
 		FLAG_AMD            = 0x00000020,
@@ -178,7 +178,7 @@ public:
 		FLAG_SSE4_1         = 0x00040000,
 		FLAG_SSE4_2         = 0x00080000,
 		FLAG_PENTIUM_PRO    = 0x00100000,
-		FLAG_INTEL_VT       = 0x00200000
+		FLAG_VMX            = 0x00200000
 	};
 
 	enum Prefix {
@@ -1331,6 +1331,7 @@ private:
 	static typename operand_t::Register index_to_reg_tr(uint8_t index)   { return static_cast<typename operand_t::Register>(operand_t::REG_TR0  + index); }
 
 public:
+	unsigned int flags() const                        { return opcode_->flags; }
 	Type type() const                                 { return opcode_->type; }
 	address_t rva() const                             { return rva_; }
 	bool valid() const                                { return type() != OP_INVALID; }
