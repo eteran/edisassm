@@ -23,8 +23,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 template <class M>
 const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group16_Mem[8] = {
-	{ "fxsave",  &Instruction::decode_M512,    OP_FXSAVE,  FLAG_FPU },
-	{ "fxrstor", &Instruction::decode_M512,    OP_FXRSTOR, FLAG_FPU },
+	{ "fxsave",  &Instruction::decode_M512,    OP_FXSAVE,  FLAG_SSE },
+	{ "fxrstor", &Instruction::decode_M512,    OP_FXRSTOR, FLAG_SSE },
 	{ "ldmxcsr", &Instruction::decode_Md,      OP_LDMXCSR, FLAG_SSE },
 	{ "stmxcsr", &Instruction::decode_Md,      OP_STMXCSR, FLAG_SSE },
 	{ "xsave",   &Instruction::decode_M,       OP_XSAVE,   FLAG_NONE },

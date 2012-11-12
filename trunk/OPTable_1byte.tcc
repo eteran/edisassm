@@ -31,15 +31,15 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "add",   &Instruction::decode_Gv_Ev,  OP_ADD,   FLAG_W_FLAGS },
 	{ "add",   &Instruction::decode_AL_Ib,  OP_ADD,   FLAG_W_FLAGS },
 	{ "add",   &Instruction::decode_rAX_Iz, OP_ADD,   FLAG_W_FLAGS },
-	{ "push",  &Instruction::decode_SegES,  OP_PUSH,  FLAG_32BIT_ONLY | FLAG_W_STACK }, // ia-32 only
-	{ "pop",   &Instruction::decode_SegES,  OP_POP,   FLAG_32BIT_ONLY | FLAG_W_STACK }, // ia-32 only
+	{ "push",  &Instruction::decode_SegES,  OP_PUSH,  FLAG_32BIT_ONLY | FLAG_STACK }, // ia-32 only
+	{ "pop",   &Instruction::decode_SegES,  OP_POP,   FLAG_32BIT_ONLY | FLAG_STACK }, // ia-32 only
 	{ "or",    &Instruction::decode_Eb_Gb,  OP_OR,    FLAG_W_FLAGS },
 	{ "or",    &Instruction::decode_Ev_Gv,  OP_OR,    FLAG_W_FLAGS },
 	{ "or",    &Instruction::decode_Gb_Eb,  OP_OR,    FLAG_W_FLAGS },
 	{ "or",    &Instruction::decode_Gv_Ev,  OP_OR,    FLAG_W_FLAGS },
 	{ "or",    &Instruction::decode_AL_Ib,  OP_OR,    FLAG_W_FLAGS },
 	{ "or",    &Instruction::decode_rAX_Iz, OP_OR,    FLAG_W_FLAGS },
-	{ "push",  &Instruction::decode_SegCS,  OP_PUSH,  FLAG_32BIT_ONLY | FLAG_W_STACK }, // ia-32 only
+	{ "push",  &Instruction::decode_SegCS,  OP_PUSH,  FLAG_32BIT_ONLY | FLAG_STACK }, // ia-32 only
 	{ "2byte", &Instruction::decode_2byte,  OP_2BYTE, FLAG_NONE },
 
 	/* 0x10 - 0x1f */
@@ -49,16 +49,16 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "adc",  &Instruction::decode_Gv_Ev,  OP_ADC,  FLAG_RW_FLAGS },
 	{ "adc",  &Instruction::decode_AL_Ib,  OP_ADC,  FLAG_RW_FLAGS },
 	{ "adc",  &Instruction::decode_rAX_Iz, OP_ADC,  FLAG_RW_FLAGS },
-	{ "push", &Instruction::decode_SegSS,  OP_PUSH, FLAG_32BIT_ONLY | FLAG_W_STACK }, // ia-32 only
-	{ "pop",  &Instruction::decode_SegSS,  OP_POP,  FLAG_32BIT_ONLY | FLAG_W_STACK }, // ia-32 only
+	{ "push", &Instruction::decode_SegSS,  OP_PUSH, FLAG_32BIT_ONLY | FLAG_STACK }, // ia-32 only
+	{ "pop",  &Instruction::decode_SegSS,  OP_POP,  FLAG_32BIT_ONLY | FLAG_STACK }, // ia-32 only
 	{ "sbb",  &Instruction::decode_Eb_Gb,  OP_SBB,  FLAG_RW_FLAGS },
 	{ "sbb",  &Instruction::decode_Ev_Gv,  OP_SBB,  FLAG_RW_FLAGS },
 	{ "sbb",  &Instruction::decode_Gb_Eb,  OP_SBB,  FLAG_RW_FLAGS },
 	{ "sbb",  &Instruction::decode_Gv_Ev,  OP_SBB,  FLAG_RW_FLAGS },
 	{ "sbb",  &Instruction::decode_AL_Ib,  OP_SBB,  FLAG_RW_FLAGS },
 	{ "sbb",  &Instruction::decode_rAX_Iz, OP_SBB,  FLAG_RW_FLAGS },
-	{ "push", &Instruction::decode_SegDS,  OP_PUSH, FLAG_32BIT_ONLY | FLAG_W_STACK }, // ia-32 only
-	{ "pop",  &Instruction::decode_SegDS,  OP_POP,  FLAG_32BIT_ONLY | FLAG_W_STACK }, // ia-32 only
+	{ "push", &Instruction::decode_SegDS,  OP_PUSH, FLAG_32BIT_ONLY | FLAG_STACK }, // ia-32 only
+	{ "pop",  &Instruction::decode_SegDS,  OP_POP,  FLAG_32BIT_ONLY | FLAG_STACK }, // ia-32 only
 
 	/* 0x20 - 0x2f */
 	{ "and",       &Instruction::decode_Eb_Gb,   OP_AND,    FLAG_W_FLAGS },
@@ -68,7 +68,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "and",       &Instruction::decode_AL_Ib,   OP_AND,    FLAG_W_FLAGS },
 	{ "and",       &Instruction::decode_rAX_Iz,  OP_AND,    FLAG_W_FLAGS },
 	{ "prefix es", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
-	{ "daa",       &Instruction::decode0,        OP_DAA,    FLAG_32BIT_ONLY | FLAG_W_FLAGS }, // ia-32 only
+	{ "daa",       &Instruction::decode0,        OP_DAA,    FLAG_32BIT_ONLY | FLAG_RW_FLAGS }, // ia-32 only
 	{ "sub",       &Instruction::decode_Eb_Gb,   OP_SUB,    FLAG_W_FLAGS },
 	{ "sub",       &Instruction::decode_Ev_Gv,   OP_SUB,    FLAG_W_FLAGS },
 	{ "sub",       &Instruction::decode_Gb_Eb,   OP_SUB,    FLAG_W_FLAGS },
@@ -76,7 +76,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "sub",       &Instruction::decode_AL_Ib,   OP_SUB,    FLAG_W_FLAGS },
 	{ "sub",       &Instruction::decode_rAX_Iz,  OP_SUB,    FLAG_W_FLAGS },
 	{ "prefix cs", &Instruction::decode_invalid, OP_PREFIX, FLAG_NONE },
-	{ "das",       &Instruction::decode0,        OP_DAS,    FLAG_32BIT_ONLY | FLAG_W_FLAGS }, // ia-32 only
+	{ "das",       &Instruction::decode0,        OP_DAS,    FLAG_32BIT_ONLY | FLAG_RW_FLAGS }, // ia-32 only
 
 	/* 0x30 - 0x3f */
 	{ "xor",       &Instruction::decode_Eb_Gb,   OP_XOR,    FLAG_W_FLAGS },
@@ -115,22 +115,22 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "dec", &Instruction::decode_rDI, OP_DEC, FLAG_32BIT_ONLY | FLAG_W_FLAGS }, // ia-32 only (REX byte)
 
 	/* 0x50 - 0x5f */
-	{ "push", &Instruction::decode_rAX, OP_PUSH, FLAG_W_STACK },
-	{ "push", &Instruction::decode_rCX, OP_PUSH, FLAG_W_STACK },
-	{ "push", &Instruction::decode_rDX, OP_PUSH, FLAG_W_STACK },
-	{ "push", &Instruction::decode_rBX, OP_PUSH, FLAG_W_STACK },
-	{ "push", &Instruction::decode_rSP, OP_PUSH, FLAG_W_STACK },
-	{ "push", &Instruction::decode_rBP, OP_PUSH, FLAG_W_STACK },
-	{ "push", &Instruction::decode_rSI, OP_PUSH, FLAG_W_STACK },
-	{ "push", &Instruction::decode_rDI, OP_PUSH, FLAG_W_STACK },
-	{ "pop",  &Instruction::decode_rAX, OP_POP,  FLAG_W_STACK },
-	{ "pop",  &Instruction::decode_rCX, OP_POP,  FLAG_W_STACK },
-	{ "pop",  &Instruction::decode_rDX, OP_POP,  FLAG_W_STACK },
-	{ "pop",  &Instruction::decode_rBX, OP_POP,  FLAG_W_STACK },
-	{ "pop",  &Instruction::decode_rSP, OP_POP,  FLAG_W_STACK },
-	{ "pop",  &Instruction::decode_rBP, OP_POP,  FLAG_W_STACK },
-	{ "pop",  &Instruction::decode_rSI, OP_POP,  FLAG_W_STACK },
-	{ "pop",  &Instruction::decode_rDI, OP_POP,  FLAG_W_STACK },
+	{ "push", &Instruction::decode_rAX, OP_PUSH, FLAG_STACK },
+	{ "push", &Instruction::decode_rCX, OP_PUSH, FLAG_STACK },
+	{ "push", &Instruction::decode_rDX, OP_PUSH, FLAG_STACK },
+	{ "push", &Instruction::decode_rBX, OP_PUSH, FLAG_STACK },
+	{ "push", &Instruction::decode_rSP, OP_PUSH, FLAG_STACK },
+	{ "push", &Instruction::decode_rBP, OP_PUSH, FLAG_STACK },
+	{ "push", &Instruction::decode_rSI, OP_PUSH, FLAG_STACK },
+	{ "push", &Instruction::decode_rDI, OP_PUSH, FLAG_STACK },
+	{ "pop",  &Instruction::decode_rAX, OP_POP,  FLAG_STACK },
+	{ "pop",  &Instruction::decode_rCX, OP_POP,  FLAG_STACK },
+	{ "pop",  &Instruction::decode_rDX, OP_POP,  FLAG_STACK },
+	{ "pop",  &Instruction::decode_rBX, OP_POP,  FLAG_STACK },
+	{ "pop",  &Instruction::decode_rSP, OP_POP,  FLAG_STACK },
+	{ "pop",  &Instruction::decode_rBP, OP_POP,  FLAG_STACK },
+	{ "pop",  &Instruction::decode_rSI, OP_POP,  FLAG_STACK },
+	{ "pop",  &Instruction::decode_rDI, OP_POP,  FLAG_STACK },
 
 	/* 0x60 - 0x6f */
 	{ "pushaw/pushad", &Instruction::decode_pushaw_pushad_invalid, OP_GROUP,   FLAG_NONE },
@@ -141,9 +141,9 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "prefix gs",     &Instruction::decode_invalid,               OP_PREFIX,  FLAG_NONE },
 	{ "prefix data16", &Instruction::decode_invalid,               OP_PREFIX,  FLAG_NONE },
 	{ "prefix addr16", &Instruction::decode_invalid,               OP_PREFIX,  FLAG_NONE },
-	{ "push",          &Instruction::decode_Iz,                    OP_PUSH,    FLAG_W_STACK },
+	{ "push",          &Instruction::decode_Iz,                    OP_PUSH,    FLAG_STACK },
 	{ "imul",          &Instruction::decode_Gv_Ev_Iz,              OP_IMUL,    FLAG_W_FLAGS },
-	{ "push",          &Instruction::decode_Ib,                    OP_PUSH,    FLAG_W_STACK },
+	{ "push",          &Instruction::decode_Ib,                    OP_PUSH,    FLAG_STACK },
 	{ "imul",          &Instruction::decode_Gv_Ev_Ib,              OP_IMUL,    FLAG_W_FLAGS },
 	{ "insb",          &Instruction::decode0,                      OP_INS,     FLAG_R_FLAGS },
 	{ "insw/insd",     &Instruction::decode_insw_insd_invalid,     OP_GROUP,   FLAG_NONE },
@@ -171,7 +171,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	/* 0x80 - 0x8f */
 	{ "group1",  &Instruction::decode_group1,  OP_GROUP, FLAG_NONE },
 	{ "group1",  &Instruction::decode_group1,  OP_GROUP, FLAG_NONE },
-	{ "group1",  &Instruction::decode_group1,  OP_GROUP, FLAG_NONE }, // ia-32 only
+	{ "group1",  &Instruction::decode_group1,  OP_GROUP, FLAG_NONE },
 	{ "group1",  &Instruction::decode_group1,  OP_GROUP, FLAG_NONE },
 	{ "test",    &Instruction::decode_Eb_Gb,   OP_TEST,  FLAG_W_FLAGS },
 	{ "test",    &Instruction::decode_Ev_Gv,   OP_TEST,  FLAG_W_FLAGS },
@@ -197,7 +197,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "xchg",                 &Instruction::decode_rDI_rAX_NOREX,        OP_XCHG,    FLAG_NONE },
 	{ "cbw/cwde/cdqe",        &Instruction::decode_cbw_cwde_cdqe,        OP_GROUP,   FLAG_NONE },
 	{ "cwd/cdq/cqo",          &Instruction::decode_cwd_cdq_cqo,          OP_GROUP,   FLAG_NONE },
-	{ "callf",                &Instruction::decode_Ap,                   OP_CALL,    FLAG_32BIT_ONLY | FLAG_W_STACK }, // ia-32 only
+	{ "callf",                &Instruction::decode_Ap,                   OP_CALL,    FLAG_32BIT_ONLY | FLAG_STACK }, // ia-32 only
 	{ "wait/prefix wait",     &Instruction::wait_or_wait_prefix,         OP_GROUP,   FLAG_NONE },
 	{ "pushfw/pushfd/pushfq", &Instruction::decode_pushfw_pushfd_pushfq, OP_GROUP,   FLAG_NONE },
 	{ "popfw/popfd/popfq",    &Instruction::decode_popfw_popfd_popfq,    OP_GROUP,   FLAG_NONE },
@@ -215,7 +215,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "cmpsw/cmpsd/cmpsq", &Instruction::decode_cmpsw_cmpsd_cmpsq, OP_GROUP, FLAG_NONE },
 	{ "test",              &Instruction::decode_AL_Ib,             OP_TEST,  FLAG_R_FLAGS },
 	{ "test",              &Instruction::decode_rAX_Iz,            OP_TEST,  FLAG_R_FLAGS },
-	{ "stosb",             &Instruction::decode0,                  OP_STOS,  FLAG_W_FLAGS },
+	{ "stosb",             &Instruction::decode0,                  OP_STOS,  FLAG_R_FLAGS },
 	{ "stosw/stosd/stosq", &Instruction::decode_stosw_stosd_stosq, OP_GROUP, FLAG_NONE },
 	{ "lodsb",             &Instruction::decode0,                  OP_LODS,  FLAG_R_FLAGS },
 	{ "lodsw/lodsd/lodsq", &Instruction::decode_lodsw_lodsd_lodsq, OP_GROUP, FLAG_NONE },
@@ -243,18 +243,18 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	/* 0xc0 - 0xcf */
 	{ "group2",           &Instruction::decode_group2,           OP_GROUP, FLAG_NONE },
 	{ "group2",           &Instruction::decode_group2,           OP_GROUP, FLAG_NONE },
-	{ "ret",              &Instruction::decode_Iw,               OP_RET,   FLAG_W_STACK },
-	{ "ret",              &Instruction::decode0,                 OP_RET,   FLAG_W_STACK },
+	{ "ret",              &Instruction::decode_Iw,               OP_RET,   FLAG_STACK },
+	{ "ret",              &Instruction::decode0,                 OP_RET,   FLAG_STACK },
 	{ "les",              &Instruction::decode_Gz_Mp,            OP_LES,   FLAG_32BIT_ONLY }, // ia-32 only
 	{ "lds",              &Instruction::decode_Gz_Mp,            OP_LDS,   FLAG_32BIT_ONLY }, // ia-32 only
 	{ "group12",          &Instruction::decode_group12,          OP_GROUP, FLAG_NONE },
 	{ "group12",          &Instruction::decode_group12,          OP_GROUP, FLAG_NONE },
-	{ "enter",            &Instruction::decode_Iw_Ib,            OP_ENTER, FLAG_W_STACK },
-	{ "leave",            &Instruction::decode0,                 OP_LEAVE, FLAG_W_STACK },
-	{ "retf",             &Instruction::decode_Iw,               OP_RETF,  FLAG_W_STACK },
-	{ "retf",             &Instruction::decode0,                 OP_RETF,  FLAG_W_STACK },
-	{ "int3",             &Instruction::decode0,                 OP_INT3,  FLAG_RW_FLAGS },
-	{ "int",              &Instruction::decode_Ib,               OP_INT,   FLAG_RW_FLAGS },
+	{ "enter",            &Instruction::decode_Iw_Ib,            OP_ENTER, FLAG_STACK },
+	{ "leave",            &Instruction::decode0,                 OP_LEAVE, FLAG_STACK },
+	{ "retf",             &Instruction::decode_Iw,               OP_RETF,  FLAG_STACK },
+	{ "retf",             &Instruction::decode0,                 OP_RETF,  FLAG_STACK },
+	{ "int3",             &Instruction::decode0,                 OP_INT3,  FLAG_W_FLAGS },
+	{ "int",              &Instruction::decode_Ib,               OP_INT,   FLAG_W_FLAGS },
 	{ "into",             &Instruction::decode0,                 OP_INTO,  FLAG_RW_FLAGS | FLAG_32BIT_ONLY }, // ia-32 only
 	{ "iretw/iret/iretq", &Instruction::decode_iretw_iret_iretq, OP_GROUP, FLAG_NONE },
 
@@ -285,7 +285,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes[0x100] = {
 	{ "in",               &Instruction::decode_eAX_Ib,           OP_IN,     FLAG_NONE },
 	{ "out",              &Instruction::decode_Ib_AL,            OP_OUT,    FLAG_NONE },
 	{ "out",              &Instruction::decode_Ib_eAX,           OP_OUT,    FLAG_NONE },
-	{ "call",             &Instruction::decode_Jz,               OP_CALL,   FLAG_W_STACK },
+	{ "call",             &Instruction::decode_Jz,               OP_CALL,   FLAG_STACK },
 	{ "jmp",              &Instruction::decode_Jz,               OP_JMP,    FLAG_NONE },
 	{ "jmp",              &Instruction::decode_Ap,               OP_JMP,    FLAG_32BIT_ONLY }, // ia-32 only
 	{ "jmp",              &Instruction::decode_Jb,               OP_JMP,    FLAG_NONE },
