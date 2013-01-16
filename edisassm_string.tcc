@@ -166,7 +166,7 @@ std::string format_immediate(const Operand<M> &operand, const T &format) {
 }
 
 //------------------------------------------------------------------------------
-// Name: format_prefix(const Instruction<M> &insn, const lower_case &)
+// Name: format_prefix
 //------------------------------------------------------------------------------
 template <class M>
 std::string format_prefix(const Instruction<M> &insn, const lower_case &) {
@@ -200,7 +200,7 @@ std::string format_prefix(const Instruction<M> &insn, const lower_case &) {
 }
 
 //------------------------------------------------------------------------------
-// Name: format_prefix(const Instruction<M> &insn, const upper_case &)
+// Name: format_prefix
 //------------------------------------------------------------------------------
 template <class M>
 std::string format_prefix(const Instruction<M> &insn, const upper_case &) {
@@ -505,7 +505,7 @@ std::string format_expression(const Operand<M> &operand, const lower_case &forma
 }
 
 //------------------------------------------------------------------------------
-// Name: register_name(typename Operand<M>::Register reg, const lower_case&)
+// Name: register_name
 // Desc: returns a string for a given register
 //------------------------------------------------------------------------------
 template <class M>
@@ -574,7 +574,7 @@ std::string register_name(typename Operand<M>::Register reg, const lower_case&) 
 }
 
 //------------------------------------------------------------------------------
-// Name: register_name(typename Operand<M>::Register reg, const upper_case&)
+// Name: register_name
 // Desc: returns a string for a given register
 //------------------------------------------------------------------------------
 template <class M>
@@ -664,7 +664,7 @@ std::string to_string(const Operand<M> &operand, const T &format) {
 }
 
 //------------------------------------------------------------------------------
-// Name: to_string(const Instruction<M> &insn, const syntax_intel_lcase &syntax)
+// Name: to_string
 // Desc: creates a std::string which represents the given instruction
 //------------------------------------------------------------------------------
 template <class M>
@@ -687,7 +687,7 @@ std::string to_string(const Instruction<M> &insn, const syntax_intel_lcase &synt
 }
 
 //------------------------------------------------------------------------------
-// Name: to_string(const Instruction<M> &insn, const syntax_intel_ucase &syntax)
+// Name: to_string
 // Desc: creates a std::string which represents the given instruction
 //------------------------------------------------------------------------------
 template <class M>
@@ -711,7 +711,7 @@ std::string to_string(const Instruction<M> &insn, const syntax_intel_ucase &synt
 
 
 //------------------------------------------------------------------------------
-// Name: to_byte_string(const Instruction<M> &insn, const upper_case&)
+// Name: to_byte_string
 // Desc: creates a std::string which represents the given instruction
 //------------------------------------------------------------------------------
 template <class M>
@@ -733,7 +733,7 @@ std::string to_byte_string(const Instruction<M> &insn, const upper_case&) {
 }
 
 //------------------------------------------------------------------------------
-// Name: to_byte_string(const Instruction<M> &insn, const lower_case&)
+// Name: to_byte_string
 // Desc: creates a std::string which represents the given instruction
 //------------------------------------------------------------------------------
 template <class M>
