@@ -29,7 +29,7 @@ namespace edisassm {
 namespace {
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: hex_string
 //------------------------------------------------------------------------------
 template <class M, class T>
 std::string hex_string(T value, const upper_case&) {
@@ -44,7 +44,7 @@ std::string hex_string(T value, const upper_case&) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: hex_string
 //------------------------------------------------------------------------------
 template <class M, class T>
 std::string hex_string(T value, const lower_case&) {
@@ -59,7 +59,7 @@ std::string hex_string(T value, const lower_case&) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: format_absolute
 //------------------------------------------------------------------------------
 template <class M>
 std::string format_absolute(const Operand<M> &operand, const upper_case &format) {
@@ -74,7 +74,7 @@ std::string format_absolute(const Operand<M> &operand, const upper_case &format)
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: format_absolute
 //------------------------------------------------------------------------------
 template <class M>
 std::string format_absolute(const Operand<M> &operand, const lower_case &format) {
@@ -90,7 +90,7 @@ std::string format_absolute(const Operand<M> &operand, const lower_case &format)
 
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: format_register
 //------------------------------------------------------------------------------
 template <class M, class T>
 std::string format_register(const Operand<M> &operand, const T &format) {
@@ -98,7 +98,7 @@ std::string format_register(const Operand<M> &operand, const T &format) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: format_relative
 // Desc: 
 //------------------------------------------------------------------------------
 template <class M, class T>
@@ -108,7 +108,7 @@ std::string format_relative(const Operand<M> &operand, const T &format) {
 
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: format_immediate
 //------------------------------------------------------------------------------
 template <class M, class T>
 std::string format_immediate(const Operand<M> &operand, const T &format) {
@@ -234,7 +234,7 @@ std::string format_prefix(const Instruction<M> &insn, const upper_case &) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: format_expression
 //------------------------------------------------------------------------------
 template <class M>
 std::string format_expression(const Operand<M> &operand, const upper_case &format) {
@@ -369,7 +369,7 @@ std::string format_expression(const Operand<M> &operand, const upper_case &forma
 
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: format_expression
 //------------------------------------------------------------------------------
 template <class M>
 std::string format_expression(const Operand<M> &operand, const lower_case &format) {
@@ -644,7 +644,7 @@ std::string register_name(typename Operand<M>::Register reg, const upper_case&) 
 
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: to_string
 // Desc: 
 //------------------------------------------------------------------------------
 template<class M, class T>

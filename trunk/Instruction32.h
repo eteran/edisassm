@@ -74,7 +74,7 @@ void Instruction<M>::decode_Gx() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_STi
+// Name: decode_STig
 //------------------------------------------------------------------------------
 template <class M>
 template <int index>
@@ -417,7 +417,7 @@ int64_t Instruction<M>::get_displacement_s64() {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: get_immediate_s8
 //------------------------------------------------------------------------------
 template <class M>
 int8_t Instruction<M>::get_immediate_s8() {
@@ -429,7 +429,7 @@ int8_t Instruction<M>::get_immediate_s8() {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: get_immediate_s16
 //------------------------------------------------------------------------------
 template <class M>
 int16_t Instruction<M>::get_immediate_s16() {
@@ -443,7 +443,7 @@ int16_t Instruction<M>::get_immediate_s16() {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: get_immediate_s32
 //------------------------------------------------------------------------------
 template <class M>
 int32_t Instruction<M>::get_immediate_s32() {
@@ -461,7 +461,7 @@ int32_t Instruction<M>::get_immediate_s32() {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: get_immediate_s64
 //------------------------------------------------------------------------------
 template <class M>
 int64_t Instruction<M>::get_immediate_s64() {
@@ -482,7 +482,7 @@ int64_t Instruction<M>::get_immediate_s64() {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: get_immediate_u8
 //------------------------------------------------------------------------------
 template <class M>
 uint8_t Instruction<M>::get_immediate_u8() {
@@ -494,7 +494,7 @@ uint8_t Instruction<M>::get_immediate_u8() {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: get_immediate_u16
 //------------------------------------------------------------------------------
 template <class M>
 uint16_t Instruction<M>::get_immediate_u16() {
@@ -509,7 +509,7 @@ uint16_t Instruction<M>::get_immediate_u16() {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: get_immediate_u32
 //------------------------------------------------------------------------------
 template <class M>
 uint32_t Instruction<M>::get_immediate_u32() {
@@ -526,7 +526,7 @@ uint32_t Instruction<M>::get_immediate_u32() {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: get_immediate_u64
 //------------------------------------------------------------------------------
 template <class M>
 uint64_t Instruction<M>::get_immediate_u64() {
@@ -1056,7 +1056,7 @@ typename Instruction<M>::operand_t &Instruction<M>::next_operand() {
 }
 
 //------------------------------------------------------------------------------
-// Name: next_operand
+// Name: next_byte
 //------------------------------------------------------------------------------
 template <class M>
 uint8_t Instruction<M>::next_byte() {
@@ -1099,7 +1099,7 @@ template <class M> void Instruction<M>::decode_pushaw_pushad_invalid()        { 
 template <class M> void Instruction<M>::decode_popaw_popad_invalid()          { decode_size_sensitive(Opcodes_popaw_popad_invalid);}
 
 //------------------------------------------------------------------------------
-// Name: wait_or_wait_prefix
+// Name: decode_jcxz_jecxz_jrcxz
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_jcxz_jecxz_jrcxz() {

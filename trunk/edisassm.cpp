@@ -64,7 +64,7 @@ void print_usage(const char *arg0) {
 }
 
 //------------------------------------------------------------------------------
-// Name: 
+// Name: get_input
 //------------------------------------------------------------------------------
 std::vector<uint8_t> get_input(const std::string &filename, bool hex_chars) {
 
