@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 //------------------------------------------------------------------------------
-// Name: Operand()
+// Name: Operand
 //------------------------------------------------------------------------------
 template <class M>
 Operand<M>::Operand() : owner_(0), type_(TYPE_INVALID) {
@@ -33,7 +33,7 @@ Operand<M>::Operand() : owner_(0), type_(TYPE_INVALID) {
 }
 
 //------------------------------------------------------------------------------
-// Name: swap(Operand &other)
+// Name: swap
 //------------------------------------------------------------------------------
 template <class M>
 void Operand<M>::swap(Operand &other) {
@@ -45,7 +45,7 @@ void Operand<M>::swap(Operand &other) {
 }
 
 //------------------------------------------------------------------------------
-// Name: relative_target() const
+// Name: relative_target
 //------------------------------------------------------------------------------
 template <class M>
 typename Operand<M>::address_t Operand<M>::relative_target() const {
@@ -70,7 +70,7 @@ typename Operand<M>::address_t Operand<M>::relative_target() const {
 }
 
 //------------------------------------------------------------------------------
-// Name: displacement() const
+// Name: displacement
 //------------------------------------------------------------------------------
 template <class M>
 int32_t Operand<M>::displacement() const {
@@ -88,7 +88,7 @@ int32_t Operand<M>::displacement() const {
 }
 
 //------------------------------------------------------------------------------
-// Name: immediate() const
+// Name: immediate
 //------------------------------------------------------------------------------
 template <class M>
 int64_t Operand<M>::immediate() const {
@@ -104,7 +104,7 @@ int64_t Operand<M>::immediate() const {
 }
 
 //------------------------------------------------------------------------------
-// Name: general_type() const
+// Name: general_type
 //------------------------------------------------------------------------------
 template <class M>
 typename Operand<M>::Type Operand<M>::general_type() const {

@@ -49,7 +49,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Operand.h"
 
 //------------------------------------------------------------------------------
-// Name: decode_Gx()
+// Name: decode_Gx
 //------------------------------------------------------------------------------
 template <class M>
 template <typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
@@ -74,7 +74,7 @@ void Instruction<M>::decode_Gx() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_STi()
+// Name: decode_STi
 //------------------------------------------------------------------------------
 template <class M>
 template <int index>
@@ -86,7 +86,7 @@ void Instruction<M>::decode_STi() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_ModRM_0_16(uint8_t rm, operand_t &operand)
+// Name: decode_ModRM_0_16
 //------------------------------------------------------------------------------
 template <class M>
 template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
@@ -135,7 +135,7 @@ void Instruction<M>::decode_ModRM_0_16(uint8_t rm, operand_t &operand) {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_ModRM_1_16(uint8_t rm, operand_t &operand)
+// Name: decode_ModRM_1_16
 //------------------------------------------------------------------------------
 template <class M>
 template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
@@ -183,7 +183,7 @@ void Instruction<M>::decode_ModRM_1_16(uint8_t rm, operand_t &operand) {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_ModRM_2_16(uint8_t rm, operand_t &operand)
+// Name: decode_ModRM_2_16
 //------------------------------------------------------------------------------
 template <class M>
 template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
@@ -231,7 +231,7 @@ void Instruction<M>::decode_ModRM_2_16(uint8_t rm, operand_t &operand) {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Reg()
+// Name: decode_Reg
 //------------------------------------------------------------------------------
 template <class M>
 template <typename Operand<M>::Register REG>
@@ -244,7 +244,7 @@ void Instruction<M>::decode_Reg() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_const_Iq()
+// Name: decode_const_Iq
 //------------------------------------------------------------------------------
 template <class M>
 template <int64_t IMM>
@@ -261,7 +261,7 @@ void Instruction<M>::decode_const_Iq() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_const_Id()
+// Name: decode_const_Id
 //------------------------------------------------------------------------------
 template <class M>
 template <int32_t IMM>
@@ -278,7 +278,7 @@ void Instruction<M>::decode_const_Id() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_const_Iw()
+// Name: decode_const_Iw
 //------------------------------------------------------------------------------
 template <class M>
 template <int16_t IMM>
@@ -295,7 +295,7 @@ void Instruction<M>::decode_const_Iw() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_const_Ib()
+// Name: decode_const_Ib
 //------------------------------------------------------------------------------
 template <class M>
 template <int8_t IMM>
@@ -312,7 +312,7 @@ void Instruction<M>::decode_const_Ib() {
 }
 
 //------------------------------------------------------------------------------
-// Name: get_modrm()
+// Name: get_modrm
 //------------------------------------------------------------------------------
 template <class M>
 uint8_t Instruction<M>::get_modrm() {
@@ -326,7 +326,7 @@ uint8_t Instruction<M>::get_modrm() {
 
 
 //------------------------------------------------------------------------------
-// Name: get_sib()
+// Name: get_sib
 //------------------------------------------------------------------------------
 template <class M>
 uint8_t Instruction<M>::get_sib() {
@@ -339,7 +339,7 @@ uint8_t Instruction<M>::get_sib() {
 }
 
 //------------------------------------------------------------------------------
-// Name: get_displacement_s8()
+// Name: get_displacement_s8
 //------------------------------------------------------------------------------
 template <class M>
 int8_t Instruction<M>::get_displacement_s8() {
@@ -354,7 +354,7 @@ int8_t Instruction<M>::get_displacement_s8() {
 }
 
 //------------------------------------------------------------------------------
-// Name: get_displacement_s16()
+// Name: get_displacement_s16
 //------------------------------------------------------------------------------
 template <class M>
 int16_t Instruction<M>::get_displacement_s16() {
@@ -372,7 +372,7 @@ int16_t Instruction<M>::get_displacement_s16() {
 }
 
 //------------------------------------------------------------------------------
-// Name: get_displacement_s32()
+// Name: get_displacement_s32
 //------------------------------------------------------------------------------
 template <class M>
 int32_t Instruction<M>::get_displacement_s32() {
@@ -392,7 +392,7 @@ int32_t Instruction<M>::get_displacement_s32() {
 }
 
 //------------------------------------------------------------------------------
-// Name: get_displacement_s64()
+// Name: get_displacement_s64
 //------------------------------------------------------------------------------
 template <class M>
 int64_t Instruction<M>::get_displacement_s64() {
@@ -547,7 +547,7 @@ uint64_t Instruction<M>::get_immediate_u64() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_ModRM_0_32(uint8_t rm, operand_t &operand)
+// Name: decode_ModRM_0_32
 //------------------------------------------------------------------------------
 template <class M>
 template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t), class DecodeMode>
@@ -637,7 +637,7 @@ void Instruction<M>::decode_ModRM_0_32(uint8_t rm, operand_t &operand) {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_ModRM_1_32(uint8_t rm, operand_t &operand)
+// Name: decode_ModRM_1_32
 //------------------------------------------------------------------------------
 template <class M>
 template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t), class DecodeMode>
@@ -699,7 +699,7 @@ void Instruction<M>::decode_ModRM_1_32(uint8_t rm, operand_t &operand) {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_ModRM_2_32(uint8_t rm, operand_t &operand)
+// Name: decode_ModRM_2_32
 //------------------------------------------------------------------------------
 template <class M>
 template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t), class DecodeMode>
@@ -762,7 +762,7 @@ void Instruction<M>::decode_ModRM_2_32(uint8_t rm, operand_t &operand) {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_ModRM_3_32(uint8_t rm, operand_t &operand)
+// Name: decode_ModRM_3_32
 //------------------------------------------------------------------------------
 template <class M>
 template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t), class DecodeMode>
@@ -784,7 +784,7 @@ void Instruction<M>::decode_ModRM_3_32(uint8_t rm, operand_t &operand) {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_ModRM_Invalid(uint8_t rm, operand_t &operand)
+// Name: decode_ModRM_Invalid
 //------------------------------------------------------------------------------
 template <class M>
 template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
@@ -795,7 +795,7 @@ void Instruction<M>::decode_ModRM_Invalid(uint8_t modrm_byte, operand_t &operand
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Ex()
+// Name: decode_Ex
 //------------------------------------------------------------------------------
 template <class M>
 template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
@@ -857,7 +857,7 @@ void Instruction<M>::decode_Ex() {
 }
 
 //------------------------------------------------------------------------------
-// Name: ~Instruction()
+// Name: ~Instruction
 //------------------------------------------------------------------------------
 template <class M>
 Instruction<M>::~Instruction() {
@@ -865,7 +865,7 @@ Instruction<M>::~Instruction() {
 }
 
 //------------------------------------------------------------------------------
-// Name: disassemble()
+// Name: disassemble
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::disassemble() {
@@ -887,7 +887,7 @@ void Instruction<M>::disassemble() {
 }
 
 //------------------------------------------------------------------------------
-// Name: Instruction(const Instruction &other)
+// Name: Instruction
 //------------------------------------------------------------------------------
 template <class M>
 Instruction<M>::Instruction(const Instruction &other) : 
@@ -910,7 +910,7 @@ Instruction<M>::Instruction(const Instruction &other) :
 }
 
 //------------------------------------------------------------------------------
-// Name: operator=(const Instruction &rhs)
+// Name: operator=
 //------------------------------------------------------------------------------
 template <class M>
 Instruction<M> &Instruction<M>::operator=(const Instruction &rhs) {
@@ -921,7 +921,7 @@ Instruction<M> &Instruction<M>::operator=(const Instruction &rhs) {
 }
 
 //------------------------------------------------------------------------------
-// Name: swap(Instruction &other)
+// Name: swap
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::swap(Instruction &other) {
@@ -958,7 +958,7 @@ void Instruction<M>::swap(Instruction &other) {
 }
 
 //------------------------------------------------------------------------------
-// Name: process_prefixes()
+// Name: process_prefixes
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::process_prefixes() {
@@ -1041,7 +1041,7 @@ void Instruction<M>::process_prefixes() {
 }
 
 //------------------------------------------------------------------------------
-// Name: next_operand()
+// Name: next_operand
 //------------------------------------------------------------------------------
 template <class M>
 typename Instruction<M>::operand_t &Instruction<M>::next_operand() {
@@ -1056,7 +1056,7 @@ typename Instruction<M>::operand_t &Instruction<M>::next_operand() {
 }
 
 //------------------------------------------------------------------------------
-// Name: next_operand()
+// Name: next_operand
 //------------------------------------------------------------------------------
 template <class M>
 uint8_t Instruction<M>::next_byte() {
@@ -1075,7 +1075,7 @@ uint8_t Instruction<M>::next_byte() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_invalid()
+// Name: decode_invalid
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_invalid() {
@@ -1099,7 +1099,7 @@ template <class M> void Instruction<M>::decode_pushaw_pushad_invalid()        { 
 template <class M> void Instruction<M>::decode_popaw_popad_invalid()          { decode_size_sensitive(Opcodes_popaw_popad_invalid);}
 
 //------------------------------------------------------------------------------
-// Name: wait_or_wait_prefix()
+// Name: wait_or_wait_prefix
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_jcxz_jecxz_jrcxz() {
@@ -1119,7 +1119,7 @@ void Instruction<M>::decode_jcxz_jecxz_jrcxz() {
 }
 
 //------------------------------------------------------------------------------
-// Name: wait_or_wait_prefix()
+// Name: wait_or_wait_prefix
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::wait_or_wait_prefix() {
@@ -1235,7 +1235,7 @@ void Instruction<M>::wait_or_wait_prefix() {
 
 
 //------------------------------------------------------------------------------
-// Name: decode_x87()
+// Name: decode_x87
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_x87() {
@@ -1253,7 +1253,7 @@ void Instruction<M>::decode_x87() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_2byte()
+// Name: decode_2byte
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_2byte() {
@@ -1281,7 +1281,7 @@ void Instruction<M>::decode_2byte() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_3byte_38()
+// Name: decode_3byte_38
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_3byte_38() {
@@ -1305,7 +1305,7 @@ void Instruction<M>::decode_3byte_38() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_3byte_3A()
+// Name: decode_3byte_3A
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_3byte_3A() {
@@ -1325,7 +1325,7 @@ void Instruction<M>::decode_3byte_3A() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_group1()
+// Name: decode_group1
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group1() {
@@ -1337,7 +1337,7 @@ void Instruction<M>::decode_group1() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_group2()
+// Name: decode_group2
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group2() {
@@ -1349,7 +1349,7 @@ void Instruction<M>::decode_group2() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_group2D()
+// Name: decode_group2D
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group2D() {
@@ -1361,7 +1361,7 @@ void Instruction<M>::decode_group2D() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_group3()
+// Name: decode_group3
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group3() {
@@ -1373,7 +1373,7 @@ void Instruction<M>::decode_group3() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_group4()
+// Name: decode_group4
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group4() {
@@ -1385,7 +1385,7 @@ void Instruction<M>::decode_group4() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_group5()
+// Name: decode_group5
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group5() {
@@ -1397,7 +1397,7 @@ void Instruction<M>::decode_group5() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_group6()
+// Name: decode_group6
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group6() {
@@ -1409,7 +1409,7 @@ void Instruction<M>::decode_group6() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_group7()
+// Name: decode_group7
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group7() {
@@ -1427,7 +1427,7 @@ void Instruction<M>::decode_group7() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_group8()
+// Name: decode_group8
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group8() {
@@ -1439,7 +1439,7 @@ void Instruction<M>::decode_group8() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_group9()
+// Name: decode_group9
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group9() {
@@ -1464,7 +1464,7 @@ void Instruction<M>::decode_group9() {
 
 
 //------------------------------------------------------------------------------
-// Name: decode_group10()
+// Name: decode_group10
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group10() {
@@ -1477,7 +1477,7 @@ void Instruction<M>::decode_group10() {
 
 
 //------------------------------------------------------------------------------
-// Name: decode_group11()
+// Name: decode_group11
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group11() {
@@ -1490,7 +1490,7 @@ void Instruction<M>::decode_group11() {
 
 
 //------------------------------------------------------------------------------
-// Name: decode_group12()
+// Name: decode_group12
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group12() {
@@ -1502,7 +1502,7 @@ void Instruction<M>::decode_group12() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_group13()
+// Name: decode_group13
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group13() {
@@ -1524,7 +1524,7 @@ void Instruction<M>::decode_group13() {
 
 
 //------------------------------------------------------------------------------
-// Name: decode_group14()
+// Name: decode_group14
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group14() {
@@ -1546,7 +1546,7 @@ void Instruction<M>::decode_group14() {
 
 
 //------------------------------------------------------------------------------
-// Name: decode_group15()
+// Name: decode_group15
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group15() {
@@ -1567,7 +1567,7 @@ void Instruction<M>::decode_group15() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_group16()
+// Name: decode_group16
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group16() {
@@ -1586,7 +1586,7 @@ void Instruction<M>::decode_group16() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_group17()
+// Name: decode_group17
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_group17() {
@@ -1598,7 +1598,7 @@ void Instruction<M>::decode_group17() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Ap()
+// Name: decode_Ap
 // Desc: absolute pointer (32 or 48 bit)
 //------------------------------------------------------------------------------
 template <class M>
@@ -1617,7 +1617,7 @@ void Instruction<M>::decode_Ap() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Ib()
+// Name: decode_Ib
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Ib() {
@@ -1628,7 +1628,7 @@ void Instruction<M>::decode_Ib() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Iw()
+// Name: decode_Iw
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Iw() {
@@ -1639,7 +1639,7 @@ void Instruction<M>::decode_Iw() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Id()
+// Name: decode_Id
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Id() {
@@ -1650,7 +1650,7 @@ void Instruction<M>::decode_Id() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Iq()
+// Name: decode_Iq
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Iq() {
@@ -1661,7 +1661,7 @@ void Instruction<M>::decode_Iq() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Jb()
+// Name: decode_Jb
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Jb() {
@@ -1673,7 +1673,7 @@ void Instruction<M>::decode_Jb() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Jw()
+// Name: decode_Jw
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Jw() {
@@ -1685,7 +1685,7 @@ void Instruction<M>::decode_Jw() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Jd()
+// Name: decode_Jd
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Jd() {
@@ -1697,7 +1697,7 @@ void Instruction<M>::decode_Jd() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Jq()
+// Name: decode_Jq
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Jq() {
@@ -1709,7 +1709,7 @@ void Instruction<M>::decode_Jq() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Ev()
+// Name: decode_Ev
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Ev() {
@@ -1722,7 +1722,7 @@ void Instruction<M>::decode_Ev() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Rv()
+// Name: decode_Rv
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Rv() {
@@ -1734,7 +1734,7 @@ void Instruction<M>::decode_Rv() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Gv()
+// Name: decode_Gv
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Gv() {
@@ -1747,7 +1747,7 @@ void Instruction<M>::decode_Gv() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Iv()
+// Name: decode_Iv
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Iv() {
@@ -1759,7 +1759,7 @@ void Instruction<M>::decode_Iv() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Ob()
+// Name: decode_Ob
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Ob() {
@@ -1774,7 +1774,7 @@ void Instruction<M>::decode_Ob() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Ow()
+// Name: decode_Ow
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Ow() {
@@ -1789,7 +1789,7 @@ void Instruction<M>::decode_Ow() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Od()
+// Name: decode_Od
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Od() {
@@ -1804,7 +1804,7 @@ void Instruction<M>::decode_Od() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Ov()
+// Name: decode_Ov
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Ov() {
@@ -1816,7 +1816,7 @@ void Instruction<M>::decode_Ov() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_Mv()
+// Name: decode_Mv
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_Mv() {
@@ -1828,7 +1828,7 @@ void Instruction<M>::decode_Mv() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_AL()
+// Name: decode_AL
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_AL() {
@@ -1840,7 +1840,7 @@ void Instruction<M>::decode_AL() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_CL()
+// Name: decode_CL
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_CL() {
@@ -1852,7 +1852,7 @@ void Instruction<M>::decode_CL() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_DL()
+// Name: decode_DL
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_DL() {
@@ -1864,7 +1864,7 @@ void Instruction<M>::decode_DL() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_BL()
+// Name: decode_BL
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_BL() {
@@ -1876,7 +1876,7 @@ void Instruction<M>::decode_BL() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_AH()
+// Name: decode_AH
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_AH() {
@@ -1888,7 +1888,7 @@ void Instruction<M>::decode_AH() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_CH()
+// Name: decode_CH
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_CH() {
@@ -1900,7 +1900,7 @@ void Instruction<M>::decode_CH() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_DH()
+// Name: decode_DH
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_DH() {
@@ -1912,7 +1912,7 @@ void Instruction<M>::decode_DH() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_BH()
+// Name: decode_BH
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_BH() {
@@ -1924,7 +1924,7 @@ void Instruction<M>::decode_BH() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_rAX_NOREX()
+// Name: decode_rAX_NOREX
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rAX_NOREX() {
@@ -1936,7 +1936,7 @@ void Instruction<M>::decode_rAX_NOREX() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_eAX()
+// Name: decode_eAX
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_eAX() {
@@ -1946,7 +1946,7 @@ void Instruction<M>::decode_eAX() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_rAX()
+// Name: decode_rAX
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rAX() {
@@ -1976,7 +1976,7 @@ void Instruction<M>::decode_rAX() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_rCX()
+// Name: decode_rCX
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rCX() {
@@ -2006,7 +2006,7 @@ void Instruction<M>::decode_rCX() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_rDX()
+// Name: decode_rDX
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rDX() {
@@ -2036,7 +2036,7 @@ void Instruction<M>::decode_rDX() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_rBX()
+// Name: decode_rBX
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rBX() {
@@ -2066,7 +2066,7 @@ void Instruction<M>::decode_rBX() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_rSP()
+// Name: decode_rSP
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rSP() {
@@ -2096,7 +2096,7 @@ void Instruction<M>::decode_rSP() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_rBP()
+// Name: decode_rBP
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rBP() {
@@ -2126,7 +2126,7 @@ void Instruction<M>::decode_rBP() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_rSI()
+// Name: decode_rSI
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rSI() {
@@ -2156,7 +2156,7 @@ void Instruction<M>::decode_rSI() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_rDI()
+// Name: decode_rDI
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_rDI() {
@@ -2186,7 +2186,7 @@ void Instruction<M>::decode_rDI() {
 }
 
 //------------------------------------------------------------------------------
-// Name: decode_rAX_rAX_NOREX()
+// Name: decode_rAX_rAX_NOREX
 // NOTE: special case because this represents 3 possible ops!
 //------------------------------------------------------------------------------
 template <class M>
@@ -2206,7 +2206,7 @@ void Instruction<M>::decode_rAX_rAX_NOREX() {
 }
 
 //------------------------------------------------------------------------------
-// Name: operand_size() const
+// Name: operand_size
 //------------------------------------------------------------------------------
 template <class M>
 int Instruction<M>::operand_size() const {
@@ -2234,7 +2234,7 @@ int Instruction<M>::operand_size() const {
 }
 
 //------------------------------------------------------------------------------
-// Name: address_size() const
+// Name: address_size
 //------------------------------------------------------------------------------
 template <class M>
 int Instruction<M>::address_size() const {	

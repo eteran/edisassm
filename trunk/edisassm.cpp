@@ -29,7 +29,7 @@ enum DISPLAY_FLAGS {
 };
 
 //------------------------------------------------------------------------------
-// Name: disassemble(const uint8_t *first, const uint8_t *end_ptr, typename Instruction<M>::address_t rva, unsigned int flags)
+// Name: disassemble
 //------------------------------------------------------------------------------
 template <class M, class In>
 void disassemble(In first, In last, typename Instruction<M>::address_t rva, unsigned int flags) {
@@ -56,7 +56,7 @@ void disassemble(In first, In last, typename Instruction<M>::address_t rva, unsi
 }
 
 //------------------------------------------------------------------------------
-// Name: print_usage(const char *arg0)
+// Name: print_usage
 //------------------------------------------------------------------------------
 void print_usage(const char *arg0) {
 	std::cerr << arg0 << " [-m32|-m64] [-x] [--rva <address>] [--show-bytes] [<filename> | -]" << std::endl;
@@ -101,7 +101,7 @@ std::vector<uint8_t> get_input(const std::string &filename, bool hex_chars) {
 }
 
 //------------------------------------------------------------------------------
-// Name: main(int argc, char *argv[])
+// Name: main
 //------------------------------------------------------------------------------
 int main(int argc, char *argv[]) {
 

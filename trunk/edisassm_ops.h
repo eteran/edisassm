@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define EDISASSM_OPS_20110816_H_
 
 //------------------------------------------------------------------------------
-// Name: operator==(const Instruction<M> &lhs, const Instruction<M> &rhs)
+// Name: operator==
 //------------------------------------------------------------------------------
 template <class M>
 bool operator==(const Instruction<M> &lhs, const Instruction<M> &rhs) {
@@ -95,7 +95,7 @@ bool operator==(const Instruction<M> &lhs, const Instruction<M> &rhs) {
 }
 
 //------------------------------------------------------------------------------
-// Name: operator!=(const Instruction<M> &lhs, const Instruction<M> &rhs)
+// Name: operator!=
 //------------------------------------------------------------------------------
 template <class M>
 bool operator!=(const Instruction<M> &lhs, const Instruction<M> &rhs) {

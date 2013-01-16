@@ -37,14 +37,14 @@ namespace edisassm {
 	typedef syntax_intel_lcase syntax_intel;
 	
 	//------------------------------------------------------------------------------
-	// Name: to_string(const Instruction<M> &insn, const T &)
+	// Name: to_string
 	// Desc: creates a std::string which represents the given instruction, in uppercase
 	//------------------------------------------------------------------------------
 	template<class M, class T>
 	std::string to_string(const Instruction<M> &insn, const T &);
 
 	//------------------------------------------------------------------------------
-	// Name: to_string(const Operand<M> &operand, const T &)
+	// Name: to_string
 	// Desc: creates a std::string which represents the given operand
 	//------------------------------------------------------------------------------
 	template<class M, class T>
@@ -52,7 +52,7 @@ namespace edisassm {
 	
 	
 	//------------------------------------------------------------------------------
-	// Name: to_string(const Instruction<M> &insn)
+	// Name: to_string
 	// Desc: creates a std::string which represents the given instruction in lowercase
 	//------------------------------------------------------------------------------
 	template <class M>
@@ -61,7 +61,7 @@ namespace edisassm {
 	}
 
 	//------------------------------------------------------------------------------
-	// Name: to_string(const Operand<M> &operand)
+	// Name: to_string
 	// Desc: creates a std::string which represents the given operand in uppercase
 	//------------------------------------------------------------------------------
 	template<class M>
@@ -70,14 +70,14 @@ namespace edisassm {
 	}
 
 	//------------------------------------------------------------------------------
-	// Name: to_byte_string(const Instruction<M> &insn, const T&)
+	// Name: to_byte_string
 	// Desc: creates a std::string which represents the given instruction
 	//------------------------------------------------------------------------------
 	template <class M, class T>
 	std::string to_byte_string(const Instruction<M> &insn, const T&);
 	
 	//------------------------------------------------------------------------------
-	// Name: to_byte_string(const Instruction<M> &insn)
+	// Name: to_byte_string
 	// Desc: creates a std::string which represents the given instruction
 	//------------------------------------------------------------------------------
 	template <class M>
@@ -86,21 +86,21 @@ namespace edisassm {
 	}
 	
 	//------------------------------------------------------------------------------
-	// Name: register_name(typename Operand<M>::Register reg, const upper_case&)
+	// Name: register_name
 	// Desc: creates a std::string which represents the given register
 	//------------------------------------------------------------------------------
 	template <class M>
 	std::string register_name(typename Operand<M>::Register reg, const upper_case&);
 	
 	//------------------------------------------------------------------------------
-	// Name: register_name(typename Operand<M>::Register reg, const lower_case&)
+	// Name: register_name
 	// Desc: creates a std::string which represents the given register
 	//------------------------------------------------------------------------------
 	template <class M>
 	std::string register_name(typename Operand<M>::Register reg, const lower_case&);
 	
 	//------------------------------------------------------------------------------
-	// Name: register_name(typename Operand<M>::Register reg)
+	// Name: register_name
 	// Desc: creates a std::string which represents the given register
 	//------------------------------------------------------------------------------
 	template <class M>
