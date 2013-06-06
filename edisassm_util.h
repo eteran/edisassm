@@ -27,41 +27,53 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define UNUSED(x) (void)(x)
 
 namespace edisassm {
-	namespace util {
-		inline std::string toupper_copy(std::string s) {
-			std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper));
-			return s;
-		}
+namespace util {
 
-		inline std::string &toupper(std::string &s) {
-			std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper));
-			return s;
-		}
+inline std::string toupper_copy(std::string s) {
+	std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper));
+	return s;
+}
 
-		inline std::string &tolower(std::string &s) {
-			std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::tolower));
-			return s;
-		}
+inline std::string &toupper(std::string &s) {
+	std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper));
+	return s;
+}
 
-		inline std::string &rtrim(std::string &s) {
-			s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
-			return s;
-		}
+inline std::string &tolower(std::string &s) {
+	std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::tolower));
+	return s;
+}
 
-		inline std::string &ltrim(std::string &s) {
-			s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
-			return s;
-		}
+inline std::string &rtrim(std::string &s) {
+	s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+	return s;
+}
 
-		inline std::string &trim(std::string &s) {
-			return ltrim(rtrim(s));
-		}
+inline std::string &ltrim(std::string &s) {
+	s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+	return s;
+}
 
-		template <class T>
-		bool is_small_num(T value) {
-			return (value > -127 && value < 128);
-		}
-	}
+inline std::string &trim(std::string &s) {
+	return ltrim(rtrim(s));
+}
+
+template <class T>
+bool is_small_num(T value) {
+	return (value > -127 && value < 128);
+}
+
+template <class T>
+bool is_call(const Instruction<T> &insn) {
+	return insn.valid() && insn.type() == Instruction<T>::OP_CALL;
+}
+
+template <class T>
+bool is_ret(const Instruction<T> &insn) {
+	return insn.valid() && insn.type() == Instruction<T>::OP_RET;
+}
+
+}
 }
 
 #endif
