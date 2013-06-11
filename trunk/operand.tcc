@@ -19,15 +19,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef OPERAND_20080421_TCC_
 #define OPERAND_20080421_TCC_
 
-#include "Instruction.h"
+#include "instruction.h"
 #include <cstring>
+#include <algorithm>
 
+namespace edisassm {
 
 //------------------------------------------------------------------------------
-// Name: Operand
+// Name: operand
 //------------------------------------------------------------------------------
 template <class M>
-Operand<M>::Operand() : owner_(0), type_(TYPE_INVALID) {
+operand<M>::operand() : owner_(0), type_(TYPE_INVALID) {
 	using std::memset;
 	memset(&u, 0, sizeof(U));
 }
@@ -36,7 +38,7 @@ Operand<M>::Operand() : owner_(0), type_(TYPE_INVALID) {
 // Name: swap
 //------------------------------------------------------------------------------
 template <class M>
-void Operand<M>::swap(Operand &other) {
+void operand<M>::swap(operand &other) {
 	using std::swap;
 
 	swap(owner_, other.owner_);
@@ -48,22 +50,22 @@ void Operand<M>::swap(Operand &other) {
 // Name: relative_target
 //------------------------------------------------------------------------------
 template <class M>
-typename Operand<M>::address_t Operand<M>::relative_target() const {
+typename operand<M>::address_type operand<M>::relative_target() const {
 
-	const address_t rva     = owner_->rva();
-	const unsigned int size = owner_->size();
-	const address_t offset  = rva + size;
+	const address_type rva    = owner_->rva();
+	const unsigned int size   = owner_->size();
+	const address_type offset = rva + size;
 
 	switch(type_) {
 	case TYPE_REL8:
-		return static_cast<address_t>(u.sbyte + offset);
+		return static_cast<address_type>(u.sbyte + offset);
 	case TYPE_REL16:
 		// NOTE: intel truncates EIP to 16-bit here
-		return static_cast<address_t>((u.sword + offset) & 0xffff);
+		return static_cast<address_type>((u.sword + offset) & 0xffff);
 	case TYPE_REL32:
-		return static_cast<address_t>(u.sdword + offset);
+		return static_cast<address_type>(u.sdword + offset);
 	case TYPE_REL64:
-		return static_cast<address_t>(u.sqword + offset);
+		return static_cast<address_type>(u.sqword + offset);
 	default:
 		return 0;
 	}
@@ -73,7 +75,7 @@ typename Operand<M>::address_t Operand<M>::relative_target() const {
 // Name: displacement
 //------------------------------------------------------------------------------
 template <class M>
-int32_t Operand<M>::displacement() const {
+int32_t operand<M>::displacement() const {
 
 	switch(u.expression.displacement_type) {
 	case DISP_U8:  return static_cast<int32_t>(u.expression.u_disp8);
@@ -91,7 +93,7 @@ int32_t Operand<M>::displacement() const {
 // Name: immediate
 //------------------------------------------------------------------------------
 template <class M>
-int64_t Operand<M>::immediate() const {
+int64_t operand<M>::immediate() const {
 
 	switch(type_) {
 	case TYPE_IMMEDIATE8:  return static_cast<int64_t>(u.sbyte);
@@ -107,8 +109,10 @@ int64_t Operand<M>::immediate() const {
 // Name: general_type
 //------------------------------------------------------------------------------
 template <class M>
-typename Operand<M>::Type Operand<M>::general_type() const {
+typename operand<M>::Type operand<M>::general_type() const {
 	return static_cast<Type>(static_cast<unsigned int>(type_) & TYPE_MASK);
+}
+
 }
 
 #endif

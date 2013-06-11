@@ -22,25 +22,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "edisassm_types.h"
 #include "edisassm_string.h"
 
-template <class M>
-class Instruction;
+namespace edisassm {
 
 template <class M>
-class Operand;
+class instruction;
 
 template <class M>
-class Operand {
+class operand {
 private:
-	friend class Instruction<M>;
+	friend class instruction<M>;
 
 public:
-	Operand();
-	~Operand() {}
+	operand();
+	~operand() {}
 
 private:
-	typedef Operand<M>            operand_t;
-	typedef typename M::address_t address_t;
-	typedef Instruction<M>        instruction_t;
+	typedef operand<M>               operand_type;
+	typedef typename M::address_type address_type;
+	typedef instruction<M>           instruction_type;
 
 public:
 	enum Register {
@@ -178,21 +177,21 @@ public:
 public:
 	Type complete_type() const           { return type_; }
 	Type general_type() const;
-	instruction_t *owner() const         { return owner_; }
+	instruction_type *owner() const      { return owner_; }
 	bool valid() const                   { return type_ != TYPE_INVALID; }
-	void swap(Operand &other);
+	void swap(operand &other);
 	
 public:
-	address_t relative_target() const;
+	address_type relative_target() const;
 	int32_t displacement() const;
 	int64_t immediate() const;
 	
 private:
-	void invalidate()                    { type_ = TYPE_INVALID; }
-	void set_owner(instruction_t *owner) { owner_ = owner; }
+	void invalidate()                       { type_ = TYPE_INVALID; }
+	void set_owner(instruction_type *owner) { owner_ = owner; }
 
 private:
-	instruction_t *owner_;
+	instruction_type *owner_;
 	Type           type_;
 
 	union U {
@@ -210,7 +209,9 @@ private:
 	} u;
 };
 
-#include "Operand.tcc"
+}
+
+#include "operand.tcc"
 
 #endif
 

@@ -19,19 +19,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef OPTABLE_GROUP6_20080314_TCC_
 #define OPTABLE_GROUP6_20080314_TCC_
 
-#include "Operand.h"
+namespace edisassm {
 
 template <class M>
-const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group6[8] = {
-	{ "sldt",    &Instruction::decode_Rv_Mw,   OP_SLDT,    FLAG_NONE },
-	{ "str",     &Instruction::decode_Rv_Mw,   OP_STR,     FLAG_NONE },
-	{ "lldt",    &Instruction::decode_Ew,      OP_LLDT,    FLAG_NONE },
-	{ "ltr",     &Instruction::decode_Ew,      OP_LTR,     FLAG_NONE },
-	{ "verr",    &Instruction::decode_Ew,      OP_VERR,    FLAG_NONE },
-	{ "verw",    &Instruction::decode_Ew,      OP_VERW,    FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE }, // NOTE: jmpe Ev on x86-64
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group6[8] = {
+	{ "sldt",    &instruction::decode_Rv_Mw,   OP_SLDT,    FLAG_NONE },
+	{ "str",     &instruction::decode_Rv_Mw,   OP_STR,     FLAG_NONE },
+	{ "lldt",    &instruction::decode_Ew,      OP_LLDT,    FLAG_NONE },
+	{ "ltr",     &instruction::decode_Ew,      OP_LTR,     FLAG_NONE },
+	{ "verr",    &instruction::decode_Ew,      OP_VERR,    FLAG_NONE },
+	{ "verw",    &instruction::decode_Ew,      OP_VERW,    FLAG_NONE },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE }, // NOTE: jmpe Ev on x86-64
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
+
+}
 
 #endif
 

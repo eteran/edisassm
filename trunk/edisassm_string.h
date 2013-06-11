@@ -21,93 +21,120 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <string>
 
-template <class M>
-class Instruction;
-
-template <class M>
-class Operand;
 
 namespace edisassm {
 
-	struct lower_case {};
-	struct upper_case {};
-	struct syntax_intel_lcase : lower_case {};
-	struct syntax_intel_ucase : upper_case {};
-	
-	typedef syntax_intel_lcase syntax_intel;
-	
-	//------------------------------------------------------------------------------
-	// Name: to_string
-	// Desc: creates a std::string which represents the given instruction, in uppercase
-	//------------------------------------------------------------------------------
-	template<class M, class T>
-	std::string to_string(const Instruction<M> &insn, const T &);
+template <class M>
+class instruction;
 
-	//------------------------------------------------------------------------------
-	// Name: to_string
-	// Desc: creates a std::string which represents the given operand
-	//------------------------------------------------------------------------------
-	template<class M, class T>
-	std::string to_string(const Operand<M> &operand, const T &);
-	
-	
-	//------------------------------------------------------------------------------
-	// Name: to_string
-	// Desc: creates a std::string which represents the given instruction in lowercase
-	//------------------------------------------------------------------------------
-	template <class M>
-	std::string to_string(const Instruction<M> &insn) {
-		return to_string(insn, syntax_intel());
-	}
+template <class M>
+class operand;
 
-	//------------------------------------------------------------------------------
-	// Name: to_string
-	// Desc: creates a std::string which represents the given operand in uppercase
-	//------------------------------------------------------------------------------
-	template<class M>
-	std::string to_string(const Operand<M> &operand) {
-		return to_string(operand, syntax_intel());
-	}
+struct lower_case   {};
+struct upper_case   {};
+struct syntax_intel {};
+struct syntax_att   {};
 
-	//------------------------------------------------------------------------------
-	// Name: to_byte_string
-	// Desc: creates a std::string which represents the given instruction
-	//------------------------------------------------------------------------------
-	template <class M, class T>
-	std::string to_byte_string(const Instruction<M> &insn, const T&);
-	
-	//------------------------------------------------------------------------------
-	// Name: to_byte_string
-	// Desc: creates a std::string which represents the given instruction
-	//------------------------------------------------------------------------------
-	template <class M>
-	std::string to_byte_string(const Instruction<M> &insn) {
-		return to_byte_string(insn, upper_case());
-	}
-	
-	//------------------------------------------------------------------------------
-	// Name: register_name
-	// Desc: creates a std::string which represents the given register
-	//------------------------------------------------------------------------------
-	template <class M>
-	std::string register_name(typename Operand<M>::Register reg, const upper_case&);
-	
-	//------------------------------------------------------------------------------
-	// Name: register_name
-	// Desc: creates a std::string which represents the given register
-	//------------------------------------------------------------------------------
-	template <class M>
-	std::string register_name(typename Operand<M>::Register reg, const lower_case&);
-	
-	//------------------------------------------------------------------------------
-	// Name: register_name
-	// Desc: creates a std::string which represents the given register
-	//------------------------------------------------------------------------------
-	template <class M>
-	std::string register_name(typename Operand<M>::Register reg) {
-		return register_name<M>(reg, lower_case());
-	}
+//------------------------------------------------------------------------------
+// Name: to_string
+// Desc: creates a std::string which represents the given instruction
+//------------------------------------------------------------------------------
+template <class M>
+std::string to_string(const instruction<M> &instruction, const syntax_intel &, const lower_case &);
+
+//------------------------------------------------------------------------------
+// Name: to_string
+// Desc: creates a std::string which represents the given instruction
+//------------------------------------------------------------------------------
+template <class M>
+std::string to_string(const instruction<M> &instruction, const syntax_intel &, const upper_case &);
+
+//------------------------------------------------------------------------------
+// Name: to_string
+// Desc: creates a std::string which represents the given instruction
+//------------------------------------------------------------------------------
+template <class M>
+std::string to_string(const instruction<M> &instruction, const syntax_intel &);
+
+//------------------------------------------------------------------------------
+// Name: to_string
+// Desc: creates a std::string which represents the given instruction
+//------------------------------------------------------------------------------
+template <class M>
+std::string to_string(const instruction<M> &instruction);
+
+//------------------------------------------------------------------------------
+// Name: to_string
+// Desc: creates a std::string which represents the given operand
+//------------------------------------------------------------------------------
+template <class M>
+std::string to_string(const operand<M> &op, const syntax_intel &, const lower_case &);
+
+//------------------------------------------------------------------------------
+// Name: to_string
+// Desc: creates a std::string which represents the given operand
+//------------------------------------------------------------------------------
+template <class M>
+std::string to_string(const operand<M> &op, const syntax_intel &, const upper_case &);
+
+//------------------------------------------------------------------------------
+// Name: to_string
+// Desc: creates a std::string which represents the given operand
+//------------------------------------------------------------------------------
+template <class M>
+std::string to_string(const operand<M> &op, const syntax_intel &);
+
+//------------------------------------------------------------------------------
+// Name: to_string
+// Desc: creates a std::string which represents the given operand
+//------------------------------------------------------------------------------
+template <class M>
+std::string to_string(const operand<M> &op);
+
+//------------------------------------------------------------------------------
+// Name: to_byte_string
+// Desc: 
+//------------------------------------------------------------------------------
+template <class M>
+std::string to_byte_string(const instruction<M> &instruction, const lower_case &);
+
+//------------------------------------------------------------------------------
+// Name: to_byte_string
+// Desc: 
+//------------------------------------------------------------------------------
+template <class M>
+std::string to_byte_string(const instruction<M> &instruction, const upper_case &);
+
+//------------------------------------------------------------------------------
+// Name: to_byte_string
+// Desc: 
+//------------------------------------------------------------------------------
+template <class M>
+std::string to_byte_string(const instruction<M> &instruction);
+
+//------------------------------------------------------------------------------
+// Name: register_name
+// Desc: returns a string for a given register
+//------------------------------------------------------------------------------
+template <class M>
+std::string register_name(typename operand<M>::Register reg, const upper_case&);
+
+//------------------------------------------------------------------------------
+// Name: register_name
+// Desc: returns a string for a given register
+//------------------------------------------------------------------------------
+template <class M>
+std::string register_name(typename operand<M>::Register reg, const lower_case&);
+
+//------------------------------------------------------------------------------
+// Name: register_name
+// Desc: returns a string for a given register
+//------------------------------------------------------------------------------
+template <class M>
+std::string register_name(typename operand<M>::Register reg);
+
 }
+
 
 #include "edisassm_string.tcc"
 #endif
