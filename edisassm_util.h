@@ -63,16 +63,6 @@ bool is_small_num(T value) {
 	return (value > -127 && value < 128);
 }
 
-template <class T>
-bool is_call(const Instruction<T> &insn) {
-	return insn.valid() && insn.type() == Instruction<T>::OP_CALL;
-}
-
-template <class T>
-bool is_ret(const Instruction<T> &insn) {
-	return insn.valid() && insn.type() == Instruction<T>::OP_RET;
-}
-
 }
 }
 

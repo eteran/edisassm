@@ -19,31 +19,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef OPTABLE_GROUP15_20080314_TCC_
 #define OPTABLE_GROUP15_20080314_TCC_
 
-#include "Operand.h"
+namespace edisassm {
 
 template <class M>
-const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group15[8] = {
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "psrlq",   &Instruction::decode_Nq_Ib,   OP_PSRLQ,   FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "psllq",   &Instruction::decode_Nq_Ib,   OP_PSLLQ,   FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group15[8] = {
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psrlq",   &instruction::decode_Nq_Ib,   OP_PSRLQ,   FLAG_NONE },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psllq",   &instruction::decode_Nq_Ib,   OP_PSLLQ,   FLAG_NONE },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
 
 template <class M>
-const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group15_66[8] = {
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "psrlq",   &Instruction::decode_Uo_Ib,   OP_PSRLQ,   FLAG_NONE },
-	{ "psrldq",  &Instruction::decode_Uo_Ib,   OP_PSRLDQ,  FLAG_SSE2 },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "psllq",   &Instruction::decode_Uo_Ib,   OP_PSLLQ,   FLAG_NONE },
-	{ "pslldq",  &Instruction::decode_Uo_Ib,   OP_PSLLDQ,  FLAG_SSE2 },
+const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group15_66[8] = {
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psrlq",   &instruction::decode_Uo_Ib,   OP_PSRLQ,   FLAG_NONE },
+	{ "psrldq",  &instruction::decode_Uo_Ib,   OP_PSRLDQ,  FLAG_SSE2 },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psllq",   &instruction::decode_Uo_Ib,   OP_PSLLQ,   FLAG_NONE },
+	{ "pslldq",  &instruction::decode_Uo_Ib,   OP_PSLLDQ,  FLAG_SSE2 },
 };
+
+}
 
 #endif
 

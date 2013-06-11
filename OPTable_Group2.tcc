@@ -19,67 +19,69 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef OPTABLE_GROUP2_20080314_TCC_
 #define OPTABLE_GROUP2_20080314_TCC_
 
-#include "Operand.h"
+namespace edisassm {
 
 template <class M>
-const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group2[16] = {
-	{ "rol", &Instruction::decode_Eb_Ib, OP_ROL, FLAG_NONE },
-	{ "ror", &Instruction::decode_Eb_Ib, OP_ROR, FLAG_NONE },
-	{ "rcl", &Instruction::decode_Eb_Ib, OP_RCL, FLAG_NONE },
-	{ "rcr", &Instruction::decode_Eb_Ib, OP_RCR, FLAG_NONE },
-	{ "shl", &Instruction::decode_Eb_Ib, OP_SHL, FLAG_NONE },
-	{ "shr", &Instruction::decode_Eb_Ib, OP_SHR, FLAG_NONE },
-	{ "sal", &Instruction::decode_Eb_Ib, OP_SAL, FLAG_NONE },
-	{ "sar", &Instruction::decode_Eb_Ib, OP_SAR, FLAG_NONE },
+const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group2[16] = {
+	{ "rol", &instruction::decode_Eb_Ib, OP_ROL, FLAG_NONE },
+	{ "ror", &instruction::decode_Eb_Ib, OP_ROR, FLAG_NONE },
+	{ "rcl", &instruction::decode_Eb_Ib, OP_RCL, FLAG_NONE },
+	{ "rcr", &instruction::decode_Eb_Ib, OP_RCR, FLAG_NONE },
+	{ "shl", &instruction::decode_Eb_Ib, OP_SHL, FLAG_NONE },
+	{ "shr", &instruction::decode_Eb_Ib, OP_SHR, FLAG_NONE },
+	{ "sal", &instruction::decode_Eb_Ib, OP_SAL, FLAG_NONE },
+	{ "sar", &instruction::decode_Eb_Ib, OP_SAR, FLAG_NONE },
 
-	{ "rol", &Instruction::decode_Ev_Ib, OP_ROL, FLAG_NONE },
-	{ "ror", &Instruction::decode_Ev_Ib, OP_ROR, FLAG_NONE },
-	{ "rcl", &Instruction::decode_Ev_Ib, OP_RCL, FLAG_NONE },
-	{ "rcr", &Instruction::decode_Ev_Ib, OP_RCR, FLAG_NONE },
-	{ "shl", &Instruction::decode_Ev_Ib, OP_SHL, FLAG_NONE },
-	{ "shr", &Instruction::decode_Ev_Ib, OP_SHR, FLAG_NONE },
-	{ "sal", &Instruction::decode_Ev_Ib, OP_SAL, FLAG_NONE },
-	{ "sar", &Instruction::decode_Ev_Ib, OP_SAR, FLAG_NONE },
+	{ "rol", &instruction::decode_Ev_Ib, OP_ROL, FLAG_NONE },
+	{ "ror", &instruction::decode_Ev_Ib, OP_ROR, FLAG_NONE },
+	{ "rcl", &instruction::decode_Ev_Ib, OP_RCL, FLAG_NONE },
+	{ "rcr", &instruction::decode_Ev_Ib, OP_RCR, FLAG_NONE },
+	{ "shl", &instruction::decode_Ev_Ib, OP_SHL, FLAG_NONE },
+	{ "shr", &instruction::decode_Ev_Ib, OP_SHR, FLAG_NONE },
+	{ "sal", &instruction::decode_Ev_Ib, OP_SAL, FLAG_NONE },
+	{ "sar", &instruction::decode_Ev_Ib, OP_SAR, FLAG_NONE },
 };
 
 template <class M>
-const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group2D[32] = {
-	{ "rol", &Instruction::decode_Eb_1, OP_ROL, FLAG_NONE },
-	{ "ror", &Instruction::decode_Eb_1, OP_ROR, FLAG_NONE },
-	{ "rcl", &Instruction::decode_Eb_1, OP_RCL, FLAG_NONE },
-	{ "rcr", &Instruction::decode_Eb_1, OP_RCR, FLAG_NONE },
-	{ "shl", &Instruction::decode_Eb_1, OP_SHL, FLAG_NONE },
-	{ "shr", &Instruction::decode_Eb_1, OP_SHR, FLAG_NONE },
-	{ "sal", &Instruction::decode_Eb_1, OP_SAL, FLAG_NONE },
-	{ "sar", &Instruction::decode_Eb_1, OP_SAR, FLAG_NONE },
+const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group2D[32] = {
+	{ "rol", &instruction::decode_Eb_1, OP_ROL, FLAG_NONE },
+	{ "ror", &instruction::decode_Eb_1, OP_ROR, FLAG_NONE },
+	{ "rcl", &instruction::decode_Eb_1, OP_RCL, FLAG_NONE },
+	{ "rcr", &instruction::decode_Eb_1, OP_RCR, FLAG_NONE },
+	{ "shl", &instruction::decode_Eb_1, OP_SHL, FLAG_NONE },
+	{ "shr", &instruction::decode_Eb_1, OP_SHR, FLAG_NONE },
+	{ "sal", &instruction::decode_Eb_1, OP_SAL, FLAG_NONE },
+	{ "sar", &instruction::decode_Eb_1, OP_SAR, FLAG_NONE },
 
-	{ "rol", &Instruction::decode_Ev_1, OP_ROL, FLAG_NONE },
-	{ "ror", &Instruction::decode_Ev_1, OP_ROR, FLAG_NONE },
-	{ "rcl", &Instruction::decode_Ev_1, OP_RCL, FLAG_NONE },
-	{ "rcr", &Instruction::decode_Ev_1, OP_RCR, FLAG_NONE },
-	{ "shl", &Instruction::decode_Ev_1, OP_SHL, FLAG_NONE },
-	{ "shr", &Instruction::decode_Ev_1, OP_SHR, FLAG_NONE },
-	{ "sal", &Instruction::decode_Ev_1, OP_SAL, FLAG_NONE },
-	{ "sar", &Instruction::decode_Ev_1, OP_SAR, FLAG_NONE },
+	{ "rol", &instruction::decode_Ev_1, OP_ROL, FLAG_NONE },
+	{ "ror", &instruction::decode_Ev_1, OP_ROR, FLAG_NONE },
+	{ "rcl", &instruction::decode_Ev_1, OP_RCL, FLAG_NONE },
+	{ "rcr", &instruction::decode_Ev_1, OP_RCR, FLAG_NONE },
+	{ "shl", &instruction::decode_Ev_1, OP_SHL, FLAG_NONE },
+	{ "shr", &instruction::decode_Ev_1, OP_SHR, FLAG_NONE },
+	{ "sal", &instruction::decode_Ev_1, OP_SAL, FLAG_NONE },
+	{ "sar", &instruction::decode_Ev_1, OP_SAR, FLAG_NONE },
 
-	{ "rol", &Instruction::decode_Eb_CL, OP_ROL, FLAG_NONE },
-	{ "ror", &Instruction::decode_Eb_CL, OP_ROR, FLAG_NONE },
-	{ "rcl", &Instruction::decode_Eb_CL, OP_RCL, FLAG_NONE },
-	{ "rcr", &Instruction::decode_Eb_CL, OP_RCR, FLAG_NONE },
-	{ "shl", &Instruction::decode_Eb_CL, OP_SHL, FLAG_NONE },
-	{ "shr", &Instruction::decode_Eb_CL, OP_SHR, FLAG_NONE },
-	{ "sal", &Instruction::decode_Eb_CL, OP_SAL, FLAG_NONE },
-	{ "sar", &Instruction::decode_Eb_CL, OP_SAR, FLAG_NONE },
+	{ "rol", &instruction::decode_Eb_CL, OP_ROL, FLAG_NONE },
+	{ "ror", &instruction::decode_Eb_CL, OP_ROR, FLAG_NONE },
+	{ "rcl", &instruction::decode_Eb_CL, OP_RCL, FLAG_NONE },
+	{ "rcr", &instruction::decode_Eb_CL, OP_RCR, FLAG_NONE },
+	{ "shl", &instruction::decode_Eb_CL, OP_SHL, FLAG_NONE },
+	{ "shr", &instruction::decode_Eb_CL, OP_SHR, FLAG_NONE },
+	{ "sal", &instruction::decode_Eb_CL, OP_SAL, FLAG_NONE },
+	{ "sar", &instruction::decode_Eb_CL, OP_SAR, FLAG_NONE },
 
-	{ "rol", &Instruction::decode_Ev_CL, OP_ROL, FLAG_NONE },
-	{ "ror", &Instruction::decode_Ev_CL, OP_ROR, FLAG_NONE },
-	{ "rcl", &Instruction::decode_Ev_CL, OP_RCL, FLAG_NONE },
-	{ "rcr", &Instruction::decode_Ev_CL, OP_RCR, FLAG_NONE },
-	{ "shl", &Instruction::decode_Ev_CL, OP_SHL, FLAG_NONE },
-	{ "shr", &Instruction::decode_Ev_CL, OP_SHR, FLAG_NONE },
-	{ "sal", &Instruction::decode_Ev_CL, OP_SAL, FLAG_NONE },
-	{ "sar", &Instruction::decode_Ev_CL, OP_SAR, FLAG_NONE },
+	{ "rol", &instruction::decode_Ev_CL, OP_ROL, FLAG_NONE },
+	{ "ror", &instruction::decode_Ev_CL, OP_ROR, FLAG_NONE },
+	{ "rcl", &instruction::decode_Ev_CL, OP_RCL, FLAG_NONE },
+	{ "rcr", &instruction::decode_Ev_CL, OP_RCR, FLAG_NONE },
+	{ "shl", &instruction::decode_Ev_CL, OP_SHL, FLAG_NONE },
+	{ "shr", &instruction::decode_Ev_CL, OP_SHR, FLAG_NONE },
+	{ "sal", &instruction::decode_Ev_CL, OP_SAL, FLAG_NONE },
+	{ "sar", &instruction::decode_Ev_CL, OP_SAR, FLAG_NONE },
 };
+
+}
 
 #endif
 

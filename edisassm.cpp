@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Instruction.h"
+#include "instruction.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -32,9 +32,9 @@ enum DISPLAY_FLAGS {
 // Name: disassemble
 //------------------------------------------------------------------------------
 template <class M, class In>
-void disassemble(In first, In last, typename Instruction<M>::address_t rva, unsigned int flags) {
+void disassemble(In first, In last, typename edisassm::instruction<M>::address_type rva, unsigned int flags) {
 
-	typedef Instruction<M> insn_t;
+	typedef edisassm::instruction<M> insn_t;
 	
 	while(first != last) {
 	
@@ -42,9 +42,9 @@ void disassemble(In first, In last, typename Instruction<M>::address_t rva, unsi
 		if(instruction) {
 			std::cout << std::hex << rva << ": ";
 			if(flags & FLAG_SHOW_BYTES) {
-				std::cout << edisassm::to_byte_string(instruction) << " ";
+				std::cout << to_byte_string(instruction) << " ";
 			}
-			std::cout << edisassm::to_string(instruction) << '\n';
+			std::cout << to_string(instruction) << '\n';
 			first += instruction.size();
 			rva   += instruction.size();
 		} else {

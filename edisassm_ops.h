@@ -19,11 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef EDISASSM_OPS_20110816_H_
 #define EDISASSM_OPS_20110816_H_
 
+namespace edisassm {
+
 //------------------------------------------------------------------------------
 // Name: operator==
 //------------------------------------------------------------------------------
 template <class M>
-bool operator==(const Instruction<M> &lhs, const Instruction<M> &rhs) {
+bool operator==(const instruction<M> &lhs, const instruction<M> &rhs) {
 	// invalid ops match nothing
 	if(!lhs.valid() || !rhs.valid()) {
 		return false;
@@ -45,11 +47,11 @@ bool operator==(const Instruction<M> &lhs, const Instruction<M> &rhs) {
 	// compare the type and value of each operand
 	for(unsigned int i = 0; i < lhs_operand_count; ++i) {
 
-		const typename Instruction<M>::operand_t &lhs_operand = lhs.operand(i);
-		const typename Instruction<M>::operand_t &rhs_operand = rhs.operand(i);
+		const typename instruction<M>::operand_type &lhs_operand = lhs.operands_[i];
+		const typename instruction<M>::operand_type &rhs_operand = rhs.operands_[i];
 
-		typename Instruction<M>::operand_t::Type lhs_operand_type = lhs_operand.general_type();
-		typename Instruction<M>::operand_t::Type rhs_operand_type = rhs_operand.general_type();
+		typename instruction<M>::operand_type::Type lhs_operand_type = lhs_operand.general_type();
+		typename instruction<M>::operand_type::Type rhs_operand_type = rhs_operand.general_type();
 
 		if(lhs_operand_type != rhs_operand_type) {
 			return false;
@@ -57,22 +59,22 @@ bool operator==(const Instruction<M> &lhs, const Instruction<M> &rhs) {
 
 		// TODO: support generics
 		switch(lhs_operand_type) {
-		case Operand<M>::TYPE_REGISTER:
+		case operand<M>::TYPE_REGISTER:
 			if(lhs_operand.reg != rhs_operand.reg) {
 				return false;
 			}
 			break;
-		case Operand<M>::TYPE_IMMEDIATE:
+		case operand<M>::TYPE_IMMEDIATE:
 			if(lhs_operand.immediate() != rhs_operand.immediate()) {
 				return false;
 			}
 			break;
-		case Operand<M>::TYPE_REL:
+		case operand<M>::TYPE_REL:
 			if(lhs_operand.relative_target() != rhs_operand.relative_target()) {
 				return false;
 			}
 			break;
-		case Operand<M>::TYPE_ABSOLUTE:
+		case operand<M>::TYPE_ABSOLUTE:
 			if(lhs_operand.absolute.offset != rhs_operand.absolute.offset) {
 				return false;
 			}
@@ -82,7 +84,7 @@ bool operator==(const Instruction<M> &lhs, const Instruction<M> &rhs) {
 			}
 			break;
 		default:
-		case Operand<M>::TYPE_EXPRESSION:
+		case operand<M>::TYPE_EXPRESSION:
 			// TODO: do this way more efficiently...
 			if(lhs_operand.format() != rhs_operand.format()) {
 				return false;
@@ -98,8 +100,12 @@ bool operator==(const Instruction<M> &lhs, const Instruction<M> &rhs) {
 // Name: operator!=
 //------------------------------------------------------------------------------
 template <class M>
-bool operator!=(const Instruction<M> &lhs, const Instruction<M> &rhs) {
+bool operator!=(const instruction<M> &lhs, const instruction<M> &rhs) {
 	return !(lhs == rhs);
+}
+
+
+
 }
 
 #endif

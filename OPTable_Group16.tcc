@@ -19,31 +19,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef OPTABLE_GROUP16_20080314_TCC_
 #define OPTABLE_GROUP16_20080314_TCC_
 
-#include "Operand.h"
+namespace edisassm {
 
 template <class M>
-const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group16_Mem[8] = {
-	{ "fxsave",  &Instruction::decode_M512,    OP_FXSAVE,  FLAG_SSE },
-	{ "fxrstor", &Instruction::decode_M512,    OP_FXRSTOR, FLAG_SSE },
-	{ "ldmxcsr", &Instruction::decode_Md,      OP_LDMXCSR, FLAG_SSE },
-	{ "stmxcsr", &Instruction::decode_Md,      OP_STMXCSR, FLAG_SSE },
-	{ "xsave",   &Instruction::decode_M,       OP_XSAVE,   FLAG_NONE },
-	{ "xrstor",  &Instruction::decode_M,       OP_XRSTOR,  FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "clflush", &Instruction::decode_M,       OP_CLFLUSH, FLAG_SSE2 },
+const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group16_Mem[8] = {
+	{ "fxsave",  &instruction::decode_M512,    OP_FXSAVE,  FLAG_SSE },
+	{ "fxrstor", &instruction::decode_M512,    OP_FXRSTOR, FLAG_SSE },
+	{ "ldmxcsr", &instruction::decode_Md,      OP_LDMXCSR, FLAG_SSE },
+	{ "stmxcsr", &instruction::decode_Md,      OP_STMXCSR, FLAG_SSE },
+	{ "xsave",   &instruction::decode_M,       OP_XSAVE,   FLAG_NONE },
+	{ "xrstor",  &instruction::decode_M,       OP_XRSTOR,  FLAG_NONE },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "clflush", &instruction::decode_M,       OP_CLFLUSH, FLAG_SSE2 },
 };
 
 template <class M>
-const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group16_Reg[8] = {
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "lfence",  &Instruction::decode0,        OP_LFENCE,  FLAG_SSE2 },
-	{ "mfence",  &Instruction::decode0,        OP_MFENCE,  FLAG_SSE2 },
-	{ "sfence",  &Instruction::decode0,        OP_SFENCE,  FLAG_SSE },
+const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group16_Reg[8] = {
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "lfence",  &instruction::decode0,        OP_LFENCE,  FLAG_SSE2 },
+	{ "mfence",  &instruction::decode0,        OP_MFENCE,  FLAG_SSE2 },
+	{ "sfence",  &instruction::decode0,        OP_SFENCE,  FLAG_SSE },
 };
+
+}
 
 #endif
 

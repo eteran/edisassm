@@ -46,14 +46,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "ModRM.h"
 #include "SIB.h"
 #include "REX.h"
-#include "Operand.h"
+namespace edisassm {
 
 //------------------------------------------------------------------------------
 // Name: decode_Gx
 //------------------------------------------------------------------------------
 template <class M>
-template <typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
-void Instruction<M>::decode_Gx() {
+template <typename operand<M>::Register (*REG_DECODE)(uint8_t)>
+void instruction<M>::decode_Gx() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -68,9 +68,9 @@ void Instruction<M>::decode_Gx() {
 		}
 	}
 
-	operand_t &operand = next_operand();
+	operand_type &operand = next_operand();
 	operand.u.reg      = (*REG_DECODE)(reg_index);
-	operand.type_      = operand_t::TYPE_REGISTER;
+	operand.type_      = operand_type::TYPE_REGISTER;
 }
 
 //------------------------------------------------------------------------------
@@ -78,58 +78,58 @@ void Instruction<M>::decode_Gx() {
 //------------------------------------------------------------------------------
 template <class M>
 template <int index>
-void Instruction<M>::decode_STi() {
+void instruction<M>::decode_STi() {
 
-	operand_t &operand = next_operand();
+	operand_type &operand = next_operand();
 	operand.u.reg      = index_to_reg_fpu(index);
-	operand.type_      = operand_t::TYPE_REGISTER;
+	operand.type_      = operand_type::TYPE_REGISTER;
 }
 
 //------------------------------------------------------------------------------
 // Name: decode_ModRM_0_16
 //------------------------------------------------------------------------------
 template <class M>
-template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
-void Instruction<M>::decode_ModRM_0_16(uint8_t rm, operand_t &operand) {
+template <typename operand<M>::Type TYPE, typename operand<M>::Register (*REG_DECODE)(uint8_t)>
+void instruction<M>::decode_ModRM_0_16(uint8_t rm, operand_type &operand) {
 
 	operand.type_                          = TYPE;
 	operand.u.expression.scale             = 1;
-	operand.u.expression.displacement_type = operand_t::DISP_NONE;
+	operand.u.expression.displacement_type = operand_type::DISP_NONE;
 
 	switch(modrm::rm(rm)) {
 	case 0x00:
-		operand.u.expression.index = operand_t::REG_SI;
-		operand.u.expression.base  = operand_t::REG_BX;
+		operand.u.expression.index = operand_type::REG_SI;
+		operand.u.expression.base  = operand_type::REG_BX;
 		break;
 	case 0x01:
-		operand.u.expression.index = operand_t::REG_DI;
-		operand.u.expression.base  = operand_t::REG_BX;
+		operand.u.expression.index = operand_type::REG_DI;
+		operand.u.expression.base  = operand_type::REG_BX;
 		break;
 	case 0x02:
-		operand.u.expression.index = operand_t::REG_SI;
-		operand.u.expression.base  = operand_t::REG_BP;
+		operand.u.expression.index = operand_type::REG_SI;
+		operand.u.expression.base  = operand_type::REG_BP;
 		break;
 	case 0x03:
-		operand.u.expression.index = operand_t::REG_DI;
-		operand.u.expression.base  = operand_t::REG_BP;
+		operand.u.expression.index = operand_type::REG_DI;
+		operand.u.expression.base  = operand_type::REG_BP;
 		break;
 	case 0x04:
-		operand.u.expression.index = operand_t::REG_SI;
-		operand.u.expression.base  = operand_t::REG_NULL;
+		operand.u.expression.index = operand_type::REG_SI;
+		operand.u.expression.base  = operand_type::REG_NULL;
 		break;
 	case 0x05:
-		operand.u.expression.index = operand_t::REG_DI;
-		operand.u.expression.base  = operand_t::REG_NULL;
+		operand.u.expression.index = operand_type::REG_DI;
+		operand.u.expression.base  = operand_type::REG_NULL;
 		break;
 	case 0x06:
-		operand.u.expression.index             = operand_t::REG_NULL;
-		operand.u.expression.base              = operand_t::REG_NULL;
+		operand.u.expression.index             = operand_type::REG_NULL;
+		operand.u.expression.base              = operand_type::REG_NULL;
 		operand.u.expression.s_disp16          = get_displacement_s16();
-		operand.u.expression.displacement_type = operand_t::DISP_S16;
+		operand.u.expression.displacement_type = operand_type::DISP_S16;
 		break;
 	case 0x07:
-		operand.u.expression.index = operand_t::REG_NULL;
-		operand.u.expression.base  = operand_t::REG_BX;
+		operand.u.expression.index = operand_type::REG_NULL;
+		operand.u.expression.base  = operand_type::REG_BX;
 		break;
 	}
 }
@@ -138,46 +138,46 @@ void Instruction<M>::decode_ModRM_0_16(uint8_t rm, operand_t &operand) {
 // Name: decode_ModRM_1_16
 //------------------------------------------------------------------------------
 template <class M>
-template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
-void Instruction<M>::decode_ModRM_1_16(uint8_t rm, operand_t &operand) {
+template <typename operand<M>::Type TYPE, typename operand<M>::Register (*REG_DECODE)(uint8_t)>
+void instruction<M>::decode_ModRM_1_16(uint8_t rm, operand_type &operand) {
 
 	operand.type_                          = TYPE;
 	operand.u.expression.scale             = 1;
 	operand.u.expression.s_disp8           = get_displacement_s8();
-	operand.u.expression.displacement_type = operand_t::DISP_S8;
+	operand.u.expression.displacement_type = operand_type::DISP_S8;
 
 	switch(modrm::rm(rm)) {
 	case 0x00:
-		operand.u.expression.index = operand_t::REG_SI;
-		operand.u.expression.base  = operand_t::REG_BX;
+		operand.u.expression.index = operand_type::REG_SI;
+		operand.u.expression.base  = operand_type::REG_BX;
 		break;
 	case 0x01:
-		operand.u.expression.index = operand_t::REG_DI;
-		operand.u.expression.base  = operand_t::REG_BX;
+		operand.u.expression.index = operand_type::REG_DI;
+		operand.u.expression.base  = operand_type::REG_BX;
 		break;
 	case 0x02:
-		operand.u.expression.index = operand_t::REG_SI;
-		operand.u.expression.base  = operand_t::REG_BP;
+		operand.u.expression.index = operand_type::REG_SI;
+		operand.u.expression.base  = operand_type::REG_BP;
 		break;
 	case 0x03:
-		operand.u.expression.index = operand_t::REG_DI;
-		operand.u.expression.base  = operand_t::REG_BP;
+		operand.u.expression.index = operand_type::REG_DI;
+		operand.u.expression.base  = operand_type::REG_BP;
 		break;
 	case 0x04:
-		operand.u.expression.index = operand_t::REG_SI;
-		operand.u.expression.base  = operand_t::REG_NULL;
+		operand.u.expression.index = operand_type::REG_SI;
+		operand.u.expression.base  = operand_type::REG_NULL;
 		break;
 	case 0x05:
-		operand.u.expression.index = operand_t::REG_DI;
-		operand.u.expression.base  = operand_t::REG_NULL;
+		operand.u.expression.index = operand_type::REG_DI;
+		operand.u.expression.base  = operand_type::REG_NULL;
 		break;
 	case 0x06:
-		operand.u.expression.index = operand_t::REG_NULL;
-		operand.u.expression.base  = operand_t::REG_BP;
+		operand.u.expression.index = operand_type::REG_NULL;
+		operand.u.expression.base  = operand_type::REG_BP;
 		break;
 	case 0x07:
-		operand.u.expression.index = operand_t::REG_NULL;
-		operand.u.expression.base  = operand_t::REG_BX;
+		operand.u.expression.index = operand_type::REG_NULL;
+		operand.u.expression.base  = operand_type::REG_BX;
 		break;
 	}
 }
@@ -186,46 +186,46 @@ void Instruction<M>::decode_ModRM_1_16(uint8_t rm, operand_t &operand) {
 // Name: decode_ModRM_2_16
 //------------------------------------------------------------------------------
 template <class M>
-template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
-void Instruction<M>::decode_ModRM_2_16(uint8_t rm, operand_t &operand) {
+template <typename operand<M>::Type TYPE, typename operand<M>::Register (*REG_DECODE)(uint8_t)>
+void instruction<M>::decode_ModRM_2_16(uint8_t rm, operand_type &operand) {
 
 	operand.type_                          = TYPE;
 	operand.u.expression.scale             = 1;
 	operand.u.expression.s_disp16          = get_displacement_s16();
-	operand.u.expression.displacement_type = operand_t::DISP_S16;
+	operand.u.expression.displacement_type = operand_type::DISP_S16;
 
 	switch(modrm::rm(rm)) {
 	case 0x00:
-		operand.u.expression.index = operand_t::REG_SI;
-		operand.u.expression.base  = operand_t::REG_BX;
+		operand.u.expression.index = operand_type::REG_SI;
+		operand.u.expression.base  = operand_type::REG_BX;
 		break;
 	case 0x01:
-		operand.u.expression.index = operand_t::REG_DI;
-		operand.u.expression.base  = operand_t::REG_BX;
+		operand.u.expression.index = operand_type::REG_DI;
+		operand.u.expression.base  = operand_type::REG_BX;
 		break;
 	case 0x02:
-		operand.u.expression.index = operand_t::REG_SI;
-		operand.u.expression.base  = operand_t::REG_BP;
+		operand.u.expression.index = operand_type::REG_SI;
+		operand.u.expression.base  = operand_type::REG_BP;
 		break;
 	case 0x03:
-		operand.u.expression.index = operand_t::REG_DI;
-		operand.u.expression.base  = operand_t::REG_BP;
+		operand.u.expression.index = operand_type::REG_DI;
+		operand.u.expression.base  = operand_type::REG_BP;
 		break;
 	case 0x04:
-		operand.u.expression.index = operand_t::REG_SI;
-		operand.u.expression.base  = operand_t::REG_NULL;
+		operand.u.expression.index = operand_type::REG_SI;
+		operand.u.expression.base  = operand_type::REG_NULL;
 		break;
 	case 0x05:
-		operand.u.expression.index = operand_t::REG_DI;
-		operand.u.expression.base  = operand_t::REG_NULL;
+		operand.u.expression.index = operand_type::REG_DI;
+		operand.u.expression.base  = operand_type::REG_NULL;
 		break;
 	case 0x06:
-		operand.u.expression.index = operand_t::REG_NULL;
-		operand.u.expression.base  = operand_t::REG_BP;
+		operand.u.expression.index = operand_type::REG_NULL;
+		operand.u.expression.base  = operand_type::REG_BP;
 		break;
 	case 0x07:
-		operand.u.expression.index = operand_t::REG_NULL;
-		operand.u.expression.base  = operand_t::REG_BX;
+		operand.u.expression.index = operand_type::REG_NULL;
+		operand.u.expression.base  = operand_type::REG_BX;
 		break;
 	}
 }
@@ -234,13 +234,13 @@ void Instruction<M>::decode_ModRM_2_16(uint8_t rm, operand_t &operand) {
 // Name: decode_Reg
 //------------------------------------------------------------------------------
 template <class M>
-template <typename Operand<M>::Register REG>
-void Instruction<M>::decode_Reg() {
+template <typename operand<M>::Register REG>
+void instruction<M>::decode_Reg() {
 
-	operand_t &operand = next_operand();
+	operand_type &operand = next_operand();
 
 	operand.u.reg = REG;
-	operand.type_ = operand_t::TYPE_REGISTER;
+	operand.type_ = operand_type::TYPE_REGISTER;
 }
 
 //------------------------------------------------------------------------------
@@ -248,12 +248,12 @@ void Instruction<M>::decode_Reg() {
 //------------------------------------------------------------------------------
 template <class M>
 template <int64_t IMM>
-void Instruction<M>::decode_const_Iq() {
+void instruction<M>::decode_const_Iq() {
 
-	operand_t &operand = next_operand();
+	operand_type &operand = next_operand();
 
 	operand.u.sqword = IMM;
-	operand.type_    = operand_t::TYPE_IMMEDIATE64;
+	operand.type_    = operand_type::TYPE_IMMEDIATE64;
 
 	// NOTE: so far this is only used for implicit constants, other
 	// ones may need a size!
@@ -265,12 +265,12 @@ void Instruction<M>::decode_const_Iq() {
 //------------------------------------------------------------------------------
 template <class M>
 template <int32_t IMM>
-void Instruction<M>::decode_const_Id() {
+void instruction<M>::decode_const_Id() {
 
-	operand_t &operand = next_operand();
+	operand_type &operand = next_operand();
 
 	operand.u.sdword = IMM;
-	operand.type_    = operand_t::TYPE_IMMEDIATE32;
+	operand.type_    = operand_type::TYPE_IMMEDIATE32;
 
 	// NOTE: so far this is only used for implicit constants, other
 	// ones may need a size!
@@ -282,12 +282,12 @@ void Instruction<M>::decode_const_Id() {
 //------------------------------------------------------------------------------
 template <class M>
 template <int16_t IMM>
-void Instruction<M>::decode_const_Iw() {
+void instruction<M>::decode_const_Iw() {
 
-	operand_t &operand = next_operand();
+	operand_type &operand = next_operand();
 
 	operand.u.sword = IMM;
-	operand.type_   = operand_t::TYPE_IMMEDIATE16;
+	operand.type_   = operand_type::TYPE_IMMEDIATE16;
 
 	// NOTE: so far this is only used for implicit constants, other
 	// ones may need a size!
@@ -299,12 +299,12 @@ void Instruction<M>::decode_const_Iw() {
 //------------------------------------------------------------------------------
 template <class M>
 template <int8_t IMM>
-void Instruction<M>::decode_const_Ib() {
+void instruction<M>::decode_const_Ib() {
 
-	operand_t &operand = next_operand();
+	operand_type &operand = next_operand();
 
 	operand.u.sbyte = IMM;
-	operand.type_   = operand_t::TYPE_IMMEDIATE8;
+	operand.type_   = operand_type::TYPE_IMMEDIATE8;
 
 	// NOTE: so far this is only used for implicit constants, other
 	// ones may need a size!
@@ -315,7 +315,7 @@ void Instruction<M>::decode_const_Ib() {
 // Name: get_modrm
 //------------------------------------------------------------------------------
 template <class M>
-uint8_t Instruction<M>::get_modrm() {
+uint8_t instruction<M>::get_modrm() {
 	if(modrm_size_ == 0) {
 		modrm_byte_ = next_byte();
 		modrm_size_ = 1;
@@ -329,7 +329,7 @@ uint8_t Instruction<M>::get_modrm() {
 // Name: get_sib
 //------------------------------------------------------------------------------
 template <class M>
-uint8_t Instruction<M>::get_sib() {
+uint8_t instruction<M>::get_sib() {
 	if(sib_size_ == 0) {
 		sib_byte_ = next_byte();
 		sib_size_ = 1;
@@ -342,10 +342,10 @@ uint8_t Instruction<M>::get_sib() {
 // Name: get_displacement_s8
 //------------------------------------------------------------------------------
 template <class M>
-int8_t Instruction<M>::get_displacement_s8() {
+int8_t instruction<M>::get_displacement_s8() {
 	// there should only every be one displacement value!
 	if(disp_size_ != 0) {
-		throw edisassm::multiple_displacements(byte_index_);
+		throw multiple_displacements(byte_index_);
 	}
 	
 	int8_t ret = next_byte();
@@ -357,10 +357,10 @@ int8_t Instruction<M>::get_displacement_s8() {
 // Name: get_displacement_s16
 //------------------------------------------------------------------------------
 template <class M>
-int16_t Instruction<M>::get_displacement_s16() {
+int16_t instruction<M>::get_displacement_s16() {
 	// there should only every be one displacement value!
 	if(disp_size_ != 0) {
-		throw edisassm::multiple_displacements(byte_index_);
+		throw multiple_displacements(byte_index_);
 	}
 	
 	int16_t ret = 0;
@@ -375,10 +375,10 @@ int16_t Instruction<M>::get_displacement_s16() {
 // Name: get_displacement_s32
 //------------------------------------------------------------------------------
 template <class M>
-int32_t Instruction<M>::get_displacement_s32() {
+int32_t instruction<M>::get_displacement_s32() {
 	// there should only every be one displacement value!
 	if(disp_size_ != 0) {
-		throw edisassm::multiple_displacements(byte_index_);
+		throw multiple_displacements(byte_index_);
 	}
 	
 	int32_t ret = 0;
@@ -395,11 +395,11 @@ int32_t Instruction<M>::get_displacement_s32() {
 // Name: get_displacement_s64
 //------------------------------------------------------------------------------
 template <class M>
-int64_t Instruction<M>::get_displacement_s64() {
+int64_t instruction<M>::get_displacement_s64() {
 
 	// there should only every be one displacement value!
 	if(disp_size_ != 0) {
-		throw edisassm::multiple_displacements(byte_index_);
+		throw multiple_displacements(byte_index_);
 	}
 	
 	int64_t ret = 0;
@@ -420,7 +420,7 @@ int64_t Instruction<M>::get_displacement_s64() {
 // Name: get_immediate_s8
 //------------------------------------------------------------------------------
 template <class M>
-int8_t Instruction<M>::get_immediate_s8() {
+int8_t instruction<M>::get_immediate_s8() {
 	
 	int8_t ret = next_byte();	
 	
@@ -432,7 +432,7 @@ int8_t Instruction<M>::get_immediate_s8() {
 // Name: get_immediate_s16
 //------------------------------------------------------------------------------
 template <class M>
-int16_t Instruction<M>::get_immediate_s16() {
+int16_t instruction<M>::get_immediate_s16() {
 	
 	int16_t ret = 0;
 	ret = (ret & 0xff00) | static_cast<int16_t>(next_byte());
@@ -446,7 +446,7 @@ int16_t Instruction<M>::get_immediate_s16() {
 // Name: get_immediate_s32
 //------------------------------------------------------------------------------
 template <class M>
-int32_t Instruction<M>::get_immediate_s32() {
+int32_t instruction<M>::get_immediate_s32() {
 	
 	int32_t ret = 0;
 
@@ -464,7 +464,7 @@ int32_t Instruction<M>::get_immediate_s32() {
 // Name: get_immediate_s64
 //------------------------------------------------------------------------------
 template <class M>
-int64_t Instruction<M>::get_immediate_s64() {
+int64_t instruction<M>::get_immediate_s64() {
 
 	int64_t ret = 0;
 
@@ -485,7 +485,7 @@ int64_t Instruction<M>::get_immediate_s64() {
 // Name: get_immediate_u8
 //------------------------------------------------------------------------------
 template <class M>
-uint8_t Instruction<M>::get_immediate_u8() {
+uint8_t instruction<M>::get_immediate_u8() {
 	
 	uint8_t ret = next_byte();
 	
@@ -497,7 +497,7 @@ uint8_t Instruction<M>::get_immediate_u8() {
 // Name: get_immediate_u16
 //------------------------------------------------------------------------------
 template <class M>
-uint16_t Instruction<M>::get_immediate_u16() {
+uint16_t instruction<M>::get_immediate_u16() {
 
 	uint16_t ret = 0;
 
@@ -512,7 +512,7 @@ uint16_t Instruction<M>::get_immediate_u16() {
 // Name: get_immediate_u32
 //------------------------------------------------------------------------------
 template <class M>
-uint32_t Instruction<M>::get_immediate_u32() {
+uint32_t instruction<M>::get_immediate_u32() {
 
 	uint32_t ret = 0;
 
@@ -529,7 +529,7 @@ uint32_t Instruction<M>::get_immediate_u32() {
 // Name: get_immediate_u64
 //------------------------------------------------------------------------------
 template <class M>
-uint64_t Instruction<M>::get_immediate_u64() {
+uint64_t instruction<M>::get_immediate_u64() {
 
 	uint64_t ret = 0;
 
@@ -550,8 +550,8 @@ uint64_t Instruction<M>::get_immediate_u64() {
 // Name: decode_ModRM_0_32
 //------------------------------------------------------------------------------
 template <class M>
-template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t), class DecodeMode>
-void Instruction<M>::decode_ModRM_0_32(uint8_t rm, operand_t &operand) {
+template <typename operand<M>::Type TYPE, typename operand<M>::Register (*REG_DECODE)(uint8_t), class DecodeMode>
+void instruction<M>::decode_ModRM_0_32(uint8_t rm, operand_type &operand) {
 
 	operand.type_ = TYPE;
 
@@ -575,7 +575,7 @@ void Instruction<M>::decode_ModRM_0_32(uint8_t rm, operand_t &operand) {
 
 			operand.u.expression.scale = 1 << sib::scale(sib_byte);
 		} else {
-			operand.u.expression.index = operand_t::REG_NULL;
+			operand.u.expression.index = operand_type::REG_NULL;
 			operand.u.expression.scale = 1;
 		}
 
@@ -583,9 +583,9 @@ void Instruction<M>::decode_ModRM_0_32(uint8_t rm, operand_t &operand) {
 
 			// we could only get here if modrm.mod == 0x00
 			// so it is always sdword
-			operand.u.expression.base              = operand_t::REG_NULL;
+			operand.u.expression.base              = operand_type::REG_NULL;
 			operand.u.expression.s_disp32          = get_displacement_s32();
-			operand.u.expression.displacement_type = operand_t::DISP_S32;
+			operand.u.expression.displacement_type = operand_type::DISP_S32;
 
 		} else {
 
@@ -600,24 +600,24 @@ void Instruction<M>::decode_ModRM_0_32(uint8_t rm, operand_t &operand) {
 			} else {
 				operand.u.expression.base = index_to_reg_32(sibbase);
 			}
-			operand.u.expression.displacement_type = operand_t::DISP_NONE;
+			operand.u.expression.displacement_type = operand_type::DISP_NONE;
 		}
 	} else if(modrm::rm(rm) == 0x05) {
 		if(BITS == 64 && DecodeMode::value == 64) {
-			operand.u.expression.index             = operand_t::REG_NULL;
+			operand.u.expression.index             = operand_type::REG_NULL;
 			operand.u.expression.scale             = 1;
-			operand.u.expression.base              = operand_t::REG_RIP;
+			operand.u.expression.base              = operand_type::REG_RIP;
 			operand.u.expression.s_disp32          = get_displacement_s32();
-			operand.u.expression.displacement_type = operand_t::DISP_S32;
+			operand.u.expression.displacement_type = operand_type::DISP_S32;
 		} else {
-			operand.u.expression.index             = operand_t::REG_NULL;
+			operand.u.expression.index             = operand_type::REG_NULL;
 			operand.u.expression.scale             = 1;
-			operand.u.expression.base              = operand_t::REG_NULL;
+			operand.u.expression.base              = operand_type::REG_NULL;
 			operand.u.expression.s_disp32          = get_displacement_s32();
-			operand.u.expression.displacement_type = operand_t::DISP_S32;
+			operand.u.expression.displacement_type = operand_type::DISP_S32;
 		}
 	} else {
-		operand.u.expression.index = operand_t::REG_NULL;
+		operand.u.expression.index = operand_type::REG_NULL;
 		operand.u.expression.scale = 1;
 
 		int rmbase = modrm::rm(rm);
@@ -632,7 +632,7 @@ void Instruction<M>::decode_ModRM_0_32(uint8_t rm, operand_t &operand) {
 			operand.u.expression.base = index_to_reg_32(rmbase);
 		}
 		operand.u.expression.s_disp8           = 0;
-		operand.u.expression.displacement_type = operand_t::DISP_NONE;
+		operand.u.expression.displacement_type = operand_type::DISP_NONE;
 	}
 }
 
@@ -640,8 +640,8 @@ void Instruction<M>::decode_ModRM_0_32(uint8_t rm, operand_t &operand) {
 // Name: decode_ModRM_1_32
 //------------------------------------------------------------------------------
 template <class M>
-template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t), class DecodeMode>
-void Instruction<M>::decode_ModRM_1_32(uint8_t rm, operand_t &operand) {
+template <typename operand<M>::Type TYPE, typename operand<M>::Register (*REG_DECODE)(uint8_t), class DecodeMode>
+void instruction<M>::decode_ModRM_1_32(uint8_t rm, operand_type &operand) {
 
 	if(modrm::rm(rm) == 0x04) {
 
@@ -673,10 +673,10 @@ void Instruction<M>::decode_ModRM_1_32(uint8_t rm, operand_t &operand) {
 				operand.u.expression.index = index_to_reg_32(sib_index);
 			}
 		} else {
-			operand.u.expression.index = operand_t::REG_NULL;
+			operand.u.expression.index = operand_type::REG_NULL;
 		}
 	} else {
-		operand.u.expression.index = operand_t::REG_NULL;
+		operand.u.expression.index = operand_type::REG_NULL;
 		operand.u.expression.scale = 1;
 
 		int rmbase = modrm::rm(rm);
@@ -695,15 +695,15 @@ void Instruction<M>::decode_ModRM_1_32(uint8_t rm, operand_t &operand) {
 
 	operand.type_                          = TYPE;
 	operand.u.expression.s_disp8           = get_displacement_s8();
-	operand.u.expression.displacement_type = operand_t::DISP_S8;
+	operand.u.expression.displacement_type = operand_type::DISP_S8;
 }
 
 //------------------------------------------------------------------------------
 // Name: decode_ModRM_2_32
 //------------------------------------------------------------------------------
 template <class M>
-template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t), class DecodeMode>
-void Instruction<M>::decode_ModRM_2_32(uint8_t rm, operand_t &operand) {
+template <typename operand<M>::Type TYPE, typename operand<M>::Register (*REG_DECODE)(uint8_t), class DecodeMode>
+void instruction<M>::decode_ModRM_2_32(uint8_t rm, operand_type &operand) {
 
 	if(modrm::rm(rm) == 0x04) {
 		const uint8_t sib_byte = get_sib();
@@ -736,10 +736,10 @@ void Instruction<M>::decode_ModRM_2_32(uint8_t rm, operand_t &operand) {
 			}
 
 		} else {
-			operand.u.expression.index = operand_t::REG_NULL;
+			operand.u.expression.index = operand_type::REG_NULL;
 		}
 	} else {
-		operand.u.expression.index = operand_t::REG_NULL;
+		operand.u.expression.index = operand_type::REG_NULL;
 		operand.u.expression.scale = 1;
 
 		int rmbase = modrm::rm(rm);
@@ -758,15 +758,15 @@ void Instruction<M>::decode_ModRM_2_32(uint8_t rm, operand_t &operand) {
 
 	operand.type_                          = TYPE;
 	operand.u.expression.s_disp32          = get_displacement_s32();
-	operand.u.expression.displacement_type = operand_t::DISP_S32;
+	operand.u.expression.displacement_type = operand_type::DISP_S32;
 }
 
 //------------------------------------------------------------------------------
 // Name: decode_ModRM_3_32
 //------------------------------------------------------------------------------
 template <class M>
-template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t), class DecodeMode>
-void Instruction<M>::decode_ModRM_3_32(uint8_t rm, operand_t &operand) {
+template <typename operand<M>::Type TYPE, typename operand<M>::Register (*REG_DECODE)(uint8_t), class DecodeMode>
+void instruction<M>::decode_ModRM_3_32(uint8_t rm, operand_type &operand) {
 
 	int rmbase = modrm::rm(rm);
 
@@ -780,45 +780,45 @@ void Instruction<M>::decode_ModRM_3_32(uint8_t rm, operand_t &operand) {
 	}
 
 	operand.u.reg = (*REG_DECODE)(rmbase);
-	operand.type_ = operand_t::TYPE_REGISTER;
+	operand.type_ = operand_type::TYPE_REGISTER;
 }
 
 //------------------------------------------------------------------------------
 // Name: decode_ModRM_Invalid
 //------------------------------------------------------------------------------
 template <class M>
-template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
-void Instruction<M>::decode_ModRM_Invalid(uint8_t modrm_byte, operand_t &operand) {
+template <typename operand<M>::Type TYPE, typename operand<M>::Register (*REG_DECODE)(uint8_t)>
+void instruction<M>::decode_ModRM_Invalid(uint8_t modrm_byte, operand_type &operand) {
 	UNUSED(modrm_byte);
 	UNUSED(operand);
-	throw edisassm::invalid_operand(byte_index_);
+	throw invalid_operand(byte_index_);
 }
 
 //------------------------------------------------------------------------------
 // Name: decode_Ex
 //------------------------------------------------------------------------------
 template <class M>
-template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
-void Instruction<M>::decode_Ex() {
+template <typename operand<M>::Type TYPE, typename operand<M>::Register (*REG_DECODE)(uint8_t)>
+void instruction<M>::decode_Ex() {
 
 	const uint8_t modrm_byte = get_modrm();
 	
-	operand_t &operand = next_operand();
+	operand_type &operand = next_operand();
 
 	if(prefix_ & PREFIX_ADDRESS) {
 		if(BITS == 64) {
 			switch(modrm::mod(modrm_byte)) {
 			case 0x00:
-				decode_ModRM_0_32<operand_t::TYPE_EXPRESSION32, REG_DECODE, modrm_32>(modrm_byte, operand);
+				decode_ModRM_0_32<operand_type::TYPE_EXPRESSION32, REG_DECODE, modrm_32>(modrm_byte, operand);
 				break;
 			case 0x01:
-				decode_ModRM_1_32<operand_t::TYPE_EXPRESSION32, REG_DECODE, modrm_32>(modrm_byte, operand);
+				decode_ModRM_1_32<operand_type::TYPE_EXPRESSION32, REG_DECODE, modrm_32>(modrm_byte, operand);
 				break;
 			case 0x02:
-				decode_ModRM_2_32<operand_t::TYPE_EXPRESSION32, REG_DECODE, modrm_32>(modrm_byte, operand);
+				decode_ModRM_2_32<operand_type::TYPE_EXPRESSION32, REG_DECODE, modrm_32>(modrm_byte, operand);
 				break;
 			case 0x03:
-				decode_ModRM_3_32<operand_t::TYPE_EXPRESSION32, REG_DECODE, modrm_32>(modrm_byte, operand);
+				decode_ModRM_3_32<operand_type::TYPE_EXPRESSION32, REG_DECODE, modrm_32>(modrm_byte, operand);
 				break;
 			}
 		} else {
@@ -857,10 +857,10 @@ void Instruction<M>::decode_Ex() {
 }
 
 //------------------------------------------------------------------------------
-// Name: ~Instruction
+// Name: ~instruction
 //------------------------------------------------------------------------------
 template <class M>
-Instruction<M>::~Instruction() {
+instruction<M>::~instruction() {
 	delete byte_stream_;
 }
 
@@ -868,7 +868,7 @@ Instruction<M>::~Instruction() {
 // Name: disassemble
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::disassemble() {
+void instruction<M>::disassemble() {
 
 	for(int i = 0; i < M::MAX_OPERANDS; ++i) {
 		operands_[i].invalidate();
@@ -887,10 +887,10 @@ void Instruction<M>::disassemble() {
 }
 
 //------------------------------------------------------------------------------
-// Name: Instruction
+// Name: instruction
 //------------------------------------------------------------------------------
 template <class M>
-Instruction<M>::Instruction(const Instruction &other) : 
+instruction<M>::instruction(const instruction &other) : 
 	byte_stream_(other.byte_stream_->clone()), byte_index_(other.byte_index_), byte1_(other.byte1_), byte2_(other.byte2_), 
 	byte3_(other.byte3_), modrm_byte_(other.modrm_byte_), 
 	sib_byte_(other.sib_byte_), rex_byte_(other.rex_byte_), rva_(other.rva_), 
@@ -913,9 +913,9 @@ Instruction<M>::Instruction(const Instruction &other) :
 // Name: operator=
 //------------------------------------------------------------------------------
 template <class M>
-Instruction<M> &Instruction<M>::operator=(const Instruction &rhs) {
+instruction<M> &instruction<M>::operator=(const instruction &rhs) {
 	if(this != &rhs) {
-		Instruction(rhs).swap(*this);
+		instruction(rhs).swap(*this);
 	}
 	return *this;
 }
@@ -924,7 +924,7 @@ Instruction<M> &Instruction<M>::operator=(const Instruction &rhs) {
 // Name: swap
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::swap(Instruction &other) {
+void instruction<M>::swap(instruction &other) {
 	using std::swap;
 
 	for(int i = 0; i < MAX_OPERANDS; ++i) {
@@ -961,7 +961,7 @@ void Instruction<M>::swap(Instruction &other) {
 // Name: process_prefixes
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::process_prefixes() {
+void instruction<M>::process_prefixes() {
 
 	bool done = false;
 
@@ -1044,13 +1044,13 @@ void Instruction<M>::process_prefixes() {
 // Name: next_operand
 //------------------------------------------------------------------------------
 template <class M>
-typename Instruction<M>::operand_t &Instruction<M>::next_operand() {
+typename instruction<M>::operand_type &instruction<M>::next_operand() {
 
 	if(operand_count_ >= MAX_OPERANDS) {
-		throw edisassm::too_many_operands(byte_index_);
+		throw too_many_operands(byte_index_);
 	}
 
-	operand_t &ret = operands_[operand_count_++];
+	operand_type &ret = operands_[operand_count_++];
 	ret.set_owner(this);
 	return ret;
 }
@@ -1059,14 +1059,14 @@ typename Instruction<M>::operand_t &Instruction<M>::next_operand() {
 // Name: next_byte
 //------------------------------------------------------------------------------
 template <class M>
-uint8_t Instruction<M>::next_byte() {
+uint8_t instruction<M>::next_byte() {
 
 	if(byte_index_ == MAX_SIZE) {
-		throw edisassm::instruction_too_big(byte_index_);
+		throw instruction_too_big(byte_index_);
 	}
 	
 	if(byte_stream_->empty()) {
-		throw edisassm::instruction_too_big(byte_index_);
+		throw instruction_too_big(byte_index_);
 	}
 
 	const uint8_t x = byte_stream_->next();
@@ -1078,36 +1078,36 @@ uint8_t Instruction<M>::next_byte() {
 // Name: decode_invalid
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_invalid() {
-	throw edisassm::invalid_instruction(byte_index_);
+void instruction<M>::decode_invalid() {
+	throw invalid_instruction(byte_index_);
 }
 
-template <class M> void Instruction<M>::decode_cbw_cwde_cdqe()                { decode_size_sensitive(Opcodes_cbw_cwde_cdqe); }
-template <class M> void Instruction<M>::decode_cwd_cdq_cqo()                  { decode_size_sensitive(Opcodes_cwd_cdq_cqo);}
-template <class M> void Instruction<M>::decode_stosw_stosd_stosq()            { decode_size_sensitive(Opcodes_stosw_stosd_stosq);}
-template <class M> void Instruction<M>::decode_lodsw_lodsd_lodsq()            { decode_size_sensitive(Opcodes_lodsw_lodsd_lodsq);}
-template <class M> void Instruction<M>::decode_scasw_scasd_scasq()            { decode_size_sensitive(Opcodes_scasw_scasd_scasq);}
-template <class M> void Instruction<M>::decode_iretw_iret_iretq()             { decode_size_sensitive(Opcodes_iretw_iret_iretq);}
-template <class M> void Instruction<M>::decode_movsw_movsd_movsq()            { decode_size_sensitive(Opcodes_movsw_movsd_movsq);}
-template <class M> void Instruction<M>::decode_popfw_popfd_popfq()            { decode_size_sensitive(Opcodes_popfw_popfd_popfq);}
-template <class M> void Instruction<M>::decode_pushfw_pushfd_pushfq()         { decode_size_sensitive(Opcodes_pushfw_pushfd_pushfq);}
-template <class M> void Instruction<M>::decode_invalid_cmpxchg8b_cmpxchg16b() { decode_size_sensitive(Opcodes_invalid_cmpxchg8b_cmpxchg16b);}
-template <class M> void Instruction<M>::decode_insw_insd_invalid()            { decode_size_sensitive(Opcodes_insw_insd_invalid);}
-template <class M> void Instruction<M>::decode_outsw_outsd_invalid()          { decode_size_sensitive(Opcodes_outsw_outsd_invalid);}
-template <class M> void Instruction<M>::decode_cmpsw_cmpsd_cmpsq()            { decode_size_sensitive(Opcodes_cmpsw_cmpsd_cmpsq);}
-template <class M> void Instruction<M>::decode_pushaw_pushad_invalid()        { decode_size_sensitive(Opcodes_pushaw_pushad_invalid);}
-template <class M> void Instruction<M>::decode_popaw_popad_invalid()          { decode_size_sensitive(Opcodes_popaw_popad_invalid);}
+template <class M> void instruction<M>::decode_cbw_cwde_cdqe()                { decode_size_sensitive(Opcodes_cbw_cwde_cdqe); }
+template <class M> void instruction<M>::decode_cwd_cdq_cqo()                  { decode_size_sensitive(Opcodes_cwd_cdq_cqo);}
+template <class M> void instruction<M>::decode_stosw_stosd_stosq()            { decode_size_sensitive(Opcodes_stosw_stosd_stosq);}
+template <class M> void instruction<M>::decode_lodsw_lodsd_lodsq()            { decode_size_sensitive(Opcodes_lodsw_lodsd_lodsq);}
+template <class M> void instruction<M>::decode_scasw_scasd_scasq()            { decode_size_sensitive(Opcodes_scasw_scasd_scasq);}
+template <class M> void instruction<M>::decode_iretw_iret_iretq()             { decode_size_sensitive(Opcodes_iretw_iret_iretq);}
+template <class M> void instruction<M>::decode_movsw_movsd_movsq()            { decode_size_sensitive(Opcodes_movsw_movsd_movsq);}
+template <class M> void instruction<M>::decode_popfw_popfd_popfq()            { decode_size_sensitive(Opcodes_popfw_popfd_popfq);}
+template <class M> void instruction<M>::decode_pushfw_pushfd_pushfq()         { decode_size_sensitive(Opcodes_pushfw_pushfd_pushfq);}
+template <class M> void instruction<M>::decode_invalid_cmpxchg8b_cmpxchg16b() { decode_size_sensitive(Opcodes_invalid_cmpxchg8b_cmpxchg16b);}
+template <class M> void instruction<M>::decode_insw_insd_invalid()            { decode_size_sensitive(Opcodes_insw_insd_invalid);}
+template <class M> void instruction<M>::decode_outsw_outsd_invalid()          { decode_size_sensitive(Opcodes_outsw_outsd_invalid);}
+template <class M> void instruction<M>::decode_cmpsw_cmpsd_cmpsq()            { decode_size_sensitive(Opcodes_cmpsw_cmpsd_cmpsq);}
+template <class M> void instruction<M>::decode_pushaw_pushad_invalid()        { decode_size_sensitive(Opcodes_pushaw_pushad_invalid);}
+template <class M> void instruction<M>::decode_popaw_popad_invalid()          { decode_size_sensitive(Opcodes_popaw_popad_invalid);}
 
 //------------------------------------------------------------------------------
 // Name: decode_jcxz_jecxz_jrcxz
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_jcxz_jecxz_jrcxz() {
+void instruction<M>::decode_jcxz_jecxz_jrcxz() {
 
 	static const opcode_entry opcodes[3] = {
-		{ "jcxz",  &Instruction::decode_Jb, OP_JCC, FLAG_R_FLAGS },
-		{ "jecxz", &Instruction::decode_Jb, OP_JCC, FLAG_R_FLAGS },
-		{ "jrcxz", &Instruction::decode_Jb, OP_JCC, FLAG_R_FLAGS }
+		{ "jcxz",  &instruction::decode_Jb, OP_JCC, FLAG_R_FLAGS },
+		{ "jecxz", &instruction::decode_Jb, OP_JCC, FLAG_R_FLAGS },
+		{ "jrcxz", &instruction::decode_Jb, OP_JCC, FLAG_R_FLAGS }
 	};
 
 	switch(address_size()) {
@@ -1122,33 +1122,33 @@ void Instruction<M>::decode_jcxz_jecxz_jrcxz() {
 // Name: wait_or_wait_prefix
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::wait_or_wait_prefix() {
+void instruction<M>::wait_or_wait_prefix() {
 	
 	// opcode 0x9b... is annoying :-P
 	static const opcode_entry Opcodes_wait[1] = {
-		{ "wait",   &Instruction::decode0, OP_WAIT,   FLAG_NONE },
+		{ "wait",   &instruction::decode0, OP_WAIT,   FLAG_NONE },
 	};
 	
 	static const opcode_entry Opcodes_wait_prefix_d9[2] = {
-		{ "fstenv", &Instruction::decode_M,  OP_FSTENV, FLAG_FPU },
-		{ "fstcw",  &Instruction::decode_Mw, OP_FSTCW,  FLAG_FPU },
+		{ "fstenv", &instruction::decode_M,  OP_FSTENV, FLAG_FPU },
+		{ "fstcw",  &instruction::decode_Mw, OP_FSTCW,  FLAG_FPU },
 	};
 
 	static const opcode_entry Opcodes_wait_prefix_db[5] = {
-		{ "feni",   &Instruction::decode0, OP_FENI,   FLAG_FPU },
-		{ "fdisi",  &Instruction::decode0, OP_FDISI,  FLAG_FPU },
-		{ "fclex",  &Instruction::decode0, OP_FCLEX,  FLAG_FPU | FLAG_W_FLAGS },
-		{ "finit",  &Instruction::decode0, OP_FINIT,  FLAG_FPU },
-		{ "fsetpm", &Instruction::decode0, OP_FSETPM, FLAG_FPU },
+		{ "feni",   &instruction::decode0, OP_FENI,   FLAG_FPU },
+		{ "fdisi",  &instruction::decode0, OP_FDISI,  FLAG_FPU },
+		{ "fclex",  &instruction::decode0, OP_FCLEX,  FLAG_FPU | FLAG_W_FLAGS },
+		{ "finit",  &instruction::decode0, OP_FINIT,  FLAG_FPU },
+		{ "fsetpm", &instruction::decode0, OP_FSETPM, FLAG_FPU },
 	};
 	
 	static const opcode_entry Opcodes_wait_prefix_dd[2] = {
-		{ "fsave", &Instruction::decode_M,  OP_FSAVE, FLAG_FPU },
-		{ "fstsw", &Instruction::decode_Mw, OP_FSTSW, FLAG_FPU },
+		{ "fsave", &instruction::decode_M,  OP_FSAVE, FLAG_FPU },
+		{ "fstsw", &instruction::decode_Mw, OP_FSTSW, FLAG_FPU },
 	};
 	
 	static const opcode_entry Opcodes_wait_prefix_df[2] = {
-		{ "fstsw", &Instruction::decode_AX, OP_FSTSW, FLAG_FPU },
+		{ "fstsw", &instruction::decode_AX, OP_FSTSW, FLAG_FPU },
 	};
 	
 	opcode_ = &Opcodes_wait[0];
@@ -1238,7 +1238,7 @@ void Instruction<M>::wait_or_wait_prefix() {
 // Name: decode_x87
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_x87() {
+void instruction<M>::decode_x87() {
 	
 	const uint8_t modrm_byte = get_modrm();
 	const uint8_t esc_num = (byte1_ - 0xd8);
@@ -1256,7 +1256,7 @@ void Instruction<M>::decode_x87() {
 // Name: decode_2byte
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_2byte() {
+void instruction<M>::decode_2byte() {
 
 	byte2_ = next_byte();
 
@@ -1284,7 +1284,7 @@ void Instruction<M>::decode_2byte() {
 // Name: decode_3byte_38
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_3byte_38() {
+void instruction<M>::decode_3byte_38() {
 
 	byte3_ = next_byte();
 
@@ -1308,7 +1308,7 @@ void Instruction<M>::decode_3byte_38() {
 // Name: decode_3byte_3A
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_3byte_3A() {
+void instruction<M>::decode_3byte_3A() {
 
 	byte3_ = next_byte();
 
@@ -1328,7 +1328,7 @@ void Instruction<M>::decode_3byte_3A() {
 // Name: decode_group1
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group1() {
+void instruction<M>::decode_group1() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1340,7 +1340,7 @@ void Instruction<M>::decode_group1() {
 // Name: decode_group2
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group2() {
+void instruction<M>::decode_group2() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1352,7 +1352,7 @@ void Instruction<M>::decode_group2() {
 // Name: decode_group2D
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group2D() {
+void instruction<M>::decode_group2D() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1364,7 +1364,7 @@ void Instruction<M>::decode_group2D() {
 // Name: decode_group3
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group3() {
+void instruction<M>::decode_group3() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1376,7 +1376,7 @@ void Instruction<M>::decode_group3() {
 // Name: decode_group4
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group4() {
+void instruction<M>::decode_group4() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1388,7 +1388,7 @@ void Instruction<M>::decode_group4() {
 // Name: decode_group5
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group5() {
+void instruction<M>::decode_group5() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1400,7 +1400,7 @@ void Instruction<M>::decode_group5() {
 // Name: decode_group6
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group6() {
+void instruction<M>::decode_group6() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1412,7 +1412,7 @@ void Instruction<M>::decode_group6() {
 // Name: decode_group7
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group7() {
+void instruction<M>::decode_group7() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1430,7 +1430,7 @@ void Instruction<M>::decode_group7() {
 // Name: decode_group8
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group8() {
+void instruction<M>::decode_group8() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1442,7 +1442,7 @@ void Instruction<M>::decode_group8() {
 // Name: decode_group9
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group9() {
+void instruction<M>::decode_group9() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1467,7 +1467,7 @@ void Instruction<M>::decode_group9() {
 // Name: decode_group10
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group10() {
+void instruction<M>::decode_group10() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1480,7 +1480,7 @@ void Instruction<M>::decode_group10() {
 // Name: decode_group11
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group11() {
+void instruction<M>::decode_group11() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1493,7 +1493,7 @@ void Instruction<M>::decode_group11() {
 // Name: decode_group12
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group12() {
+void instruction<M>::decode_group12() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1505,7 +1505,7 @@ void Instruction<M>::decode_group12() {
 // Name: decode_group13
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group13() {
+void instruction<M>::decode_group13() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1527,7 +1527,7 @@ void Instruction<M>::decode_group13() {
 // Name: decode_group14
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group14() {
+void instruction<M>::decode_group14() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1549,7 +1549,7 @@ void Instruction<M>::decode_group14() {
 // Name: decode_group15
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group15() {
+void instruction<M>::decode_group15() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1570,7 +1570,7 @@ void Instruction<M>::decode_group15() {
 // Name: decode_group16
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group16() {
+void instruction<M>::decode_group16() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1589,7 +1589,7 @@ void Instruction<M>::decode_group16() {
 // Name: decode_group17
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_group17() {
+void instruction<M>::decode_group17() {
 
 	const uint8_t modrm_byte = get_modrm();
 
@@ -1602,10 +1602,10 @@ void Instruction<M>::decode_group17() {
 // Desc: absolute pointer (32 or 48 bit)
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Ap() {
+void instruction<M>::decode_Ap() {
 
-	operand_t &operand = next_operand();
-	operand.type_      = operand_t::TYPE_ABSOLUTE;
+	operand_type &operand = next_operand();
+	operand.type_      = operand_type::TYPE_ABSOLUTE;
 
 	if(prefix_ & PREFIX_OPERAND) {
 		operand.u.absolute.offset = get_immediate_u16();
@@ -1620,104 +1620,104 @@ void Instruction<M>::decode_Ap() {
 // Name: decode_Ib
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Ib() {
-	operand_t &operand = next_operand();
+void instruction<M>::decode_Ib() {
+	operand_type &operand = next_operand();
 
 	operand.u.sbyte = get_immediate_s8();
-	operand.type_   = operand_t::TYPE_IMMEDIATE8;
+	operand.type_   = operand_type::TYPE_IMMEDIATE8;
 }
 
 //------------------------------------------------------------------------------
 // Name: decode_Iw
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Iw() {
-	operand_t &operand = next_operand();
+void instruction<M>::decode_Iw() {
+	operand_type &operand = next_operand();
 
 	operand.u.sword = get_immediate_s16();
-	operand.type_   = operand_t::TYPE_IMMEDIATE16;
+	operand.type_   = operand_type::TYPE_IMMEDIATE16;
 }
 
 //------------------------------------------------------------------------------
 // Name: decode_Id
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Id() {
-	operand_t &operand = next_operand();
+void instruction<M>::decode_Id() {
+	operand_type &operand = next_operand();
 
 	operand.u.sdword = get_immediate_s32();
-	operand.type_    = operand_t::TYPE_IMMEDIATE32;
+	operand.type_    = operand_type::TYPE_IMMEDIATE32;
 }
 
 //------------------------------------------------------------------------------
 // Name: decode_Iq
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Iq() {
-	operand_t &operand = next_operand();
+void instruction<M>::decode_Iq() {
+	operand_type &operand = next_operand();
 
 	operand.u.sqword = get_immediate_s64();
-	operand.type_    = operand_t::TYPE_IMMEDIATE64;
+	operand.type_    = operand_type::TYPE_IMMEDIATE64;
 }
 
 //------------------------------------------------------------------------------
 // Name: decode_Jb
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Jb() {
+void instruction<M>::decode_Jb() {
 
-	operand_t &operand = next_operand();
+	operand_type &operand = next_operand();
 
 	operand.u.sbyte = get_immediate_s8();
-	operand.type_   = operand_t::TYPE_REL8;
+	operand.type_   = operand_type::TYPE_REL8;
 }
 
 //------------------------------------------------------------------------------
 // Name: decode_Jw
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Jw() {
+void instruction<M>::decode_Jw() {
 
-	operand_t &operand = next_operand();
+	operand_type &operand = next_operand();
 
 	operand.u.sword = get_immediate_s16();
-	operand.type_   = operand_t::TYPE_REL16;
+	operand.type_   = operand_type::TYPE_REL16;
 }
 
 //------------------------------------------------------------------------------
 // Name: decode_Jd
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Jd() {
+void instruction<M>::decode_Jd() {
 
-	operand_t &operand = next_operand();
+	operand_type &operand = next_operand();
 
 	operand.u.sdword = get_immediate_s32();
-	operand.type_    = operand_t::TYPE_REL32;
+	operand.type_    = operand_type::TYPE_REL32;
 }
 
 //------------------------------------------------------------------------------
 // Name: decode_Jq
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Jq() {
+void instruction<M>::decode_Jq() {
 
-	operand_t &operand = next_operand();
+	operand_type &operand = next_operand();
 
 	operand.u.sqword = get_immediate_s64();
-	operand.type_    = operand_t::TYPE_REL64;
+	operand.type_    = operand_type::TYPE_REL64;
 }
 
 //------------------------------------------------------------------------------
 // Name: decode_Ev
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Ev() {
+void instruction<M>::decode_Ev() {
 
 	switch(operand_size()) {
-	case 16: decode_Ex<operand_t::TYPE_EXPRESSION16, &Instruction::index_to_reg_16>(); break;
-	case 32: decode_Ex<operand_t::TYPE_EXPRESSION32, &Instruction::index_to_reg_32>(); break;
-	case 64: decode_Ex<operand_t::TYPE_EXPRESSION64, &Instruction::index_to_reg_64>(); break;
+	case 16: decode_Ex<operand_type::TYPE_EXPRESSION16, &instruction::index_to_reg_16>(); break;
+	case 32: decode_Ex<operand_type::TYPE_EXPRESSION32, &instruction::index_to_reg_32>(); break;
+	case 64: decode_Ex<operand_type::TYPE_EXPRESSION64, &instruction::index_to_reg_64>(); break;
 	}
 }
 
@@ -1725,11 +1725,11 @@ void Instruction<M>::decode_Ev() {
 // Name: decode_Rv
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Rv() {
+void instruction<M>::decode_Rv() {
 	switch(operand_size()) {
-	case 16: decode_Ex<operand_t::TYPE_INVALID, &Instruction::index_to_reg_16>(); break;
-	case 32: decode_Ex<operand_t::TYPE_INVALID, &Instruction::index_to_reg_32>(); break;
-	case 64: decode_Ex<operand_t::TYPE_INVALID, &Instruction::index_to_reg_64>(); break;
+	case 16: decode_Ex<operand_type::TYPE_INVALID, &instruction::index_to_reg_16>(); break;
+	case 32: decode_Ex<operand_type::TYPE_INVALID, &instruction::index_to_reg_32>(); break;
+	case 64: decode_Ex<operand_type::TYPE_INVALID, &instruction::index_to_reg_64>(); break;
 	}
 }
 
@@ -1737,12 +1737,12 @@ void Instruction<M>::decode_Rv() {
 // Name: decode_Gv
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Gv() {
+void instruction<M>::decode_Gv() {
 
 	switch(operand_size()) {
-	case 16: decode_Gx<&Instruction::index_to_reg_16>(); break;
-	case 32: decode_Gx<&Instruction::index_to_reg_32>(); break;
-	case 64: decode_Gx<&Instruction::index_to_reg_64>(); break;
+	case 16: decode_Gx<&instruction::index_to_reg_16>(); break;
+	case 32: decode_Gx<&instruction::index_to_reg_32>(); break;
+	case 64: decode_Gx<&instruction::index_to_reg_64>(); break;
 	}
 }
 
@@ -1750,7 +1750,7 @@ void Instruction<M>::decode_Gv() {
 // Name: decode_Iv
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Iv() {
+void instruction<M>::decode_Iv() {
 	switch(operand_size()) {
 	case 16: decode_Iw(); break;
 	case 32: decode_Id(); break;
@@ -1762,13 +1762,13 @@ void Instruction<M>::decode_Iv() {
 // Name: decode_Ob
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Ob() {
-	operand_t &operand = next_operand();
+void instruction<M>::decode_Ob() {
+	operand_type &operand = next_operand();
 
-	operand.type_                          = operand_t::TYPE_EXPRESSION8;
-	operand.u.expression.displacement_type = operand_t::DISP_S32;
-	operand.u.expression.index             = operand_t::REG_NULL;
-	operand.u.expression.base              = operand_t::REG_NULL;
+	operand.type_                          = operand_type::TYPE_EXPRESSION8;
+	operand.u.expression.displacement_type = operand_type::DISP_S32;
+	operand.u.expression.index             = operand_type::REG_NULL;
+	operand.u.expression.base              = operand_type::REG_NULL;
 	operand.u.expression.scale             = 1;
 	operand.u.expression.s_disp32          = get_displacement_s32();
 }
@@ -1777,13 +1777,13 @@ void Instruction<M>::decode_Ob() {
 // Name: decode_Ow
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Ow() {
-	operand_t &operand = next_operand();
+void instruction<M>::decode_Ow() {
+	operand_type &operand = next_operand();
 
-	operand.type_                          = operand_t::TYPE_EXPRESSION16;
-	operand.u.expression.displacement_type = operand_t::DISP_S32;
-	operand.u.expression.index             = operand_t::REG_NULL;
-	operand.u.expression.base              = operand_t::REG_NULL;
+	operand.type_                          = operand_type::TYPE_EXPRESSION16;
+	operand.u.expression.displacement_type = operand_type::DISP_S32;
+	operand.u.expression.index             = operand_type::REG_NULL;
+	operand.u.expression.base              = operand_type::REG_NULL;
 	operand.u.expression.scale             = 1;
 	operand.u.expression.s_disp32          = get_displacement_s32();
 }
@@ -1792,13 +1792,13 @@ void Instruction<M>::decode_Ow() {
 // Name: decode_Od
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Od() {
-	operand_t &operand = next_operand();
+void instruction<M>::decode_Od() {
+	operand_type &operand = next_operand();
 
-	operand.type_                          = operand_t::TYPE_EXPRESSION32;
-	operand.u.expression.displacement_type = operand_t::DISP_S32;
-	operand.u.expression.index             = operand_t::REG_NULL;
-	operand.u.expression.base              = operand_t::REG_NULL;
+	operand.type_                          = operand_type::TYPE_EXPRESSION32;
+	operand.u.expression.displacement_type = operand_type::DISP_S32;
+	operand.u.expression.index             = operand_type::REG_NULL;
+	operand.u.expression.base              = operand_type::REG_NULL;
 	operand.u.expression.scale             = 1;
 	operand.u.expression.s_disp32          = get_displacement_s32();
 }
@@ -1807,11 +1807,11 @@ void Instruction<M>::decode_Od() {
 // Name: decode_Ov
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Ov() {
+void instruction<M>::decode_Ov() {
 	switch(operand_size()) {
 	case 16: decode_Ow(); break;
 	case 32: decode_Od(); break;
-	case 64: throw edisassm::invalid_instruction(byte_index_); break;
+	case 64: throw invalid_instruction(byte_index_); break;
 	}
 }
 
@@ -1819,7 +1819,7 @@ void Instruction<M>::decode_Ov() {
 // Name: decode_Mv
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_Mv() {
+void instruction<M>::decode_Mv() {
 	switch(operand_size()) {
 	case 16: decode_Mw(); break;
 	case 32: decode_Md(); break;
@@ -1831,11 +1831,11 @@ void Instruction<M>::decode_Mv() {
 // Name: decode_AL
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_AL() {
+void instruction<M>::decode_AL() {
 	if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-		decode_Reg<operand_t::REG_R8B>();
+		decode_Reg<operand_type::REG_R8B>();
 	} else {
-		decode_Reg<operand_t::REG_AL>();
+		decode_Reg<operand_type::REG_AL>();
 	}
 }
 
@@ -1843,11 +1843,11 @@ void Instruction<M>::decode_AL() {
 // Name: decode_CL
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_CL() {
+void instruction<M>::decode_CL() {
 	if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-		decode_Reg<operand_t::REG_R9B>();
+		decode_Reg<operand_type::REG_R9B>();
 	} else {
-		decode_Reg<operand_t::REG_CL>();
+		decode_Reg<operand_type::REG_CL>();
 	}
 }
 
@@ -1855,11 +1855,11 @@ void Instruction<M>::decode_CL() {
 // Name: decode_DL
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_DL() {
+void instruction<M>::decode_DL() {
 	if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-		decode_Reg<operand_t::REG_R10B>();
+		decode_Reg<operand_type::REG_R10B>();
 	} else {
-		decode_Reg<operand_t::REG_DL>();
+		decode_Reg<operand_type::REG_DL>();
 	}
 }
 
@@ -1867,11 +1867,11 @@ void Instruction<M>::decode_DL() {
 // Name: decode_BL
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_BL() {
+void instruction<M>::decode_BL() {
 	if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-		decode_Reg<operand_t::REG_R11B>();
+		decode_Reg<operand_type::REG_R11B>();
 	} else {
-		decode_Reg<operand_t::REG_BL>();
+		decode_Reg<operand_type::REG_BL>();
 	}
 }
 
@@ -1879,11 +1879,11 @@ void Instruction<M>::decode_BL() {
 // Name: decode_AH
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_AH() {
+void instruction<M>::decode_AH() {
 	if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-		decode_Reg<operand_t::REG_R12B>();
+		decode_Reg<operand_type::REG_R12B>();
 	} else {
-		decode_Reg<operand_t::REG_AH>();
+		decode_Reg<operand_type::REG_AH>();
 	}
 }
 
@@ -1891,11 +1891,11 @@ void Instruction<M>::decode_AH() {
 // Name: decode_CH
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_CH() {
+void instruction<M>::decode_CH() {
 	if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-		decode_Reg<operand_t::REG_R13B>();
+		decode_Reg<operand_type::REG_R13B>();
 	} else {
-		decode_Reg<operand_t::REG_CH>();
+		decode_Reg<operand_type::REG_CH>();
 	}
 }
 
@@ -1903,11 +1903,11 @@ void Instruction<M>::decode_CH() {
 // Name: decode_DH
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_DH() {
+void instruction<M>::decode_DH() {
 	if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-		decode_Reg<operand_t::REG_R14B>();
+		decode_Reg<operand_type::REG_R14B>();
 	} else {
-		decode_Reg<operand_t::REG_DH>();
+		decode_Reg<operand_type::REG_DH>();
 	}
 }
 
@@ -1915,11 +1915,11 @@ void Instruction<M>::decode_DH() {
 // Name: decode_BH
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_BH() {
+void instruction<M>::decode_BH() {
 	if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-		decode_Reg<operand_t::REG_R15B>();
+		decode_Reg<operand_type::REG_R15B>();
 	} else {
-		decode_Reg<operand_t::REG_BH>();
+		decode_Reg<operand_type::REG_BH>();
 	}
 }
 
@@ -1927,11 +1927,11 @@ void Instruction<M>::decode_BH() {
 // Name: decode_rAX_NOREX
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_rAX_NOREX() {
+void instruction<M>::decode_rAX_NOREX() {
 	switch(operand_size()) {;
-	case 16: decode_Reg<operand_t::REG_AX>();  break;
-	case 32: decode_Reg<operand_t::REG_EAX>(); break;
-	case 64: decode_Reg<operand_t::REG_RAX>(); break;
+	case 16: decode_Reg<operand_type::REG_AX>();  break;
+	case 32: decode_Reg<operand_type::REG_EAX>(); break;
+	case 64: decode_Reg<operand_type::REG_RAX>(); break;
 	}
 }
 
@@ -1939,7 +1939,7 @@ void Instruction<M>::decode_rAX_NOREX() {
 // Name: decode_eAX
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_eAX() {
+void instruction<M>::decode_eAX() {
 	// TODO: is this correct, it seems to be the same
 	// because eAX is only used for ops where REX is illegal
 	decode_rAX_NOREX();
@@ -1949,27 +1949,27 @@ void Instruction<M>::decode_eAX() {
 // Name: decode_rAX
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_rAX() {
+void instruction<M>::decode_rAX() {
 	switch(operand_size()) {
 	case 16:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R8W>();
+			decode_Reg<operand_type::REG_R8W>();
 		} else {
-			decode_Reg<operand_t::REG_AX>();
+			decode_Reg<operand_type::REG_AX>();
 		}
 		break;
 	case 32:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R8D>();
+			decode_Reg<operand_type::REG_R8D>();
 		} else {
-			decode_Reg<operand_t::REG_EAX>();
+			decode_Reg<operand_type::REG_EAX>();
 		}
 		break;
 	case 64:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R8>();
+			decode_Reg<operand_type::REG_R8>();
 		} else {
-			decode_Reg<operand_t::REG_RAX>();
+			decode_Reg<operand_type::REG_RAX>();
 		}
 		break;
 	}
@@ -1979,27 +1979,27 @@ void Instruction<M>::decode_rAX() {
 // Name: decode_rCX
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_rCX() {
+void instruction<M>::decode_rCX() {
 	switch(operand_size()) {
 	case 16:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R9W>();
+			decode_Reg<operand_type::REG_R9W>();
 		} else {
-			decode_Reg<operand_t::REG_CX>();
+			decode_Reg<operand_type::REG_CX>();
 		}
 		break;
 	case 32:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R9D>();
+			decode_Reg<operand_type::REG_R9D>();
 		} else {
-			decode_Reg<operand_t::REG_ECX>();
+			decode_Reg<operand_type::REG_ECX>();
 		}
 		break;
 	case 64:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R9>();
+			decode_Reg<operand_type::REG_R9>();
 		} else {
-			decode_Reg<operand_t::REG_RCX>();
+			decode_Reg<operand_type::REG_RCX>();
 		}
 		break;
 	}
@@ -2009,27 +2009,27 @@ void Instruction<M>::decode_rCX() {
 // Name: decode_rDX
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_rDX() {
+void instruction<M>::decode_rDX() {
 	switch(operand_size()) {
 	case 16:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R10W>();
+			decode_Reg<operand_type::REG_R10W>();
 		} else {
-			decode_Reg<operand_t::REG_DX>();
+			decode_Reg<operand_type::REG_DX>();
 		}
 		break;
 	case 32:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R10D>();
+			decode_Reg<operand_type::REG_R10D>();
 		} else {
-			decode_Reg<operand_t::REG_EDX>();
+			decode_Reg<operand_type::REG_EDX>();
 		}
 		break;
 	case 64:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R10>();
+			decode_Reg<operand_type::REG_R10>();
 		} else {
-			decode_Reg<operand_t::REG_RDX>();
+			decode_Reg<operand_type::REG_RDX>();
 		}
 		break;
 	}
@@ -2039,27 +2039,27 @@ void Instruction<M>::decode_rDX() {
 // Name: decode_rBX
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_rBX() {
+void instruction<M>::decode_rBX() {
 	switch(operand_size()) {
 	case 16:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R11W>();
+			decode_Reg<operand_type::REG_R11W>();
 		} else {
-			decode_Reg<operand_t::REG_BX>();
+			decode_Reg<operand_type::REG_BX>();
 		}
 		break;
 	case 32:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R11D>();
+			decode_Reg<operand_type::REG_R11D>();
 		} else {
-			decode_Reg<operand_t::REG_EBX>();
+			decode_Reg<operand_type::REG_EBX>();
 		}
 		break;
 	case 64:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R11>();
+			decode_Reg<operand_type::REG_R11>();
 		} else {
-			decode_Reg<operand_t::REG_RBX>();
+			decode_Reg<operand_type::REG_RBX>();
 		}
 		break;
 	}
@@ -2069,27 +2069,27 @@ void Instruction<M>::decode_rBX() {
 // Name: decode_rSP
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_rSP() {
+void instruction<M>::decode_rSP() {
 	switch(operand_size()) {
 	case 16:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R12W>();
+			decode_Reg<operand_type::REG_R12W>();
 		} else {
-			decode_Reg<operand_t::REG_SP>();
+			decode_Reg<operand_type::REG_SP>();
 		}
 		break;
 	case 32:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R12D>();
+			decode_Reg<operand_type::REG_R12D>();
 		} else {
-			decode_Reg<operand_t::REG_ESP>();
+			decode_Reg<operand_type::REG_ESP>();
 		}
 		break;
 	case 64:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R12>();
+			decode_Reg<operand_type::REG_R12>();
 		} else {
-			decode_Reg<operand_t::REG_RSP>();
+			decode_Reg<operand_type::REG_RSP>();
 		}
 		break;
 	}
@@ -2099,27 +2099,27 @@ void Instruction<M>::decode_rSP() {
 // Name: decode_rBP
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_rBP() {
+void instruction<M>::decode_rBP() {
 	switch(operand_size()) {
 	case 16:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R13W>();
+			decode_Reg<operand_type::REG_R13W>();
 		} else {
-			decode_Reg<operand_t::REG_BP>();
+			decode_Reg<operand_type::REG_BP>();
 		}
 		break;
 	case 32:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R13D>();
+			decode_Reg<operand_type::REG_R13D>();
 		} else {
-			decode_Reg<operand_t::REG_EBP>();
+			decode_Reg<operand_type::REG_EBP>();
 		}
 		break;
 	case 64:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R13>();
+			decode_Reg<operand_type::REG_R13>();
 		} else {
-			decode_Reg<operand_t::REG_RBP>();
+			decode_Reg<operand_type::REG_RBP>();
 		}
 		break;
 	}
@@ -2129,27 +2129,27 @@ void Instruction<M>::decode_rBP() {
 // Name: decode_rSI
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_rSI() {
+void instruction<M>::decode_rSI() {
 	switch(operand_size()) {
 	case 16:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R14W>();
+			decode_Reg<operand_type::REG_R14W>();
 		} else {
-			decode_Reg<operand_t::REG_SI>();
+			decode_Reg<operand_type::REG_SI>();
 		}
 		break;
 	case 32:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R14D>();
+			decode_Reg<operand_type::REG_R14D>();
 		} else {
-			decode_Reg<operand_t::REG_ESI>();
+			decode_Reg<operand_type::REG_ESI>();
 		}
 		break;
 	case 64:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R14>();
+			decode_Reg<operand_type::REG_R14>();
 		} else {
-			decode_Reg<operand_t::REG_RSI>();
+			decode_Reg<operand_type::REG_RSI>();
 		}
 		break;
 	}
@@ -2159,27 +2159,27 @@ void Instruction<M>::decode_rSI() {
 // Name: decode_rDI
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_rDI() {
+void instruction<M>::decode_rDI() {
 	switch(operand_size()) {
 	case 16:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R15W>();
+			decode_Reg<operand_type::REG_R15W>();
 		} else {
-			decode_Reg<operand_t::REG_DI>();
+			decode_Reg<operand_type::REG_DI>();
 		}
 		break;
 	case 32:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R15D>();
+			decode_Reg<operand_type::REG_R15D>();
 		} else {
-			decode_Reg<operand_t::REG_EDI>();
+			decode_Reg<operand_type::REG_EDI>();
 		}
 		break;
 	case 64:
 		if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
-			decode_Reg<operand_t::REG_R15>();
+			decode_Reg<operand_type::REG_R15>();
 		} else {
-			decode_Reg<operand_t::REG_RDI>();
+			decode_Reg<operand_type::REG_RDI>();
 		}
 		break;
 	}
@@ -2190,7 +2190,7 @@ void Instruction<M>::decode_rDI() {
 // NOTE: special case because this represents 3 possible ops!
 //------------------------------------------------------------------------------
 template <class M>
-void Instruction<M>::decode_rAX_rAX_NOREX() {
+void instruction<M>::decode_rAX_rAX_NOREX() {
 
 	// TODO: does F3 or xchg r8, rAX take precedence
 	if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
@@ -2209,7 +2209,7 @@ void Instruction<M>::decode_rAX_rAX_NOREX() {
 // Name: operand_size
 //------------------------------------------------------------------------------
 template <class M>
-int Instruction<M>::operand_size() const {
+int instruction<M>::operand_size() const {
 	int ret = 32;
 
 	// we check if 16-bit mode is enabled
@@ -2237,7 +2237,7 @@ int Instruction<M>::operand_size() const {
 // Name: address_size
 //------------------------------------------------------------------------------
 template <class M>
-int Instruction<M>::address_size() const {	
+int instruction<M>::address_size() const {	
 	
 	if(prefix_ & PREFIX_ADDRESS) {
 		if(BITS == 64) {
@@ -2248,6 +2248,8 @@ int Instruction<M>::address_size() const {
 	} else {
 		return BITS;
 	}
+}
+
 }
 
 #endif

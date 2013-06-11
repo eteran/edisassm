@@ -19,27 +19,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef OPTABLE_GROUP17_20080314_TCC_
 #define OPTABLE_GROUP17_20080314_TCC_
 
-#include "Operand.h"
+namespace edisassm {
 
 template <class M>
-const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group17[64] = {
-	{ "prefetchnta", &Instruction::decode_M,       OP_PREFETCHH, FLAG_NONE },
-	{ "prefetcht0",  &Instruction::decode_M,       OP_PREFETCHH, FLAG_NONE },
-	{ "prefetcht1",  &Instruction::decode_M,       OP_PREFETCHH, FLAG_NONE },
-	{ "prefetcht2",  &Instruction::decode_M,       OP_PREFETCHH, FLAG_NONE },
-	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
-	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
-	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
-	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
+const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group17[64] = {
+	{ "prefetchnta", &instruction::decode_M,       OP_PREFETCHH, FLAG_NONE },
+	{ "prefetcht0",  &instruction::decode_M,       OP_PREFETCHH, FLAG_NONE },
+	{ "prefetcht1",  &instruction::decode_M,       OP_PREFETCHH, FLAG_NONE },
+	{ "prefetcht2",  &instruction::decode_M,       OP_PREFETCHH, FLAG_NONE },
+	{ "invalid",     &instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
+	{ "invalid",     &instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
+	{ "invalid",     &instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
+	{ "invalid",     &instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
 
-	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
-	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
-	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
-	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
-	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
-	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
-	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
-	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
+	{ "invalid",     &instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
+	{ "invalid",     &instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
+	{ "invalid",     &instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
+	{ "invalid",     &instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
+	{ "invalid",     &instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
+	{ "invalid",     &instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
+	{ "invalid",     &instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
+	{ "invalid",     &instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
 
 	INVALID_BLOCK,
 
@@ -47,6 +47,8 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group17[64] 
 
 	INVALID_BLOCK
 };
+
+}
 
 #endif
 

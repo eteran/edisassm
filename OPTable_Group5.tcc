@@ -19,19 +19,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef OPTABLE_GROUP5_20080314_TCC_
 #define OPTABLE_GROUP5_20080314_TCC_
 
-#include "Operand.h"
+namespace edisassm {
 
 template <class M>
-const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group5[8] = {
-	{ "inc",     &Instruction::decode_Ev,      OP_INC,     FLAG_W_FLAGS },
-	{ "dec",     &Instruction::decode_Ev,      OP_DEC,     FLAG_W_FLAGS },
-	{ "call",    &Instruction::decode_Ev,      OP_CALL,    FLAG_STACK },
-	{ "callf",   &Instruction::decode_Ep,      OP_CALL,    FLAG_32BIT_ONLY | FLAG_STACK },
-	{ "jmp",     &Instruction::decode_Ev,      OP_JMP,     FLAG_NONE },
-	{ "jmpf",    &Instruction::decode_Ep,      OP_JMP,     FLAG_NONE },
-	{ "push",    &Instruction::decode_Ev,      OP_PUSH,    FLAG_STACK },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group5[8] = {
+	{ "inc",     &instruction::decode_Ev,      OP_INC,     FLAG_W_FLAGS },
+	{ "dec",     &instruction::decode_Ev,      OP_DEC,     FLAG_W_FLAGS },
+	{ "call",    &instruction::decode_Ev,      OP_CALL,    FLAG_STACK },
+	{ "callf",   &instruction::decode_Ep,      OP_CALL,    FLAG_32BIT_ONLY | FLAG_STACK },
+	{ "jmp",     &instruction::decode_Ev,      OP_JMP,     FLAG_NONE },
+	{ "jmpf",    &instruction::decode_Ep,      OP_JMP,     FLAG_NONE },
+	{ "push",    &instruction::decode_Ev,      OP_PUSH,    FLAG_STACK },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
+
+}
 
 #endif
 

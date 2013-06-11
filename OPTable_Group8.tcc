@@ -19,19 +19,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef OPTABLE_GROUP8_20080314_TCC_
 #define OPTABLE_GROUP8_20080314_TCC_
 
-#include "Operand.h"
+namespace edisassm {
 
 template <class M>
-const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group8[8] = {
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "bt",      &Instruction::decode_Ev_Ib,   OP_BT,      FLAG_W_FLAGS },
-	{ "bts",     &Instruction::decode_Ev_Ib,   OP_BTS,     FLAG_W_FLAGS },
-	{ "btr",     &Instruction::decode_Ev_Ib,   OP_BTR,     FLAG_W_FLAGS },
-	{ "btc",     &Instruction::decode_Ev_Ib,   OP_BTC,     FLAG_W_FLAGS },
+const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group8[8] = {
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "bt",      &instruction::decode_Ev_Ib,   OP_BT,      FLAG_W_FLAGS },
+	{ "bts",     &instruction::decode_Ev_Ib,   OP_BTS,     FLAG_W_FLAGS },
+	{ "btr",     &instruction::decode_Ev_Ib,   OP_BTR,     FLAG_W_FLAGS },
+	{ "btc",     &instruction::decode_Ev_Ib,   OP_BTC,     FLAG_W_FLAGS },
 };
+
+}
 
 #endif
 

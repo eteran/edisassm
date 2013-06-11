@@ -19,19 +19,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef OPTABLE_GROUP11_20080314_TCC_
 #define OPTABLE_GROUP11_20080314_TCC_
 
-#include "Operand.h"
+namespace edisassm {
 
 template <class M>
-const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group11[8] = {
-	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
-	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
-	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
-	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
-	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
-	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
-	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
-	{ "ud", &Instruction::decode0, OP_UD, FLAG_NONE },
+const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group11[8] = {
+	{ "ud", &instruction::decode0, OP_UD, FLAG_NONE },
+	{ "ud", &instruction::decode0, OP_UD, FLAG_NONE },
+	{ "ud", &instruction::decode0, OP_UD, FLAG_NONE },
+	{ "ud", &instruction::decode0, OP_UD, FLAG_NONE },
+	{ "ud", &instruction::decode0, OP_UD, FLAG_NONE },
+	{ "ud", &instruction::decode0, OP_UD, FLAG_NONE },
+	{ "ud", &instruction::decode0, OP_UD, FLAG_NONE },
+	{ "ud", &instruction::decode0, OP_UD, FLAG_NONE },
 };
 
-#endif
+}
 
+#endif

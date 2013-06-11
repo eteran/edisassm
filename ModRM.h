@@ -21,10 +21,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "edisassm_types.h"
 
+namespace edisassm {
 namespace modrm {
 	inline uint8_t rm(uint8_t value)  { return value & 0x07; }
 	inline uint8_t reg(uint8_t value) { return (value >> 3) & 0x07; }
 	inline uint8_t mod(uint8_t value) { return (value >> 6) & 0x03; }
+}
 }
 
 #endif
