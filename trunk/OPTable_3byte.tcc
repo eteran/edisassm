@@ -318,8 +318,8 @@ const typename instruction<M>::opcode_entry instruction<M>::Opcodes_3Byte_38_66[
 	INVALID_BLOCK,
 
 	/* 0x0f 0x38 0x80 - 0x0f 0x38 0x8f */
-	{ "nvept", &instruction::decode_Gd_Mo, OP_NVEPT, FLAG_NONE },		// x86-64: nvept Gq, Mo
-	{ "nvvpid", &instruction::decode_Gd_Mo, OP_NVVPID, FLAG_NONE },	// x86-64: nvvpid Gq, Mo
+	{ "nvept", &instruction::decode_Gd_Mo, OP_NVEPT, FLAG_NONE },   // x86-64: nvept Gq, Mo
+	{ "nvvpid", &instruction::decode_Gd_Mo, OP_NVVPID, FLAG_NONE }, // x86-64: nvvpid Gq, Mo
 	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -399,8 +399,8 @@ const typename instruction<M>::opcode_entry instruction<M>::Opcodes_3Byte_3A_66[
 	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "pextrb", &instruction::decode_Rd_Mb_Vo_Ib, OP_PEXTRB, FLAG_SSE4_1 },
 	{ "pextrw", &instruction::decode_Rd_Mw_Vo_Ib, OP_PEXTRW, FLAG_SSE | FLAG_SSE4_1 },
-	{ "pextrd", &instruction::decode_Ed_Vo_Ib, OP_PEXTRD, FLAG_NONE },		// x86-64: pextrq Eq, Vo, Ib
-	{ "extractps", &instruction::decode_Ed_Vo_Ib, OP_EXTRACTPS, FLAG_SSE4_1 },	// x86-64: extractps Ev, Vo, Ib
+	{ "pextrd", &instruction::decode_Ed_Vo_Ib, OP_PEXTRD, FLAG_NONE },         // x86-64: pextrq Eq, Vo, Ib
+	{ "extractps", &instruction::decode_Ed_Vo_Ib, OP_EXTRACTPS, FLAG_SSE4_1 }, // x86-64: extractps Ev, Vo, Ib
 	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -413,7 +413,7 @@ const typename instruction<M>::opcode_entry instruction<M>::Opcodes_3Byte_3A_66[
 	/* 0x0f 0x3a 0x20 - 0x0f 0x3a 0x2f */
 	{ "pinsrb",   &instruction::decode_Vo_Mb_Ib, OP_PINSRB,   FLAG_SSE4_1 },
 	{ "insertps", &instruction::decode_Vo_Md_Ib, OP_INSERTPS, FLAG_SSE4_1 },
-	{ "pinsrd",   &instruction::decode_Vo_Ed_Ib, OP_PINSRD,   FLAG_NONE },		// x86-64: pinsrq Vo, Eq, Ib
+	{ "pinsrd",   &instruction::decode_Vo_Ed_Ib, OP_PINSRD,   FLAG_NONE }, // x86-64: pinsrq Vo, Eq, Ib
 	{ "invalid",  &instruction::decode_invalid,  OP_INVALID,  FLAG_NONE },
 	{ "invalid",  &instruction::decode_invalid,  OP_INVALID,  FLAG_NONE },
 	{ "invalid",  &instruction::decode_invalid,  OP_INVALID,  FLAG_NONE },

@@ -70,10 +70,10 @@ template <class M>
 class EDB_EXPORT instruction {
 	template <class U>
 	friend bool operator==(const instruction<U> &lhs, const instruction<U> &rhs);
-	
+
 	template <class U>
 	friend bool operator!=(const instruction<U> &lhs, const instruction<U> &rhs);
-	
+
 private:
 	class stream_base {
 	public:
@@ -83,28 +83,28 @@ private:
 		virtual bool empty() const = 0;
 		virtual stream_base *clone() = 0;
 	};
-	
+
 	template <class In>
 	class stream_iterator : public stream_base {
 	public:
 		stream_iterator(In first, In last) : first_(first), last_(last) {
 		}
-		
+
 	private:
 		stream_iterator(const stream_iterator &);
 		stream_iterator &operator=(const stream_iterator &);
-		
+
 	public:
 		virtual uint8_t next()       { return *first_++; }
 		virtual uint8_t peek() const { return *first_; }
 		virtual bool empty() const   { return first_ == last_; }
 		virtual stream_base *clone() { return new stream_iterator(first_, last_); }
-		
+
 	private:
 		In first_;
 		In last_;
 	};
-	
+
 public:
 	static const int MAX_OPERANDS = M::MAX_OPERANDS;
 	static const int MAX_SIZE     = M::MAX_SIZE;
@@ -121,8 +121,8 @@ public:
 public:
 	template <class In>
 	instruction(In first, In last, address_type rva, const std::nothrow_t&) throw() :
-			byte_stream_(new stream_iterator<In>(first, last)), byte_index_(0), byte1_(0x00), byte2_(0x00), byte3_(0x00), 
-			modrm_byte_(0x00), sib_byte_(0x00), rex_byte_(0x00), rva_(rva), 
+			byte_stream_(new stream_iterator<In>(first, last)), byte_index_(0), byte1_(0x00), byte2_(0x00), byte3_(0x00),
+			modrm_byte_(0x00), sib_byte_(0x00), rex_byte_(0x00), rva_(rva),
 			opcode_(&Opcode_invalid), prefix_(0x00000000), mandatory_prefix_(0x00000000),
 			operand_count_(0), modrm_size_(0), sib_size_(0), disp_size_(0), prefix_size_(0),
 			immediate_size_(0), rex_size_(0) {
@@ -138,15 +138,15 @@ public:
 
 	template <class In>
 	instruction(In first, In last, address_type rva) :
-			byte_stream_(new stream_iterator<In>(first, last)), byte_index_(0), byte1_(0x00), byte2_(0x00), byte3_(0x00), 
-			modrm_byte_(0x00), sib_byte_(0x00), rex_byte_(0x00), rva_(rva), 
+			byte_stream_(new stream_iterator<In>(first, last)), byte_index_(0), byte1_(0x00), byte2_(0x00), byte3_(0x00),
+			modrm_byte_(0x00), sib_byte_(0x00), rex_byte_(0x00), rva_(rva),
 			opcode_(&Opcode_invalid), prefix_(0x00000000), mandatory_prefix_(0x00000000),
 			operand_count_(0), modrm_size_(0), sib_size_(0), disp_size_(0), prefix_size_(0),
 			immediate_size_(0), rex_size_(0) {
 
 		disassemble();
 	}
-	
+
 	~instruction();
 
 public:
@@ -668,7 +668,7 @@ public:
 		OP_PSIGNB,
 		OP_PSIGND,
 		OP_PSIGNW,
-		
+
 		// SSE4a
 		OP_LZCNT,   // TODO: implement in tables..
 		OP_MOVNTSD, // TODO: implement in tables..
@@ -845,7 +845,7 @@ private:
 		}
 		(this->*(opcode_->decoder))();
 	}
-	
+
 	// special FPU variants..
 	void wait_or_wait_prefix();
 
@@ -903,7 +903,7 @@ private:
 	void decode_3byte_3A();
 
 private:
-	uint8_t get_modrm();	
+	uint8_t get_modrm();
 	uint8_t get_sib();
 
 	template <typename operand_type::Register REG>
@@ -934,7 +934,7 @@ private:
 	int16_t get_displacement_s16();
 	int32_t get_displacement_s32();
 	int64_t get_displacement_s64();
-	
+
 	template <int index>
 	void decode_STi();
 
@@ -1340,7 +1340,7 @@ public:
 	unsigned int flags() const                        { return opcode_->flags; }
 	Type type() const                                 { return opcode_->type; }
 	address_type rva() const                          { return rva_; }
-	bool valid() const                                { return type() != OP_INVALID; }	
+	bool valid() const                                { return type() != OP_INVALID; }
 	const operand_type *operands() const              { return operands_; }
 	const uint8_t *bytes() const                      { return bytes_; }
 	operator void *() const                           { return reinterpret_cast<void *>(valid()); }
@@ -1433,21 +1433,21 @@ private:
 	operand_type        operands_[MAX_OPERANDS];
 	uint8_t             bytes_[MAX_SIZE];
 	uint8_t             byte_index_;
-	
+
 	uint8_t             byte1_;
 	uint8_t             byte2_;
 	uint8_t             byte3_;
 	uint8_t             modrm_byte_;
 	uint8_t             sib_byte_;
 	uint8_t             rex_byte_;
-	
+
 	address_type        rva_;
 	const opcode_entry *opcode_;
 
 	uint32_t            prefix_;
 	uint32_t            mandatory_prefix_;
 	uint8_t             operand_count_;
-	
+
 	uint8_t             modrm_size_;
 	uint8_t             sib_size_;
 	uint8_t             disp_size_;
