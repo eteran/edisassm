@@ -320,7 +320,7 @@ uint8_t instruction<M>::get_modrm() {
 		modrm_byte_ = next_byte();
 		modrm_size_ = 1;
 	}
-	
+
 	return modrm_byte_;
 }
 
@@ -334,7 +334,7 @@ uint8_t instruction<M>::get_sib() {
 		sib_byte_ = next_byte();
 		sib_size_ = 1;
 	}
-	
+
 	return sib_byte_;
 }
 
@@ -347,7 +347,7 @@ int8_t instruction<M>::get_displacement_s8() {
 	if(disp_size_ != 0) {
 		throw multiple_displacements(byte_index_);
 	}
-	
+
 	int8_t ret = next_byte();
 	disp_size_ = sizeof(int8_t);
 	return ret;
@@ -362,7 +362,7 @@ int16_t instruction<M>::get_displacement_s16() {
 	if(disp_size_ != 0) {
 		throw multiple_displacements(byte_index_);
 	}
-	
+
 	int16_t ret = 0;
 	ret = (ret & 0xff00) | static_cast<int16_t>(next_byte());
 	ret = (ret & 0x00ff) | (static_cast<int16_t>(next_byte()) << 8);
@@ -380,7 +380,7 @@ int32_t instruction<M>::get_displacement_s32() {
 	if(disp_size_ != 0) {
 		throw multiple_displacements(byte_index_);
 	}
-	
+
 	int32_t ret = 0;
 	ret = (ret & 0xffffff00) | static_cast<int32_t>(next_byte());
 	ret = (ret & 0xffff00ff) | (static_cast<int32_t>(next_byte()) << 8);
@@ -401,7 +401,7 @@ int64_t instruction<M>::get_displacement_s64() {
 	if(disp_size_ != 0) {
 		throw multiple_displacements(byte_index_);
 	}
-	
+
 	int64_t ret = 0;
 	ret = (ret & 0xffffffffffffff00LL) | static_cast<int64_t>(next_byte());
 	ret = (ret & 0xffffffffffff00ffLL) | (static_cast<int64_t>(next_byte()) << 8);
@@ -421,9 +421,9 @@ int64_t instruction<M>::get_displacement_s64() {
 //------------------------------------------------------------------------------
 template <class M>
 int8_t instruction<M>::get_immediate_s8() {
-	
-	int8_t ret = next_byte();	
-	
+
+	int8_t ret = next_byte();
+
 	immediate_size_ += sizeof(int8_t);
 	return ret;
 }
@@ -433,7 +433,7 @@ int8_t instruction<M>::get_immediate_s8() {
 //------------------------------------------------------------------------------
 template <class M>
 int16_t instruction<M>::get_immediate_s16() {
-	
+
 	int16_t ret = 0;
 	ret = (ret & 0xff00) | static_cast<int16_t>(next_byte());
 	ret = (ret & 0x00ff) | (static_cast<int16_t>(next_byte()) << 8);
@@ -447,7 +447,7 @@ int16_t instruction<M>::get_immediate_s16() {
 //------------------------------------------------------------------------------
 template <class M>
 int32_t instruction<M>::get_immediate_s32() {
-	
+
 	int32_t ret = 0;
 
 	ret = (ret & 0xffffff00) | static_cast<int32_t>(next_byte());
@@ -455,7 +455,7 @@ int32_t instruction<M>::get_immediate_s32() {
 	ret = (ret & 0xff00ffff) | (static_cast<int32_t>(next_byte()) << 16);
 	ret = (ret & 0x00ffffff) | (static_cast<int32_t>(next_byte()) << 24);
 
-	
+
 	immediate_size_ += sizeof(int32_t);
 	return ret;
 }
@@ -486,9 +486,9 @@ int64_t instruction<M>::get_immediate_s64() {
 //------------------------------------------------------------------------------
 template <class M>
 uint8_t instruction<M>::get_immediate_u8() {
-	
+
 	uint8_t ret = next_byte();
-	
+
 	immediate_size_ += sizeof(uint8_t);
 	return ret;
 }
@@ -503,7 +503,7 @@ uint16_t instruction<M>::get_immediate_u16() {
 
 	ret = (ret & 0xff00) | static_cast<uint16_t>(next_byte());
 	ret = (ret & 0x00ff) | (static_cast<uint16_t>(next_byte()) << 8);
-	
+
 	immediate_size_ += sizeof(uint16_t);
 	return ret;
 }
@@ -520,7 +520,7 @@ uint32_t instruction<M>::get_immediate_u32() {
 	ret = (ret & 0xffff00ff) | (static_cast<uint32_t>(next_byte()) << 8);
 	ret = (ret & 0xff00ffff) | (static_cast<uint32_t>(next_byte()) << 16);
 	ret = (ret & 0x00ffffff) | (static_cast<uint32_t>(next_byte()) << 24);
-	
+
 	immediate_size_ += sizeof(uint32_t);
 	return ret;
 }
@@ -541,7 +541,7 @@ uint64_t instruction<M>::get_immediate_u64() {
 	ret = (ret & 0xffff00ffffffffffULL) | (static_cast<uint64_t>(next_byte()) << 40);
 	ret = (ret & 0xff00ffffffffffffULL) | (static_cast<uint64_t>(next_byte()) << 48);
 	ret = (ret & 0x00ffffffffffffffULL) | (static_cast<uint64_t>(next_byte()) << 56);
-	
+
 	immediate_size_ += sizeof(uint64_t);
 	return ret;
 }
@@ -802,7 +802,7 @@ template <typename operand<M>::Type TYPE, typename operand<M>::Register (*REG_DE
 void instruction<M>::decode_Ex() {
 
 	const uint8_t modrm_byte = get_modrm();
-	
+
 	operand_type &operand = next_operand();
 
 	if(prefix_ & PREFIX_ADDRESS) {
@@ -875,10 +875,10 @@ void instruction<M>::disassemble() {
 	}
 
 	process_prefixes();
-	
+
 	// get the first byte of the actual opcode
 	byte1_ = next_byte();
-	
+
 	// find the entry in the table
 	opcode_ = &Opcodes[byte1_];
 
@@ -890,14 +890,14 @@ void instruction<M>::disassemble() {
 // Name: instruction
 //------------------------------------------------------------------------------
 template <class M>
-instruction<M>::instruction(const instruction &other) : 
-	byte_stream_(other.byte_stream_->clone()), byte_index_(other.byte_index_), byte1_(other.byte1_), byte2_(other.byte2_), 
-	byte3_(other.byte3_), modrm_byte_(other.modrm_byte_), 
-	sib_byte_(other.sib_byte_), rex_byte_(other.rex_byte_), rva_(other.rva_), 
-	opcode_(other.opcode_), prefix_(other.prefix_), 
-	mandatory_prefix_(other.mandatory_prefix_), 
+instruction<M>::instruction(const instruction &other) :
+	byte_stream_(other.byte_stream_->clone()), byte_index_(other.byte_index_), byte1_(other.byte1_), byte2_(other.byte2_),
+	byte3_(other.byte3_), modrm_byte_(other.modrm_byte_),
+	sib_byte_(other.sib_byte_), rex_byte_(other.rex_byte_), rva_(other.rva_),
+	opcode_(other.opcode_), prefix_(other.prefix_),
+	mandatory_prefix_(other.mandatory_prefix_),
 	operand_count_(other.operand_count_), modrm_size_(other.modrm_size_),
-	sib_size_(other.sib_size_), disp_size_(other.disp_size_), 
+	sib_size_(other.sib_size_), disp_size_(other.disp_size_),
 	prefix_size_(other.prefix_size_), immediate_size_(other.immediate_size_),
 	rex_size_(other.rex_size_) {
 
@@ -905,7 +905,7 @@ instruction<M>::instruction(const instruction &other) :
 		operands_[i] = other.operands_[i];
 		operands_[i].set_owner(this);
 	}
-	
+
 	std::copy(other.bytes_, other.bytes_ + sizeof(other.bytes_), bytes_);
 }
 
@@ -930,7 +930,7 @@ void instruction<M>::swap(instruction &other) {
 	for(int i = 0; i < MAX_OPERANDS; ++i) {
 		operands_[i].swap(other.operands_[i]);
 	}
-	
+
 	for(int i = 0; i < MAX_SIZE; ++i) {
 		swap(bytes_[i], other.bytes_[i]);
 	}
@@ -1064,7 +1064,7 @@ uint8_t instruction<M>::next_byte() {
 	if(byte_index_ == MAX_SIZE) {
 		throw instruction_too_big(byte_index_);
 	}
-	
+
 	if(byte_stream_->empty()) {
 		throw instruction_too_big(byte_index_);
 	}
@@ -1123,12 +1123,12 @@ void instruction<M>::decode_jcxz_jecxz_jrcxz() {
 //------------------------------------------------------------------------------
 template <class M>
 void instruction<M>::wait_or_wait_prefix() {
-	
+
 	// opcode 0x9b... is annoying :-P
 	static const opcode_entry Opcodes_wait[1] = {
 		{ "wait",   &instruction::decode0, OP_WAIT,   FLAG_NONE },
 	};
-	
+
 	static const opcode_entry Opcodes_wait_prefix_d9[2] = {
 		{ "fstenv", &instruction::decode_M,  OP_FSTENV, FLAG_FPU },
 		{ "fstcw",  &instruction::decode_Mw, OP_FSTCW,  FLAG_FPU },
@@ -1141,18 +1141,18 @@ void instruction<M>::wait_or_wait_prefix() {
 		{ "finit",  &instruction::decode0, OP_FINIT,  FLAG_FPU },
 		{ "fsetpm", &instruction::decode0, OP_FSETPM, FLAG_FPU },
 	};
-	
+
 	static const opcode_entry Opcodes_wait_prefix_dd[2] = {
 		{ "fsave", &instruction::decode_M,  OP_FSAVE, FLAG_FPU },
 		{ "fstsw", &instruction::decode_Mw, OP_FSTSW, FLAG_FPU },
 	};
-	
+
 	static const opcode_entry Opcodes_wait_prefix_df[2] = {
 		{ "fstsw", &instruction::decode_AX, OP_FSTSW, FLAG_FPU },
 	};
-	
+
 	opcode_ = &Opcodes_wait[0];
-	
+
 	if(!byte_stream_->empty()) {
 		switch(byte_stream_->peek()) {
 		case 0xd9:
@@ -1229,7 +1229,7 @@ void instruction<M>::wait_or_wait_prefix() {
 			break;
 		}
 	}
-	
+
 	(this->*(opcode_->decoder))();
 }
 
@@ -1239,7 +1239,7 @@ void instruction<M>::wait_or_wait_prefix() {
 //------------------------------------------------------------------------------
 template <class M>
 void instruction<M>::decode_x87() {
-	
+
 	const uint8_t modrm_byte = get_modrm();
 	const uint8_t esc_num = (byte1_ - 0xd8);
 
@@ -2237,8 +2237,8 @@ int instruction<M>::operand_size() const {
 // Name: address_size
 //------------------------------------------------------------------------------
 template <class M>
-int instruction<M>::address_size() const {	
-	
+int instruction<M>::address_size() const {
+
 	if(prefix_ & PREFIX_ADDRESS) {
 		if(BITS == 64) {
 			return 32;

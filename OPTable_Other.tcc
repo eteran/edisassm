@@ -27,9 +27,9 @@ const typename instruction<M>::opcode_entry instruction<M>::Opcode_invalid =
 
 template <class M>
 const typename instruction<M>::opcode_entry instruction<M>::Opcodes_nop_pause_xchg[3] = {
-	{ "nop",	&instruction::decode0,                                                                        OP_NOP,   FLAG_NONE },
-	{ "pause",	&instruction::decode0,                                                                        OP_PAUSE, FLAG_SSE2 },
-	{ "xchg", 	&instruction::template decode2<&instruction_type::decode_rAX, &instruction_type::decode_rAX_NOREX>, OP_XCHG,  FLAG_NONE },
+	{ "nop",   &instruction::decode0,                                                                        OP_NOP,   FLAG_NONE },
+	{ "pause", &instruction::decode0,                                                                        OP_PAUSE, FLAG_SSE2 },
+	{ "xchg",  &instruction::template decode2<&instruction_type::decode_rAX, &instruction_type::decode_rAX_NOREX>, OP_XCHG,  FLAG_NONE },
 };
 
 template <class M>

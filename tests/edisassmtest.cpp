@@ -4071,7 +4071,7 @@ struct test_data_t {
 	{3,"\x66\x89\xd4", "mov sp, dx", insn32_t::FLAG_NONE},
 	{3,"\x66\x89\xf4", "mov sp, si", insn32_t::FLAG_NONE},
 	{3,"\x66\x89\xe4", "mov sp, sp", insn32_t::FLAG_NONE},
-		
+
 
 	// test opcodes with no operands (or implicit ones, which we consider to be "none")
 	{1, "\x27", "daa", insn32_t::FLAG_32BIT_ONLY | insn32_t::FLAG_RW_FLAGS},
@@ -4203,7 +4203,7 @@ struct test_data_t {
 	{2, "\xdb\xe2", "fnclex", insn32_t::FLAG_FPU},
 	{2, "\xdb\xe3", "fninit", insn32_t::FLAG_FPU},
 	{2, "\xdb\xe4", "fnsetpm", insn32_t::FLAG_FPU | insn32_t::FLAG_286_ONLY},
-	
+
 	{3, "\x9b\xdb\xe1", "fdisi", insn32_t::FLAG_FPU},
 	{3, "\x9b\xdb\xe2", "fclex", insn32_t::FLAG_FPU | insn32_t::FLAG_W_FLAGS},
 	{3, "\x9b\xdb\xe3", "finit", insn32_t::FLAG_FPU},
@@ -4224,7 +4224,7 @@ struct test_data_t {
 	{4, "\x67\x9b\xdd\x30", "fsave [bx+si]", insn32_t::FLAG_FPU},
 	{4, "\x67\x9b\xdd\x38", "fstsw word ptr [bx+si]", insn32_t::FLAG_FPU},
 	{4, "\x9b\xdd\x75\x94", "fsave [ebp-108]", insn32_t::FLAG_FPU},
-	
+
 	{2, "\xd9\x30", "fnstenv [eax]", insn32_t::FLAG_FPU},
 	{2, "\xd9\x38", "fnstcw word ptr [eax]", insn32_t::FLAG_FPU},
 	{3, "\x9b\xd9\x30", "fstenv [eax]", insn32_t::FLAG_FPU},
@@ -4239,31 +4239,31 @@ struct test_data_t {
 int main() {
 	for(size_t i = 0; i < sizeof(test32_data) / sizeof(test32_data[0]); ++i) {
 		test_data_t *p = &test32_data[i];
-		
+
 		std::cout << "performing test #" << i << "...";
 		insn32_t insn(p->bytes, p->bytes + p->size, 0x00000000, std::nothrow);
-				
+
 		if(!insn.valid() || edisassm::to_string(insn) != p->result) {
 			std::cout << "\n----------\n";
 			std::cout << edisassm::to_string(insn) << " != " << p->result << std::endl;
 			std::cout << "FAIL" << std::endl;
 			return -1;
 		}
-		
+
 		if(insn.size() != p->size) {
 			std::cout << "\n----------\n";
 			std::cout << edisassm::to_byte_string(insn) << " incorrect size" << std::endl;
 			std::cout << "FAIL" << std::endl;
 			return -1;
 		}
-		
+
 		if(insn.flags() != p->flags) {
 			std::cout << "\n----------\n";
 			std::cout << edisassm::to_byte_string(insn) << " wrong flags" << std::endl;
 			std::cout << "FAIL" << std::endl;
 			return -1;
 		}
-				
+
 		std::cout << " " << edisassm::to_byte_string(insn) << " '" << edisassm::to_string(insn) << "' " << "OK" << std::endl;
 	}
 }

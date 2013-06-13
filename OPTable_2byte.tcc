@@ -409,7 +409,7 @@ const typename instruction<M>::opcode_entry instruction<M>::Opcodes_2Byte_66[0x1
 	{ "cmovnle", &instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_R_FLAGS | FLAG_PENTIUM_PRO },
 
 	/* 0x0f 0x50 - 0x0f 0x5f */
-	{ "movmskpd", &instruction::decode_Gd_Uo, OP_MOVMSKPD, FLAG_SSE2 },	// x86-64: movmskpd Gq, Uo
+	{ "movmskpd", &instruction::decode_Gd_Uo, OP_MOVMSKPD, FLAG_SSE2 }, // x86-64: movmskpd Gq, Uo
 	{ "sqrtpd",   &instruction::decode_Vo_Wo, OP_SQRTPD,   FLAG_SSE2 },
 	{ "rsqrtps",  &instruction::decode_Vo_Wo, OP_RSQRTPS,  FLAG_SSE },
 	{ "rcpps",    &instruction::decode_Vo_Wo, OP_RCPPS,    FLAG_SSE },
@@ -538,8 +538,8 @@ const typename instruction<M>::opcode_entry instruction<M>::Opcodes_2Byte_66[0x1
 	{ "xadd",   &instruction::decode_Eb_Gb,       OP_XADD,   FLAG_NONE },
 	{ "xadd",   &instruction::decode_Ev_Gv,       OP_XADD,   FLAG_NONE },
 	{ "cmppd",  &instruction::decode_Vo_Wo_Ib,    OP_CMPPD,  FLAG_SSE2 },
-	{ "movnti", &instruction::decode_Md_Gd,       OP_MOVNTI, FLAG_SSE2 },	// x86-64: movnti Nq, Gq
-	{ "pinsrw", &instruction::decode_Vo_Rd_Mw_Ib, OP_PINSRW, FLAG_SSE },	// x86-64: pinsrw Vo, Rq/Mw,Ib
+	{ "movnti", &instruction::decode_Md_Gd,       OP_MOVNTI, FLAG_SSE2 }, // x86-64: movnti Nq, Gq
+	{ "pinsrw", &instruction::decode_Vo_Rd_Mw_Ib, OP_PINSRW, FLAG_SSE },  // x86-64: pinsrw Vo, Rq/Mw,Ib
 	{ "pextrw", &instruction::decode_Gd_Uo_Ib,    OP_PEXTRW, FLAG_SSE | FLAG_SSE4_1 },
 	{ "shufpd", &instruction::decode_Vo_Wo_Ib,    OP_SHUFPD, FLAG_SSE2 },
 	{ "group9", &instruction::decode_group9,      OP_GROUP,  FLAG_NONE },
@@ -658,10 +658,10 @@ const typename instruction<M>::opcode_entry instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "movaps", &instruction::decode_Vo_Wo, OP_MOVAPS, FLAG_SSE },
 	{ "movaps", &instruction::decode_Wo_Vo, OP_MOVAPS, FLAG_SSE },
-	{ "cvtsi2sd", &instruction::decode_Vo_Ed, OP_CVTSI2SD, FLAG_SSE2 },	// x86-64: cvtsi2sd Vo, Eq
+	{ "cvtsi2sd", &instruction::decode_Vo_Ed, OP_CVTSI2SD, FLAG_SSE2 },    // x86-64: cvtsi2sd Vo, Eq
 	{ "movntps",  &instruction::decode_Mo_Vo, OP_MOVNTPS, FLAG_SSE },
-	{ "cvttsd2si",  &instruction::decode_Gd_Wo, OP_CVTTSD2SI, FLAG_SSE2 },	// x86-64: cvttsd2si Gq, Wo
-	{ "cvtsd2si",  &instruction::decode_Gd_Wo, OP_CVTSD2SI, FLAG_SSE2 },	// x86-64: cvtsd2si Gq, Wo
+	{ "cvttsd2si",  &instruction::decode_Gd_Wo, OP_CVTTSD2SI, FLAG_SSE2 }, // x86-64: cvttsd2si Gq, Wo
+	{ "cvtsd2si",  &instruction::decode_Gd_Wo, OP_CVTSD2SI, FLAG_SSE2 },   // x86-64: cvtsd2si Gq, Wo
 	{ "ucomiss",  &instruction::decode_Vo_Wo, OP_UCOMISS, FLAG_SSE | FLAG_W_FLAGS },
 	{ "comiss",  &instruction::decode_Vo_Wo, OP_COMISS, FLAG_SSE | FLAG_W_FLAGS },
 
@@ -702,7 +702,7 @@ const typename instruction<M>::opcode_entry instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "cmovnle", &instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_R_FLAGS | FLAG_PENTIUM_PRO },
 
 	/* 0x0f 0x50 - 0x0f 0x5f */
-	{ "movmskps", &instruction::decode_Gd_Uo, OP_MOVMSKPS, FLAG_SSE },	// x86-64: movmskps Gq, Uo
+	{ "movmskps", &instruction::decode_Gd_Uo, OP_MOVMSKPS, FLAG_SSE }, // x86-64: movmskps Gq, Uo
 	{ "sqrtsd",   &instruction::decode_Vo_Wo, OP_SQRTSD,   FLAG_SSE2 },
 	{ "rsqrtps",  &instruction::decode_Vo_Wo, OP_RSQRTPS,  FLAG_SSE },
 	{ "rcpps",    &instruction::decode_Vo_Wo, OP_RCPPS,    FLAG_SSE },
@@ -734,7 +734,7 @@ const typename instruction<M>::opcode_entry instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "packssdw", &instruction::decode_Pq_Qq, OP_PACKSSDW, FLAG_MMX },
 	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "movd", &instruction::decode_Pd_Ed, OP_MOVD, FLAG_MMX },		// x86-64: movq Pd, Eq
+	{ "movd", &instruction::decode_Pd_Ed, OP_MOVD, FLAG_MMX }, // x86-64: movq Pd, Eq
 	{ "movq", &instruction::decode_Pq_Qq, OP_MOVQ, FLAG_MMX },
 
 	/* 0x0f 0x70 - 0x0f 0x7f */
@@ -831,8 +831,8 @@ const typename instruction<M>::opcode_entry instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "xadd", &instruction::decode_Eb_Gb, OP_XADD, FLAG_NONE },
 	{ "xadd", &instruction::decode_Ev_Gv, OP_XADD, FLAG_NONE },
 	{ "cmpsd", &instruction::decode_Vo_Wo_Ib, OP_CMPSD, FLAG_SSE2 },
-	{ "movnti", &instruction::decode_Md_Gd, OP_MOVNTI, FLAG_SSE2 },	// x86-64: movnti Nq, Gq
-	{ "pinsrw", &instruction::decode_Pq_Rd_Mw_Ib, OP_PINSRW, FLAG_SSE },	// x86-64: pinsrw Pq, Rq/Mw,Ib
+	{ "movnti", &instruction::decode_Md_Gd, OP_MOVNTI, FLAG_SSE2 },      // x86-64: movnti Nq, Gq
+	{ "pinsrw", &instruction::decode_Pq_Rd_Mw_Ib, OP_PINSRW, FLAG_SSE }, // x86-64: pinsrw Pq, Rq/Mw,Ib
 	{ "pextrw", &instruction::decode_Gd_Nq_Ib, OP_PEXTRW, FLAG_SSE | FLAG_SSE4_1 },
 	{ "shufps", &instruction::decode_Vo_Wo_Ib, OP_SHUFPS, FLAG_SSE },
 	{ "group9", &instruction::decode_group9, OP_GROUP, FLAG_NONE },
@@ -951,10 +951,10 @@ const typename instruction<M>::opcode_entry instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "movaps", &instruction::decode_Vo_Wo, OP_MOVAPS, FLAG_SSE },
 	{ "movaps", &instruction::decode_Wo_Vo, OP_MOVAPS, FLAG_SSE },
-	{ "cvtsi2ss", &instruction::decode_Vo_Ed, OP_CVTSI2SS, FLAG_SSE }, // x86-64: cvtsi2ss Vo, Eq
+	{ "cvtsi2ss", &instruction::decode_Vo_Ed, OP_CVTSI2SS, FLAG_SSE },    // x86-64: cvtsi2ss Vo, Eq
 	{ "movntps",  &instruction::decode_Mo_Vo, OP_MOVNTPS, FLAG_SSE },
 	{ "cvttss2si",  &instruction::decode_Gd_Wo, OP_CVTTSS2SI, FLAG_SSE }, // x86-64: cvttss2si Gq, Wo
-	{ "cvtss2si",  &instruction::decode_Gd_Wo, OP_CVTSS2SI, FLAG_SSE },	// x86-64: cvtss2si Gq, Wo
+	{ "cvtss2si",  &instruction::decode_Gd_Wo, OP_CVTSS2SI, FLAG_SSE },   // x86-64: cvtss2si Gq, Wo
 	{ "ucomiss",  &instruction::decode_Vo_Wo, OP_UCOMISS, FLAG_SSE | FLAG_W_FLAGS },
 	{ "comiss",  &instruction::decode_Vo_Wo, OP_COMISS, FLAG_SSE | FLAG_W_FLAGS },
 
@@ -995,7 +995,7 @@ const typename instruction<M>::opcode_entry instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "cmovnle", &instruction::decode_Gv_Ev, OP_CMOVCC, FLAG_R_FLAGS | FLAG_PENTIUM_PRO },
 
 	/* 0x0f 0x50 - 0x0f 0x5f */
-	{ "movmskps", &instruction::decode_Gd_Uo, OP_MOVMSKPS, FLAG_SSE },	// x86-64: movmskps Gq, Uo
+	{ "movmskps", &instruction::decode_Gd_Uo, OP_MOVMSKPS, FLAG_SSE }, // x86-64: movmskps Gq, Uo
 	{ "sqrtss", &instruction::decode_Vo_Wo, OP_SQRTSS, FLAG_SSE },
 	{ "rsqrtss", &instruction::decode_Vo_Wo, OP_RSQRTSS, FLAG_SSE },
 	{ "rcpss", &instruction::decode_Vo_Wo, OP_RCPSS, FLAG_SSE },
@@ -1027,7 +1027,7 @@ const typename instruction<M>::opcode_entry instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "packssdw",  &instruction::decode_Pq_Qq,   OP_PACKSSDW,  FLAG_MMX },
 	{ "invalid",   &instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
 	{ "invalid",   &instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
-	{ "movd",      &instruction::decode_Pd_Ed,   OP_MOVD,      FLAG_MMX },		// x86-64: movq Pd, Eq
+	{ "movd",      &instruction::decode_Pd_Ed,   OP_MOVD,      FLAG_MMX }, // x86-64: movq Pd, Eq
 	{ "movdqu",    &instruction::decode_Vo_Wo,   OP_MOVDQU,    FLAG_SSE2 },
 
 	/* 0x0f 0x70 - 0x0f 0x7f */
@@ -1039,8 +1039,8 @@ const typename instruction<M>::opcode_entry instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "pcmpeqw", &instruction::decode_Pq_Qq, OP_PCMPEQW, FLAG_MMX },
 	{ "pcmpeqd", &instruction::decode_Pq_Qq, OP_PCMPEQD, FLAG_MMX },
 	{ "emms",    &instruction::decode0, OP_EMMS, FLAG_MMX },
-	{ "vmread",  &instruction::decode_Ed_Gd, OP_VMREAD, FLAG_VMX | FLAG_W_FLAGS },	// x86-64: vmread Eq, Gq
-	{ "vmwrite", &instruction::decode_Gd_Ed, OP_VMWRITE, FLAG_VMX | FLAG_W_FLAGS },	// x86-64: vmwrite Gq, Eq
+	{ "vmread",  &instruction::decode_Ed_Gd, OP_VMREAD, FLAG_VMX | FLAG_W_FLAGS },  // x86-64: vmread Eq, Gq
+	{ "vmwrite", &instruction::decode_Gd_Ed, OP_VMWRITE, FLAG_VMX | FLAG_W_FLAGS }, // x86-64: vmwrite Gq, Eq
 	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
@@ -1124,8 +1124,8 @@ const typename instruction<M>::opcode_entry instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "xadd", &instruction::decode_Eb_Gb, OP_XADD, FLAG_NONE },
 	{ "xadd", &instruction::decode_Ev_Gv, OP_XADD, FLAG_NONE },
 	{ "cmpss", &instruction::decode_Vo_Wo_Ib, OP_CMPSS, FLAG_SSE },
-	{ "movnti", &instruction::decode_Md_Gd, OP_MOVNTI, FLAG_SSE2 },	// x86-64: movnti Nq, Gq
-	{ "pinsrw", &instruction::decode_Pq_Rd_Mw_Ib, OP_PINSRW, FLAG_SSE },	// x86-64: pinsrw Pq, Rq/Mw,Ib
+	{ "movnti", &instruction::decode_Md_Gd, OP_MOVNTI, FLAG_SSE2 },       // x86-64: movnti Nq, Gq
+	{ "pinsrw", &instruction::decode_Pq_Rd_Mw_Ib, OP_PINSRW, FLAG_SSE },  // x86-64: pinsrw Pq, Rq/Mw,Ib
 	{ "pextrw", &instruction::decode_Gd_Nq_Ib, OP_PEXTRW, FLAG_SSE | FLAG_SSE4_1 },
 	{ "shufps", &instruction::decode_Vo_Wo_Ib, OP_SHUFPS, FLAG_SSE },
 	{ "group9", &instruction::decode_group9, OP_GROUP, FLAG_NONE },

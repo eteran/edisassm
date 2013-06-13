@@ -98,7 +98,7 @@ const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group7A[64] 
 	{ "lmsw", &instruction::decode_Ew, OP_LMSW, FLAG_NONE },
 	{ "lmsw", &instruction::decode_Ew, OP_LMSW, FLAG_NONE },
 
-	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },	// x86-64: swapgs
+	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE }, // x86-64: swapgs
 	{ "rdtscp",  &instruction::decode0,        OP_RDTSCP,  FLAG_NONE },
 	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
