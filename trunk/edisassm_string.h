@@ -35,19 +35,18 @@ struct upper_case   {};
 struct syntax_intel {};
 struct syntax_att   {};
 
-//------------------------------------------------------------------------------
-// Name: to_string
-// Desc: creates a std::string which represents the given instruction
-//------------------------------------------------------------------------------
-template <class M>
-std::string to_string(const instruction<M> &instruction, const syntax_intel &, const lower_case &);
+
+struct default_formatting {
+	typedef lower_case   case_type;
+	typedef syntax_intel syntax_type;
+};
 
 //------------------------------------------------------------------------------
 // Name: to_string
 // Desc: creates a std::string which represents the given instruction
 //------------------------------------------------------------------------------
-template <class M>
-std::string to_string(const instruction<M> &instruction, const syntax_intel &, const upper_case &);
+template <class M, class F>
+std::string to_string(const instruction<M> &instruction, const F &format);
 
 //------------------------------------------------------------------------------
 // Name: to_string
@@ -60,15 +59,8 @@ std::string to_string(const instruction<M> &instruction);
 // Name: to_string
 // Desc: creates a std::string which represents the given operand
 //------------------------------------------------------------------------------
-template <class M>
-std::string to_string(const operand<M> &operand, const syntax_intel &, const lower_case &);
-
-//------------------------------------------------------------------------------
-// Name: to_string
-// Desc: creates a std::string which represents the given operand
-//------------------------------------------------------------------------------
-template <class M>
-std::string to_string(const operand<M> &operand, const syntax_intel &, const upper_case &);
+template <class M, class F>
+std::string to_string(const operand<M> &operand, const F &format);
 
 //------------------------------------------------------------------------------
 // Name: to_string
