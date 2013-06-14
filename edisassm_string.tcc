@@ -177,6 +177,14 @@ std::string register_name(typename operand<M>::Register reg) {
 namespace {
 
 //------------------------------------------------------------------------------
+// Name: toupper_copy
+//------------------------------------------------------------------------------
+inline std::string toupper_copy(std::string s) {
+	std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper));
+	return s;
+}
+
+//------------------------------------------------------------------------------
 // Name: is_small_num
 //------------------------------------------------------------------------------
 template <class T>
@@ -778,7 +786,7 @@ std::string to_string(const instruction<M> &instruction, const syntax_intel &, c
 	std::ostringstream ss;
 
 	ss << format_prefix(instruction, upper_case());
-	ss << std::uppercase << instruction.mnemonic() << std::nouppercase;
+	ss << toupper_copy(instruction.mnemonic());
 
 	const std::size_t count = instruction.operand_count();
 	if(count != 0) {
