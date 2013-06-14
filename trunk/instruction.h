@@ -19,14 +19,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef INSTRUCTION_20070427_H_
 #define INSTRUCTION_20070427_H_
 
-#include "edisassm_util.h"
 #include "edisassm_exception.h"
 #include "edisassm_model.h"
 #include "edisassm_types.h"
 #include "operand.h"
 #include "ModRM.h"
 #include <cstddef>
-
 
 #ifdef QT_CORE_LIB
 #include <QtGlobal>

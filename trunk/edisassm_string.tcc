@@ -19,11 +19,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef EDISASSM_STRING_20110816_TCC_
 #define EDISASSM_STRING_20110816_TCC_
 
+#include <algorithm>
 #include <cassert>
 #include <iomanip>
 #include <limits>
 #include <sstream>
-#include "edisassm_util.h"
 
 namespace edisassm {
 
@@ -34,7 +34,7 @@ namespace edisassm {
 template <class M>
 std::string register_name(typename operand<M>::Register reg, const lower_case&) {
 
-	static const char *names[] = {
+	static const char *const names[] = {
 		"",
 
 		"rax",   "rcx",   "rdx",   "rbx",
@@ -103,7 +103,7 @@ std::string register_name(typename operand<M>::Register reg, const lower_case&) 
 template <class M>
 std::string register_name(typename operand<M>::Register reg, const upper_case&) {
 
-	static const char *names[] = {
+	static const char *const names[] = {
 		"",
 
 		"RAX",   "RCX",   "RDX",   "RBX",
@@ -175,6 +175,61 @@ std::string register_name(typename operand<M>::Register reg) {
 }
 
 namespace {
+
+//------------------------------------------------------------------------------
+// Name: is_small_num
+//------------------------------------------------------------------------------
+template <class T>
+bool is_small_num(T value) {
+	return (value > -127 && value < 128);
+}
+
+//------------------------------------------------------------------------------
+// Name: toupper_copy
+//------------------------------------------------------------------------------
+inline std::string toupper_copy(std::string s) {
+	std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper));
+	return s;
+}
+
+//------------------------------------------------------------------------------
+// Name: toupper
+//------------------------------------------------------------------------------
+inline std::string &toupper(std::string &s) {
+	std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper));
+	return s;
+}
+
+//------------------------------------------------------------------------------
+// Name: tolower
+//------------------------------------------------------------------------------
+inline std::string &tolower(std::string &s) {
+	std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::tolower));
+	return s;
+}
+
+//------------------------------------------------------------------------------
+// Name: rtrim
+//------------------------------------------------------------------------------
+inline std::string &rtrim(std::string &s) {
+	s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+	return s;
+}
+
+//------------------------------------------------------------------------------
+// Name: ltrim
+//------------------------------------------------------------------------------
+inline std::string &ltrim(std::string &s) {
+	s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+	return s;
+}
+
+//------------------------------------------------------------------------------
+// Name: trim
+//------------------------------------------------------------------------------
+inline std::string &trim(std::string &s) {
+	return ltrim(rtrim(s));
+}
 
 //------------------------------------------------------------------------------
 // Name: hex_string
@@ -630,7 +685,7 @@ std::string format_immediate(const operand<M> &op, const upper_case &) {
 		if(op.qword() < std::numeric_limits<uint32_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
-			if(util::is_small_num(op.sqword())) {
+			if(is_small_num(op.sqword())) {
 				ss << op.sqword();
 			} else {
 				ss << hex_string<M>(op.sqword(), upper_case());
@@ -642,7 +697,7 @@ std::string format_immediate(const operand<M> &op, const upper_case &) {
 		if(op.dword() < std::numeric_limits<uint16_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
-			if(util::is_small_num(op.sdword())) {
+			if(is_small_num(op.sdword())) {
 				ss << op.sdword();
 			} else {
 				ss << hex_string<M>(op.sdword(), upper_case());
@@ -654,7 +709,7 @@ std::string format_immediate(const operand<M> &op, const upper_case &) {
 		if(op.word() < std::numeric_limits<uint8_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
-			if(util::is_small_num(op.sword())) {
+			if(is_small_num(op.sword())) {
 				ss << op.sword();
 			} else {
 				ss << hex_string<M>(op.sword(), upper_case());
@@ -691,7 +746,7 @@ std::string format_immediate(const operand<M> &op, const lower_case &) {
 		if(op.qword() < std::numeric_limits<uint32_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
-			if(util::is_small_num(op.sqword())) {
+			if(is_small_num(op.sqword())) {
 				ss << op.sqword();
 			} else {
 				ss << hex_string<M>(op.sqword(), lower_case());
@@ -703,7 +758,7 @@ std::string format_immediate(const operand<M> &op, const lower_case &) {
 		if(op.dword() < std::numeric_limits<uint16_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
-			if(util::is_small_num(op.sdword())) {
+			if(is_small_num(op.sdword())) {
 				ss << op.sdword();
 			} else {
 				ss << hex_string<M>(op.sdword(), lower_case());
@@ -715,7 +770,7 @@ std::string format_immediate(const operand<M> &op, const lower_case &) {
 		if(op.word() < std::numeric_limits<uint8_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
-			if(util::is_small_num(op.sword())) {
+			if(is_small_num(op.sword())) {
 				ss << op.sword();
 			} else {
 				ss << hex_string<M>(op.sword(), lower_case());
@@ -770,7 +825,7 @@ std::string to_string(const instruction<M> &insn, const syntax_intel &, const up
 	std::ostringstream ss;
 
 	ss << format_prefix(insn, upper_case());
-	ss << util::toupper_copy(insn.mnemonic());
+	ss << toupper_copy(insn.mnemonic());
 
 	const std::size_t count = insn.operand_count();
 	if(count != 0) {

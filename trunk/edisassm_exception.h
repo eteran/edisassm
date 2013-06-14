@@ -19,6 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef EDISASSM_EXCEPTION_20080414_H_
 #define EDISASSM_EXCEPTION_20080414_H_
 
+#include <exception>
+
 namespace edisassm {
 
 struct invalid_instruction : public std::exception {
