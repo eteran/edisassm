@@ -789,8 +789,9 @@ void instruction<M>::decode_ModRM_3_32(uint8_t rm, operand_type &operand) {
 template <class M>
 template <typename operand<M>::Type TYPE, typename operand<M>::Register (*REG_DECODE)(uint8_t)>
 void instruction<M>::decode_ModRM_Invalid(uint8_t modrm_byte, operand_type &operand) {
-	UNUSED(modrm_byte);
-	UNUSED(operand);
+	(void)modrm_byte;
+	(void)operand;
+	
 	throw invalid_operand(byte_index_);
 }
 
