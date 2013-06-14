@@ -760,9 +760,9 @@ std::string to_string(const instruction<M> &instruction, const syntax_intel &, c
 
 	const std::size_t count = instruction.operand_count();
 	if(count != 0) {
-		ss << ' ' << to_string(instruction.operands()[0], syntax_intel());
+		ss << ' ' << to_string(instruction.operands()[0], syntax_intel(), lower_case());
 		for(std::size_t i = 1; i < count; ++i) {
-			ss << ", " << to_string(instruction.operands()[i], syntax_intel());
+			ss << ", " << to_string(instruction.operands()[i], syntax_intel(), lower_case());
 		}
 	}
 
