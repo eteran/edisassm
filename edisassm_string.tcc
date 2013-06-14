@@ -753,6 +753,26 @@ std::string format_immediate(const operand<M> &operand, const lower_case &) {
 	return ss.str();
 }
 
+//------------------------------------------------------------------------------
+// Name: to_string
+// Desc: creates a std::string which represents the given operand
+//------------------------------------------------------------------------------
+template <class M, class Syntax, class Case>
+std::string to_string(const operand<M> &operand, const Syntax &, const Case &) {
+
+	typedef edisassm::operand<M> O;
+
+	switch(operand.general_type()) {
+	case O::TYPE_ABSOLUTE:   return format_absolute  (operand, Case());
+	case O::TYPE_EXPRESSION: return format_expression(operand, Case());
+	case O::TYPE_IMMEDIATE:  return format_immediate (operand, Case());
+	case O::TYPE_REGISTER:   return format_register  (operand, Case());
+	case O::TYPE_REL:        return format_relative  (operand, Case());
+	default:
+		return register_name<M>(O::REG_INVALID, Case());
+		// is it better to throw, or return a string?
+		//throw invalid_operand(owner_->size());
+	}
 }
 
 //------------------------------------------------------------------------------
@@ -799,56 +819,33 @@ std::string to_string(const instruction<M> &instruction, const syntax_intel &, c
 	return ss.str();
 }
 
+}
+
+//------------------------------------------------------------------------------
+// Name: to_string
+// Desc: creates a std::string which represents the given instruction
+//------------------------------------------------------------------------------
+template <class M, class F>
+std::string to_string(const instruction<M> &instruction, const F &) {
+	return to_string(instruction, typename F::syntax_type(), typename F::case_type());
+}
+
 //------------------------------------------------------------------------------
 // Name: to_string
 // Desc: creates a std::string which represents the given instruction
 //------------------------------------------------------------------------------
 template <class M>
 std::string to_string(const instruction<M> &instruction) {
-	return to_string(instruction, syntax_intel(), upper_case());
+	return to_string(instruction, default_formatting());
 }
 
 //------------------------------------------------------------------------------
 // Name: to_string
 // Desc: creates a std::string which represents the given operand
 //------------------------------------------------------------------------------
-template <class M>
-std::string to_string(const operand<M> &operand, const syntax_intel &, const lower_case &) {
-
-	typedef edisassm::operand<M> O;
-
-	switch(operand.general_type()) {
-	case O::TYPE_ABSOLUTE:   return format_absolute(operand, lower_case());
-	case O::TYPE_EXPRESSION: return format_expression(operand, lower_case());
-	case O::TYPE_IMMEDIATE:  return format_immediate(operand, lower_case());
-	case O::TYPE_REGISTER:   return format_register(operand, lower_case());
-	case O::TYPE_REL:        return format_relative(operand, lower_case());
-	default:
-		return register_name<M>(O::REG_INVALID, lower_case());
-		// is it better to throw, or return a string?
-		//throw invalid_operand(owner_->size());
-	}
-}
-
-//------------------------------------------------------------------------------
-// Name: to_string
-// Desc: creates a std::string which represents the given operand
-//------------------------------------------------------------------------------
-template <class M>
-std::string to_string(const operand<M> &operand, const syntax_intel &, const upper_case &) {
-	typedef edisassm::operand<M> O;
-
-	switch(operand.general_type()) {
-	case O::TYPE_ABSOLUTE:   return format_absolute(operand, upper_case());
-	case O::TYPE_EXPRESSION: return format_expression(operand, upper_case());
-	case O::TYPE_IMMEDIATE:  return format_immediate(operand, upper_case());
-	case O::TYPE_REGISTER:   return format_register(operand, upper_case());
-	case O::TYPE_REL:        return format_relative(operand, upper_case());
-	default:
-		return register_name<M>(O::REG_INVALID, upper_case());
-		// is it better to throw, or return a string?
-		//throw invalid_operand(owner_->size());
-	}
+template <class M, class F>
+std::string to_string(const operand<M> &operand, const F &) {
+	return to_string(operand, typename F::syntax_type(), typename F::case_type());
 }
 
 //------------------------------------------------------------------------------
@@ -857,7 +854,7 @@ std::string to_string(const operand<M> &operand, const syntax_intel &, const upp
 //------------------------------------------------------------------------------
 template <class M>
 std::string to_string(const operand<M> &operand) {
-	return to_string(operand, syntax_intel(), upper_case());
+	return to_string(operand, default_formatting());
 }
 
 //------------------------------------------------------------------------------
