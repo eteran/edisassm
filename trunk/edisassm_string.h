@@ -54,13 +54,6 @@ std::string to_string(const instruction<M> &instruction, const syntax_intel &, c
 // Desc: creates a std::string which represents the given instruction
 //------------------------------------------------------------------------------
 template <class M>
-std::string to_string(const instruction<M> &instruction, const syntax_intel &);
-
-//------------------------------------------------------------------------------
-// Name: to_string
-// Desc: creates a std::string which represents the given instruction
-//------------------------------------------------------------------------------
-template <class M>
 std::string to_string(const instruction<M> &instruction);
 
 //------------------------------------------------------------------------------
@@ -68,28 +61,21 @@ std::string to_string(const instruction<M> &instruction);
 // Desc: creates a std::string which represents the given operand
 //------------------------------------------------------------------------------
 template <class M>
-std::string to_string(const operand<M> &op, const syntax_intel &, const lower_case &);
+std::string to_string(const operand<M> &operand, const syntax_intel &, const lower_case &);
 
 //------------------------------------------------------------------------------
 // Name: to_string
 // Desc: creates a std::string which represents the given operand
 //------------------------------------------------------------------------------
 template <class M>
-std::string to_string(const operand<M> &op, const syntax_intel &, const upper_case &);
+std::string to_string(const operand<M> &operand, const syntax_intel &, const upper_case &);
 
 //------------------------------------------------------------------------------
 // Name: to_string
 // Desc: creates a std::string which represents the given operand
 //------------------------------------------------------------------------------
 template <class M>
-std::string to_string(const operand<M> &op, const syntax_intel &);
-
-//------------------------------------------------------------------------------
-// Name: to_string
-// Desc: creates a std::string which represents the given operand
-//------------------------------------------------------------------------------
-template <class M>
-std::string to_string(const operand<M> &op);
+std::string to_string(const operand<M> &operand);
 
 //------------------------------------------------------------------------------
 // Name: to_byte_string
