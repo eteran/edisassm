@@ -23,13 +23,25 @@ namespace edisassm {
 
 template <class T>
 bool is_call(const instruction<T> &insn) {
-	return insn.valid() && insn.type() == instruction<T>::OP_CALL;
+	return insn.type() == instruction<T>::OP_CALL;
 }
 
 template <class T>
 bool is_ret(const instruction<T> &insn) {
-	return insn.valid() && insn.type() == instruction<T>::OP_RET;
+	return insn.type() == instruction<T>::OP_RET;
 }
+
+template <class T>
+bool is_conditional_jump(const instruction<T> &insn) {
+	return insn.type() == instruction<T>::OP_JCC;
+}
+
+template <class T>
+bool is_unconditional_jump(const instruction<T> &insn) {
+	return insn.type() == instruction<T>::OP_JMP;
+}
+
+
 
 }
 
