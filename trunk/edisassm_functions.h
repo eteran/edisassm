@@ -41,7 +41,15 @@ bool is_unconditional_jump(const instruction<T> &insn) {
 	return insn.type() == instruction<T>::OP_JMP;
 }
 
+template <class T>
+bool is_jump(const instruction<T> &insn) {
+	return is_unconditional_jump(insn) || is_conditional_jump(insn);
+}
 
+template <class T>
+bool is_nop(const instruction<T> &insn) {
+	return insn.type() == instruction<T>::OP_NOP;
+}
 
 }
 
