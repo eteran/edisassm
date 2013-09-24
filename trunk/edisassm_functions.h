@@ -51,6 +51,11 @@ bool is_nop(const instruction<T> &insn) {
 	return insn.type() == instruction<T>::OP_NOP;
 }
 
+template <class T>
+bool is_halt(const instruction<T> &insn) {
+	return insn.type() == instruction<T>::OP_HLT;
+}
+
 }
 
 #endif
