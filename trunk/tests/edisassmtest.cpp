@@ -1,12 +1,12 @@
 
-#include "instruction.h"
+#include "Instruction.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <cstdio>
 
-typedef edisassm::instruction<edisassm::x86_64> insn64_t;
-typedef edisassm::instruction<edisassm::x86>    insn32_t;
+typedef edisassm::Instruction<edisassm::x86_64> insn64_t;
+typedef edisassm::Instruction<edisassm::x86>    insn32_t;
 
 struct test_data_t {
 	unsigned size;
