@@ -22,39 +22,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace edisassm {
 
 template <class M>
-const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group9[8] = {
-	{ "invalid",              &instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
-	{ "cmpxchg8b/cmpxchg16b", &instruction::decode_invalid_cmpxchg8b_cmpxchg16b, OP_GROUP,   FLAG_NONE },
-	{ "invalid",              &instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
-	{ "invalid",              &instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
-	{ "invalid",              &instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
-	{ "invalid",              &instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
-	{ "vmptrld",              &instruction::decode_Mq,                           OP_VMPTRLD, FLAG_VMX },
-	{ "vmptrst",              &instruction::decode_Mq,                           OP_VMPTRST, FLAG_VMX },
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group9[8] = {
+	{ "invalid",              &Instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
+	{ "cmpxchg8b/cmpxchg16b", &Instruction::decode_invalid_cmpxchg8b_cmpxchg16b, OP_GROUP,   FLAG_NONE },
+	{ "invalid",              &Instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
+	{ "invalid",              &Instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
+	{ "invalid",              &Instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
+	{ "invalid",              &Instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
+	{ "vmptrld",              &Instruction::decode_Mq,                           OP_VMPTRLD, FLAG_VMX },
+	{ "vmptrst",              &Instruction::decode_Mq,                           OP_VMPTRST, FLAG_VMX },
 };
 
 template <class M>
-const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group9_66[8] = {
-	{ "invalid",              &instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
-	{ "cmpxchg8b/cmpxchg16b", &instruction::decode_invalid_cmpxchg8b_cmpxchg16b, OP_GROUP,   FLAG_NONE },
-	{ "invalid",              &instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
-	{ "invalid",              &instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
-	{ "invalid",              &instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
-	{ "invalid",              &instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
-	{ "vmclear",              &instruction::decode_Mq,                           OP_VMCLEAR, FLAG_VMX },
-	{ "vmptrst",              &instruction::decode_Mq,                           OP_VMPTRST, FLAG_VMX },
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group9_66[8] = {
+	{ "invalid",              &Instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
+	{ "cmpxchg8b/cmpxchg16b", &Instruction::decode_invalid_cmpxchg8b_cmpxchg16b, OP_GROUP,   FLAG_NONE },
+	{ "invalid",              &Instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
+	{ "invalid",              &Instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
+	{ "invalid",              &Instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
+	{ "invalid",              &Instruction::decode_invalid,                      OP_INVALID, FLAG_NONE },
+	{ "vmclear",              &Instruction::decode_Mq,                           OP_VMCLEAR, FLAG_VMX },
+	{ "vmptrst",              &Instruction::decode_Mq,                           OP_VMPTRST, FLAG_VMX },
 };
 
 template <class M>
-const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group9_F3[8] = {
-	{ "invalid",              &instruction::decode_invalid,                       OP_INVALID, FLAG_NONE },
-	{ "cmpxchg8b/cmpxchg16b", &instruction::decode_invalid_cmpxchg8b_cmpxchg16b,  OP_GROUP,   FLAG_NONE },
-	{ "invalid",              &instruction::decode_invalid,                       OP_INVALID, FLAG_NONE },
-	{ "invalid",              &instruction::decode_invalid,                       OP_INVALID, FLAG_NONE },
-	{ "invalid",              &instruction::decode_invalid,                       OP_INVALID, FLAG_NONE },
-	{ "invalid",              &instruction::decode_invalid,                       OP_INVALID, FLAG_NONE },
-	{ "vmxon",                &instruction::decode_Mq,                            OP_VMXON,   FLAG_VMX },
-	{ "vmptrst",              &instruction::decode_Mq,                            OP_VMPTRST, FLAG_VMX },
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group9_F3[8] = {
+	{ "invalid",              &Instruction::decode_invalid,                       OP_INVALID, FLAG_NONE },
+	{ "cmpxchg8b/cmpxchg16b", &Instruction::decode_invalid_cmpxchg8b_cmpxchg16b,  OP_GROUP,   FLAG_NONE },
+	{ "invalid",              &Instruction::decode_invalid,                       OP_INVALID, FLAG_NONE },
+	{ "invalid",              &Instruction::decode_invalid,                       OP_INVALID, FLAG_NONE },
+	{ "invalid",              &Instruction::decode_invalid,                       OP_INVALID, FLAG_NONE },
+	{ "invalid",              &Instruction::decode_invalid,                       OP_INVALID, FLAG_NONE },
+	{ "vmxon",                &Instruction::decode_Mq,                            OP_VMXON,   FLAG_VMX },
+	{ "vmptrst",              &Instruction::decode_Mq,                            OP_VMPTRST, FLAG_VMX },
 };
 
 }

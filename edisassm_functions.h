@@ -22,38 +22,38 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace edisassm {
 
 template <class T>
-bool is_call(const instruction<T> &insn) {
-	return insn.type() == instruction<T>::OP_CALL;
+bool is_call(const Instruction<T> &insn) {
+	return insn.type() == Instruction<T>::OP_CALL;
 }
 
 template <class T>
-bool is_ret(const instruction<T> &insn) {
-	return insn.type() == instruction<T>::OP_RET;
+bool is_ret(const Instruction<T> &insn) {
+	return insn.type() == Instruction<T>::OP_RET;
 }
 
 template <class T>
-bool is_conditional_jump(const instruction<T> &insn) {
-	return insn.type() == instruction<T>::OP_JCC;
+bool is_conditional_jump(const Instruction<T> &insn) {
+	return insn.type() == Instruction<T>::OP_JCC;
 }
 
 template <class T>
-bool is_unconditional_jump(const instruction<T> &insn) {
-	return insn.type() == instruction<T>::OP_JMP;
+bool is_unconditional_jump(const Instruction<T> &insn) {
+	return insn.type() == Instruction<T>::OP_JMP;
 }
 
 template <class T>
-bool is_jump(const instruction<T> &insn) {
+bool is_jump(const Instruction<T> &insn) {
 	return is_unconditional_jump(insn) || is_conditional_jump(insn);
 }
 
 template <class T>
-bool is_nop(const instruction<T> &insn) {
-	return insn.type() == instruction<T>::OP_NOP;
+bool is_nop(const Instruction<T> &insn) {
+	return insn.type() == Instruction<T>::OP_NOP;
 }
 
 template <class T>
-bool is_halt(const instruction<T> &insn) {
-	return insn.type() == instruction<T>::OP_HLT;
+bool is_halt(const Instruction<T> &insn) {
+	return insn.type() == Instruction<T>::OP_HLT;
 }
 
 }

@@ -19,17 +19,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef OPERAND_20080421_TCC_
 #define OPERAND_20080421_TCC_
 
-#include "instruction.h"
+#include "Instruction.h"
 #include <cstring>
 #include <algorithm>
 
 namespace edisassm {
 
 //------------------------------------------------------------------------------
-// Name: operand
+// Name: Operand
 //------------------------------------------------------------------------------
 template <class M>
-operand<M>::operand() : owner_(0), type_(TYPE_INVALID) {
+Operand<M>::Operand() : owner_(0), type_(TYPE_INVALID) {
 	using std::memset;
 	memset(&u, 0, sizeof(U));
 }
@@ -38,7 +38,7 @@ operand<M>::operand() : owner_(0), type_(TYPE_INVALID) {
 // Name: swap
 //------------------------------------------------------------------------------
 template <class M>
-void operand<M>::swap(operand &other) {
+void Operand<M>::swap(Operand &other) {
 	using std::swap;
 
 	swap(owner_, other.owner_);
@@ -50,7 +50,7 @@ void operand<M>::swap(operand &other) {
 // Name: relative_target
 //------------------------------------------------------------------------------
 template <class M>
-typename operand<M>::address_type operand<M>::relative_target() const {
+typename Operand<M>::address_type Operand<M>::relative_target() const {
 
 	const address_type rva    = owner_->rva();
 	const unsigned int size   = owner_->size();
@@ -75,7 +75,7 @@ typename operand<M>::address_type operand<M>::relative_target() const {
 // Name: displacement
 //------------------------------------------------------------------------------
 template <class M>
-int32_t operand<M>::displacement() const {
+int32_t Operand<M>::displacement() const {
 
 	switch(u.expression.displacement_type) {
 	case DISP_U8:  return static_cast<int32_t>(u.expression.u_disp8);
@@ -93,7 +93,7 @@ int32_t operand<M>::displacement() const {
 // Name: immediate
 //------------------------------------------------------------------------------
 template <class M>
-int64_t operand<M>::immediate() const {
+int64_t Operand<M>::immediate() const {
 
 	switch(type_) {
 	case TYPE_IMMEDIATE8:  return static_cast<int64_t>(u.sbyte);
@@ -109,7 +109,7 @@ int64_t operand<M>::immediate() const {
 // Name: general_type
 //------------------------------------------------------------------------------
 template <class M>
-typename operand<M>::Type operand<M>::general_type() const {
+typename Operand<M>::Type Operand<M>::general_type() const {
 	return static_cast<Type>(static_cast<unsigned int>(type_) & TYPE_MASK);
 }
 

@@ -21,20 +21,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <string>
 
-
 namespace edisassm {
 
 template <class M>
-class instruction;
+class Instruction;
 
 template <class M>
-class operand;
+class Operand;
 
 struct lower_case   {};
 struct upper_case   {};
 struct syntax_intel {};
 struct syntax_att   {};
-
 
 struct default_formatting {
 	typedef lower_case   case_type;
@@ -43,76 +41,75 @@ struct default_formatting {
 
 //------------------------------------------------------------------------------
 // Name: to_string
-// Desc: creates a std::string which represents the given instruction
+// Desc: creates a std::string which represents the given inst
 //------------------------------------------------------------------------------
 template <class M, class F>
-std::string to_string(const instruction<M> &instruction, const F &format);
+std::string to_string(const Instruction<M> &inst, const F &format);
 
 //------------------------------------------------------------------------------
 // Name: to_string
-// Desc: creates a std::string which represents the given instruction
+// Desc: creates a std::string which represents the given inst
 //------------------------------------------------------------------------------
 template <class M>
-std::string to_string(const instruction<M> &instruction);
+std::string to_string(const Instruction<M> &inst);
 
 //------------------------------------------------------------------------------
 // Name: to_string
 // Desc: creates a std::string which represents the given operand
 //------------------------------------------------------------------------------
 template <class M, class F>
-std::string to_string(const operand<M> &operand, const F &format);
+std::string to_string(const Operand<M> &op, const F &format);
 
 //------------------------------------------------------------------------------
 // Name: to_string
 // Desc: creates a std::string which represents the given operand
 //------------------------------------------------------------------------------
 template <class M>
-std::string to_string(const operand<M> &operand);
+std::string to_string(const Operand<M> &op);
 
 //------------------------------------------------------------------------------
 // Name: to_byte_string
 // Desc: 
 //------------------------------------------------------------------------------
 template <class M>
-std::string to_byte_string(const instruction<M> &instruction, const lower_case &);
+std::string to_byte_string(const Instruction<M> &inst, const lower_case &);
 
 //------------------------------------------------------------------------------
 // Name: to_byte_string
 // Desc: 
 //------------------------------------------------------------------------------
 template <class M>
-std::string to_byte_string(const instruction<M> &instruction, const upper_case &);
+std::string to_byte_string(const Instruction<M> &inst, const upper_case &);
 
 //------------------------------------------------------------------------------
 // Name: to_byte_string
 // Desc: 
 //------------------------------------------------------------------------------
 template <class M>
-std::string to_byte_string(const instruction<M> &instruction);
+std::string to_byte_string(const Instruction<M> &inst);
 
 //------------------------------------------------------------------------------
 // Name: register_name
 // Desc: returns a string for a given register
 //------------------------------------------------------------------------------
 template <class M>
-std::string register_name(typename operand<M>::Register reg, const upper_case&);
+std::string register_name(typename Operand<M>::Register reg, const upper_case&);
 
 //------------------------------------------------------------------------------
 // Name: register_name
 // Desc: returns a string for a given register
 //------------------------------------------------------------------------------
 template <class M>
-std::string register_name(typename operand<M>::Register reg, const lower_case&);
+std::string register_name(typename Operand<M>::Register reg, const lower_case&);
 
 //------------------------------------------------------------------------------
 // Name: register_name
 // Desc: returns a string for a given register
 //------------------------------------------------------------------------------
 template <class M>
-std::string register_name(typename operand<M>::Register reg);
+std::string register_name(typename Operand<M>::Register reg);
 
 }
-
 
 #include "edisassm_string.tcc"
 #endif

@@ -16,15 +16,15 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "instruction.h"
-#include "instruction32.h"
-#include "instruction64.h"
+#include "Instruction.h"
+#include "Instruction32.h"
+#include "Instruction64.h"
 
 // explicitly instantiate these two
 // to make sure everything links ok
 namespace edisassm {
 
-template class instruction<x86>;
-template class instruction<x86_64>;
+template class Instruction<x86>;
+template class Instruction<x86_64>;
 
 }

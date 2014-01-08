@@ -16,12 +16,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "instruction.h"
+#include "Instruction.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <climits>
 #include <cstring>
+
+namespace {
 
 enum DISPLAY_FLAGS {
 	FLAG_NONE       = 0x00,
@@ -32,9 +34,9 @@ enum DISPLAY_FLAGS {
 // Name: disassemble
 //------------------------------------------------------------------------------
 template <class M, class In>
-void disassemble(In first, In last, typename edisassm::instruction<M>::address_type rva, unsigned int flags) {
+void disassemble(In first, In last, typename edisassm::Instruction<M>::address_type rva, unsigned int flags) {
 
-	typedef edisassm::instruction<M> insn_t;
+	typedef edisassm::Instruction<M> insn_t;
 	
 	while(first != last) {
 	
@@ -98,6 +100,8 @@ std::vector<uint8_t> get_input(const std::string &filename, bool hex_chars) {
 	}
 	
 	return r;
+}
+
 }
 
 //------------------------------------------------------------------------------

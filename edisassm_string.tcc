@@ -32,7 +32,7 @@ namespace edisassm {
 // Desc: returns a string for a given register
 //------------------------------------------------------------------------------
 template <class M>
-std::string register_name(typename operand<M>::Register reg, const lower_case&) {
+std::string register_name(typename Operand<M>::Register reg, const lower_case&) {
 
 	static const char *const names[] = {
 		"",
@@ -101,7 +101,7 @@ std::string register_name(typename operand<M>::Register reg, const lower_case&) 
 // Desc: returns a string for a given register
 //------------------------------------------------------------------------------
 template <class M>
-std::string register_name(typename operand<M>::Register reg, const upper_case&) {
+std::string register_name(typename Operand<M>::Register reg, const upper_case&) {
 
 	static const char *const names[] = {
 		"",
@@ -170,7 +170,7 @@ std::string register_name(typename operand<M>::Register reg, const upper_case&) 
 // Desc: returns a string for a given register
 //------------------------------------------------------------------------------
 template <class M>
-std::string register_name(typename operand<M>::Register reg) {
+std::string register_name(typename Operand<M>::Register reg) {
 	return register_name<M>(reg, lower_case());
 }
 
@@ -226,10 +226,10 @@ std::string hex_string(T value, const lower_case&) {
 // Name: format_expression
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_expression(const operand<M> &operand, const upper_case &) {
+std::string format_expression(const Operand<M> &op, const upper_case &) {
 
-	typedef edisassm::operand<M> O;
-	typedef edisassm::instruction<M> I;
+	typedef edisassm::Operand<M> O;
+	typedef edisassm::Instruction<M> I;
 
 	static const char *expression_strings[] = {
 		"",
@@ -243,9 +243,9 @@ std::string format_expression(const operand<M> &operand, const upper_case &) {
 	};
 
 	std::ostringstream ss;
-	ss << expression_strings[operand.complete_type() - O::TYPE_EXPRESSION];
+	ss << expression_strings[op.complete_type() - O::TYPE_EXPRESSION];
 
-	const uint32_t prefix = operand.owner()->prefix();
+	const uint32_t prefix = op.owner()->prefix();
 
 	if(prefix & I::PREFIX_CS)      ss << "CS:";
 	else if(prefix & I::PREFIX_SS) ss << "SS:";
@@ -259,92 +259,92 @@ std::string format_expression(const operand<M> &operand, const upper_case &) {
 	ss << '[';
 
 	// the base, if any
-	if(operand.expression().base != O::REG_NULL) {
-		ss << register_name<M>(operand.expression().base, upper_case());
+	if(op.expression().base != O::REG_NULL) {
+		ss << register_name<M>(op.expression().base, upper_case());
 		only_disp = false;
 	}
 
 	// the index, if any
-	if(operand.expression().index != O::REG_NULL) {
+	if(op.expression().index != O::REG_NULL) {
 		if(!only_disp) {
 			ss << '+';
 		}
-		ss << register_name<M>(operand.expression().index, upper_case());
+		ss << register_name<M>(op.expression().index, upper_case());
 		only_disp = false;
 
 		// the scale, if any
-		if(operand.expression().scale != 1) {
-			ss << '*' << static_cast<int>(operand.expression().scale);
+		if(op.expression().scale != 1) {
+			ss << '*' << static_cast<int>(op.expression().scale);
 		}
 	}
 
 	// the displacement, if any
-	switch(operand.expression().displacement_type) {
+	switch(op.expression().displacement_type) {
 	case O::DISP_U32:
-		if(operand.expression().u_disp32 <= std::numeric_limits<uint16_t>::max()) {
+		if(op.expression().u_disp32 <= std::numeric_limits<uint16_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
 			if(!only_disp) {
 				ss << '+';
 			}
-			ss << hex_string<M>(operand.expression().u_disp32, upper_case());
+			ss << hex_string<M>(op.expression().u_disp32, upper_case());
 			break;
 		}
 		// FALL THROUGH
 	case O::DISP_U16:
-		if(operand.expression().u_disp16 <= std::numeric_limits<uint8_t>::max()) {
+		if(op.expression().u_disp16 <= std::numeric_limits<uint8_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
 			if(!only_disp) {
 				ss << '+';
 			}
-			ss << hex_string<M>(operand.expression().u_disp16, upper_case());
+			ss << hex_string<M>(op.expression().u_disp16, upper_case());
 			break;
 		}
 		// FALL THROUGH
 	case O::DISP_U8:
-		if(operand.expression().u_disp8 != 0 || only_disp) {
+		if(op.expression().u_disp8 != 0 || only_disp) {
 			if(!only_disp) {
 				ss << '+';
 			}
-			ss << hex_string<M>(operand.expression().u_disp8, upper_case());
+			ss << hex_string<M>(op.expression().u_disp8, upper_case());
 		}
 		break;
 
 	case O::DISP_S32:
-		if(operand.expression().s_disp32 <= std::numeric_limits<int16_t>::max() && operand.expression().s_disp32 >= std::numeric_limits<int16_t>::min()) {
+		if(op.expression().s_disp32 <= std::numeric_limits<int16_t>::max() && op.expression().s_disp32 >= std::numeric_limits<int16_t>::min()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string<M>(operand.expression().s_disp32, upper_case());
+				ss << hex_string<M>(op.expression().s_disp32, upper_case());
 			} else {
 				ss << '+';
-				ss << hex_string<M>(operand.expression().s_disp32, upper_case());
+				ss << hex_string<M>(op.expression().s_disp32, upper_case());
 			}
 			break;
 		}
 		// FALL THROUGH
 	case O::DISP_S16:
-		if(operand.expression().s_disp16 <= std::numeric_limits<int8_t>::max() && operand.expression().s_disp16 >= std::numeric_limits<int8_t>::min()) {
+		if(op.expression().s_disp16 <= std::numeric_limits<int8_t>::max() && op.expression().s_disp16 >= std::numeric_limits<int8_t>::min()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string<M>(operand.expression().s_disp16, upper_case());
+				ss << hex_string<M>(op.expression().s_disp16, upper_case());
 			} else {
-				ss << std::showpos << static_cast<int32_t>(operand.expression().s_disp16);
+				ss << std::showpos << static_cast<int32_t>(op.expression().s_disp16);
 			}
 			break;
 		}
 		// FALL THROUGH
 	case O::DISP_S8:
-		if(operand.expression().s_disp8 != 0 || only_disp) {
+		if(op.expression().s_disp8 != 0 || only_disp) {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string<M>(operand.expression().s_disp8, upper_case());
+				ss << hex_string<M>(op.expression().s_disp8, upper_case());
 			} else {
-				ss << std::showpos << static_cast<int32_t>(operand.expression().s_disp8);
+				ss << std::showpos << static_cast<int32_t>(op.expression().s_disp8);
 			}
 		}
 		break;
@@ -362,10 +362,10 @@ std::string format_expression(const operand<M> &operand, const upper_case &) {
 // Name: format_expression
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_expression(const operand<M> &operand, const lower_case &) {
+std::string format_expression(const Operand<M> &op, const lower_case &) {
 
-	typedef edisassm::operand<M> O;
-	typedef edisassm::instruction<M> I;
+	typedef edisassm::Operand<M> O;
+	typedef edisassm::Instruction<M> I;
 
 	static const char *expression_strings[] = {
 		"",
@@ -379,9 +379,9 @@ std::string format_expression(const operand<M> &operand, const lower_case &) {
 	};
 
 	std::ostringstream ss;
-	ss << expression_strings[operand.complete_type() - O::TYPE_EXPRESSION];
+	ss << expression_strings[op.complete_type() - O::TYPE_EXPRESSION];
 
-	const uint32_t prefix = operand.owner()->prefix();
+	const uint32_t prefix = op.owner()->prefix();
 
 	if(prefix & I::PREFIX_CS)      ss << "cs:";
 	else if(prefix & I::PREFIX_SS) ss << "ss:";
@@ -395,92 +395,92 @@ std::string format_expression(const operand<M> &operand, const lower_case &) {
 	ss << '[';
 
 	// the base, if any
-	if(operand.expression().base != O::REG_NULL) {
-		ss << register_name<M>(operand.expression().base, lower_case());
+	if(op.expression().base != O::REG_NULL) {
+		ss << register_name<M>(op.expression().base, lower_case());
 		only_disp = false;
 	}
 
 	// the index, if any
-	if(operand.expression().index != O::REG_NULL) {
+	if(op.expression().index != O::REG_NULL) {
 		if(!only_disp) {
 			ss << '+';
 		}
-		ss << register_name<M>(operand.expression().index, lower_case());
+		ss << register_name<M>(op.expression().index, lower_case());
 		only_disp = false;
 
 		// the scale, if any
-		if(operand.expression().scale != 1) {
-			ss << '*' << static_cast<int>(operand.expression().scale);
+		if(op.expression().scale != 1) {
+			ss << '*' << static_cast<int>(op.expression().scale);
 		}
 	}
 
 	// the displacement, if any
-	switch(operand.expression().displacement_type) {
+	switch(op.expression().displacement_type) {
 	case O::DISP_U32:
-		if(operand.expression().u_disp32 <= std::numeric_limits<uint16_t>::max()) {
+		if(op.expression().u_disp32 <= std::numeric_limits<uint16_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
 			if(!only_disp) {
 				ss << '+';
 			}
-			ss << hex_string<M>(operand.expression().u_disp32, lower_case());
+			ss << hex_string<M>(op.expression().u_disp32, lower_case());
 			break;
 		}
 		// FALL THROUGH
 	case O::DISP_U16:
-		if(operand.expression().u_disp16 <= std::numeric_limits<uint8_t>::max()) {
+		if(op.expression().u_disp16 <= std::numeric_limits<uint8_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
 			if(!only_disp) {
 				ss << '+';
 			}
-			ss << hex_string<M>(operand.expression().u_disp16, lower_case());
+			ss << hex_string<M>(op.expression().u_disp16, lower_case());
 			break;
 		}
 		// FALL THROUGH
 	case O::DISP_U8:
-		if(operand.expression().u_disp8 != 0 || only_disp) {
+		if(op.expression().u_disp8 != 0 || only_disp) {
 			if(!only_disp) {
 				ss << '+';
 			}
-			ss << hex_string<M>(operand.expression().u_disp8, lower_case());
+			ss << hex_string<M>(op.expression().u_disp8, lower_case());
 		}
 		break;
 
 	case O::DISP_S32:
-		if(operand.expression().s_disp32 <= std::numeric_limits<int16_t>::max() && operand.expression().s_disp32 >= std::numeric_limits<int16_t>::min()) {
+		if(op.expression().s_disp32 <= std::numeric_limits<int16_t>::max() && op.expression().s_disp32 >= std::numeric_limits<int16_t>::min()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string<M>(operand.expression().s_disp32, lower_case());
+				ss << hex_string<M>(op.expression().s_disp32, lower_case());
 			} else {
 				ss << '+';
-				ss << hex_string<M>(operand.expression().s_disp32, lower_case());
+				ss << hex_string<M>(op.expression().s_disp32, lower_case());
 			}
 			break;
 		}
 		// FALL THROUGH
 	case O::DISP_S16:
-		if(operand.expression().s_disp16 <= std::numeric_limits<int8_t>::max() && operand.expression().s_disp16 >= std::numeric_limits<int8_t>::min()) {
+		if(op.expression().s_disp16 <= std::numeric_limits<int8_t>::max() && op.expression().s_disp16 >= std::numeric_limits<int8_t>::min()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string<M>(operand.expression().s_disp16, lower_case());
+				ss << hex_string<M>(op.expression().s_disp16, lower_case());
 			} else {
-				ss << std::showpos << static_cast<int32_t>(operand.expression().s_disp16);
+				ss << std::showpos << static_cast<int32_t>(op.expression().s_disp16);
 			}
 			break;
 		}
 		// FALL THROUGH
 	case O::DISP_S8:
-		if(operand.expression().s_disp8 != 0 || only_disp) {
+		if(op.expression().s_disp8 != 0 || only_disp) {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string<M>(operand.expression().s_disp8, lower_case());
+				ss << hex_string<M>(op.expression().s_disp8, lower_case());
 			} else {
-				ss << std::showpos << static_cast<int32_t>(operand.expression().s_disp8);
+				ss << std::showpos << static_cast<int32_t>(op.expression().s_disp8);
 			}
 		}
 		break;
@@ -497,13 +497,13 @@ std::string format_expression(const operand<M> &operand, const lower_case &) {
 // Name: format_absolute
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_absolute(const operand<M> &operand, const upper_case &) {
+std::string format_absolute(const Operand<M> &op, const upper_case &) {
 	std::ostringstream ss;
 
 	ss << "FAR "
-	   << hex_string<M>(operand.absolute().seg, upper_case())
+	   << hex_string<M>(op.absolute().seg, upper_case())
 	   << ':'
-	   << hex_string<M>(operand.absolute().offset, upper_case());
+	   << hex_string<M>(op.absolute().offset, upper_case());
 
 	return ss.str();
 }
@@ -512,13 +512,13 @@ std::string format_absolute(const operand<M> &operand, const upper_case &) {
 // Name: format_absolute
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_absolute(const operand<M> &operand, const lower_case &) {
+std::string format_absolute(const Operand<M> &op, const lower_case &) {
 	std::ostringstream ss;
 
 	ss << "far "
-	   << hex_string<M>(operand.absolute().seg, lower_case())
+	   << hex_string<M>(op.absolute().seg, lower_case())
 	   << ':'
-	   << hex_string<M>(operand.absolute().offset, lower_case());
+	   << hex_string<M>(op.absolute().offset, lower_case());
 
 	return ss.str();
 }
@@ -527,29 +527,29 @@ std::string format_absolute(const operand<M> &operand, const lower_case &) {
 // Name: format_register
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_register(const operand<M> &operand, const upper_case &) {
-	return register_name<M>(operand.reg(), upper_case());
+std::string format_register(const Operand<M> &op, const upper_case &) {
+	return register_name<M>(op.reg(), upper_case());
 }
 
 //------------------------------------------------------------------------------
 // Name: format_register
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_register(const operand<M> &operand, const lower_case &) {
-	return register_name<M>(operand.reg(), lower_case());
+std::string format_register(const Operand<M> &op, const lower_case &) {
+	return register_name<M>(op.reg(), lower_case());
 }
 
 //------------------------------------------------------------------------------
 // Name: format_prefix
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_prefix(const instruction<M> &instruction, const lower_case &) {
+std::string format_prefix(const Instruction<M> &inst, const lower_case &) {
 
-	typedef edisassm::instruction<M> I;
+	typedef edisassm::Instruction<M> I;
 
 	std::string ret;
 
-	if((instruction.prefix() & I::PREFIX_LOCK) && !(instruction.mandatory_prefix() & I::PREFIX_LOCK)) {
+	if((inst.prefix() & I::PREFIX_LOCK) && !(inst.mandatory_prefix() & I::PREFIX_LOCK)) {
 
 		// TODO: this is only legal for the memory dest versions of:
 		// ADD, ADC, AND, BTC, BTR, BTS, CMPXCHG, CMPXCH8B, (CMPXCH16B?)
@@ -557,8 +557,8 @@ std::string format_prefix(const instruction<M> &instruction, const lower_case &)
 
 		ret = "lock ";
 
-	} else if((instruction.prefix() & I::PREFIX_REP) && !(instruction.mandatory_prefix() & I::PREFIX_REP)) {
-		if(instruction.type() == I::OP_CMPS || instruction.type() == I::OP_SCAS) {
+	} else if((inst.prefix() & I::PREFIX_REP) && !(inst.mandatory_prefix() & I::PREFIX_REP)) {
+		if(inst.type() == I::OP_CMPS || inst.type() == I::OP_SCAS) {
 			ret = "repe ";
 		} else {
 
@@ -567,7 +567,7 @@ std::string format_prefix(const instruction<M> &instruction, const lower_case &)
 
 			ret = "rep ";
 		}
-	} else if((instruction.prefix() & I::PREFIX_REPNE) && !(instruction.mandatory_prefix() & I::PREFIX_REPNE)) {
+	} else if((inst.prefix() & I::PREFIX_REPNE) && !(inst.mandatory_prefix() & I::PREFIX_REPNE)) {
 		// TODO: this is only legal for:
 		// CMPS and SCAS
 		ret = "repne ";
@@ -580,13 +580,13 @@ std::string format_prefix(const instruction<M> &instruction, const lower_case &)
 // Name: format_prefix
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_prefix(const instruction<M> &instruction, const upper_case &) {
+std::string format_prefix(const Instruction<M> &inst, const upper_case &) {
 
-	typedef edisassm::instruction<M> I;
+	typedef edisassm::Instruction<M> I;
 
 	std::string ret;
 
-	if((instruction.prefix() & I::PREFIX_LOCK) && !(instruction.mandatory_prefix() & I::PREFIX_LOCK)) {
+	if((inst.prefix() & I::PREFIX_LOCK) && !(inst.mandatory_prefix() & I::PREFIX_LOCK)) {
 
 		// TODO: this is only legal for the memory dest versions of:
 		// ADD, ADC, AND, BTC, BTR, BTS, CMPXCHG, CMPXCH8B, (CMPXCH16B?)
@@ -594,8 +594,8 @@ std::string format_prefix(const instruction<M> &instruction, const upper_case &)
 
 		ret = "LOCK ";
 
-	} else if((instruction.prefix() & I::PREFIX_REP) && !(instruction.mandatory_prefix() & I::PREFIX_REP)) {
-		if(instruction.type() == I::OP_CMPS || instruction.type() == I::OP_SCAS) {
+	} else if((inst.prefix() & I::PREFIX_REP) && !(inst.mandatory_prefix() & I::PREFIX_REP)) {
+		if(inst.type() == I::OP_CMPS || inst.type() == I::OP_SCAS) {
 			ret = "REPE ";
 		} else {
 
@@ -604,7 +604,7 @@ std::string format_prefix(const instruction<M> &instruction, const upper_case &)
 
 			ret = "REP ";
 		}
-	} else if((instruction.prefix() & I::PREFIX_REPNE) && !(instruction.mandatory_prefix() & I::PREFIX_REPNE)) {
+	} else if((inst.prefix() & I::PREFIX_REPNE) && !(inst.mandatory_prefix() & I::PREFIX_REPNE)) {
 		// TODO: this is only legal for:
 		// CMPS and SCAS
 		ret = "REPNE ";
@@ -618,8 +618,8 @@ std::string format_prefix(const instruction<M> &instruction, const upper_case &)
 // Desc:
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_relative(const operand<M> &operand, const upper_case &) {
-	return hex_string<M>(static_cast<typename M::address_type>(operand.relative_target()), upper_case());
+std::string format_relative(const Operand<M> &op, const upper_case &) {
+	return hex_string<M>(static_cast<typename M::address_type>(op.relative_target()), upper_case());
 }
 
 //------------------------------------------------------------------------------
@@ -627,62 +627,62 @@ std::string format_relative(const operand<M> &operand, const upper_case &) {
 // Desc:
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_relative(const operand<M> &operand, const lower_case &) {
-	return hex_string<M>(static_cast<typename M::address_type>(operand.relative_target()), lower_case());
+std::string format_relative(const Operand<M> &op, const lower_case &) {
+	return hex_string<M>(static_cast<typename M::address_type>(op.relative_target()), lower_case());
 }
 
 //------------------------------------------------------------------------------
 // Name: format_immediate
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_immediate(const operand<M> &operand, const upper_case &) {
+std::string format_immediate(const Operand<M> &op, const upper_case &) {
 
-	typedef edisassm::operand<M> O;
+	typedef edisassm::Operand<M> O;
 
 	std::ostringstream ss;
 
-	switch(operand.complete_type()) {
+	switch(op.complete_type()) {
 	case O::TYPE_IMMEDIATE64:
-		if(operand.qword() < std::numeric_limits<uint32_t>::max()) {
+		if(op.qword() < std::numeric_limits<uint32_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
-			if(is_small_num(operand.sqword())) {
-				ss << operand.sqword();
+			if(is_small_num(op.sqword())) {
+				ss << op.sqword();
 			} else {
-				ss << hex_string<M>(operand.sqword(), upper_case());
+				ss << hex_string<M>(op.sqword(), upper_case());
 			}
 			break;
 		}
 		// FALL THROUGH
 	case O::TYPE_IMMEDIATE32:
-		if(operand.dword() < std::numeric_limits<uint16_t>::max()) {
+		if(op.dword() < std::numeric_limits<uint16_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
-			if(is_small_num(operand.sdword())) {
-				ss << operand.sdword();
+			if(is_small_num(op.sdword())) {
+				ss << op.sdword();
 			} else {
-				ss << hex_string<M>(operand.sdword(), upper_case());
+				ss << hex_string<M>(op.sdword(), upper_case());
 			}
 			break;
 		}
 		// FALL THROUGH
 	case O::TYPE_IMMEDIATE16:
-		if(operand.word() < std::numeric_limits<uint8_t>::max()) {
+		if(op.word() < std::numeric_limits<uint8_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
-			if(is_small_num(operand.sword())) {
-				ss << operand.sword();
+			if(is_small_num(op.sword())) {
+				ss << op.sword();
 			} else {
-				ss << hex_string<M>(operand.sword(), upper_case());
+				ss << hex_string<M>(op.sword(), upper_case());
 			}
 			break;
 		}
 		// FALL THROUGH
 	case O::TYPE_IMMEDIATE8:
-		if(operand.sbyte() & 0x80) {
-			ss << hex_string<M>(operand.byte(), upper_case());
+		if(op.sbyte() & 0x80) {
+			ss << hex_string<M>(op.byte(), upper_case());
 		} else {
-			ss << static_cast<int>(operand.sbyte());
+			ss << static_cast<int>(op.sbyte());
 		}
 		break;
 	default:
@@ -696,54 +696,54 @@ std::string format_immediate(const operand<M> &operand, const upper_case &) {
 // Name: format_immediate
 //------------------------------------------------------------------------------
 template <class M>
-std::string format_immediate(const operand<M> &operand, const lower_case &) {
+std::string format_immediate(const Operand<M> &op, const lower_case &) {
 
-	typedef edisassm::operand<M> O;
+	typedef edisassm::Operand<M> O;
 
 	std::ostringstream ss;
 
-	switch(operand.complete_type()) {
+	switch(op.complete_type()) {
 	case O::TYPE_IMMEDIATE64:
-		if(operand.qword() < std::numeric_limits<uint32_t>::max()) {
+		if(op.qword() < std::numeric_limits<uint32_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
-			if(is_small_num(operand.sqword())) {
-				ss << operand.sqword();
+			if(is_small_num(op.sqword())) {
+				ss << op.sqword();
 			} else {
-				ss << hex_string<M>(operand.sqword(), lower_case());
+				ss << hex_string<M>(op.sqword(), lower_case());
 			}
 			break;
 		}
 		// FALL THROUGH
 	case O::TYPE_IMMEDIATE32:
-		if(operand.dword() < std::numeric_limits<uint16_t>::max()) {
+		if(op.dword() < std::numeric_limits<uint16_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
-			if(is_small_num(operand.sdword())) {
-				ss << operand.sdword();
+			if(is_small_num(op.sdword())) {
+				ss << op.sdword();
 			} else {
-				ss << hex_string<M>(operand.sdword(), lower_case());
+				ss << hex_string<M>(op.sdword(), lower_case());
 			}
 			break;
 		}
 		// FALL THROUGH
 	case O::TYPE_IMMEDIATE16:
-		if(operand.word() < std::numeric_limits<uint8_t>::max()) {
+		if(op.word() < std::numeric_limits<uint8_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
-			if(is_small_num(operand.sword())) {
-				ss << operand.sword();
+			if(is_small_num(op.sword())) {
+				ss << op.sword();
 			} else {
-				ss << hex_string<M>(operand.sword(), lower_case());
+				ss << hex_string<M>(op.sword(), lower_case());
 			}
 			break;
 		}
 		// FALL THROUGH
 	case O::TYPE_IMMEDIATE8:
-		if(operand.sbyte() & 0x80) {
-			ss << hex_string<M>(operand.byte(), lower_case());
+		if(op.sbyte() & 0x80) {
+			ss << hex_string<M>(op.byte(), lower_case());
 		} else {
-			ss << static_cast<int>(operand.sbyte());
+			ss << static_cast<int>(op.sbyte());
 		}
 		break;
 	default:
@@ -758,16 +758,16 @@ std::string format_immediate(const operand<M> &operand, const lower_case &) {
 // Desc: creates a std::string which represents the given operand
 //------------------------------------------------------------------------------
 template <class M, class Syntax, class Case>
-std::string to_string(const operand<M> &operand, const Syntax &, const Case &) {
+std::string to_string(const Operand<M> &op, const Syntax &, const Case &) {
 
-	typedef edisassm::operand<M> O;
+	typedef edisassm::Operand<M> O;
 
-	switch(operand.general_type()) {
-	case O::TYPE_ABSOLUTE:   return format_absolute  (operand, Case());
-	case O::TYPE_EXPRESSION: return format_expression(operand, Case());
-	case O::TYPE_IMMEDIATE:  return format_immediate (operand, Case());
-	case O::TYPE_REGISTER:   return format_register  (operand, Case());
-	case O::TYPE_REL:        return format_relative  (operand, Case());
+	switch(op.general_type()) {
+	case O::TYPE_ABSOLUTE:   return format_absolute  (op, Case());
+	case O::TYPE_EXPRESSION: return format_expression(op, Case());
+	case O::TYPE_IMMEDIATE:  return format_immediate (op, Case());
+	case O::TYPE_REGISTER:   return format_register  (op, Case());
+	case O::TYPE_REL:        return format_relative  (op, Case());
 	default:
 		return register_name<M>(O::REG_INVALID, Case());
 		// is it better to throw, or return a string?
@@ -777,20 +777,20 @@ std::string to_string(const operand<M> &operand, const Syntax &, const Case &) {
 
 //------------------------------------------------------------------------------
 // Name: to_string
-// Desc: creates a std::string which represents the given instruction
+// Desc: creates a std::string which represents the given inst
 //------------------------------------------------------------------------------
 template <class M>
-std::string to_string(const instruction<M> &instruction, const syntax_intel &, const lower_case &) {
+std::string to_string(const Instruction<M> &inst, const syntax_intel &, const lower_case &) {
 	std::ostringstream ss;
 
-	ss << format_prefix(instruction, lower_case());
-	ss << instruction.mnemonic();
+	ss << format_prefix(inst, lower_case());
+	ss << inst.mnemonic();
 
-	const std::size_t count = instruction.operand_count();
+	const std::size_t count = inst.operand_count();
 	if(count != 0) {
-		ss << ' ' << to_string(instruction.operands()[0], syntax_intel(), lower_case());
+		ss << ' ' << to_string(inst.operands()[0], syntax_intel(), lower_case());
 		for(std::size_t i = 1; i < count; ++i) {
-			ss << ", " << to_string(instruction.operands()[i], syntax_intel(), lower_case());
+			ss << ", " << to_string(inst.operands()[i], syntax_intel(), lower_case());
 		}
 	}
 
@@ -799,20 +799,20 @@ std::string to_string(const instruction<M> &instruction, const syntax_intel &, c
 
 //------------------------------------------------------------------------------
 // Name: to_string
-// Desc: creates a std::string which represents the given instruction
+// Desc: creates a std::string which represents the given inst
 //------------------------------------------------------------------------------
 template <class M>
-std::string to_string(const instruction<M> &instruction, const syntax_intel &, const upper_case &) {
+std::string to_string(const Instruction<M> &inst, const syntax_intel &, const upper_case &) {
 	std::ostringstream ss;
 
-	ss << format_prefix(instruction, upper_case());
-	ss << toupper_copy(instruction.mnemonic());
+	ss << format_prefix(inst, upper_case());
+	ss << toupper_copy(inst.mnemonic());
 
-	const std::size_t count = instruction.operand_count();
+	const std::size_t count = inst.operand_count();
 	if(count != 0) {
-		ss << ' ' << to_string(instruction.operands()[0], syntax_intel(), upper_case());
+		ss << ' ' << to_string(inst.operands()[0], syntax_intel(), upper_case());
 		for(std::size_t i = 1; i < count; ++i) {
-			ss << ", " << to_string(instruction.operands()[i], syntax_intel(), upper_case());
+			ss << ", " << to_string(inst.operands()[i], syntax_intel(), upper_case());
 		}
 	}
 
@@ -823,20 +823,20 @@ std::string to_string(const instruction<M> &instruction, const syntax_intel &, c
 
 //------------------------------------------------------------------------------
 // Name: to_string
-// Desc: creates a std::string which represents the given instruction
+// Desc: creates a std::string which represents the given inst
 //------------------------------------------------------------------------------
 template <class M, class F>
-std::string to_string(const instruction<M> &instruction, const F &) {
-	return to_string(instruction, typename F::syntax_type(), typename F::case_type());
+std::string to_string(const Instruction<M> &inst, const F &) {
+	return to_string(inst, typename F::syntax_type(), typename F::case_type());
 }
 
 //------------------------------------------------------------------------------
 // Name: to_string
-// Desc: creates a std::string which represents the given instruction
+// Desc: creates a std::string which represents the given inst
 //------------------------------------------------------------------------------
 template <class M>
-std::string to_string(const instruction<M> &instruction) {
-	return to_string(instruction, default_formatting());
+std::string to_string(const Instruction<M> &inst) {
+	return to_string(inst, default_formatting());
 }
 
 //------------------------------------------------------------------------------
@@ -844,8 +844,8 @@ std::string to_string(const instruction<M> &instruction) {
 // Desc: creates a std::string which represents the given operand
 //------------------------------------------------------------------------------
 template <class M, class F>
-std::string to_string(const operand<M> &operand, const F &) {
-	return to_string(operand, typename F::syntax_type(), typename F::case_type());
+std::string to_string(const Operand<M> &op, const F &) {
+	return to_string(op, typename F::syntax_type(), typename F::case_type());
 }
 
 //------------------------------------------------------------------------------
@@ -853,8 +853,8 @@ std::string to_string(const operand<M> &operand, const F &) {
 // Desc: creates a std::string which represents the given operand
 //------------------------------------------------------------------------------
 template <class M>
-std::string to_string(const operand<M> &operand) {
-	return to_string(operand, default_formatting());
+std::string to_string(const Operand<M> &op) {
+	return to_string(op, default_formatting());
 }
 
 //------------------------------------------------------------------------------
@@ -862,13 +862,13 @@ std::string to_string(const operand<M> &operand) {
 // Desc:
 //------------------------------------------------------------------------------
 template <class M>
-std::string to_byte_string(const instruction<M> &instruction, const lower_case &) {
+std::string to_byte_string(const Instruction<M> &inst, const lower_case &) {
 	std::ostringstream ss;
 
-	const uint8_t *const ptr = instruction.bytes();
+	const uint8_t *const ptr = inst.bytes();
 
 	ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(ptr[0]);
-	for(unsigned int i = 1; i < instruction.size(); ++i) {
+	for(unsigned int i = 1; i < inst.size(); ++i) {
 		ss << ' ' << std::hex << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(ptr[i]);
 	}
 	return ss.str();
@@ -879,11 +879,11 @@ std::string to_byte_string(const instruction<M> &instruction, const lower_case &
 // Desc:
 //------------------------------------------------------------------------------
 template <class M>
-std::string to_byte_string(const instruction<M> &instruction, const upper_case &) {
+std::string to_byte_string(const Instruction<M> &inst, const upper_case &) {
 	std::ostringstream ss;
 
-	const uint8_t *const ptr = instruction.bytes();
-	const unsigned int size = instruction.size();
+	const uint8_t *const ptr = inst.bytes();
+	const unsigned int size = inst.size();
 	if(size != 0) {
 		ss << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(ptr[0]);
 		for(unsigned int i = 1; i < size; ++i) {
@@ -898,8 +898,8 @@ std::string to_byte_string(const instruction<M> &instruction, const upper_case &
 // Desc:
 //------------------------------------------------------------------------------
 template <class M>
-std::string to_byte_string(const instruction<M> &instruction) {
-	return to_byte_string(instruction, lower_case());
+std::string to_byte_string(const Instruction<M> &inst) {
+	return to_byte_string(inst, lower_case());
 }
 
 }
