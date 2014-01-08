@@ -22,27 +22,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace edisassm {
 
 template <class M>
-const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group14[8] = {
-	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "psrld",   &instruction::decode_Nq_Ib,   OP_PSRLD,   FLAG_NONE },
-	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "psrad",   &instruction::decode_Nq_Ib,   OP_PSRAD,   FLAG_NONE },
-	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "pslld",   &instruction::decode_Nq_Ib,   OP_PSLLD,   FLAG_NONE },
-	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group14[8] = {
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psrld",   &Instruction::decode_Nq_Ib,   OP_PSRLD,   FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psrad",   &Instruction::decode_Nq_Ib,   OP_PSRAD,   FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "pslld",   &Instruction::decode_Nq_Ib,   OP_PSLLD,   FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
 
 template <class M>
-const typename instruction<M>::opcode_entry instruction<M>::Opcodes_Group14_66[8] = {
-	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "psrld",   &instruction::decode_Uo_Ib,   OP_PSRLD,   FLAG_NONE },
-	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "psrad",   &instruction::decode_Uo_Ib,   OP_PSRAD,   FLAG_NONE },
-	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "pslld",   &instruction::decode_Uo_Ib,   OP_PSLLD,   FLAG_NONE },
-	{ "invalid", &instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group14_66[8] = {
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psrld",   &Instruction::decode_Uo_Ib,   OP_PSRLD,   FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "psrad",   &Instruction::decode_Uo_Ib,   OP_PSRAD,   FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "pslld",   &Instruction::decode_Uo_Ib,   OP_PSLLD,   FLAG_NONE },
+	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 };
 
 }

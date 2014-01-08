@@ -25,21 +25,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace edisassm {
 
 template <class M>
-class instruction;
+class Instruction;
 
 template <class M>
-class operand {
+class Operand {
 private:
-	friend class instruction<M>;
+	friend class Instruction<M>;
 
 public:
-	operand();
-	~operand() {}
+	Operand();
+	~Operand() {}
 
 private:
-	typedef operand<M>               operand_type;
+	typedef Operand<M>               operand_type;
 	typedef typename M::address_type address_type;
-	typedef instruction<M>           instruction_type;
+	typedef Instruction<M>           instruction_type;
 
 public:
 	enum Register {
@@ -179,7 +179,7 @@ public:
 	Type general_type() const;
 	instruction_type *owner() const      { return owner_; }
 	bool valid() const                   { return type_ != TYPE_INVALID; }
-	void swap(operand &other);
+	void swap(Operand &other);
 	
 public:
 	address_type relative_target() const;
@@ -211,7 +211,7 @@ private:
 
 }
 
-#include "operand.tcc"
+#include "Operand.tcc"
 
 #endif
 
