@@ -30,6 +30,31 @@ enum DISPLAY_FLAGS {
 	FLAG_SHOW_BYTES = 0x01
 };
 
+template <class M>
+std::string format_invalid_instruction(const edisassm::Instruction<M> &inst) {
+	char byte_buffer[32];
+	const uint8_t *const buf = inst.bytes();
+
+	switch(inst.size()) {
+	case 1:
+		snprintf(byte_buffer, sizeof(byte_buffer), "db 0x%02x", buf[0] & 0xff);
+		break;
+	case 2:
+		snprintf(byte_buffer, sizeof(byte_buffer), "dw 0x%02x%02x", buf[1] & 0xff, buf[0] & 0xff);
+		break;
+	case 4:
+		snprintf(byte_buffer, sizeof(byte_buffer), "dd 0x%02x%02x%02x%02x", buf[3] & 0xff, buf[2] & 0xff, buf[1] & 0xff, buf[0] & 0xff);
+		break;
+	case 8:
+		snprintf(byte_buffer, sizeof(byte_buffer), "dq 0x%02x%02x%02x%02x%02x%02x%02x%02x", buf[7] & 0xff, buf[6] & 0xff, buf[5] & 0xff, buf[4] & 0xff, buf[3] & 0xff, buf[2] & 0xff, buf[1] & 0xff, buf[0] & 0xff);
+		break;
+	default:
+		// we tried...didn't we?
+		return "invalid";
+	}
+	return byte_buffer;
+}
+
 //------------------------------------------------------------------------------
 // Name: disassemble
 //------------------------------------------------------------------------------
@@ -50,9 +75,13 @@ void disassemble(In first, In last, typename edisassm::Instruction<M>::address_t
 			first += instruction.size();
 			rva   += instruction.size();
 		} else {
-			std::cout << "(bad)\n";
-			first += 1;
-			rva   += 1;
+			std::cout << std::hex << rva << ": ";
+			if(flags & FLAG_SHOW_BYTES) {
+				std::cout << to_byte_string(instruction) << " ";
+			}
+			std::cout << format_invalid_instruction(instruction) << " (bad)\n";
+			first += instruction.size();
+			rva   += instruction.size();
 		}
 	}
 }
