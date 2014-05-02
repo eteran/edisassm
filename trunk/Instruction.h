@@ -762,6 +762,7 @@ public:
 		OP_FSTCW,
 		OP_FSTENV,
 		OP_FSTP,
+		OP_FSTPNCE,
 		OP_FSTSW,
 		OP_FSUB,
 		OP_FSUBP,

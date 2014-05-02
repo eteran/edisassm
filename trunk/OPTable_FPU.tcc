@@ -201,14 +201,14 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Hi[0x200
 	{ "invalid", &Instruction::decode_invalid,         OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid,         OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid,         OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid,         OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid,         OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid,         OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid,         OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid,         OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid,         OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid,         OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid,         OP_INVALID, FLAG_NONE },
+	{ "fstpnce", &Instruction::template decode_STi_ST<0>, OP_FSTPNCE,    FLAG_FPU }, // TODO: is param order correct?
+	{ "fstpnce", &Instruction::template decode_STi_ST<1>, OP_FSTPNCE,    FLAG_FPU }, // TODO: is param order correct?
+	{ "fstpnce", &Instruction::template decode_STi_ST<2>, OP_FSTPNCE,    FLAG_FPU }, // TODO: is param order correct?
+	{ "fstpnce", &Instruction::template decode_STi_ST<3>, OP_FSTPNCE,    FLAG_FPU }, // TODO: is param order correct?
+	{ "fstpnce", &Instruction::template decode_STi_ST<4>, OP_FSTPNCE,    FLAG_FPU }, // TODO: is param order correct?
+	{ "fstpnce", &Instruction::template decode_STi_ST<5>, OP_FSTPNCE,    FLAG_FPU }, // TODO: is param order correct?
+	{ "fstpnce", &Instruction::template decode_STi_ST<6>, OP_FSTPNCE,    FLAG_FPU }, // TODO: is param order correct?
+	{ "fstpnce", &Instruction::template decode_STi_ST<7>, OP_FSTPNCE,    FLAG_FPU }, // TODO: is param order correct?
 	{ "fchs",    &Instruction::decode0,                OP_FCHS,    FLAG_FPU },
 	{ "fabs",    &Instruction::decode0,                OP_FABS,    FLAG_FPU },
 	{ "invalid", &Instruction::decode_invalid,         OP_INVALID, FLAG_NONE },
@@ -598,14 +598,14 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_x87_Hi[0x200
 	{ "invalid", &Instruction::decode_invalid,            OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid,            OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid,            OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid,            OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid,            OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid,            OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid,            OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid,            OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid,            OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid,            OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid,            OP_INVALID, FLAG_NONE },
+	{ "fstp",    &Instruction::template decode_STi_ST<0>,  OP_FSTP,    FLAG_FPU },
+	{ "fstp",    &Instruction::template decode_STi_ST<1>,  OP_FSTP,    FLAG_FPU },
+	{ "fstp",    &Instruction::template decode_STi_ST<2>,  OP_FSTP,    FLAG_FPU },
+	{ "fstp",    &Instruction::template decode_STi_ST<3>,  OP_FSTP,    FLAG_FPU },
+	{ "fstp",    &Instruction::template decode_STi_ST<4>,  OP_FSTP,    FLAG_FPU },
+	{ "fstp",    &Instruction::template decode_STi_ST<5>,  OP_FSTP,    FLAG_FPU },
+	{ "fstp",    &Instruction::template decode_STi_ST<6>,  OP_FSTP,    FLAG_FPU },
+	{ "fstp",    &Instruction::template decode_STi_ST<7>,  OP_FSTP,    FLAG_FPU },
 	{ "fnstsw",  &Instruction::decode_AX,                 OP_FNSTSW,  FLAG_FPU },
 	{ "invalid", &Instruction::decode_invalid,            OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid,            OP_INVALID, FLAG_NONE },
