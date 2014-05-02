@@ -801,7 +801,14 @@ template <class M>
 template <typename Operand<M>::Type TYPE, typename Operand<M>::Register (*REG_DECODE)(uint8_t)>
 void Instruction<M>::decode_Ex() {
 
-	const uint8_t modrm_byte = get_modrm();
+	uint8_t modrm_byte = get_modrm();
+	
+	// it seems that for these cases, the processor just *ignores* the
+	// memory selection part of the ModRM. So to simulate this, we just 
+	// force that part to have a value indicating a register
+	if(TYPE == operand_type::TYPE_INVALID) {
+		modrm_byte |= 0xc0;
+	}
 
 	operand_type &operand = next_operand();
 

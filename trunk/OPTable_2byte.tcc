@@ -53,7 +53,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "movhps",   &Instruction::decode_Mq_Vq,   OP_MOVHPS,   FLAG_SSE },
 	{ "group17",  &Instruction::decode_group17, OP_GROUP,    FLAG_NONE },
 	{ "invalid",  &Instruction::decode_invalid, OP_INVALID,  FLAG_NONE },
-	{ "invalid",  &Instruction::decode_invalid, OP_INVALID,  FLAG_NONE },
+	{ "nop",      &Instruction::decode_Ev,      OP_NOP,      FLAG_NONE }, // undocumented
 	{ "invalid",  &Instruction::decode_invalid, OP_INVALID,  FLAG_NONE },
 	{ "invalid",  &Instruction::decode_invalid, OP_INVALID,  FLAG_NONE },
 	{ "invalid",  &Instruction::decode_invalid, OP_INVALID,  FLAG_NONE },
@@ -347,7 +347,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "movhpd",   &Instruction::decode_Mq_Vq,   OP_MOVHPD,   FLAG_SSE2 },
 	{ "group17",  &Instruction::decode_group17, OP_GROUP,    FLAG_NONE },
 	{ "invalid",  &Instruction::decode_invalid, OP_INVALID,  FLAG_NONE },
-	{ "invalid",  &Instruction::decode_invalid, OP_INVALID,  FLAG_NONE },
+	{ "nop",      &Instruction::decode_Ev,      OP_NOP,      FLAG_NONE }, // undocumented
 	{ "invalid",  &Instruction::decode_invalid, OP_INVALID,  FLAG_NONE },
 	{ "invalid",  &Instruction::decode_invalid, OP_INVALID,  FLAG_NONE },
 	{ "invalid",  &Instruction::decode_invalid, OP_INVALID,  FLAG_NONE },
@@ -640,7 +640,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "movhps",   &Instruction::decode_Mq_Vq,   OP_MOVHPS,   FLAG_SSE },
 	{ "group17",  &Instruction::decode_group17, OP_GROUP,    FLAG_NONE },
 	{ "invalid",  &Instruction::decode_invalid, OP_INVALID,  FLAG_NONE },
-	{ "invalid",  &Instruction::decode_invalid, OP_INVALID,  FLAG_NONE },
+	{ "nop",      &Instruction::decode_Ev,      OP_NOP,      FLAG_NONE }, // undocumented
 	{ "invalid",  &Instruction::decode_invalid, OP_INVALID,  FLAG_NONE },
 	{ "invalid",  &Instruction::decode_invalid, OP_INVALID,  FLAG_NONE },
 	{ "invalid",  &Instruction::decode_invalid, OP_INVALID,  FLAG_NONE },
@@ -933,7 +933,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F3[0x1
 	{ "movhps", &Instruction::decode_Mq_Vq, OP_MOVHPS, FLAG_SSE },
 	{ "group17", &Instruction::decode_group17, OP_GROUP, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "nop",      &Instruction::decode_Ev,      OP_NOP,      FLAG_NONE }, // undocumented
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
