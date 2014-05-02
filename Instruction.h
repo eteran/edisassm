@@ -1157,7 +1157,7 @@ private:
 	DECODE2(Ev, Gv)
 	DECODE2(Eb, Gb)
 	DECODE2(Eb, Ib)
-	DECODE2(Cd, Rd)
+	DECODE2(Cd, Rd) // FIX
 	DECODE2(Ed, Gd)
 	DECODE2(Ed, Pd)
 	DECODE2(Ed, Vo)
@@ -1214,7 +1214,7 @@ private:
 	DECODE2(Pq, Wo)
 	DECODE2(Pq, Wq)
 	DECODE2(Qq, Pq)
-	DECODE2(Rd, Cd)
+	DECODE2(Rd, Cd) // FIX
 	DECODE2(Rd, Dd)
 	DECODE2(Sw, Ew)
 	DECODE2(Uo, Ib)

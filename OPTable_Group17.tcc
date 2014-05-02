@@ -30,7 +30,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group17[64] 
 	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
 	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
 	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
-	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
+	{ "nop",         &Instruction::decode_Ev,      OP_NOP,       FLAG_NONE }, // undocumented
 
 	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
 	{ "invalid",     &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
