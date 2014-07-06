@@ -814,18 +814,19 @@ void Instruction<M>::decode_Ex() {
 
 	if(prefix_ & PREFIX_ADDRESS) {
 		if(BITS == 64) {
+			// TODO: should this be forced to 
 			switch(modrm::mod(modrm_byte)) {
 			case 0x00:
-				decode_ModRM_0_32<operand_type::TYPE_EXPRESSION32, REG_DECODE, modrm_32>(modrm_byte, operand);
+				decode_ModRM_0_32<TYPE, REG_DECODE, modrm_32>(modrm_byte, operand);
 				break;
 			case 0x01:
-				decode_ModRM_1_32<operand_type::TYPE_EXPRESSION32, REG_DECODE, modrm_32>(modrm_byte, operand);
+				decode_ModRM_1_32<TYPE, REG_DECODE, modrm_32>(modrm_byte, operand);
 				break;
 			case 0x02:
-				decode_ModRM_2_32<operand_type::TYPE_EXPRESSION32, REG_DECODE, modrm_32>(modrm_byte, operand);
+				decode_ModRM_2_32<TYPE, REG_DECODE, modrm_32>(modrm_byte, operand);
 				break;
 			case 0x03:
-				decode_ModRM_3_32<operand_type::TYPE_EXPRESSION32, REG_DECODE, modrm_32>(modrm_byte, operand);
+				decode_ModRM_3_32<TYPE, REG_DECODE, modrm_32>(modrm_byte, operand);
 				break;
 			}
 		} else {
