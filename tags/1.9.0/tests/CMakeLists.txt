@@ -1,0 +1,7 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
+INCLUDE_DIRECTORIES(..)
+SET(edisassmtest_SOURCES edisassmtest.cpp ../Instruction.cpp)
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wmissing-field-initializers -Wno-long-long -ansi -pedantic -W -Wall")
+ADD_EXECUTABLE(edisassmtest ${edisassmtest_SOURCES})
+SET(CMAKE_BUILD_TYPE Debug)
