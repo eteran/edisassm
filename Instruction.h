@@ -1455,6 +1455,11 @@ private:
 	uint8_t             rex_size_;
 };
 
+#if __cplusplus >= 201103L
+extern template class Instruction<x86>;
+extern template class Instruction<x86_64>;
+#endif
+
 }
 
 #include "edisassm_string.h"
