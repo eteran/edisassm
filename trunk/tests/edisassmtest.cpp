@@ -4237,6 +4237,44 @@ struct test_data_t {
 };
 
 int main() {
+
+	printf("[\n");
+	for(size_t i = 0; i < sizeof(test32_data) / sizeof(test32_data[0]); ++i) {
+	
+		test_data_t *p = &test32_data[i];
+		
+		printf("{\n");
+		printf("\t\"mnemonic\":\"%s\",\n", p->result);
+		printf("\t\"bytes\":[");
+		for(unsigned z = 0; z < p->size; ++z) {
+			if(z != p->size - 1) {
+				printf("\"%02x\",", p->bytes[z] & 0xff);
+			} else {
+				printf("\"%02x\"", p->bytes[z] & 0xff);
+			}
+		}
+		printf("]\n");
+		printf("}");
+		
+		if(i != (sizeof(test32_data) / sizeof(test32_data[0])) - 1) {
+			printf(",");
+		}
+		
+		printf("\n");
+	
+		/*
+			unsigned size;
+			const char *bytes;
+			const char *result;
+			unsigned int flags;
+		*/
+	
+	}
+	printf("]\n");
+	
+	return 0;
+
+
 	for(size_t i = 0; i < sizeof(test32_data) / sizeof(test32_data[0]); ++i) {
 		test_data_t *p = &test32_data[i];
 
