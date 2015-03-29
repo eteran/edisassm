@@ -29,14 +29,17 @@ class Instruction;
 template <class M>
 class Operand;
 
-struct lower_case   {};
-struct upper_case   {};
-struct syntax_intel {};
-struct syntax_att   {};
+struct lower_case    {};
+struct upper_case    {};
+struct syntax_intel  {};
+struct syntax_att    {};
+struct small_int_dec {};
+struct small_int_hex {};
 
 struct default_formatting {
-	typedef lower_case   case_type;
-	typedef syntax_intel syntax_type;
+	typedef lower_case    case_type;
+	typedef syntax_intel  syntax_type;
+	typedef small_int_hex small_int_type;
 };
 
 //------------------------------------------------------------------------------

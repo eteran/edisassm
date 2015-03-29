@@ -177,19 +177,38 @@ std::string register_name(typename Operand<M>::Register reg) {
 namespace {
 
 //------------------------------------------------------------------------------
-// Name: toupper_copy
+// Name: mnemonic_to_string
 //------------------------------------------------------------------------------
-inline std::string toupper_copy(std::string s) {
+template <class M>
+std::string mnemonic_to_string(const Instruction<M> &inst, const upper_case &) {
+	std::string s = inst.mnemonic();
 	std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper));
 	return s;
+}
+
+//------------------------------------------------------------------------------
+// Name: mnemonic_to_string
+//------------------------------------------------------------------------------
+template <class M>
+std::string mnemonic_to_string(const Instruction<M> &inst, const lower_case &) {
+	return inst.mnemonic();
 }
 
 //------------------------------------------------------------------------------
 // Name: is_small_num
 //------------------------------------------------------------------------------
 template <class T>
-bool is_small_num(T value) {
+bool is_small_num(T value, const small_int_dec &) {
 	return (value > -127 && value < 128);
+}
+
+//------------------------------------------------------------------------------
+// Name: is_small_num
+//------------------------------------------------------------------------------
+template <class T>
+bool is_small_num(T value, const small_int_hex &) {
+	(void)value;
+	return false;
 }
 
 //------------------------------------------------------------------------------
@@ -526,17 +545,9 @@ std::string format_absolute(const Operand<M> &op, const lower_case &) {
 //------------------------------------------------------------------------------
 // Name: format_register
 //------------------------------------------------------------------------------
-template <class M>
-std::string format_register(const Operand<M> &op, const upper_case &) {
-	return register_name<M>(op.reg(), upper_case());
-}
-
-//------------------------------------------------------------------------------
-// Name: format_register
-//------------------------------------------------------------------------------
-template <class M>
-std::string format_register(const Operand<M> &op, const lower_case &) {
-	return register_name<M>(op.reg(), lower_case());
+template <class M, class F>
+std::string format_register(const Operand<M> &op, const F &) {
+	return register_name<M>(op.reg(), typename F::case_type());
 }
 
 //------------------------------------------------------------------------------
@@ -617,25 +628,16 @@ std::string format_prefix(const Instruction<M> &inst, const upper_case &) {
 // Name: format_relative
 // Desc:
 //------------------------------------------------------------------------------
-template <class M>
-std::string format_relative(const Operand<M> &op, const upper_case &) {
-	return hex_string<M>(static_cast<typename M::address_type>(op.relative_target()), upper_case());
-}
-
-//------------------------------------------------------------------------------
-// Name: format_relative
-// Desc:
-//------------------------------------------------------------------------------
-template <class M>
-std::string format_relative(const Operand<M> &op, const lower_case &) {
-	return hex_string<M>(static_cast<typename M::address_type>(op.relative_target()), lower_case());
+template <class M, class F>
+std::string format_relative(const Operand<M> &op, const F &) {
+	return hex_string<M>(static_cast<typename M::address_type>(op.relative_target()), typename F::case_type());
 }
 
 //------------------------------------------------------------------------------
 // Name: format_immediate
 //------------------------------------------------------------------------------
-template <class M>
-std::string format_immediate(const Operand<M> &op, const upper_case &) {
+template <class M, class F>
+std::string format_immediate(const Operand<M> &op, const F &) {
 
 	typedef edisassm::Operand<M> O;
 
@@ -646,10 +648,10 @@ std::string format_immediate(const Operand<M> &op, const upper_case &) {
 		if(op.qword() < std::numeric_limits<uint32_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
-			if(is_small_num(op.sqword())) {
+			if(is_small_num(op.sqword(), typename F::small_int_type())) {
 				ss << op.sqword();
 			} else {
-				ss << hex_string<M>(op.sqword(), upper_case());
+				ss << hex_string<M>(op.sqword(), typename F::case_type());
 			}
 			break;
 		}
@@ -658,10 +660,10 @@ std::string format_immediate(const Operand<M> &op, const upper_case &) {
 		if(op.dword() < std::numeric_limits<uint16_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
-			if(is_small_num(op.sdword())) {
+			if(is_small_num(op.sdword(), typename F::small_int_type())) {
 				ss << op.sdword();
 			} else {
-				ss << hex_string<M>(op.sdword(), upper_case());
+				ss << hex_string<M>(op.sdword(), typename F::case_type());
 			}
 			break;
 		}
@@ -670,150 +672,23 @@ std::string format_immediate(const Operand<M> &op, const upper_case &) {
 		if(op.word() < std::numeric_limits<uint8_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
-			if(is_small_num(op.sword())) {
+			if(is_small_num(op.sword(), typename F::small_int_type())) {
 				ss << op.sword();
 			} else {
-				ss << hex_string<M>(op.sword(), upper_case());
+				ss << hex_string<M>(op.sword(), typename F::case_type());
 			}
 			break;
 		}
 		// FALL THROUGH
 	case O::TYPE_IMMEDIATE8:
-		if(op.sbyte() & 0x80) {
-			ss << hex_string<M>(op.byte(), upper_case());
-		} else {
+		if(is_small_num(op.byte(), typename F::small_int_type())) {		
 			ss << static_cast<int>(op.sbyte());
+		} else {
+			ss << hex_string<M>(op.byte(), typename F::case_type());
 		}
 		break;
 	default:
 		break;
-	}
-
-	return ss.str();
-}
-
-//------------------------------------------------------------------------------
-// Name: format_immediate
-//------------------------------------------------------------------------------
-template <class M>
-std::string format_immediate(const Operand<M> &op, const lower_case &) {
-
-	typedef edisassm::Operand<M> O;
-
-	std::ostringstream ss;
-
-	switch(op.complete_type()) {
-	case O::TYPE_IMMEDIATE64:
-		if(op.qword() < std::numeric_limits<uint32_t>::max()) {
-			// this will lead to a fall through, we can print smaller
-		} else {
-			if(is_small_num(op.sqword())) {
-				ss << op.sqword();
-			} else {
-				ss << hex_string<M>(op.sqword(), lower_case());
-			}
-			break;
-		}
-		// FALL THROUGH
-	case O::TYPE_IMMEDIATE32:
-		if(op.dword() < std::numeric_limits<uint16_t>::max()) {
-			// this will lead to a fall through, we can print smaller
-		} else {
-			if(is_small_num(op.sdword())) {
-				ss << op.sdword();
-			} else {
-				ss << hex_string<M>(op.sdword(), lower_case());
-			}
-			break;
-		}
-		// FALL THROUGH
-	case O::TYPE_IMMEDIATE16:
-		if(op.word() < std::numeric_limits<uint8_t>::max()) {
-			// this will lead to a fall through, we can print smaller
-		} else {
-			if(is_small_num(op.sword())) {
-				ss << op.sword();
-			} else {
-				ss << hex_string<M>(op.sword(), lower_case());
-			}
-			break;
-		}
-		// FALL THROUGH
-	case O::TYPE_IMMEDIATE8:
-		if(op.sbyte() & 0x80) {
-			ss << hex_string<M>(op.byte(), lower_case());
-		} else {
-			ss << static_cast<int>(op.sbyte());
-		}
-		break;
-	default:
-		break;
-	}
-
-	return ss.str();
-}
-
-//------------------------------------------------------------------------------
-// Name: to_string
-// Desc: creates a std::string which represents the given operand
-//------------------------------------------------------------------------------
-template <class M, class Syntax, class Case>
-std::string to_string(const Operand<M> &op, const Syntax &, const Case &) {
-
-	typedef edisassm::Operand<M> O;
-
-	switch(op.general_type()) {
-	case O::TYPE_ABSOLUTE:   return format_absolute  (op, Case());
-	case O::TYPE_EXPRESSION: return format_expression(op, Case());
-	case O::TYPE_IMMEDIATE:  return format_immediate (op, Case());
-	case O::TYPE_REGISTER:   return format_register  (op, Case());
-	case O::TYPE_REL:        return format_relative  (op, Case());
-	default:
-		return register_name<M>(O::REG_INVALID, Case());
-		// is it better to throw, or return a string?
-		//throw invalid_operand(owner_->size());
-	}
-}
-
-//------------------------------------------------------------------------------
-// Name: to_string
-// Desc: creates a std::string which represents the given inst
-//------------------------------------------------------------------------------
-template <class M>
-std::string to_string(const Instruction<M> &inst, const syntax_intel &, const lower_case &) {
-	std::ostringstream ss;
-
-	ss << format_prefix(inst, lower_case());
-	ss << inst.mnemonic();
-
-	const std::size_t count = inst.operand_count();
-	if(count != 0) {
-		ss << ' ' << to_string(inst.operands()[0], syntax_intel(), lower_case());
-		for(std::size_t i = 1; i < count; ++i) {
-			ss << ", " << to_string(inst.operands()[i], syntax_intel(), lower_case());
-		}
-	}
-
-	return ss.str();
-}
-
-//------------------------------------------------------------------------------
-// Name: to_string
-// Desc: creates a std::string which represents the given inst
-//------------------------------------------------------------------------------
-template <class M>
-std::string to_string(const Instruction<M> &inst, const syntax_intel &, const upper_case &) {
-	std::ostringstream ss;
-
-	ss << format_prefix(inst, upper_case());
-	ss << toupper_copy(inst.mnemonic());
-
-	const std::size_t count = inst.operand_count();
-	if(count != 0) {
-		ss << ' ' << to_string(inst.operands()[0], syntax_intel(), upper_case());
-		for(std::size_t i = 1; i < count; ++i) {
-			ss << ", " << to_string(inst.operands()[i], syntax_intel(), upper_case());
-		}
 	}
 
 	return ss.str();
@@ -826,8 +701,23 @@ std::string to_string(const Instruction<M> &inst, const syntax_intel &, const up
 // Desc: creates a std::string which represents the given inst
 //------------------------------------------------------------------------------
 template <class M, class F>
-std::string to_string(const Instruction<M> &inst, const F &) {
-	return to_string(inst, typename F::syntax_type(), typename F::case_type());
+std::string to_string(const Instruction<M> &inst, const F &format) {
+
+	std::ostringstream ss;
+
+	ss << format_prefix(inst, typename F::case_type());
+	ss << mnemonic_to_string(inst, typename F::case_type());
+
+	const std::size_t count = inst.operand_count();
+	if(count != 0) {
+		ss << ' ' << to_string(inst.operands()[0], format);
+		for(std::size_t i = 1; i < count; ++i) {
+			ss << ", " << to_string(inst.operands()[i], format);
+		}
+	}
+
+	return ss.str();
+
 }
 
 //------------------------------------------------------------------------------
@@ -844,8 +734,21 @@ std::string to_string(const Instruction<M> &inst) {
 // Desc: creates a std::string which represents the given operand
 //------------------------------------------------------------------------------
 template <class M, class F>
-std::string to_string(const Operand<M> &op, const F &) {
-	return to_string(op, typename F::syntax_type(), typename F::case_type());
+std::string to_string(const Operand<M> &op, const F &format) {
+	
+	typedef edisassm::Operand<M> O;
+
+	switch(op.general_type()) {
+	case O::TYPE_ABSOLUTE:   return format_absolute  (op, typename F::case_type());
+	case O::TYPE_EXPRESSION: return format_expression(op, typename F::case_type());
+	case O::TYPE_IMMEDIATE:  return format_immediate (op, format);
+	case O::TYPE_REGISTER:   return format_register  (op, format);
+	case O::TYPE_REL:        return format_relative  (op, format);
+	default:
+		return register_name<M>(O::REG_INVALID, typename F::case_type());
+		// is it better to throw, or return a string?
+		//throw invalid_operand(owner_->size());
+	}
 }
 
 //------------------------------------------------------------------------------
