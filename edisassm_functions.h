@@ -56,6 +56,11 @@ bool is_halt(const Instruction<T> &insn) {
 	return insn.type() == Instruction<T>::OP_HLT;
 }
 
+template <class T>
+bool is_terminator(const Instruction<T> &insn) {
+	return is_halt(insn) || is_jump(insn) || is_ret(insn);
+}
+
 }
 
 #endif
