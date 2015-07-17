@@ -38,10 +38,6 @@ std::string format_invalid_instruction(const Instruction<M> &inst) {
 	char byte_buffer[32];
 	const uint8_t *const buf = inst.bytes();
 	
-	if(inst == inst) {
-	
-	}
-
 	switch(inst.size()) {
 	case 1:
 		snprintf(byte_buffer, sizeof(byte_buffer), "db 0x%02x", buf[0] & 0xff);
@@ -69,8 +65,6 @@ template <class M, class In>
 void disassemble(In first, In last, uint64_t rva, unsigned int flags) {
 
 	typedef Instruction<M> insn_t;
-	
-	std::cout << "SIZE: " << sizeof(insn_t) << std::endl;
 	
 	Formatter formatter;
 	
