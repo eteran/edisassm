@@ -53,7 +53,7 @@ bool is_small_num(T value, const FormatOptions &options) {
 	if(options.smallNumFormat == SmallNumAsDec) {
 		return (value > -127 && value < 128);
 	} else {
-		return false;
+		return (value > -9 && value < 9);
 	}
 }
 
