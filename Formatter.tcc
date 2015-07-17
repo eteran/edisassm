@@ -1,3 +1,20 @@
+/*
+Copyright (C) 2006 - 2015 Evan Teran
+                          evan.teran@gmail.com
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #ifndef FORMATTER_TCC_
 #define FORMATTER_TCC_
@@ -21,13 +38,11 @@ size_t array_count(T (&)[N]) {
 //------------------------------------------------------------------------------
 template <class M>
 std::string mnemonic_to_string(const Instruction<M> &inst, const FormatOptions &options) {
+	std::string s = inst.mnemonic();
 	if(options.capitalization == UpperCase) {
-		std::string s = inst.mnemonic();
 		std::transform(s.begin(), s.end(), s.begin(), std::ptr_fun<int, int>(std::toupper));
-		return s;
-	} else {
-		return inst.mnemonic();
 	}
+	return s;
 }
 
 //------------------------------------------------------------------------------
@@ -47,25 +62,20 @@ bool is_small_num(T value, const FormatOptions &options) {
 //------------------------------------------------------------------------------
 template <class M, class T>
 std::string hex_string(T value, const FormatOptions &options) {
-	if(options.capitalization == UpperCase) {
-		if(value == 0) {
-			return "0";
-		}
-	
-		std::ostringstream ss;
-		ss << "0x";
-		ss << std::uppercase << std::hex << std::setw(sizeof(T) * 2) << std::setfill('0') << static_cast<uint64_t>(value);
-		return ss.str();
-	} else {
-		if(value == 0) {
-			return "0";
-		}
 
-		std::ostringstream ss;
-		ss << "0x";
-		ss << std::hex << std::setw(sizeof(T) * 2) << std::setfill('0') << static_cast<uint64_t>(value);
-		return ss.str();	
+	if(value == 0) {
+		return "0";
 	}
+	
+	std::ostringstream ss;
+	ss << "0x";
+
+	if(options.capitalization == UpperCase) {		
+		ss << std::uppercase;
+	}
+	
+	ss << std::hex << std::setw(sizeof(T) * 2) << std::setfill('0') << static_cast<uint64_t>(value);
+	return ss.str();
 }
 
 //------------------------------------------------------------------------------
@@ -76,16 +86,14 @@ std::string format_absolute(const Operand<M> &op, const FormatOptions &options) 
 	std::ostringstream ss;
 
 	if(options.capitalization == UpperCase) {
-		ss << "FAR "
-		   << hex_string<M>(op.absolute().seg, options)
-		   << ':'
-		   << hex_string<M>(op.absolute().offset, options);
+		ss << "FAR ";
 	} else {
-		ss << "far "
-		   << hex_string<M>(op.absolute().seg, options)
-		   << ':'
-		   << hex_string<M>(op.absolute().offset, options);	
+		ss << "far ";
 	}
+	
+	ss << hex_string<M>(op.absolute().seg, options)
+	   << ':'
+	   << hex_string<M>(op.absolute().offset, options);
 
 	return ss.str();
 }
@@ -96,7 +104,7 @@ std::string format_absolute(const Operand<M> &op, const FormatOptions &options) 
 template <class M>
 std::string format_prefix(const Instruction<M> &inst, const FormatOptions &options) {
 
-	typedef edisassm::Instruction<M> I;
+	typedef Instruction<M> I;
 
 	std::string ret;
 	if(options.capitalization == UpperCase) {
@@ -167,7 +175,7 @@ std::string format_relative(const Operand<M> &op, const FormatOptions &options) 
 template <class M>
 std::string format_immediate(const Operand<M> &op, const FormatOptions &options) {
 
-	typedef edisassm::Operand<M> O;
+	typedef Operand<M> O;
 
 	std::ostringstream ss;
 
@@ -247,7 +255,7 @@ std::string Formatter::to_string(const Instruction<M> &inst) {
 
 template <class M>
 std::string Formatter::to_string(const Operand<M> &op) {
-	typedef edisassm::Operand<M> O;
+	typedef Operand<M> O;
 
 	switch(op.general_type()) {
 	case O::TYPE_ABSOLUTE:   return format_absolute  (op, options_);
@@ -265,29 +273,26 @@ std::string Formatter::to_string(const Operand<M> &op) {
 
 template <class M>
 std::string Formatter::to_byte_string(const Instruction<M> &inst) {
-	if(options_.capitalization == UpperCase) {
-		std::ostringstream ss;
 
-		const uint8_t *const ptr = inst.bytes();
-		const unsigned int size = inst.size();
-		if(size != 0) {
+	std::ostringstream ss;
+	const uint8_t *const ptr = inst.bytes();
+	const unsigned int size  = inst.size();
+
+	if(size != 0) {
+		if(options_.capitalization == UpperCase) {			
 			ss << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(ptr[0]);
 			for(unsigned int i = 1; i < size; ++i) {
 				ss << ' ' << std::uppercase << std::hex << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(ptr[i]);
+			}		
+		} else {
+			ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(ptr[0]);
+			for(unsigned int i = 1; i < size; ++i) {
+				ss << ' ' << std::hex << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(ptr[i]);
 			}
 		}
-		return ss.str();	
-	} else {
-		std::ostringstream ss;
-
-		const uint8_t *const ptr = inst.bytes();
-
-		ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(ptr[0]);
-		for(unsigned int i = 1; i < inst.size(); ++i) {
-			ss << ' ' << std::hex << std::setw(2) << std::setfill('0') << static_cast<uint32_t>(ptr[i]);
-		}
-		return ss.str();	
 	}
+	
+	return ss.str();	 
 }
 
 
@@ -424,8 +429,12 @@ std::string Formatter::register_name(typename Operand<M>::Register reg) {
 template <class M>
 std::string Formatter::format_expression(const Operand<M> &op) {
 
-	typedef edisassm::Operand<M> O;
-	typedef edisassm::Instruction<M> I;
+	typedef Operand<M> O;
+	typedef Instruction<M> I;
+	
+	std::ostringstream ss;
+	
+	const uint32_t prefix = op.owner()->prefix();
 
 	if(options_.capitalization == UpperCase) {
 		static const char *expression_strings[] = {
@@ -439,10 +448,7 @@ std::string Formatter::format_expression(const Operand<M> &op) {
 			"XMMWORD PTR ",
 		};
 
-		std::ostringstream ss;
 		ss << expression_strings[op.complete_type() - O::TYPE_EXPRESSION];
-
-		const uint32_t prefix = op.owner()->prefix();
 
 		if(prefix & I::PREFIX_CS)      ss << "CS:";
 		else if(prefix & I::PREFIX_SS) ss << "SS:";
@@ -451,107 +457,6 @@ std::string Formatter::format_expression(const Operand<M> &op) {
 		else if(prefix & I::PREFIX_FS) ss << "FS:";
 		else if(prefix & I::PREFIX_GS) ss << "GS:";
 
-		bool only_disp = true;
-
-		ss << '[';
-
-		// the base, if any
-		if(op.expression().base != O::REG_NULL) {
-			ss << register_name<M>(op.expression().base);
-			only_disp = false;
-		}
-
-		// the index, if any
-		if(op.expression().index != O::REG_NULL) {
-			if(!only_disp) {
-				ss << '+';
-			}
-			ss << register_name<M>(op.expression().index);
-			only_disp = false;
-
-			// the scale, if any
-			if(op.expression().scale != 1) {
-				ss << '*' << static_cast<int>(op.expression().scale);
-			}
-		}
-
-		// the displacement, if any
-		switch(op.expression().displacement_type) {
-		case O::DISP_U32:
-			if(op.expression().u_disp32 <= std::numeric_limits<uint16_t>::max()) {
-				// this will lead to a fall through, we can print smaller
-			} else {
-				if(!only_disp) {
-					ss << '+';
-				}
-				ss << hex_string<M>(op.expression().u_disp32, options_);
-				break;
-			}
-			// FALL THROUGH
-		case O::DISP_U16:
-			if(op.expression().u_disp16 <= std::numeric_limits<uint8_t>::max()) {
-				// this will lead to a fall through, we can print smaller
-			} else {
-				if(!only_disp) {
-					ss << '+';
-				}
-				ss << hex_string<M>(op.expression().u_disp16, options_);
-				break;
-			}
-			// FALL THROUGH
-		case O::DISP_U8:
-			if(op.expression().u_disp8 != 0 || only_disp) {
-				if(!only_disp) {
-					ss << '+';
-				}
-				ss << hex_string<M>(op.expression().u_disp8, options_);
-			}
-			break;
-
-		case O::DISP_S32:
-			if(op.expression().s_disp32 <= std::numeric_limits<int16_t>::max() && op.expression().s_disp32 >= std::numeric_limits<int16_t>::min()) {
-				// this will lead to a fall through, we can print smaller
-			} else {
-				if(only_disp) {
-					// we only have a displacement, so we wanna display in hex since it is likely an address
-					ss << hex_string<M>(op.expression().s_disp32, options_);
-				} else {
-					ss << '+';
-					ss << hex_string<M>(op.expression().s_disp32, options_);
-				}
-				break;
-			}
-			// FALL THROUGH
-		case O::DISP_S16:
-			if(op.expression().s_disp16 <= std::numeric_limits<int8_t>::max() && op.expression().s_disp16 >= std::numeric_limits<int8_t>::min()) {
-				// this will lead to a fall through, we can print smaller
-			} else {
-				if(only_disp) {
-					// we only have a displacement, so we wanna display in hex since it is likely an address
-					ss << hex_string<M>(op.expression().s_disp16, options_);
-				} else {
-					ss << std::showpos << static_cast<int32_t>(op.expression().s_disp16);
-				}
-				break;
-			}
-			// FALL THROUGH
-		case O::DISP_S8:
-			if(op.expression().s_disp8 != 0 || only_disp) {
-				if(only_disp) {
-					// we only have a displacement, so we wanna display in hex since it is likely an address
-					ss << hex_string<M>(op.expression().s_disp8, options_);
-				} else {
-					ss << std::showpos << static_cast<int32_t>(op.expression().s_disp8);
-				}
-			}
-			break;
-
-		default:
-			break;
-		}
-		ss << ']';
-
-		return ss.str();
 	} else {
 		static const char *expression_strings[] = {
 			"",
@@ -564,10 +469,8 @@ std::string Formatter::format_expression(const Operand<M> &op) {
 			"xmmword ptr ",
 		};
 
-		std::ostringstream ss;
+		
 		ss << expression_strings[op.complete_type() - O::TYPE_EXPRESSION];
-
-		const uint32_t prefix = op.owner()->prefix();
 
 		if(prefix & I::PREFIX_CS)      ss << "cs:";
 		else if(prefix & I::PREFIX_SS) ss << "ss:";
@@ -575,109 +478,109 @@ std::string Formatter::format_expression(const Operand<M> &op) {
 		else if(prefix & I::PREFIX_ES) ss << "es:";
 		else if(prefix & I::PREFIX_FS) ss << "fs:";
 		else if(prefix & I::PREFIX_GS) ss << "gs:";
+	}
 
-		bool only_disp = true;
+	bool only_disp = true;
 
-		ss << '[';
+	ss << '[';
 
-		// the base, if any
-		if(op.expression().base != O::REG_NULL) {
-			ss << register_name<M>(op.expression().base);
-			only_disp = false;
+	// the base, if any
+	if(op.expression().base != O::REG_NULL) {
+		ss << register_name<M>(op.expression().base);
+		only_disp = false;
+	}
+
+	// the index, if any
+	if(op.expression().index != O::REG_NULL) {
+		if(!only_disp) {
+			ss << '+';
 		}
+		ss << register_name<M>(op.expression().index);
+		only_disp = false;
 
-		// the index, if any
-		if(op.expression().index != O::REG_NULL) {
+		// the scale, if any
+		if(op.expression().scale != 1) {
+			ss << '*' << static_cast<int>(op.expression().scale);
+		}
+	}
+
+	// the displacement, if any
+	switch(op.expression().displacement_type) {
+	case O::DISP_U32:
+		if(op.expression().u_disp32 <= std::numeric_limits<uint16_t>::max()) {
+			// this will lead to a fall through, we can print smaller
+		} else {
 			if(!only_disp) {
 				ss << '+';
 			}
-			ss << register_name<M>(op.expression().index);
-			only_disp = false;
-
-			// the scale, if any
-			if(op.expression().scale != 1) {
-				ss << '*' << static_cast<int>(op.expression().scale);
-			}
-		}
-
-		// the displacement, if any
-		switch(op.expression().displacement_type) {
-		case O::DISP_U32:
-			if(op.expression().u_disp32 <= std::numeric_limits<uint16_t>::max()) {
-				// this will lead to a fall through, we can print smaller
-			} else {
-				if(!only_disp) {
-					ss << '+';
-				}
-				ss << hex_string<M>(op.expression().u_disp32, options_);
-				break;
-			}
-			// FALL THROUGH
-		case O::DISP_U16:
-			if(op.expression().u_disp16 <= std::numeric_limits<uint8_t>::max()) {
-				// this will lead to a fall through, we can print smaller
-			} else {
-				if(!only_disp) {
-					ss << '+';
-				}
-				ss << hex_string<M>(op.expression().u_disp16, options_);
-				break;
-			}
-			// FALL THROUGH
-		case O::DISP_U8:
-			if(op.expression().u_disp8 != 0 || only_disp) {
-				if(!only_disp) {
-					ss << '+';
-				}
-				ss << hex_string<M>(op.expression().u_disp8, options_);
-			}
-			break;
-
-		case O::DISP_S32:
-			if(op.expression().s_disp32 <= std::numeric_limits<int16_t>::max() && op.expression().s_disp32 >= std::numeric_limits<int16_t>::min()) {
-				// this will lead to a fall through, we can print smaller
-			} else {
-				if(only_disp) {
-					// we only have a displacement, so we wanna display in hex since it is likely an address
-					ss << hex_string<M>(op.expression().s_disp32, options_);
-				} else {
-					ss << '+';
-					ss << hex_string<M>(op.expression().s_disp32, options_);
-				}
-				break;
-			}
-			// FALL THROUGH
-		case O::DISP_S16:
-			if(op.expression().s_disp16 <= std::numeric_limits<int8_t>::max() && op.expression().s_disp16 >= std::numeric_limits<int8_t>::min()) {
-				// this will lead to a fall through, we can print smaller
-			} else {
-				if(only_disp) {
-					// we only have a displacement, so we wanna display in hex since it is likely an address
-					ss << hex_string<M>(op.expression().s_disp16, options_);
-				} else {
-					ss << std::showpos << static_cast<int32_t>(op.expression().s_disp16);
-				}
-				break;
-			}
-			// FALL THROUGH
-		case O::DISP_S8:
-			if(op.expression().s_disp8 != 0 || only_disp) {
-				if(only_disp) {
-					// we only have a displacement, so we wanna display in hex since it is likely an address
-					ss << hex_string<M>(op.expression().s_disp8, options_);
-				} else {
-					ss << std::showpos << static_cast<int32_t>(op.expression().s_disp8);
-				}
-			}
-			break;
-
-		default:
+			ss << hex_string<M>(op.expression().u_disp32, options_);
 			break;
 		}
-		ss << ']';
+		// FALL THROUGH
+	case O::DISP_U16:
+		if(op.expression().u_disp16 <= std::numeric_limits<uint8_t>::max()) {
+			// this will lead to a fall through, we can print smaller
+		} else {
+			if(!only_disp) {
+				ss << '+';
+			}
+			ss << hex_string<M>(op.expression().u_disp16, options_);
+			break;
+		}
+		// FALL THROUGH
+	case O::DISP_U8:
+		if(op.expression().u_disp8 != 0 || only_disp) {
+			if(!only_disp) {
+				ss << '+';
+			}
+			ss << hex_string<M>(op.expression().u_disp8, options_);
+		}
+		break;
 
-		return ss.str();	
+	case O::DISP_S32:
+		if(op.expression().s_disp32 <= std::numeric_limits<int16_t>::max() && op.expression().s_disp32 >= std::numeric_limits<int16_t>::min()) {
+			// this will lead to a fall through, we can print smaller
+		} else {
+			if(only_disp) {
+				// we only have a displacement, so we wanna display in hex since it is likely an address
+				ss << hex_string<M>(op.expression().s_disp32, options_);
+			} else {
+				ss << '+';
+				ss << hex_string<M>(op.expression().s_disp32, options_);
+			}
+			break;
+		}
+		// FALL THROUGH
+	case O::DISP_S16:
+		if(op.expression().s_disp16 <= std::numeric_limits<int8_t>::max() && op.expression().s_disp16 >= std::numeric_limits<int8_t>::min()) {
+			// this will lead to a fall through, we can print smaller
+		} else {
+			if(only_disp) {
+				// we only have a displacement, so we wanna display in hex since it is likely an address
+				ss << hex_string<M>(op.expression().s_disp16, options_);
+			} else {
+				ss << std::showpos << static_cast<int32_t>(op.expression().s_disp16);
+			}
+			break;
+		}
+		// FALL THROUGH
+	case O::DISP_S8:
+		if(op.expression().s_disp8 != 0 || only_disp) {
+			if(only_disp) {
+				// we only have a displacement, so we wanna display in hex since it is likely an address
+				ss << hex_string<M>(op.expression().s_disp8, options_);
+			} else {
+				ss << std::showpos << static_cast<int32_t>(op.expression().s_disp8);
+			}
+		}
+		break;
+
+	default:
+		break;
 	}
+	ss << ']';
+
+	return ss.str();
 }
 
 //------------------------------------------------------------------------------
