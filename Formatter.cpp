@@ -52,6 +52,20 @@ Formatter::Formatter(const FormatOptions &options) : options_(options) {
 }
 
 //------------------------------------------------------------------------------
+// Name: options
+//------------------------------------------------------------------------------
+FormatOptions Formatter::options() const {
+	return options_;
+}
+
+//------------------------------------------------------------------------------
+// Name: setOptions
+//------------------------------------------------------------------------------
+void Formatter::setOptions(const FormatOptions &options) {
+	options_ = options;
+}
+
+//------------------------------------------------------------------------------
 // Name: operator=
 //------------------------------------------------------------------------------
 Formatter &Formatter::operator=(const Formatter &rhs) {

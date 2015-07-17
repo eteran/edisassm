@@ -59,6 +59,10 @@ public:
 	Formatter &operator=(const Formatter &rhs);
 	
 public:
+	FormatOptions options() const;
+	void setOptions(const FormatOptions &options);
+	
+public:
 	template <class M>
 	std::string to_string(const Instruction<M> &inst) const;
 	
