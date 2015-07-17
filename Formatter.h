@@ -60,23 +60,23 @@ public:
 	
 public:
 	template <class M>
-	std::string to_string(const Instruction<M> &inst);
+	std::string to_string(const Instruction<M> &inst) const;
 	
 	template <class M>
-	std::string to_string(const Operand<M> &op);
+	std::string to_string(const Operand<M> &op) const;
 	
 	template <class M>
-	std::string to_byte_string(const Instruction<M> &inst);
+	std::string to_byte_string(const Instruction<M> &inst) const;
 	
 	template <class M>
-	std::string register_name(typename Operand<M>::Register reg);
+	std::string register_name(typename Operand<M>::Register reg) const;
 	
 private:
 	template <class M>
-	std::string format_expression(const Operand<M> &op);
+	std::string format_expression(const Operand<M> &op) const;
 
 	template <class M>
-	std::string format_register(const Operand<M> &op);
+	std::string format_register(const Operand<M> &op) const;
 	
 public:
 	void swap(Formatter &other);

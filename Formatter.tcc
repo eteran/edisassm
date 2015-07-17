@@ -234,7 +234,7 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 
 
 template <class M>
-std::string Formatter::to_string(const Instruction<M> &inst) {
+std::string Formatter::to_string(const Instruction<M> &inst) const {
 
 	std::ostringstream ss;
 
@@ -254,7 +254,7 @@ std::string Formatter::to_string(const Instruction<M> &inst) {
 
 
 template <class M>
-std::string Formatter::to_string(const Operand<M> &op) {
+std::string Formatter::to_string(const Operand<M> &op) const {
 	typedef Operand<M> O;
 
 	switch(op.general_type()) {
@@ -272,7 +272,7 @@ std::string Formatter::to_string(const Operand<M> &op) {
 
 
 template <class M>
-std::string Formatter::to_byte_string(const Instruction<M> &inst) {
+std::string Formatter::to_byte_string(const Instruction<M> &inst) const {
 
 	std::ostringstream ss;
 	const uint8_t *const ptr = inst.bytes();
@@ -297,7 +297,7 @@ std::string Formatter::to_byte_string(const Instruction<M> &inst) {
 
 
 template <class M>
-std::string Formatter::register_name(typename Operand<M>::Register reg) {
+std::string Formatter::register_name(typename Operand<M>::Register reg) const {
 	static const char *const names_lower[] = {
 		"",
 
@@ -427,7 +427,7 @@ std::string Formatter::register_name(typename Operand<M>::Register reg) {
 // Name: format_expression
 //------------------------------------------------------------------------------
 template <class M>
-std::string Formatter::format_expression(const Operand<M> &op) {
+std::string Formatter::format_expression(const Operand<M> &op) const{
 
 	typedef Operand<M> O;
 	typedef Instruction<M> I;
@@ -587,7 +587,7 @@ std::string Formatter::format_expression(const Operand<M> &op) {
 // Name: format_register
 //------------------------------------------------------------------------------
 template <class M>
-std::string Formatter::format_register(const Operand<M> &op) {
+std::string Formatter::format_register(const Operand<M> &op) const{
 	return register_name<M>(op.reg());
 }
 
