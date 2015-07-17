@@ -1,6 +1,6 @@
 /*
-Copyright (C) 2006 - 2014 Evan Teran
-                          eteran@alum.rit.edu
+Copyright (C) 2006 - 2015 Evan Teran
+                          evan.teran@gmail.com
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -57,10 +57,10 @@ bool operator==(const Instruction<M> &lhs, const Instruction<M> &rhs) {
 			return false;
 		}
 
-		// TODO: support generics
+		// TODO(eteran): support generics
 		switch(lhs_operand_type) {
 		case Operand<M>::TYPE_REGISTER:
-			if(lhs_operand.reg != rhs_operand.reg) {
+			if(lhs_operand.reg() != rhs_operand.reg()) {
 				return false;
 			}
 			break;
@@ -75,18 +75,59 @@ bool operator==(const Instruction<M> &lhs, const Instruction<M> &rhs) {
 			}
 			break;
 		case Operand<M>::TYPE_ABSOLUTE:
-			if(lhs_operand.absolute.offset != rhs_operand.absolute.offset) {
+			if(lhs_operand.absolute().offset != rhs_operand.absolute().offset) {
 				return false;
 			}
 
-			if(lhs_operand.absolute.seg != rhs_operand.absolute.seg) {
+			if(lhs_operand.absolute().seg != rhs_operand.absolute().seg) {
 				return false;
 			}
 			break;
 		default:
 		case Operand<M>::TYPE_EXPRESSION:
-			// TODO: do this way more efficiently...
-			if(lhs_operand.format() != rhs_operand.format()) {
+			{
+				// This is a bit more complex, because there are mathematical
+				// equivalencies
+				typename Operand<M>::expression_t lhs_expression = lhs_operand.expression();
+				typename Operand<M>::expression_t rhs_expression = rhs_operand.expression();
+
+
+				if(lhs_operand.displacement() !=  rhs_operand.displacement()) {
+					return false;
+				}
+
+				// the simple case
+				if( lhs_expression.base  == rhs_expression.base &&
+					lhs_expression.index == rhs_expression.index &&
+					lhs_expression.scale == rhs_expression.scale) {
+
+					return true;
+				}
+
+				// Inst1 [index * 1] == Inst2 [base]
+				if( lhs_expression.base  == Operand<M>::REG_NULL &&
+					lhs_expression.scale == 1 &&
+					lhs_expression.index == rhs_expression.base) {
+
+
+					return true;
+				}
+
+				// Inst2 [index * 1] == Inst1 [base]
+				if( rhs_expression.base  == Operand<M>::REG_NULL &&
+					rhs_expression.scale == 1 &&
+					rhs_expression.index == lhs_expression.base) {
+
+
+					return true;
+				}
+
+				if(lhs_expression.index == Operand<M>::REG_NULL || rhs_expression.index == Operand<M>::REG_NULL) {
+					if(lhs_expression.base  == rhs_expression.base) {
+						return true;
+					}
+				}
+
 				return false;
 			}
 			break;

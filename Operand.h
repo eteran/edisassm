@@ -1,6 +1,6 @@
 /*
-Copyright (C) 2006 - 2014 Evan Teran
-                          eteran@alum.rit.edu
+Copyright (C) 2006 - 2015 Evan Teran
+                          evan.teran@gmail.com
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,8 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef OPERAND_20070521_H_
 #define OPERAND_20070521_H_
 
-#include "edisassm_types.h"
-#include "edisassm_string.h"
+#include <cstdint>
 
 namespace edisassm {
 
@@ -37,9 +36,8 @@ public:
 	~Operand() {}
 
 private:
-	typedef Operand<M>               operand_type;
-	typedef typename M::address_type address_type;
-	typedef Instruction<M>           instruction_type;
+	typedef Operand<M>     operand_type;
+	typedef Instruction<M> instruction_type;
 
 public:
 	enum Register {
@@ -182,17 +180,13 @@ public:
 	void swap(Operand &other);
 	
 public:
-	address_type relative_target() const;
+	uint64_t relative_target() const;
 	int32_t displacement() const;
 	int64_t immediate() const;
 	
 private:
-	void invalidate()                       { type_ = TYPE_INVALID; }
-	void set_owner(instruction_type *owner) { owner_ = owner; }
-
-private:
 	instruction_type *owner_;
-	Type           type_;
+	Type              type_;
 
 	union U {
 		int8_t       sbyte;

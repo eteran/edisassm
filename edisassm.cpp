@@ -1,6 +1,6 @@
 /*
-Copyright (C) 2006 - 2014 Evan Teran
-                          eteran@alum.rit.edu
+Copyright (C) 2006 - 2015 Evan Teran
+                          evan.teran@gmail.com
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,11 +17,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "Instruction.h"
+#include "Formatter.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <climits>
 #include <cstring>
+
+using namespace edisassm;
 
 namespace {
 
@@ -31,9 +34,13 @@ enum DISPLAY_FLAGS {
 };
 
 template <class M>
-std::string format_invalid_instruction(const edisassm::Instruction<M> &inst) {
+std::string format_invalid_instruction(const Instruction<M> &inst) {
 	char byte_buffer[32];
 	const uint8_t *const buf = inst.bytes();
+	
+	if(inst == inst) {
+	
+	}
 
 	switch(inst.size()) {
 	case 1:
@@ -59,9 +66,13 @@ std::string format_invalid_instruction(const edisassm::Instruction<M> &inst) {
 // Name: disassemble
 //------------------------------------------------------------------------------
 template <class M, class In>
-void disassemble(In first, In last, typename edisassm::Instruction<M>::address_type rva, unsigned int flags) {
+void disassemble(In first, In last, uint64_t rva, unsigned int flags) {
 
-	typedef edisassm::Instruction<M> insn_t;
+	typedef Instruction<M> insn_t;
+	
+	std::cout << "SIZE: " << sizeof(insn_t) << std::endl;
+	
+	Formatter formatter;
 	
 	while(first != last) {
 	
@@ -69,15 +80,15 @@ void disassemble(In first, In last, typename edisassm::Instruction<M>::address_t
 		if(instruction) {
 			std::cout << std::hex << rva << ": ";
 			if(flags & FLAG_SHOW_BYTES) {
-				std::cout << to_byte_string(instruction) << " ";
+				std::cout << formatter.to_byte_string(instruction) << " ";
 			}
-			std::cout << to_string(instruction) << '\n';
+			std::cout << formatter.to_string(instruction) << '\n';
 			first += instruction.size();
 			rva   += instruction.size();
 		} else {
 			std::cout << std::hex << rva << ": ";
 			if(flags & FLAG_SHOW_BYTES) {
-				std::cout << to_byte_string(instruction) << " ";
+				std::cout << formatter.to_byte_string(instruction) << " ";
 			}
 			std::cout << format_invalid_instruction(instruction) << " (bad)\n";
 			first += instruction.size();
@@ -185,8 +196,8 @@ int main(int argc, char *argv[]) {
 	const uint8_t *const last  = first + data.size();
 
 	if(x86_64_mode) {
-		disassemble<edisassm::x86_64>(first, last, rva_address, flags);
+		disassemble<x86_64>(first, last, rva_address, flags);
 	} else {
-		disassemble<edisassm::x86>(first, last, rva_address, flags);
+		disassemble<x86>(first, last, rva_address, flags);
 	}
 }

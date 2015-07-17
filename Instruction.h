@@ -1,6 +1,6 @@
 /*
-Copyright (C) 2006 - 2014 Evan Teran
-                          eteran@alum.rit.edu
+Copyright (C) 2006 - 2015 Evan Teran
+                          evan.teran@gmail.com
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Model.h"
 #include "Operand.h"
 #include "edisassm_exception.h"
-#include "edisassm_types.h"
+#include <cstdint>
 #include <cstddef>
 
 #ifdef QT_CORE_LIB
@@ -79,7 +79,7 @@ private:
 		virtual uint8_t next() = 0;
 		virtual uint8_t peek() const = 0;
 		virtual bool empty() const = 0;
-		virtual stream_base *clone() = 0;
+		virtual stream_base *clone() const = 0;
 	};
 
 	template <class In>
@@ -89,14 +89,14 @@ private:
 		}
 
 	private:
-		stream_iterator(const stream_iterator &);
-		stream_iterator &operator=(const stream_iterator &);
+		stream_iterator(const stream_iterator &) = delete;
+		stream_iterator &operator=(const stream_iterator &) = delete;
 
 	public:
-		virtual uint8_t next()       { return *first_++; }
-		virtual uint8_t peek() const { return *first_; }
-		virtual bool empty() const   { return first_ == last_; }
-		virtual stream_base *clone() { return new stream_iterator(first_, last_); }
+		virtual uint8_t next()             { return *first_++; }
+		virtual uint8_t peek() const       { return *first_; }
+		virtual bool empty() const         { return first_ == last_; }
+		virtual stream_base *clone() const { return new stream_iterator(first_, last_); }
 
 	private:
 		In first_;
@@ -110,7 +110,6 @@ public:
 
 public:
 	typedef Operand<M>               operand_type;
-	typedef typename M::address_type address_type;
 	typedef Instruction<M>           instruction_type;
 
 public:
@@ -118,7 +117,7 @@ public:
 
 public:
 	template <class In>
-	Instruction(In first, In last, address_type rva, const std::nothrow_t&) throw() :
+	Instruction(In first, In last, uint64_t rva, const std::nothrow_t&) throw() :
 			byte_stream_(new stream_iterator<In>(first, last)), byte_index_(0), byte1_(0x00), byte2_(0x00), byte3_(0x00),
 			modrm_byte_(0x00), sib_byte_(0x00), rex_byte_(0x00), rva_(rva),
 			opcode_(&Opcode_invalid), prefix_(0x00000000), mandatory_prefix_(0x00000000),
@@ -135,7 +134,7 @@ public:
 
 
 	template <class In>
-	Instruction(In first, In last, address_type rva) :
+	Instruction(In first, In last, uint64_t rva) :
 			byte_stream_(new stream_iterator<In>(first, last)), byte_index_(0), byte1_(0x00), byte2_(0x00), byte3_(0x00),
 			modrm_byte_(0x00), sib_byte_(0x00), rex_byte_(0x00), rva_(rva),
 			opcode_(&Opcode_invalid), prefix_(0x00000000), mandatory_prefix_(0x00000000),
@@ -1338,7 +1337,7 @@ private:
 public:
 	unsigned int flags() const                        { return opcode_->flags; }
 	Type type() const                                 { return opcode_->type; }
-	address_type rva() const                          { return rva_; }
+	uint64_t rva() const                              { return rva_; }
 	bool valid() const                                { return type() != OP_INVALID; }
 	const operand_type *operands() const              { return operands_; }
 	const uint8_t *bytes() const                      { return bytes_; }
@@ -1440,7 +1439,7 @@ private:
 	uint8_t             sib_byte_;
 	uint8_t             rex_byte_;
 
-	address_type        rva_;
+	uint64_t            rva_;
 	const opcode_entry *opcode_;
 
 	uint32_t            prefix_;
@@ -1462,7 +1461,6 @@ extern template class Instruction<x86_64>;
 
 }
 
-#include "edisassm_string.h"
 #include "edisassm_ops.h"
 #include "edisassm_functions.h"
 #endif

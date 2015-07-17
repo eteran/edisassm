@@ -1,5 +1,6 @@
 
 #include "Instruction.h"
+#include "Formatter.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -14,7 +15,23 @@ struct test_data_t {
 	const char *result;
 	unsigned int flags;
 } test32_data[] = {
-	// test Mod/RM decoding..
+	{2,"\x8B\x03",                     "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	{3,"\x8B\x43\x00",                 "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	{6,"\x8B\x83\x00\x00\x00\x00",     "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	{3,"\x8B\x04\x23",                 "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	{3,"\x8B\x04\x63",                 "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	{3,"\x8B\x04\xA3",                 "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	{3,"\x8B\x04\xE3",                 "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	{4,"\x8B\x44\x23\x00",             "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	{4,"\x8B\x44\x63\x00",             "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	{4,"\x8B\x44\xA3\x00",             "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	{4,"\x8B\x44\xE3\x00",             "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	{7,"\x8B\x84\x23\x00\x00\x00\x00", "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	{7,"\x8B\x84\x63\x00\x00\x00\x00", "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	{7,"\x8B\x84\xA3\x00\x00\x00\x00", "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	{7,"\x8B\x84\xE3\x00\x00\x00\x00", "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	{7,"\x8B\x04\x1D\x00\x00\x00\x00", "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	{4,"\xc8\x01\x00\x02", "enter 1, 2", insn32_t::FLAG_STACK},
 	{2,"\x89\x00", "mov dword ptr [eax], eax", insn32_t::FLAG_NONE},
 	{2,"\x89\x01", "mov dword ptr [ecx], eax", insn32_t::FLAG_NONE},
 	{2,"\x89\x02", "mov dword ptr [edx], eax", insn32_t::FLAG_NONE},
@@ -4238,41 +4255,50 @@ struct test_data_t {
 
 int main() {
 
-	printf("[\n");
-	for(size_t i = 0; i < sizeof(test32_data) / sizeof(test32_data[0]); ++i) {
+	edisassm::Formatter formatter;
+
+
+	// Testing Operators...
+	test_data_t mov_modrm[] = {	
+		{2,"\x8B\x03",                     "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+		{3,"\x8B\x43\x00",                 "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+		{6,"\x8B\x83\x00\x00\x00\x00",     "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+		{3,"\x8B\x04\x23",                 "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+		{3,"\x8B\x04\x63",                 "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+		{3,"\x8B\x04\xA3",                 "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+		{3,"\x8B\x04\xE3",                 "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+		{4,"\x8B\x44\x23\x00",             "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+		{4,"\x8B\x44\x63\x00",             "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+		{4,"\x8B\x44\xA3\x00",             "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+		{4,"\x8B\x44\xE3\x00",             "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+		{7,"\x8B\x84\x23\x00\x00\x00\x00", "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+		{7,"\x8B\x84\x63\x00\x00\x00\x00", "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+		{7,"\x8B\x84\xA3\x00\x00\x00\x00", "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+		{7,"\x8B\x84\xE3\x00\x00\x00\x00", "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+		{7,"\x8B\x04\x1D\x00\x00\x00\x00", "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
+	};
 	
-		test_data_t *p = &test32_data[i];
-		
-		printf("{\n");
-		printf("\t\"mnemonic\":\"%s\",\n", p->result);
-		printf("\t\"bytes\":[");
-		for(unsigned z = 0; z < p->size; ++z) {
-			if(z != p->size - 1) {
-				printf("\"%02x\",", p->bytes[z] & 0xff);
-			} else {
-				printf("\"%02x\"", p->bytes[z] & 0xff);
+	for(size_t i = 0; i < sizeof(mov_modrm) / sizeof(mov_modrm[0]); ++i) {
+		for(size_t j = 0; j < sizeof(mov_modrm) / sizeof(mov_modrm[0]); ++j) {
+			
+			test_data_t *p1 = &mov_modrm[i];
+			test_data_t *p2 = &mov_modrm[j];
+			
+			insn32_t insn1(p1->bytes, p1->bytes + p1->size, 0x00000000, std::nothrow);
+			insn32_t insn2(p2->bytes, p2->bytes + p2->size, 0x00000000, std::nothrow);
+			
+			if(!insn1.valid() || !insn2.valid() || insn1 != insn2) {
+				std::cout << "\n----------\n";
+				std::cout << "I = " << i << std::endl;
+				std::cout << "J = " << j << std::endl;
+				std::cout << formatter.to_string(insn1) << " != " << formatter.to_string(insn2) << std::endl;
+				std::cout << "FAIL" << std::endl;
+				return -1;			
 			}
+			
 		}
-		printf("]\n");
-		printf("}");
-		
-		if(i != (sizeof(test32_data) / sizeof(test32_data[0])) - 1) {
-			printf(",");
-		}
-		
-		printf("\n");
-	
-		/*
-			unsigned size;
-			const char *bytes;
-			const char *result;
-			unsigned int flags;
-		*/
-	
 	}
-	printf("]\n");
 	
-	return 0;
 
 
 	for(size_t i = 0; i < sizeof(test32_data) / sizeof(test32_data[0]); ++i) {
@@ -4281,27 +4307,27 @@ int main() {
 		std::cout << "performing test #" << i << "...";
 		insn32_t insn(p->bytes, p->bytes + p->size, 0x00000000, std::nothrow);
 
-		if(!insn.valid() || edisassm::to_string(insn) != p->result) {
+		if(!insn.valid() || formatter.to_string(insn) != p->result) {
 			std::cout << "\n----------\n";
-			std::cout << edisassm::to_string(insn) << " != " << p->result << std::endl;
+			std::cout << formatter.to_string(insn) << " != " << p->result << std::endl;
 			std::cout << "FAIL" << std::endl;
 			return -1;
 		}
 
 		if(insn.size() != p->size) {
 			std::cout << "\n----------\n";
-			std::cout << edisassm::to_byte_string(insn) << " incorrect size" << std::endl;
+			std::cout << formatter.to_byte_string(insn) << " incorrect size" << std::endl;
 			std::cout << "FAIL" << std::endl;
 			return -1;
 		}
 
 		if(insn.flags() != p->flags) {
 			std::cout << "\n----------\n";
-			std::cout << edisassm::to_byte_string(insn) << " wrong flags" << std::endl;
+			std::cout << formatter.to_byte_string(insn) << " wrong flags" << std::endl;
 			std::cout << "FAIL" << std::endl;
 			return -1;
 		}
 
-		std::cout << " " << edisassm::to_byte_string(insn) << " '" << edisassm::to_string(insn) << "' " << "OK" << std::endl;
+		std::cout << " " << formatter.to_byte_string(insn) << " '" << formatter.to_string(insn) << "' " << "OK" << std::endl;
 	}
 }

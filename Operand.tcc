@@ -1,6 +1,6 @@
 /*
-Copyright (C) 2006 - 2014 Evan Teran
-                          eteran@alum.rit.edu
+Copyright (C) 2006 - 2015 Evan Teran
+                          evan.teran@gmail.com
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -50,22 +50,22 @@ void Operand<M>::swap(Operand &other) {
 // Name: relative_target
 //------------------------------------------------------------------------------
 template <class M>
-typename Operand<M>::address_type Operand<M>::relative_target() const {
+uint64_t Operand<M>::relative_target() const {
 
-	const address_type rva    = owner_->rva();
-	const unsigned int size   = owner_->size();
-	const address_type offset = rva + size;
+	const uint64_t rva      = owner_->rva();
+	const unsigned int size = owner_->size();
+	const uint64_t offset   = rva + size;
 
 	switch(type_) {
 	case TYPE_REL8:
-		return static_cast<address_type>(u.sbyte + offset);
+		return static_cast<uint64_t>(u.sbyte + offset);
 	case TYPE_REL16:
 		// NOTE: intel truncates EIP to 16-bit here
-		return static_cast<address_type>((u.sword + offset) & 0xffff);
+		return static_cast<uint64_t>((u.sword + offset) & 0xffff);
 	case TYPE_REL32:
-		return static_cast<address_type>(u.sdword + offset);
+		return static_cast<uint64_t>(u.sdword + offset);
 	case TYPE_REL64:
-		return static_cast<address_type>(u.sqword + offset);
+		return static_cast<uint64_t>(u.sqword + offset);
 	default:
 		return 0;
 	}

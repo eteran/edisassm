@@ -1,4 +1,5 @@
 [BITS 32]
+enter 1, 2
 fclex
 fdisi
 feni

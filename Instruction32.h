@@ -1,6 +1,6 @@
 /*
-Copyright (C) 2006 - 2014 Evan Teran
-                          eteran@alum.rit.edu
+Copyright (C) 2006 - 2015 Evan Teran
+                          evan.teran@gmail.com
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #ifndef INSTRUCTION_20080314_TCC_
 #define INSTRUCTION_20080314_TCC_
-
-#include <iostream>
 
 #include "OPTable_FPU.tcc"
 #include "OPTable_1byte.tcc"
@@ -46,6 +44,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "ModRM.h"
 #include "SIB.h"
 #include "REX.h"
+
+#include <iostream>
+
 namespace edisassm {
 
 //------------------------------------------------------------------------------
@@ -814,7 +815,7 @@ void Instruction<M>::decode_Ex() {
 
 	if(prefix_ & PREFIX_ADDRESS) {
 		if(BITS == 64) {
-			// TODO: should this be forced to 
+			// TODO(eteran): should this be forced to 
 			switch(modrm::mod(modrm_byte)) {
 			case 0x00:
 				decode_ModRM_0_32<TYPE, REG_DECODE, modrm_32>(modrm_byte, operand);
@@ -879,7 +880,7 @@ template <class M>
 void Instruction<M>::disassemble() {
 
 	for(int i = 0; i < M::MAX_OPERANDS; ++i) {
-		operands_[i].invalidate();
+		operands_[i].type_ = Operand<M>::TYPE_INVALID;
 	}
 
 	process_prefixes();
@@ -911,7 +912,7 @@ Instruction<M>::Instruction(const Instruction &other) :
 
 	for(int i = 0; i < M::MAX_OPERANDS; ++i) {
 		operands_[i] = other.operands_[i];
-		operands_[i].set_owner(this);
+		operands_[i].owner_ = this;
 	}
 
 	std::copy(other.bytes_, other.bytes_ + sizeof(other.bytes_), bytes_);
@@ -1059,7 +1060,7 @@ typename Instruction<M>::operand_type &Instruction<M>::next_operand() {
 	}
 
 	operand_type &ret = operands_[operand_count_++];
-	ret.set_owner(this);
+	ret.owner_ = this;
 	return ret;
 }
 
@@ -1948,7 +1949,7 @@ void Instruction<M>::decode_rAX_NOREX() {
 //------------------------------------------------------------------------------
 template <class M>
 void Instruction<M>::decode_eAX() {
-	// TODO: is this correct, it seems to be the same
+	// TODO(eteran): is this correct, it seems to be the same
 	// because eAX is only used for ops where REX is illegal
 	decode_rAX_NOREX();
 }
@@ -2200,7 +2201,7 @@ void Instruction<M>::decode_rDI() {
 template <class M>
 void Instruction<M>::decode_rAX_rAX_NOREX() {
 
-	// TODO: does F3 or xchg r8, rAX take precedence
+	// TODO(eteran): does F3 or xchg r8, rAX take precedence
 	if(BITS == 64 && rex::is_rex(rex_byte_) && rex::b(rex_byte_)) {
 		opcode_ = &Opcodes_nop_pause_xchg[2];
 	} else if(prefix_ & PREFIX_REP) {
