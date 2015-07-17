@@ -143,10 +143,6 @@ std::vector<uint8_t> get_input(const std::string &filename, bool hex_chars) {
 //------------------------------------------------------------------------------
 int main(int argc, char *argv[]) {
 
-	if(argc == 1) {
-		print_usage(argv[0]);
-	}
-
 	unsigned int flags    = FLAG_NONE;
 	bool x86_64_mode      = false;
 	bool hex_chars        = false;
@@ -186,12 +182,10 @@ int main(int argc, char *argv[]) {
 	}
 
 	const std::vector<uint8_t> data = get_input(filename, hex_chars);
-	const uint8_t *const first = &data[0];
-	const uint8_t *const last  = first + data.size();
 
 	if(x86_64_mode) {
-		disassemble<x86_64>(first, last, rva_address, flags);
+		disassemble<x86_64>(data.begin(), data.end(), rva_address, flags);
 	} else {
-		disassemble<x86>(first, last, rva_address, flags);
+		disassemble<x86>(data.begin(), data.end(), rva_address, flags);
 	}
 }
