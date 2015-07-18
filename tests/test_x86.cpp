@@ -6,7 +6,6 @@
 #include <string>
 #include <cstdio>
 
-typedef edisassm::Instruction<edisassm::x86_64> insn64_t;
 typedef edisassm::Instruction<edisassm::x86>    insn32_t;
 
 struct test_data_t {
@@ -15,6 +14,9 @@ struct test_data_t {
 	const char *result;
 	unsigned int flags;
 } test32_data[] = {
+	{3,"\x0f\x7e\xf0",                 "movd eax, mm6",   insn32_t::FLAG_MMX},
+	{3,"\x0f\x6e\xf8",                 "movd mm7, eax",   insn32_t::FLAG_MMX},
+	{4,"\x66\x0f\x6e\xd1",            "movd xmm2, ecx", insn32_t::FLAG_MMX},
 	{2,"\x8B\x03",                     "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
 	{3,"\x8B\x43\x00",                 "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},
 	{6,"\x8B\x83\x00\x00\x00\x00",     "mov eax, dword ptr [ebx]", insn32_t::FLAG_NONE},

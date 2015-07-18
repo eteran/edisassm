@@ -147,7 +147,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "packssdw",  &Instruction::decode_Pq_Qq,   OP_PACKSSDW,  FLAG_MMX },
 	{ "invalid",   &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
 	{ "invalid",   &Instruction::decode_invalid, OP_INVALID,   FLAG_NONE },
-	{ "movd",      &Instruction::decode_Pd_Ed,   OP_MOVD,      FLAG_MMX }, // x86-64: movq Pd, Eq
+	{ "movd",      &Instruction::decode_Pd_Ed,   OP_MOVD,      FLAG_MMX }, 
 	{ "movq",      &Instruction::decode_Pq_Qq,   OP_MOVQ,      FLAG_MMX },
 
 	/* 0x0f 0x70 - 0x0f 0x7f */
@@ -165,7 +165,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_NA[0x1
 	{ "invalid", &Instruction::decode_invalid,  OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid,  OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid,  OP_INVALID, FLAG_NONE },
-	{ "movd",    &Instruction::decode_Ed_Pd,    OP_MOVD,    FLAG_MMX }, // x86-64: movq Eq,Pd
+	{ "movd",    &Instruction::decode_Ed_Pd,    OP_MOVD,    FLAG_MMX },
 	{ "movq",    &Instruction::decode_Qq_Pq,    OP_MOVQ,    FLAG_MMX },
 
 	/* 0x0f 0x80 - 0x0f 0x8f */
@@ -441,7 +441,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "packssdw",   &Instruction::decode_Vo_Wo, OP_PACKSSDW,   FLAG_MMX },
 	{ "punpcklqdq", &Instruction::decode_Vo_Wo, OP_PUNPCKLQDQ, FLAG_SSE2 },
 	{ "punpckhqdq", &Instruction::decode_Vo_Wo, OP_PUNPCKHQDQ, FLAG_SSE2 },
-	{ "movd",       &Instruction::decode_Vo_Ed, OP_MOVD,       FLAG_MMX }, // x86-64: movq Vo, Eq
+	{ "movd",       &Instruction::decode_Vo_Ed, OP_MOVD,       FLAG_MMX },
 	{ "movq",       &Instruction::decode_Vo_Qq, OP_MOVQ,       FLAG_MMX },
 
 	/* 0x0f 0x70 - 0x0f 0x7f */
@@ -459,7 +459,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_66[0x1
 	{ "invalid", &Instruction::decode_invalid,  OP_INVALID, FLAG_NONE },
 	{ "haddpd",  &Instruction::decode_Vo_Wo,    OP_HADDPD,  FLAG_SSE3 },
 	{ "hsubpd",  &Instruction::decode_Vo_Wo,    OP_HSUBPD,  FLAG_SSE3 },
-	{ "movd",    &Instruction::decode_Ed_Vo,    OP_MOVD,    FLAG_MMX }, // x86-64: movq Eq, Vo
+	{ "movd",    &Instruction::decode_Ed_Vo,    OP_MOVD,    FLAG_MMX },
 	{ "movdqa",  &Instruction::decode_Wo_Vo,    OP_MOVDQA,  FLAG_SSE2 },
 
 	/* 0x0f 0x80 - 0x0f 0x8f */
@@ -734,7 +734,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "packssdw", &Instruction::decode_Pq_Qq, OP_PACKSSDW, FLAG_MMX },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "movd", &Instruction::decode_Pd_Ed, OP_MOVD, FLAG_MMX }, // x86-64: movq Pd, Eq
+	{ "movd", &Instruction::decode_Pd_Ed, OP_MOVD, FLAG_MMX },
 	{ "movq", &Instruction::decode_Pq_Qq, OP_MOVQ, FLAG_MMX },
 
 	/* 0x0f 0x70 - 0x0f 0x7f */
@@ -752,7 +752,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_2Byte_F2[0x1
 	{ "invalid", &Instruction::decode_invalid,  OP_INVALID, FLAG_NONE },
 	{ "haddps",  &Instruction::decode_Vo_Wo,    OP_HADDPS,  FLAG_SSE3 },
 	{ "hsubps",  &Instruction::decode_Vo_Wo,    OP_HSUBPS,  FLAG_SSE3 },
-	{ "movd",    &Instruction::decode_Ed_Pd,    OP_MOVD,    FLAG_MMX }, // x86-64: movq Eq,Pd
+	{ "movd",    &Instruction::decode_Ed_Pd,    OP_MOVD,    FLAG_MMX },
 	{ "movq",    &Instruction::decode_Qq_Pq,    OP_MOVQ,    FLAG_MMX },
 
 	/* 0x0f 0x80 - 0x0f 0x8f */
