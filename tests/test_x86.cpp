@@ -14,6 +14,8 @@ struct test_data_t {
 	const char *result;
 	unsigned int flags;
 } test32_data[] = {
+	{5,"\xba\x83\x79\x1b\x9e", "mov edx, 0x9e1b7983", insn32_t::FLAG_NONE },
+	{6,"\x89\x93\x9c\x01\xff\xff", "mov dword ptr [ebx+0xffff019c], edx", insn32_t::FLAG_NONE },
 	{3,"\x0f\x7e\xf0",                 "movd eax, mm6",   insn32_t::FLAG_MMX},
 	{3,"\x0f\x6e\xf8",                 "movd mm7, eax",   insn32_t::FLAG_MMX},
 	{4,"\x66\x0f\x6e\xd1",            "movd xmm2, ecx", insn32_t::FLAG_MMX},

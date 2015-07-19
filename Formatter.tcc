@@ -199,7 +199,7 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 			if(is_small_num(op.sdword(), options)) {
 				ss << op.sdword();
 			} else {
-				ss << hex_string<M>(op.sdword(), options);
+				ss << hex_string<M>(static_cast<typename M::address_type>(op.sdword()), options);
 			}
 			break;
 		}
@@ -211,7 +211,7 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 			if(is_small_num(op.sword(), options)) {
 				ss << op.sword();
 			} else {
-				ss << hex_string<M>(op.sword(), options);
+				ss << hex_string<M>(static_cast<typename M::address_type>(op.sword()), options);
 			}
 			break;
 		}
@@ -220,7 +220,7 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 		if(is_small_num(op.byte(), options)) {		
 			ss << static_cast<int>(op.sbyte());
 		} else {
-			ss << hex_string<M>(op.byte(), options);
+			ss << hex_string<M>(static_cast<typename M::address_type>(op.byte()), options);
 		}
 		break;
 	default:
@@ -503,7 +503,8 @@ std::string Formatter::format_expression(const Operand<M> &op) const{
 			ss << '*' << static_cast<int>(op.expression().scale);
 		}
 	}
-
+	
+	
 	// the displacement, if any
 	switch(op.expression().displacement_type) {
 	case O::DISP_U32:
@@ -537,16 +538,16 @@ std::string Formatter::format_expression(const Operand<M> &op) const{
 		}
 		break;
 
-	case O::DISP_S32:
+	case O::DISP_S32:		
 		if(op.expression().s_disp32 <= std::numeric_limits<int16_t>::max() && op.expression().s_disp32 >= std::numeric_limits<int16_t>::min()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string<M>(op.expression().s_disp32, options_);
+				ss << hex_string<M>(static_cast<typename M::address_type>(op.expression().s_disp32), options_);
 			} else {
 				ss << '+';
-				ss << hex_string<M>(op.expression().s_disp32, options_);
+				ss << hex_string<M>(static_cast<typename M::address_type>(op.expression().s_disp32), options_);
 			}
 			break;
 		}
@@ -557,7 +558,7 @@ std::string Formatter::format_expression(const Operand<M> &op) const{
 		} else {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string<M>(op.expression().s_disp16, options_);
+				ss << hex_string<M>(static_cast<typename M::address_type>(op.expression().s_disp16), options_);
 			} else {
 				ss << std::showpos << static_cast<int32_t>(op.expression().s_disp16);
 			}
@@ -568,7 +569,7 @@ std::string Formatter::format_expression(const Operand<M> &op) const{
 		if(op.expression().s_disp8 != 0 || only_disp) {
 			if(only_disp) {
 				// we only have a displacement, so we wanna display in hex since it is likely an address
-				ss << hex_string<M>(op.expression().s_disp8, options_);
+				ss << hex_string<M>(static_cast<typename M::address_type>(op.expression().s_disp8), options_);
 			} else {
 				ss << std::showpos << static_cast<int32_t>(op.expression().s_disp8);
 			}
