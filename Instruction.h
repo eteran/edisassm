@@ -1237,6 +1237,7 @@ private:
 	DECODE2(Wo, Vo)
 	DECODE2(Wq, Vq)
 	DECODE2(Qq, Wo)
+	DECODE2(Wq, Vo)
 
 	DECODE2(rCX, rAX_NOREX)
 	DECODE2(rDX, rAX_NOREX)

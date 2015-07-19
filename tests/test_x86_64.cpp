@@ -19,7 +19,8 @@ struct test_data_t {
 	{3, "\x0f\x7e\xf0",         "movd eax, mm6",   insn64_t::FLAG_MMX},
 	{3, "\x0f\x6e\xf8",         "movd mm7, eax",   insn64_t::FLAG_MMX},
 	{5, "\x66\x44\x0f\x6e\xd1", "movd xmm10, ecx", insn64_t::FLAG_MMX},
-	
+	{8,"\xf2\x0f\x10\x05\xc0\x87\x04\x08", "movsd xmm0, qword ptr [rip+0x080487c0]", insn64_t::FLAG_SSE2},
+	{9,"\xf2\x0f\x11\x84\x24\x98\x00\x00\x00", "movsd qword ptr [rsp+152], xmm0", insn64_t::FLAG_SSE2},
 
 
 };

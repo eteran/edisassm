@@ -16,6 +16,10 @@ struct test_data_t {
 } test32_data[] = {
 	{5,"\xba\x83\x79\x1b\x9e", "mov edx, 0x9e1b7983", insn32_t::FLAG_NONE },
 	{6,"\x89\x93\x9c\x01\xff\xff", "mov dword ptr [ebx+0xffff019c], edx", insn32_t::FLAG_NONE },
+	
+	{8,"\xf2\x0f\x10\x05\xc0\x87\x04\x08", "movsd xmm0, qword ptr [0x080487c0]", insn32_t::FLAG_SSE2},
+	{9,"\xf2\x0f\x11\x84\x24\x98\x00\x00\x00", "movsd qword ptr [esp+152], xmm0", insn32_t::FLAG_SSE2},
+	
 	{3,"\x0f\x7e\xf0",                 "movd eax, mm6",   insn32_t::FLAG_MMX},
 	{3,"\x0f\x6e\xf8",                 "movd mm7, eax",   insn32_t::FLAG_MMX},
 	{4,"\x66\x0f\x6e\xd1",            "movd xmm2, ecx", insn32_t::FLAG_MMX},

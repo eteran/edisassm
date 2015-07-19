@@ -1007,8 +1007,8 @@ const Instruction<x86_64>::opcode_entry Instruction<x86_64>::Opcodes_2Byte_F2[0x
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 
 	/* 0x0f 0x10 - 0x0f 0x1f */
-	{ "movsd", &Instruction::decode_Vo_Wo, OP_MOVSD, FLAG_SSE2 },
-	{ "movsd", &Instruction::decode_Wo_Vo, OP_MOVSD, FLAG_SSE2 },
+	{ "movsd", &Instruction::decode_Vq_Wq, OP_MOVSD, FLAG_SSE2 },
+	{ "movsd", &Instruction::decode_Wq_Vq, OP_MOVSD, FLAG_SSE2 },
 	{ "movddup", &Instruction::decode_Vq_Mq, OP_MOVDDUP, FLAG_SSE3 },
 	{ "movlps", &Instruction::decode_Mq_Vq, OP_MOVLPS, FLAG_SSE },
 	{ "unpcklps", &Instruction::decode_Vo_Wq, OP_UNPCKLPS, FLAG_SSE },
