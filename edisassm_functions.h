@@ -33,7 +33,16 @@ bool is_ret(const Instruction<T> &insn) {
 
 template <class T>
 bool is_conditional_jump(const Instruction<T> &insn) {
-	return insn.type() == Instruction<T>::OP_JCC;
+
+	switch(insn.type()) {
+	case Instruction<T>::OP_JCC:
+	case Instruction<T>::OP_LOOP:
+	case Instruction<T>::OP_LOOPE:
+	case Instruction<T>::OP_LOOPNE:
+		return true;
+	default:
+		return false;
+	}
 }
 
 template <class T>
