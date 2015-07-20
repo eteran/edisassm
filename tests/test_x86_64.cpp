@@ -15,7 +15,11 @@ struct test_data_t {
 	unsigned int flags;
 } test64_data[] = {
 	
-	// stupid wait prefix stuff...
+	{7,"\x67\x8b\x05\x10\x00\x00\x00", "mov eax, dword ptr [eip+16]", insn64_t::FLAG_NONE },
+	{6,"\x8b\x05\x10\x00\x00\x00", "mov eax, dword ptr [rip+16]", insn64_t::FLAG_NONE },
+	
+
+	{3, "\x0f\x20\x40", "mov eax, cr0", insn64_t::FLAG_R_FLAGS },
 	{3, "\x0f\x7e\xf0",         "movd eax, mm6",   insn64_t::FLAG_MMX},
 	{3, "\x0f\x6e\xf8",         "movd mm7, eax",   insn64_t::FLAG_MMX},
 	{5, "\x66\x44\x0f\x6e\xd1", "movd xmm10, ecx", insn64_t::FLAG_MMX},

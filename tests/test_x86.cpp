@@ -14,6 +14,21 @@ struct test_data_t {
 	const char *result;
 	unsigned int flags;
 } test32_data[] = {
+	{3,"\x0f\x1a\x00", "nop dword ptr [eax]", insn32_t::FLAG_NONE },
+
+// TODO(eteran): is this op supposed to have a "REPNE" prefix displayed?
+//	{6,"\xf3\xf2\x66\x0f\x58\xc0", "addpd xmm0, xmm0", insn32_t::FLAG_NONE },
+
+	{10,"\xf7\x88\x00\x00\x00\x00\x00\x00\x00\x00", "test dword ptr [eax], 0", insn32_t::FLAG_NONE },
+	
+// TODO(eteran): fails due to formatting issue, but decodes correctly
+//	{2, "\xd9\xd8", "fstpnce st0, st0", insn32_t::FLAG_FPU },
+
+// TODO(eteran): fails due to formatting issue, but decodes correctly
+//	{2, "\xdf\xdf", "fstp st7, st0", insn32_t::FLAG_FPU },
+	
+	{3, "\x0f\x20\x40", "mov eax, cr0", insn32_t::FLAG_R_FLAGS },
+
 	{5,"\xba\x83\x79\x1b\x9e", "mov edx, 0x9e1b7983", insn32_t::FLAG_NONE },
 	{6,"\x89\x93\x9c\x01\xff\xff", "mov dword ptr [ebx+0xffff019c], edx", insn32_t::FLAG_NONE },
 	
@@ -4332,6 +4347,7 @@ int main() {
 		if(insn.flags() != p->flags) {
 			std::cout << "\n----------\n";
 			std::cout << formatter.to_byte_string(insn) << " wrong flags" << std::endl;
+			std::cout << "FLAGS: " << insn.flags() << std::endl;
 			std::cout << "FAIL" << std::endl;
 			return -1;
 		}

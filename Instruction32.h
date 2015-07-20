@@ -609,6 +609,12 @@ void Instruction<M>::decode_ModRM_0_32(uint8_t rm, operand_type &operand) {
 			operand.u.expression.base              = operand_type::REG_RIP;
 			operand.u.expression.s_disp32          = get_displacement_s32();
 			operand.u.expression.displacement_type = operand_type::DISP_S32;
+		} else if(BITS == 64 && DecodeMode::value == 32) {
+			operand.u.expression.index             = operand_type::REG_NULL;
+			operand.u.expression.scale             = 1;
+			operand.u.expression.base              = operand_type::REG_EIP;
+			operand.u.expression.s_disp32          = get_displacement_s32();
+			operand.u.expression.displacement_type = operand_type::DISP_S32;		
 		} else {
 			operand.u.expression.index             = operand_type::REG_NULL;
 			operand.u.expression.scale             = 1;
