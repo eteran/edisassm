@@ -16,9 +16,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Instruction.h"
-#include "Instruction32.h"
-#include "Instruction64.h"
+#include "edisassm/Instruction.h"
+#include "edisassm/Instruction32.h"
+#include "edisassm/Instruction64.h"
 
 // explicitly instantiate these two
 // to make sure everything links ok

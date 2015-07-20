@@ -1,7 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 set(CMAKE_CXX_STANDARD 11)
 SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
-INCLUDE_DIRECTORIES(..)
+INCLUDE_DIRECTORIES(../include)
 
 SET(test_x86_SOURCES    test_x86.cpp    ../Instruction.cpp ../Formatter.cpp)
 SET(test_x86_64_SOURCES test_x86_64.cpp ../Instruction.cpp ../Formatter.cpp)

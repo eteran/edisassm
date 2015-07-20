@@ -16,8 +16,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "Instruction.h"
-#include "Formatter.h"
+#include "edisassm/Instruction.h"
+#include "edisassm/Formatter.h"
 #include <iostream>
 #include <fstream>
 #include <vector>

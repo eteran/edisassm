@@ -1,6 +1,6 @@
 
-#include "Instruction.h"
-#include "Formatter.h"
+#include "edisassm/Instruction.h"
+#include "edisassm/Formatter.h"
 #include <iostream>
 #include <fstream>
 #include <string>
