@@ -14,6 +14,7 @@ struct test_data_t {
 	const char *result;
 	unsigned int flags;
 } test32_data[] = {
+	{4,"\x66\x83\xe4\xfe", "and sp, 0xfffe", insn32_t::FLAG_W_FLAGS },
 	{3,"\x83\xe4\xf0", "and esp, 0xfffffff0", insn32_t::FLAG_W_FLAGS },
 	{2,"\x6a\xfe", "push 0xfffffffe", insn32_t::FLAG_STACK },
 	{5,"\x68\xff\xff\xff\xff", "push 0xffffffff", insn32_t::FLAG_STACK },
