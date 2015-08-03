@@ -14,6 +14,7 @@ struct test_data_t {
 	const char *result;
 	unsigned int flags;
 } test32_data[] = {
+	{5,"\x68\xff\xff\xff\xff", "push 0xffffffff", insn32_t::FLAG_STACK },
 	{3,"\x0f\x1a\x00", "nop dword ptr [eax]", insn32_t::FLAG_NONE },
 
 // TODO(eteran): is this op supposed to have a "REPNE" prefix displayed?
@@ -4278,8 +4279,11 @@ struct test_data_t {
 
 int main() {
 
-	edisassm::Formatter formatter;
-
+	edisassm::FormatOptions options;
+	options.syntax         = edisassm::SyntaxIntel;
+	options.capitalization = edisassm::LowerCase;
+	options.smallNumFormat = edisassm::SmallNumAsHex;
+	edisassm::Formatter formatter(options);
 
 	// Testing Operators...
 	test_data_t mov_modrm[] = {	
@@ -4332,7 +4336,8 @@ int main() {
 
 		if(!insn.valid() || formatter.to_string(insn) != p->result) {
 			std::cout << "\n----------\n";
-			std::cout << formatter.to_string(insn) << " != " << p->result << std::endl;
+			std::cout << "GOT      : " << formatter.to_string(insn) << std::endl;
+			std::cout << "EXPECTED : " << p->result << std::endl;
 			std::cout << "FAIL" << std::endl;
 			return -1;
 		}

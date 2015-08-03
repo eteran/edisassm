@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <iomanip>
 #include <limits>
 #include <sstream>
+#include <type_traits>
 
 namespace edisassm {
 namespace {
@@ -63,6 +64,8 @@ bool is_small_num(T value, const FormatOptions &options) {
 template <class T>
 std::string hex_string(T value, const FormatOptions &options) {
 
+	typedef typename std::make_unsigned<T>::type unsigned_type;
+
 	if(value == 0) {
 		return "0";
 	}
@@ -74,7 +77,7 @@ std::string hex_string(T value, const FormatOptions &options) {
 		ss << std::uppercase;
 	}
 	
-	ss << std::hex << std::setw(sizeof(T) * 2) << std::setfill('0') << static_cast<uint64_t>(value);
+	ss << std::hex << std::setw(sizeof(T) * 2) << std::setfill('0') << static_cast<unsigned_type>(value);
 	return ss.str();
 }
 
@@ -178,6 +181,9 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 	typedef Operand<M> O;
 
 	std::ostringstream ss;
+	
+	typedef typename std::make_signed<typename M::address_type>::type stack_type;
+	
 
 	switch(op.complete_type()) {
 	case O::TYPE_IMMEDIATE64:
@@ -192,14 +198,18 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 			break;
 		}
 		// FALL THROUGH
-	case O::TYPE_IMMEDIATE32:
+	case O::TYPE_IMMEDIATE32:	
 		if(op.dword() < std::numeric_limits<uint16_t>::max()) {
 			// this will lead to a fall through, we can print smaller
 		} else {
 			if(is_small_num(op.sdword(), options)) {
 				ss << op.sdword();
 			} else {
-				ss << hex_string(static_cast<uint32_t>(op.sdword()), options);
+				if(op.owner()->type() == Instruction<M>::OP_PUSH) {
+					ss << hex_string(static_cast<stack_type>(op.sdword()), options);
+				} else {
+					ss << hex_string(static_cast<uint32_t>(op.sdword()), options);
+				}
 			}
 			break;
 		}
@@ -211,7 +221,11 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 			if(is_small_num(op.sword(), options)) {
 				ss << op.sword();
 			} else {
-				ss << hex_string(static_cast<uint16_t>(op.sword()), options);
+				if(op.owner()->type() == Instruction<M>::OP_PUSH) {
+					ss << hex_string(static_cast<stack_type>(op.sword()), options);
+				} else {			
+					ss << hex_string(static_cast<uint16_t>(op.sword()), options);
+				}
 			}
 			break;
 		}
@@ -220,7 +234,11 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 		if(is_small_num(op.byte(), options)) {		
 			ss << static_cast<int>(op.sbyte());
 		} else {
-			ss << hex_string(static_cast<uint8_t>(op.byte()), options);
+			if(op.owner()->type() == Instruction<M>::OP_PUSH) {
+				ss << hex_string(static_cast<stack_type>(op.byte()), options);
+			} else {		
+				ss << hex_string(static_cast<uint8_t>(op.byte()), options);
+			}
 		}
 		break;
 	default:
