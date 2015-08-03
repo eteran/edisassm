@@ -205,10 +205,13 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 			if(is_small_num(op.sdword(), options)) {
 				ss << op.sdword();
 			} else {
+			
+				const int32_t i32 = op.sdword();
+			
 				if(op.owner()->type() == Instruction<M>::OP_PUSH) {
-					ss << hex_string(static_cast<stack_type>(op.sdword()), options);
+					ss << hex_string(static_cast<stack_type>(i32), options);
 				} else {
-					ss << hex_string(static_cast<uint32_t>(op.sdword()), options);
+					ss << hex_string(static_cast<uint32_t>(i32), options);
 				}
 			}
 			break;
@@ -221,10 +224,13 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 			if(is_small_num(op.sword(), options)) {
 				ss << op.sword();
 			} else {
+			
+				const int16_t i16 = op.sword();
+			
 				if(op.owner()->type() == Instruction<M>::OP_PUSH) {
-					ss << hex_string(static_cast<stack_type>(op.sword()), options);
+					ss << hex_string(static_cast<stack_type>(i16), options);
 				} else {			
-					ss << hex_string(static_cast<uint16_t>(op.sword()), options);
+					ss << hex_string(static_cast<uint16_t>(i16), options);
 				}
 			}
 			break;
@@ -234,10 +240,13 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 		if(is_small_num(op.byte(), options)) {		
 			ss << static_cast<int>(op.sbyte());
 		} else {
+		
+			const int8_t i8 = op.byte();
+		
 			if(op.owner()->type() == Instruction<M>::OP_PUSH) {
-				ss << hex_string(static_cast<stack_type>(op.byte()), options);
-			} else {		
-				ss << hex_string(static_cast<uint8_t>(op.byte()), options);
+				ss << hex_string(static_cast<stack_type>(i8), options);
+			} else {	
+				ss << hex_string(static_cast<uint8_t>(i8), options);
 			}
 		}
 		break;

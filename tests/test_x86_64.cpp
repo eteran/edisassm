@@ -15,6 +15,7 @@ struct test_data_t {
 	unsigned int flags;
 } test64_data[] = {
 	
+	{2,"\x6a\xfe", "push 0xfffffffffffffffe", insn64_t::FLAG_STACK },
 	{5,"\x68\xff\xff\xff\xff", "push 0xffffffffffffffff", insn64_t::FLAG_STACK },
 	{7,"\x67\x8b\x05\x10\x00\x00\x00", "mov eax, dword ptr [eip+16]", insn64_t::FLAG_NONE },
 	{6,"\x8b\x05\x10\x00\x00\x00", "mov eax, dword ptr [rip+16]", insn64_t::FLAG_NONE },
@@ -46,7 +47,8 @@ int main() {
 
 		if(!insn.valid() || formatter.to_string(insn) != p->result) {
 			std::cout << "\n----------\n";
-			std::cout << formatter.to_string(insn) << " != " << p->result << std::endl;
+			std::cout << "GOT      : " << formatter.to_string(insn) << std::endl;
+			std::cout << "EXPECTED : " << p->result << std::endl;
 			std::cout << "FAIL" << std::endl;
 			return -1;
 		}
