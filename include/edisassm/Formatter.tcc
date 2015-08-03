@@ -66,6 +66,11 @@ std::string hex_string(T value, const FormatOptions &options) {
 
 	typedef typename std::make_unsigned<T>::type unsigned_type;
 
+	typedef typename std::conditional<
+		std::is_same<unsigned_type, uint8_t>::value,
+		uint16_t,
+		unsigned_type>::type real_type;
+
 	if(value == 0) {
 		return "0";
 	}
@@ -77,7 +82,7 @@ std::string hex_string(T value, const FormatOptions &options) {
 		ss << std::uppercase;
 	}
 	
-	ss << std::hex << std::setw(sizeof(T) * 2) << std::setfill('0') << static_cast<unsigned_type>(value);
+	ss << std::hex << std::setw(sizeof(T) * 2) << std::setfill('0') << static_cast<real_type>(value);
 	return ss.str();
 }
 
@@ -243,11 +248,14 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 		
 			const int8_t i8 = op.byte();
 		
-			if(op.owner()->type() == Instruction<M>::OP_PUSH) {
+			// TODO(eteran): find out, is an 8-bit signed immediate, always sign extended?
+			//               seems like it may be...
+		
+			//if(op.owner()->type() == Instruction<M>::OP_PUSH) {
 				ss << hex_string(static_cast<stack_type>(i8), options);
-			} else {	
-				ss << hex_string(static_cast<uint8_t>(i8), options);
-			}
+			//} else {
+			//	ss << hex_string(static_cast<uint8_t>(i8), options);
+			//}
 		}
 		break;
 	default:
