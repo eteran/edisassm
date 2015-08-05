@@ -1642,6 +1642,23 @@ void Instruction<M>::decode_Ib() {
 	operand.type_   = operand_type::TYPE_IMMEDIATE8;
 }
 
+
+//------------------------------------------------------------------------------
+// Name: decode_Ib
+//------------------------------------------------------------------------------
+template <class M>
+void Instruction<M>::decode_Ixb() {
+	operand_type &operand = next_operand();
+	
+	const int8_t n = get_immediate_s8();
+	
+	switch(operand_size()) {
+	case 16: operand.u.sword  = static_cast<int16_t>(n); operand.type_ = operand_type::TYPE_IMMEDIATE16; break;
+	case 32: operand.u.sdword = static_cast<int32_t>(n); operand.type_ = operand_type::TYPE_IMMEDIATE32; break;
+	case 64: operand.u.sqword = static_cast<int64_t>(n); operand.type_ = operand_type::TYPE_IMMEDIATE64; break;
+	}
+}
+
 //------------------------------------------------------------------------------
 // Name: decode_Iw
 //------------------------------------------------------------------------------
@@ -1654,6 +1671,22 @@ void Instruction<M>::decode_Iw() {
 }
 
 //------------------------------------------------------------------------------
+// Name: decode_Ixw
+//------------------------------------------------------------------------------
+template <class M>
+void Instruction<M>::decode_Ixw() {
+	operand_type &operand = next_operand();
+	
+	const int16_t n = get_immediate_s16();
+
+	switch(operand_size()) {
+	case 16: operand.u.sword  = static_cast<int16_t>(n); operand.type_ = operand_type::TYPE_IMMEDIATE16; break;
+	case 32: operand.u.sdword = static_cast<int32_t>(n); operand.type_ = operand_type::TYPE_IMMEDIATE32; break;
+	case 64: operand.u.sqword = static_cast<int64_t>(n); operand.type_ = operand_type::TYPE_IMMEDIATE64; break;
+	}
+}
+
+//------------------------------------------------------------------------------
 // Name: decode_Id
 //------------------------------------------------------------------------------
 template <class M>
@@ -1662,6 +1695,22 @@ void Instruction<M>::decode_Id() {
 
 	operand.u.sdword = get_immediate_s32();
 	operand.type_    = operand_type::TYPE_IMMEDIATE32;
+}
+
+//------------------------------------------------------------------------------
+// Name: decode_Id
+//------------------------------------------------------------------------------
+template <class M>
+void Instruction<M>::decode_Ixd() {
+	operand_type &operand = next_operand();
+	
+	const int32_t n = get_immediate_s32();
+
+	switch(operand_size()) {
+	case 16: throw invalid_instruction(byte_index_);
+	case 32: operand.u.sdword = static_cast<int32_t>(n); operand.type_ = operand_type::TYPE_IMMEDIATE32; break;
+	case 64: operand.u.sqword = static_cast<int64_t>(n); operand.type_ = operand_type::TYPE_IMMEDIATE64; break;
+	}
 }
 
 //------------------------------------------------------------------------------

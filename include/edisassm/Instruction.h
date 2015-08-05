@@ -1066,6 +1066,12 @@ private:
 	void decode_Iq();
 	void decode_Iv();
 	void decode_Iz() { if(prefix_ & PREFIX_OPERAND) { decode_Iw(); } else { decode_Id(); } }
+	
+	// Immediate (with sign extension)
+	void decode_Ixb();
+	void decode_Ixw();
+	void decode_Ixd();	
+	void decode_Ixz() { if(prefix_ & PREFIX_OPERAND) { decode_Ixw(); } else { decode_Ixd(); } }
 
 	// EIP relative
 	void decode_Jb();
@@ -1162,6 +1168,7 @@ private:
 	DECODE2(Ed, Pd)
 	DECODE2(Ed, Vo)
 	DECODE2(Ev, Ib)
+	DECODE2(Ev, Ixb)
 	DECODE2(Ev, Iz)
 	DECODE2(Ev, Sw)
 	DECODE2(Ew, Gw)

@@ -24,7 +24,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <iomanip>
 #include <limits>
 #include <sstream>
-#include <type_traits>
 
 namespace edisassm {
 namespace {
@@ -64,13 +63,6 @@ bool is_small_num(T value, const FormatOptions &options) {
 template <class T>
 std::string hex_string(T value, const FormatOptions &options) {
 
-	typedef typename std::make_unsigned<T>::type unsigned_type;
-
-	typedef typename std::conditional<
-		std::is_same<unsigned_type, uint8_t>::value,
-		uint16_t,
-		unsigned_type>::type real_type;
-
 	if(value == 0) {
 		return "0";
 	}
@@ -82,7 +74,7 @@ std::string hex_string(T value, const FormatOptions &options) {
 		ss << std::uppercase;
 	}
 	
-	ss << std::hex << std::setw(sizeof(T) * 2) << std::setfill('0') << static_cast<real_type>(value);
+	ss << std::hex << std::setw(sizeof(T) * 2) << std::setfill('0') << static_cast<uint64_t>(value);
 	return ss.str();
 }
 
@@ -185,10 +177,7 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 
 	typedef Operand<M> O;
 
-	std::ostringstream ss;
-	
-	typedef typename std::make_signed<typename M::address_type>::type stack_type;
-	
+	std::ostringstream ss;	
 
 	switch(op.complete_type()) {
 	case O::TYPE_IMMEDIATE64:
@@ -210,14 +199,8 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 			if(is_small_num(op.sdword(), options)) {
 				ss << op.sdword();
 			} else {
-			
 				const int32_t i32 = op.sdword();
-			
-				if(op.owner()->type() == Instruction<M>::OP_PUSH) {
-					ss << hex_string(static_cast<stack_type>(i32), options);
-				} else {
-					ss << hex_string(static_cast<uint32_t>(i32), options);
-				}
+				ss << hex_string(static_cast<uint32_t>(i32), options);
 			}
 			break;
 		}
@@ -229,14 +212,8 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 			if(is_small_num(op.sword(), options)) {
 				ss << op.sword();
 			} else {
-			
-				const int16_t i16 = op.sword();
-			
-				if(op.owner()->type() == Instruction<M>::OP_PUSH) {
-					ss << hex_string(static_cast<stack_type>(i16), options);
-				} else {			
-					ss << hex_string(static_cast<uint16_t>(i16), options);
-				}
+				const int16_t i16 = op.sword();	
+				ss << hex_string(static_cast<uint16_t>(i16), options);
 			}
 			break;
 		}
@@ -245,22 +222,8 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 		if(is_small_num(op.byte(), options)) {		
 			ss << static_cast<int>(op.sbyte());
 		} else {
-		
 			const int8_t i8 = op.byte();
-		
-			// TODO(eteran): find out, is an 8-bit signed immediate, always sign extended?
-			//               seems like it may be...
-		
-			if(op.owner()->prefix() & Instruction<M>::PREFIX_OPERAND) {
-				ss << hex_string(static_cast<uint16_t>(i8), options);
-			} else {
-				//if(op.owner()->type() == Instruction<M>::OP_PUSH) {
-				// ss << hex_string(static_cast<stack_type>(i8), options);
-				//} else {
-				//	ss << hex_string(static_cast<uint8_t>(i8), options);
-				//}
-				ss << hex_string(static_cast<uint8_t>(i8), options);
-			}
+			ss << hex_string(static_cast<uint8_t>(i8), options);
 		}
 		break;
 	default:

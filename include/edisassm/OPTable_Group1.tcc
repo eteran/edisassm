@@ -50,14 +50,14 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_Group1[32] =
 	{ "xor", &Instruction::decode_Eb_Ib, OP_XOR, FLAG_NONE },
 	{ "cmp", &Instruction::decode_Eb_Ib, OP_CMP, FLAG_W_FLAGS },
 
-	{ "add", &Instruction::decode_Ev_Ib, OP_ADD, FLAG_W_FLAGS },
-	{ "or",  &Instruction::decode_Ev_Ib, OP_OR,  FLAG_W_FLAGS },
-	{ "adc", &Instruction::decode_Ev_Ib, OP_ADC, FLAG_RW_FLAGS },
-	{ "sbb", &Instruction::decode_Ev_Ib, OP_SBB, FLAG_NONE },
-	{ "and", &Instruction::decode_Ev_Ib, OP_AND, FLAG_W_FLAGS },
-	{ "sub", &Instruction::decode_Ev_Ib, OP_SUB, FLAG_NONE },
-	{ "xor", &Instruction::decode_Ev_Ib, OP_XOR, FLAG_NONE },
-	{ "cmp", &Instruction::decode_Ev_Ib, OP_CMP, FLAG_W_FLAGS },
+	{ "add", &Instruction::decode_Ev_Ixb, OP_ADD, FLAG_W_FLAGS },
+	{ "or",  &Instruction::decode_Ev_Ixb, OP_OR,  FLAG_W_FLAGS },
+	{ "adc", &Instruction::decode_Ev_Ixb, OP_ADC, FLAG_RW_FLAGS },
+	{ "sbb", &Instruction::decode_Ev_Ixb, OP_SBB, FLAG_NONE },
+	{ "and", &Instruction::decode_Ev_Ixb, OP_AND, FLAG_W_FLAGS },
+	{ "sub", &Instruction::decode_Ev_Ixb, OP_SUB, FLAG_NONE },
+	{ "xor", &Instruction::decode_Ev_Ixb, OP_XOR, FLAG_NONE },
+	{ "cmp", &Instruction::decode_Ev_Ixb, OP_CMP, FLAG_W_FLAGS },
 };
 
 }
