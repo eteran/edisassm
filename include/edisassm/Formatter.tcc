@@ -255,10 +255,11 @@ std::string format_immediate(const Operand<M> &op, const FormatOptions &options)
 				ss << hex_string(static_cast<uint16_t>(i8), options);
 			} else {
 				//if(op.owner()->type() == Instruction<M>::OP_PUSH) {
-					ss << hex_string(static_cast<stack_type>(i8), options);
+				// ss << hex_string(static_cast<stack_type>(i8), options);
 				//} else {
 				//	ss << hex_string(static_cast<uint8_t>(i8), options);
 				//}
+				ss << hex_string(static_cast<uint8_t>(i8), options);
 			}
 		}
 		break;
