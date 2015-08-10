@@ -1432,7 +1432,7 @@ private:
 	static const opcode_entry Opcodes_invalid_cmpxchg8b_cmpxchg16b[3];
 	static const opcode_entry Opcodes_insw_insd_invalid[3];
 	static const opcode_entry Opcodes_outsw_outsd_invalid[3];
-	static const opcode_entry Opcodes_cmpsw_cmpsd_invalid[3];
+	static const opcode_entry Opcodes_cmpsw_cmpsd_cmpsq[3];
 	static const opcode_entry Opcodes_pushaw_pushad_invalid[3];
 	static const opcode_entry Opcodes_popaw_popad_invalid[3];
 
