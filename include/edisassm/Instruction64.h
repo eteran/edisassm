@@ -296,7 +296,7 @@ const Instruction<x86_64>::opcode_entry Instruction<x86_64>::Opcodes[0x100] = {
 	{ "movsb",             &Instruction::decode0,                  OP_MOVS,  FLAG_R_FLAGS },
 	{ "movsw/movsd/movsq", &Instruction::decode_movsw_movsd_movsq, OP_GROUP, FLAG_NONE },
 	{ "cmpsb",             &Instruction::decode0,                  OP_CMPS,  FLAG_RW_FLAGS },
-	{ "cmpsw/cmpsd/cmpsq", &Instruction::decode_cmpsw_cmpsd_invalid, OP_GROUP, FLAG_NONE },
+	{ "cmpsw/cmpsd/cmpsq", &Instruction::decode_cmpsw_cmpsd_cmpsq, OP_GROUP, FLAG_NONE },
 	{ "test",              &Instruction::decode_AL_Ib,             OP_TEST,  FLAG_NONE },
 	{ "test",              &Instruction::decode_rAX_Iz,            OP_TEST,  FLAG_NONE },
 	{ "stosb",             &Instruction::decode0,                  OP_STOS,  FLAG_NONE },
