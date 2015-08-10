@@ -360,7 +360,7 @@ const typename Instruction<M>::opcode_entry Instruction<M>::Opcodes_3Byte_38_66[
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
-	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
+	{ "adcx",    &Instruction::decode_Gy_Ey,   OP_ADCX,    FLAG_RW_FLAGS },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },
 	{ "invalid", &Instruction::decode_invalid, OP_INVALID, FLAG_NONE },

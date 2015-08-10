@@ -1785,6 +1785,20 @@ void Instruction<M>::decode_Ev() {
 	}
 }
 
+
+//------------------------------------------------------------------------------
+// Name: decode_Ey
+//------------------------------------------------------------------------------
+template <class M>
+void Instruction<M>::decode_Ey() {
+
+	if(BITS == 64 && !(prefix_ & PREFIX_OPERAND)) {
+		decode_Ex<operand_type::TYPE_EXPRESSION64, &Instruction::index_to_reg_64>();
+	} else {
+		decode_Ex<operand_type::TYPE_EXPRESSION32, &Instruction::index_to_reg_32>();
+	}
+}
+
 //------------------------------------------------------------------------------
 // Name: decode_Rv
 //------------------------------------------------------------------------------

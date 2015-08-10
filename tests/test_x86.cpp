@@ -14,6 +14,7 @@ struct test_data_t {
 	const char *result;
 	unsigned int flags;
 } test32_data[] = {
+	{6,"\xf0\x66\x0f\x38\xf6\xc1", "lock adcx eax, ecx", insn32_t::FLAG_RW_FLAGS},
 	{2,"\xcd\x80", "int 0x80", insn32_t::FLAG_W_FLAGS},
 	{3,"\x83\xe4\xf0", "and esp, 0xfffffff0", insn32_t::FLAG_W_FLAGS },	
 	{4,"\x66\x83\xe4\xfe", "and sp, 0xfffe", insn32_t::FLAG_W_FLAGS },
@@ -4249,33 +4250,36 @@ struct test_data_t {
 	{2, "\xdb\xe3", "fninit", insn32_t::FLAG_FPU},
 	{2, "\xdb\xe4", "fnsetpm", insn32_t::FLAG_FPU | insn32_t::FLAG_286_ONLY},
 
+	
+#if 0 // OBE, now treated as two seperate ops
+	{3, "\x9b\xd9\x30", "fstenv [eax]", insn32_t::FLAG_FPU},
+	{3, "\x9b\xd9\x31", "fstenv [ecx]", insn32_t::FLAG_FPU},
+	{3, "\x9b\xd9\x38", "fstcw word ptr [eax]", insn32_t::FLAG_FPU},
+	{3, "\x9b\xd9\x39", "fstcw word ptr [ecx]", insn32_t::FLAG_FPU},
 	{3, "\x9b\xdb\xe1", "fdisi", insn32_t::FLAG_FPU},
 	{3, "\x9b\xdb\xe2", "fclex", insn32_t::FLAG_FPU | insn32_t::FLAG_W_FLAGS},
 	{3, "\x9b\xdb\xe3", "finit", insn32_t::FLAG_FPU},
 	{3, "\x9b\xdb\xe4", "fsetpm", insn32_t::FLAG_FPU},
+	{3, "\x9b\xdd\x30", "fsave [eax]", insn32_t::FLAG_FPU},
+	{3, "\x9b\xdd\x31", "fsave [ecx]", insn32_t::FLAG_FPU},
+	{3, "\x9b\xdd\x33", "fsave [ebx]", insn32_t::FLAG_FPU},
+	{3, "\x9b\xdd\x38", "fstsw word ptr [eax]", insn32_t::FLAG_FPU},
+	{3, "\x9b\xdf\xe0", "fstsw ax", insn32_t::FLAG_FPU},	
+	{4, "\x9b\xdd\x75\x94", "fsave [ebp-108]", insn32_t::FLAG_FPU},
+	{4, "\x67\x9b\xdd\x30", "fsave [bx+si]", insn32_t::FLAG_FPU},
+	{4, "\x67\x9b\xdd\x38", "fstsw word ptr [bx+si]", insn32_t::FLAG_FPU},	
+#endif
 
 	{2, "\xdd\x30",         "fnsave [eax]", insn32_t::FLAG_FPU},
 	{2, "\xdd\x38",         "fnstsw word ptr [eax]", insn32_t::FLAG_FPU},
 	{2, "\xdf\xe0",         "fnstsw ax", insn32_t::FLAG_FPU},
 	{3, "\x67\xdd\x30",     "fnsave [bx+si]", insn32_t::FLAG_FPU},
 	{3, "\x67\xdd\x38",     "fnstsw word ptr [bx+si]", insn32_t::FLAG_FPU},
-	{3, "\x9b\xdb\xe2",     "fclex", insn32_t::FLAG_FPU | insn32_t::FLAG_W_FLAGS},
-	{3, "\x9b\xdb\xe3",     "finit", insn32_t::FLAG_FPU},
-	{3, "\x9b\xdd\x30",     "fsave [eax]", insn32_t::FLAG_FPU},
-	{3, "\x9b\xdd\x31",     "fsave [ecx]", insn32_t::FLAG_FPU},
-	{3, "\x9b\xdd\x33",     "fsave [ebx]", insn32_t::FLAG_FPU},
-	{3, "\x9b\xdd\x38",     "fstsw word ptr [eax]", insn32_t::FLAG_FPU},
-	{3, "\x9b\xdf\xe0",     "fstsw ax", insn32_t::FLAG_FPU},
-	{4, "\x67\x9b\xdd\x30", "fsave [bx+si]", insn32_t::FLAG_FPU},
-	{4, "\x67\x9b\xdd\x38", "fstsw word ptr [bx+si]", insn32_t::FLAG_FPU},
-	{4, "\x9b\xdd\x75\x94", "fsave [ebp-108]", insn32_t::FLAG_FPU},
+
+	
 
 	{2, "\xd9\x30", "fnstenv [eax]", insn32_t::FLAG_FPU},
 	{2, "\xd9\x38", "fnstcw word ptr [eax]", insn32_t::FLAG_FPU},
-	{3, "\x9b\xd9\x30", "fstenv [eax]", insn32_t::FLAG_FPU},
-	{3, "\x9b\xd9\x31", "fstenv [ecx]", insn32_t::FLAG_FPU},
-	{3, "\x9b\xd9\x38", "fstcw word ptr [eax]", insn32_t::FLAG_FPU},
-	{3, "\x9b\xd9\x39", "fstcw word ptr [ecx]", insn32_t::FLAG_FPU},
 	{4, "\x66\x0f\xfe\x08", "paddd xmm1, xmmword ptr [eax]", insn32_t::FLAG_MMX},
 	{3, "\x0f\xfe\x08", "paddd mm1, qword ptr [eax]", insn32_t::FLAG_MMX},
 	{5, "\x66\x0F\x38\x10\x11", "pblendvb xmm2, xmmword ptr [ecx]", insn32_t::FLAG_SSE4_1}

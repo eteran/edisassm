@@ -236,6 +236,7 @@ public:
 		OP_AAM,
 		OP_AAS,
 		OP_ADC,
+		OP_ADCX,
 		OP_ADD,
 		OP_CMP,
 		OP_DAA,
@@ -973,6 +974,8 @@ private:
 	void decode_Ed() { decode_Ex<operand_type::TYPE_EXPRESSION32, &Instruction<M>::index_to_reg_32>(); }
 	void decode_Eq() { decode_Ex<operand_type::TYPE_EXPRESSION64, &Instruction<M>::index_to_reg_64>(); }
 	void decode_Ev();
+	void decode_Ey();
+	
 	void decode_Qd() { decode_Ex<operand_type::TYPE_EXPRESSION32,  &Instruction<M>::index_to_reg_mmx>(); }
 	void decode_Qq() { decode_Ex<operand_type::TYPE_EXPRESSION64,  &Instruction<M>::index_to_reg_mmx>(); }
 	void decode_Qo() { decode_Ex<operand_type::TYPE_EXPRESSION128, &Instruction<M>::index_to_reg_mmx>(); }
@@ -1047,6 +1050,8 @@ private:
 	void decode_Gd() { decode_Gx<&Instruction<M>::index_to_reg_32>(); }
 	void decode_Gq() { decode_Gx<&Instruction<M>::index_to_reg_64>(); }
 	void decode_Gz() { if(prefix_ & PREFIX_OPERAND) { decode_Gx<&Instruction<M>::index_to_reg_16>(); } else { decode_Gx<&Instruction<M>::index_to_reg_32>(); } }
+	void decode_Gy() { if(prefix_ & PREFIX_OPERAND) { decode_Gx<&Instruction<M>::index_to_reg_32>(); } else { decode_Gx<&Instruction<M>::index_to_reg_64>(); } }
+	
 	void decode_Vo() { decode_Gx<&Instruction<M>::index_to_reg_xmmx>(); }
 	void decode_Vd() { decode_Gx<&Instruction<M>::index_to_reg_xmmx>(); }
 	void decode_Vq() { decode_Gx<&Instruction<M>::index_to_reg_xmmx>(); }
@@ -1180,6 +1185,7 @@ private:
 	DECODE2(Gd, Wq)
 	DECODE2(Gv, Eb)
 	DECODE2(Gv, Ev)
+	DECODE2(Gy, Ey)
 	DECODE2(Gv, Ew)
 	DECODE2(Gv, M)
 	DECODE2(Gv, Ma)
