@@ -1109,7 +1109,7 @@ template <class M> void Instruction<M>::decode_pushfw_pushfd_pushfq()         { 
 template <class M> void Instruction<M>::decode_invalid_cmpxchg8b_cmpxchg16b() { decode_size_sensitive(Opcodes_invalid_cmpxchg8b_cmpxchg16b);}
 template <class M> void Instruction<M>::decode_insw_insd_invalid()            { decode_size_sensitive(Opcodes_insw_insd_invalid);}
 template <class M> void Instruction<M>::decode_outsw_outsd_invalid()          { decode_size_sensitive(Opcodes_outsw_outsd_invalid);}
-template <class M> void Instruction<M>::decode_cmpsw_cmpsd_cmpsq()            { decode_size_sensitive(Opcodes_cmpsw_cmpsd_cmpsq);}
+template <class M> void Instruction<M>::decode_cmpsw_cmpsd_invalid()            { decode_size_sensitive(Opcodes_cmpsw_cmpsd_cmpsq);}
 template <class M> void Instruction<M>::decode_pushaw_pushad_invalid()        { decode_size_sensitive(Opcodes_pushaw_pushad_invalid);}
 template <class M> void Instruction<M>::decode_popaw_popad_invalid()          { decode_size_sensitive(Opcodes_popaw_popad_invalid);}
 

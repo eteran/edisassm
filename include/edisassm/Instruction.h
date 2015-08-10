@@ -863,7 +863,7 @@ private:
 	void decode_invalid_cmpxchg8b_cmpxchg16b();
 
 	// no 64-bit variant
-	void decode_cmpsw_cmpsd_cmpsq();
+	void decode_cmpsw_cmpsd_invalid();
 	void decode_outsw_outsd_invalid();
 	void decode_insw_insd_invalid();
 	void decode_pushaw_pushad_invalid();
