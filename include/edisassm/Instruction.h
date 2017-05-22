@@ -25,6 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "edisassm_exception.h"
 #include <cstdint>
 #include <cstddef>
+#include <string>
 
 #ifdef QT_CORE_LIB
 #include <QtGlobal>
